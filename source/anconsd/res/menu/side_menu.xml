@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_beauty"
+        android:showAsAction="always"
+        android:title="@string/menu_beauty"
+        android:visible="true">
+    </item>
+    <item
+        android:id="@+id/menu_relax"
+        android:showAsAction="always"
+        android:title="@string/menu_relax"
+        android:visible="true">
+    </item>
+    <item
+        android:id="@+id/menu_game"
+        android:showAsAction="always"
+        android:title="@string/menu_game"
+        android:visible="true">
+    </item>
+    <item
+        android:id="@+id/menu_car"
+        android:showAsAction="always"
+        android:title="@string/menu_car"
+        android:visible="true">
+    </item>
+    <item
+        android:id="@+id/menu_famous"
+        android:showAsAction="always"
+        android:visible="true" android:title="@string/menu_famous">
+    </item>
+
+</menu>

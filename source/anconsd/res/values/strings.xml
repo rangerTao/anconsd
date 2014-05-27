@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">淘米看图</string>
+    <string name="channel_name">BaiduMobAd_CHANNEL</string>
+    <string name="uploadpic">\u4e0a\u4f20\u56fe\u7247</string>
+    <string name="closeservice">\u5173\u95ed\u670d\u52a1</string>
+    <string name="cannotconnect">\u65e0\u6cd5\u8fde\u63a5</string>
+    <string name="howtouse">\u4f7f\u7528\u8bf4\u660e</string>
+    <string name="usertip1">\u0031\u002e\u70b9\u51fb\u201c\u4e0a\u4f20\u56fe\u7247\u201d\u6309\u94ae\uff0c\u5f00\u542f\u56fe\u7247\u4e0a\u4f20\u670d\u52a1\u3002</string>
+    <string name="usertip2">\u0032\u002e\u5728\u5bb6\u4e2d\u7684\u7535\u8111\u4e0a\uff0c\u901a\u8fc7\u0049\u0045\u6d4f\u89c8\u5668\u8bbf\u95ee\u754c\u9762\u4e0a\u63d0\u793a\u7684\u7f51\u5740\u3002\u5982\uff1a\u0031\u0039\u0032\u002e\u0031\u0036\u0038\u002e\u0031\u002e\u0031\u0030\u0030\uff1a\u0038\u0030\u0038\u0030\u3002\u8bbf\u95ee\u6587\u4ef6\u7ba1\u7406\u9875\u9762\u3002</string>
+    <string name="usertip3">\u0033\u002e\u4e0a\u4f20\u6587\u4ef6\uff1a\u901a\u8fc7\u70b9\u51fb\u9875\u9762\u4e0a\u7684\u201c\u6d4f\u89c8\u6587\u4ef6\u201d\u6309\u94ae\uff0c\u5728\u5f39\u51fa\u7684\u5bf9\u8bdd\u6846\u4e2d\uff0c\u9009\u62e9\u60a8\u9700\u8981\u4e0a\u4f20\u7684\u56fe\u7247\u548c\u89c6\u9891\u0028\u683c\u5f0f\u4ec5\u9650\u006d\u0070\u0034\u548c\u0033\u0067\u0070\u0029\u6587\u4ef6\uff0c\u5e76\u70b9\u51fb\u786e\u5b9a\u6309\u94ae\uff0c\u786e\u5b9a\u9009\u62e9\u3002\u00a0\u0020\u0020\u70b9\u51fb\u9875\u9762\u4e2d\u7684\u4e0a\u4f20\u6309\u94ae\uff0c\u4e0a\u4f20\u6587\u4ef6\u3002</string>
+    <string name="usertip4">\u0034\u002e\u5220\u9664\u6587\u4ef6\uff1a\u5728\u9875\u9762\u4e2d\uff0c\u52fe\u9009\u9700\u8981\u5220\u9664\u7684\u6587\u4ef6\uff0c\u70b9\u51fb\u9875\u9762\u4e2d\u7684\u201c\u5220\u9664\u9009\u4e2d\u201d\u6309\u94ae\uff0c\u5373\u53ef\u5220\u9664\u6587\u4ef6\u3002</string>
+    <string name="cannottip1">\u8bf7\u786e\u8ba4\u0057\u0069\u002d\u0046\u0069\u8fde\u63a5\u6b63\u786e\u5f00\u542f\uff0c\u5e76\u4e0e\u8bbf\u95ee\u7ba1\u7406\u9875\u9762\u7684\u8ba1\u7b97\u673a\u8fde\u63a5\u5728\u540c\u4e00\u4e2a\u65e0\u7ebf\u7f51\u7edc\u5185\u3002\u5e76\u8bf7\u6309\u4f7f\u7528\u8bf4\u660e\u0031\uff0c\u91cd\u65b0\u5f00\u542f\u670d\u52a1\u3002</string>
+    <string name="cannottip2">\u0032\u002e\u5728\u4e0b\u9762\u7684\u6587\u672c\u6846\u4e2d\uff0c\u8f93\u5165\u8bbf\u95ee\u7ba1\u7406\u9875\u9762\u6240\u4f7f\u7528\u8ba1\u7b97\u673a\u7684\u0049\u0050\u5730\u5740\uff0c\u5e76\u70b9\u51fb\u201c\u786e\u5b9a\u201d\u6309\u94ae\uff0c\u8fdb\u884c\u7f51\u7edc\u8bca\u6d4b\u8bd5</string>
+    <string name="ipaddress">\u0049\u0050\u5730\u5740</string>
+    <string name="btnCheck">\u6d4b\u8bd5</string>
+    <string name="btnConfirm">\u786e\u5b9a</string>
+    <string name="btnClose">\u5173\u95ed</string>
+    <string name="btnMore">更多</string>
+    <string name="btnCancel">取消</string>
+    <string name="network_error_tip">网络不给力~~</string>
+    <string name="loading">加载中...</string>
+    <string name="ipaddressformatwrong">\u0049\u0050\u0020\u5730\u5740\u683c\u5f0f\u4e0d\u6b63\u786e\u3002</string>
+    <string name="retrytip">\u8bf7\u91cd\u8bd5\u901a\u8fc7\u6d4f\u89c8\u5668\u8bbf\u95ee\u7ba1\u7406\u9875\u9762\u3002</string>
+    <string name="networkerror">\u7f51\u7edc\u8fde\u63a5\u9519\u8bef\uff0c\u8bf7\u68c0\u67e5\u0077\u0069\u0066\u0069\u8fde\u63a5\u3002</string>
+    <string name="deletesuccess">\u5220\u9664\u6210\u529f</string>
+    <string name="player_tip">\u64ad\u653e\u6240\u9009\u89c6\u9891\uff0c\u9700\u8981\u9009\u62e9\u76f8\u5e94\u64ad\u653e\u5668\u3002\n\u8bf7\u767b\u5f55\u0077\u0077\u0077\u002e\u0064\u0075\u006f\u006c\u0065\u0079\u0075\u0061\u006e\u002e\u0063\u006f\u006d\uff0c\u8fdb\u5165\u201c\u4eb2\u5b50\u6e38\u620f\u201d\u680f\u76ee\u9009\u62e9\u64ad\u653e\u5668\u3002</string>
+    <string name="player_notfound_title">\u672a\u53d1\u73b0\u89c6\u9891\u64ad\u653e\u5668\u3002</string>
+    <string name="action_bar_share_with">Share with…</string>
+    <string name="share_tip">我在“淘米看图”看到一张很给力的图片，一起来看看吧。\nhttp://apk.ccdroid.cc/taomi.html</string>
+    <string name="button_negative">取消</string>
+    <string name="button_folder_pick_positive">选中当前目录</string>
+    <string name="alert_network_inavailble">网络不给力啊！</string>
+    <string name="menu_beauty">美女</string>
+    <string name="menu_relax">趣味</string>
+    <string name="menu_game">游戏</string>
+    <string name="menu_car">汽车</string>
+    <string name="menu_famous">影视/名人</string>
+    <string name="menu_topic">专题</string>
+    <string name="menu_promotion">推荐</string>
+    <string name="loding_tip_waiting">请稍候....</string>
+    
+    <string name="share_success">分享成功</string>
+    <string name="share_fail">分享失败</string>
+    <string name="share_click_text">请猛戳：</string>
+    <string name="share_url">http://apk.cndroid.cc/taomi.html</string>
+    <string name="weixin_not_installed">您还没有安装微信，点击确定后将前往官网下载~</string>
+    <string name="tip_warning">哎呦~~</string>
+    
+    <string name="button_set_wallpaper">壁纸</string>
+    <string name="button_save_to_local">保存</string>
+    
+    <string name="toast_save_succ">保存成功~~</string>
+    
+
+</resources>

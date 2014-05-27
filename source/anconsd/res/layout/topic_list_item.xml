@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/shadow_padding"
+    android:paddingRight="@dimen/shadow_padding"
+    android:paddingTop="0dp"
+    android:background="@drawable/list_card_item_selector"
+    android:orientation="vertical" >
+    
+    <ImageView android:id="@+id/picture"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:contentDescription="@null"
+        android:scaleType="fitXY"/>
+    
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/picture"
+        android:layout_alignLeft="@+id/picture"
+        android:layout_alignRight="@+id/picture"
+        android:layout_alignTop="@+id/picture"
+        android:visibility="gone"
+        android:background="@drawable/classes_item_corner" />
+    
+    <TextView android:id="@+id/titile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/custom_dialog_btn_tv_normal_color"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_below="@+id/picture"
+        android:textSize="12sp"/>
+    
+    <View android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/titile"
+        android:background="@color/common_divider"/>
+    
+    <TextView android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/divider"
+        android:paddingBottom="8dp"
+        android:textColor="@color/topic_description"
+        android:textSize="12sp"/>
+
+</RelativeLayout>

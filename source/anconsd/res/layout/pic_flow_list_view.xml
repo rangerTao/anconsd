@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gesture-image="http://schemas.polites.com/android"
+    xmlns:baiduadsdk="http://schemas.android.com/apk/res/com.andconsd"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.huewu.pla.lib.MultiColumnPullToRefreshListView
+        xmlns:pla="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/waterfallview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/baiduad"
+        android:cacheColorHint="#00000000"
+        android:divider="@android:color/transparent"
+        android:listSelector="@drawable/headphoto_item_bg_selector"
+        pla:plaColumnNumber="2"
+        pla:plaLandscapeColumnNumber="3" />
+
+    <RelativeLayout
+        android:id="@+id/fl_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#848484"
+        android:visibility="gone" >
+
+        <com.andconsd.widget.photoview.PhotoView
+            android:id="@+id/ivFullScreen"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            gesture-image:max-scale="10.0"
+            gesture-image:min-scale="0.1"
+            gesture-image:strict="false" />
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="#000000"
+            android:gravity="right"
+            android:onClick="sendto" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@null"
+                android:src="@drawable/sendto" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/rlSendto"
+        layout="@layout/layout_sendto" />
+
+    <include
+        android:id="@+id/pb_loading"
+        layout="@layout/pb_loading"
+        android:visibility="gone" />
+
+    <com.baidu.mobads.AdView
+        android:id="@+id/baiduad"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        baiduadsdk:adSize="0" />
+
+</RelativeLayout>

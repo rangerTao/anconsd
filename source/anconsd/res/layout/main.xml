@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:baiduadsdk="http://schemas.android.com/apk/res/com.andconsd"
+    android:id="@+id/rlItemListMain"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF" >
+
+    <ImageView
+        android:id="@+id/ivBarcode"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone" />
+
+    <GridView
+        android:id="@+id/gl"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:columnWidth="110dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="30px" />
+
+    <com.baidu.mobads.AdView
+        android:id="@+id/baiduad"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        baiduadsdk:adSize="0" />
+
+</RelativeLayout>

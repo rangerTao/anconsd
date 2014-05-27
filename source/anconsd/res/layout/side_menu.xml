@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3f3f3f"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/menu_beauty"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/side_menu_bg_selector"
+        android:gravity="center_horizontal"
+        android:onClick="side_menu_on_click"
+        android:text="@string/menu_beauty"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/menu_relax"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/side_menu_bg_selector"
+        android:gravity="center_horizontal"
+        android:onClick="side_menu_on_click"
+        android:text="@string/menu_relax"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/menu_game"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/side_menu_bg_selector"
+        android:gravity="center_horizontal"
+        android:onClick="side_menu_on_click"
+        android:text="@string/menu_game"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/menu_car"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/side_menu_bg_selector"
+        android:gravity="center_horizontal"
+        android:onClick="side_menu_on_click"
+        android:text="@string/menu_car"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/menu_famous"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/side_menu_bg_selector"
+        android:gravity="center_horizontal"
+        android:onClick="side_menu_on_click"
+        android:text="@string/menu_famous"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/menu_topics"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/side_menu_bg_selector"
+        android:gravity="center_horizontal"
+        android:onClick="side_menu_on_click"
+        android:text="@string/menu_topic"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/menu_promotion"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/side_menu_bg_selector"
+        android:gravity="center_horizontal"
+        android:onClick="side_menu_on_click"
+        android:text="@string/menu_promotion"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
+
+</LinearLayout>
