@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ActAddUrl_Tip</key>
+	<string>积分授予接口</string>
+	<key>ActAddUrl</key>
+	<string>http://192.168.9.87:10001/Add.ashx</string>
+	<key>ActQueryUrl_Tip</key>
+	<string>虚拟币查询接口</string>
+	<key>ActQueryUrl</key>
+	<string>http://192.168.9.87:10001/Query.ashx</string>
+	<key>ActLoadMallTabsTip</key>
+	<string>下载虚拟商城tabbarItems</string>
+	<key>ActLoadMallTabs</key>
+	<string>http://192.168.9.87:10001/loadMallTabs.ashx</string>
+	<key>ActConsumeUrlTip</key>
+	<string>激励点消费接口</string>
+	<key>ActConsumeUrl</key>
+	<string>http://192.168.9.87:10001/Consume.ashx</string>
+	<key>ActGiftMallUrlTip</key>
+	<string>积分商城接口</string>
+	<key>ActGiftMallUrl</key>
+	<string>http://192.168.9.87:10001/GiftMall.ashx</string>
+	<key>useFlag</key>
+	<string>0</string>
+</dict>
+</plist>
