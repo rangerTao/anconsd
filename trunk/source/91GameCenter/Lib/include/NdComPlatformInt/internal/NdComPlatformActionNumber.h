@@ -1,0 +1,151 @@
+/*
+ *  NdComPlatformActionNumber.h
+ *  NdComPlatform
+ *
+ *  Created by Sie Kensou on 10-8-12.
+ *  Copyright 2010 NetDragon WebSoft Inc.. All rights reserved.
+ *
+ */
+
+#define ACTION_NUMBER_GET_SESSIONID														1
+#define ACTION_NUMBER_LOGIN																2
+#define ACTION_NUMBER_REGISTER															3
+#define ACTION_NUMBER_MODIFY_NICK_NAME													4
+#define ACTION_NUMBER_MODIFY_ACCOUNT_PASSWORD											5
+#define ACTION_NUMBER_SET_PHONE_NUM														6
+#define ACTION_NUMBER_GET_PRE_REGISTER_ACCOUNT											7
+
+#define ACTION_NUMBER_MODIFY_USER_INFO													8
+#define ACTION_NUMBER_MODIFY_USER_FEELING												9
+#define ACTION_NUMBER_FRIEND_ADD_AUTHORIZE												10
+#define ACTION_NUMBER_GET_USER_INFO														11
+#define ACTION_NUMBER_UPLOAD_PHOTO														12
+#define ACTION_NUMBER_DOWNLOAD_HEAD_PHOTO												13
+#define ACTION_NUMBER_DOWNLOAD_APP_ICON													14
+#define ACTION_NUMBER_APP_VERSION_UPDATE_CHECK											15
+#define ACTION_NUMBER_CHECK_HAS_PHONE_NUM												16
+#define ACTION_NUMBER_SET_USER_PHONE_NUM												17
+#define ACTION_NUMBER_RM_ACCOUNT_FROM_SERVER											18
+#define ACTION_NUMBER_GET_APP_URL_WITH_RESOURCE_CENTER									19
+#define ACTION_NUMBER_GET_USER_INFO_BATCH												20
+
+#define ACTION_NUMBER_GET_3RD_CONFIG													32
+#define ACTION_NUMBER_UNBIND_3RD														35
+#define ACTION_NUMBER_GET_BIND_3RD_ACCOUNT_LIST											38
+#define ACTION_NUMBER_GET_3RD_PLATFORM_LIST												39
+#define ACTION_NUMBER_FOLLOW_DEVELOPER_MICROBLOG										40
+#define	ACTION_NUMBER_3RD_LOGIN															41
+#define	ACTION_NUMBER_91_BIND_3RD														42
+#define	ACTION_NUMBER_3RD_REAUTH														43
+
+#define ACTION_NUMBER_GET_LEADER_BOARD_ICON												52
+#define ACTION_NUMBER_GET_MODULE_LIST													53
+#define ACTION_NUMBER_GET_NEW_APP_COUNT                                                 54
+
+#define ACTION_NUMBER_BD_GET_BIND_INFO													55
+#define ACTION_NUMBER_BD_GET_SMS_VERIFY_FOR_BIND                                        56
+#define ACTION_NUMBER_BD_GET_SMS_VERIFY_FOR_UNBIND                                      57
+#define ACTION_NUMBER_BD_GET_SMS_VERIFY_FOR_RESET_PASSWORD                              58
+#define ACTION_NUMBER_BD_BIND_PHONE														59
+#define ACTION_NUMBER_BD_UNBIND_PHONE													60
+#define ACTION_NUMBER_BD_RESET_PASSWORD_VERIFY											61
+#define ACTION_NUMBER_BD_RESET_PASSWORD                                                 62
+#define ACTION_NUMBER_BD_BIND_PHONE_LOTTERY                                             63
+
+#define ACTION_NUMBER_LOGIN_ON_TOURISTS_MODE											90
+#define ACTION_NUMBER_TOURISTS_TO_REGULA												91
+#define ACTION_NUMBER_GET_ACCOUNTS														92
+
+#define ACTION_NUMBER_GET_PHONE_REGISTER_SMSCODE										96
+#define ACTION_NUMBER_UPLOAD_CHANNEL_ID													97
+#define ACTION_NUMBER_ACCOUNT_PASSWORD_VERIFY											98
+#define ACTION_NUMBER_LOGIN_WITH_3RD_SESSIONID											99
+#define ACTION_NUMBER_LOGOUT															100
+
+#define ACTION_NUMBER_CHECK_VIRTUAL_MONEY_PAY_PASSWORD									101
+#define ACTION_NUMBER_QUERY_VIRTUAL_MONEY_BALANCE										103
+#define ACTION_NUMBER_REQUEST_VIRTUAL_MONEY_PAY											104
+#define ACTION_NUMBER_QUERY_VIRTUAL_MONEY_PAY_RECORD									105
+#define ACTION_NUMBER_AGENCY_PAY														106
+#define ACTION_NUMBER_QUERY_AGENCY_PAY_ORDER_INFO										107
+#define ACTION_NUMBER_QUERY_ORDERSERIAL													108
+
+#define ACTION_NUMBER_SMS_RECHARGE														206
+#define ACTION_NUMBER_RECHARGE_RECORD													209
+
+#define ACTION_NUMBER_UPLOAD_CONTACTS													301
+#define ACTION_NUMBER_FIND_USER_BY_ACCOUNT_OR_NAME										303
+#define ACTION_NUMBER_FIND_USER_BY_AREA_AGE_SEX											304
+#define ACTION_NUMBER_SEND_ADD_FRIEND_REQUEST											305
+#define ACTION_NUMBER_FIND_MY_FRIENDS													306
+#define ACTION_NUMBER_DEL_FRIEND														307
+#define ACTION_NUMBER_GET_FRIEND_FRIENDS_LIST											308
+#define ACTION_NUMBER_GET_MAY_RECOGNIZE_LIST											309
+
+#define ACTION_NUMBER_SEND_INVITE_FRIENDS_REQUEST										311/**<批量邀请好友*/
+#define ACTION_NUMBER_SEND_ADD_FRIENDS_REQUEST											312/**<批量添加好友*/
+#define ACTION_NUMBER_SET_REMARK														313
+#define ACTION_NUMBER_GET_REMARK														314
+#define ACTION_NUMBER_GET_ALL_FRIEND_BRIEF_INFO											315
+
+#define ACTION_NUMBER_FRIEND_APP_LIST													331
+#define ACTION_NUMBER_APP_USER_LIST														332
+#define ACTION_NUMBER_APP_FRIEND_LIST													333
+#define ACTION_NUMBER_APP_FRIEND_UNPLAY_LIST											334/**<获取某个应用没玩该应用的我的好友*/
+#define ACTION_NUMBER_APP_USER_STRANGER_LIST											335/**<获取某个应用的陌生人用户*/
+
+#define ACTION_NUMBER_ALL_FRIENDS_NEWS_LIST												401
+#define ACTION_NUMBER_A_FRIEND_NEWS_LIST												402
+#define ACTION_NUMBER_A_FRIEND_TYPE_NEWS_LIST											403
+#define ACTION_NUMBER_A_FRIEND_ONE_NEWS													404
+#define ACTION_NUMBER_GET_NEW_MSG_COUNT													405
+
+#define ACTION_NUMBER_SEND_DOWNLOAD_APPID												406 /**<发送应用下载动态*/
+#define ACTION_NUMBER_SEND_TEMPLATE_ACTIVITY											407 /**<发送动态模板*/
+#define ACTION_NUMBER_ALL_FRIENDS_FANGLE_LIST											408
+
+#define ACTION_NUMBER_SEND_MSG_TO_FRIEND												411
+#define ACTION_NUMBER_RECEIVE_ALL_FRIENDS_NEW_MSG_LIST									412
+#define ACTION_NUMBER_A_FRIEND_MSG_LIST													413
+
+#define ACTION_NUMBER_SYSTEM_MSG_LIST													421
+#define ACTION_NUMBER_A_SYSTEM_MSG														422
+#define ACTION_NUMBER_SHARED_MSG_WITH_3RD												431
+#define ACTION_NUMBER_SEND_MSG_TO_3RD_FRIEND											432
+
+#define ACTION_NUMBER_CUSTOM_TAG														451
+	
+#define ACTION_NUMBER_GET_MerchantInfo													461
+#define ACTION_NUMBER_SUBMIT_FEEDBACK													462
+
+#define ACTION_NUMBER_COMMIT_LEADER_BOARD_INFO											501
+#define ACTION_NUMBER_GET_ALL_LEADER_BOARD												502
+#define ACTION_NUMBER_GET_LEADER_BOARD_INFO												503
+
+#define ACTION_NUMBER_UNLOCK_ARCHIEVEMENT												510
+#define ACTION_NUMBER_GET_ALL_ARCHIEVEMENTS												511
+
+
+#define ACTION_NUMBER_VG_GET_CATE														601
+#define ACTION_NUMBER_VG_GET_PROMOTION													602
+#define ACTION_NUMBER_VG_GET_COMMODITY													603
+#define ACTION_NUMBER_VG_REQ_ORDER														604
+#define ACTION_NUMBER_VG_USE_HOLDING													605
+#define ACTION_NUMBER_VG_GET_HOLDING													606
+#define ACTION_NUMBER_VG_GET_ONE_HOLDING												607
+#define ACTION_NUMBER_VG_REQUEST_USE_HOLDING											608
+#define ACTION_NUMBER_VG_CONFIRM_USE_HOLDING											609
+#define ACTION_NUMBER_VG_GET_SINGLE_COMMODITY_INFO										610
+#define ACTION_NUMBER_VG_QUERY_VC_BALANCE												621
+#define ACTION_NUMBER_VG_REQUEST_VC_PAY													622
+
+#define ACTION_NUMBER_USE_REDEEMCODE													801
+
+//软件互推
+#define ACTION_NUMBER_AP_GET_APP_LIST													1001
+#define ACTION_NUMBER_AP_TOUCH_APP														1002
+#define ACTION_NUMBER_AP_GET_AWARDS														1003
+#define ACTION_NUMBER_AP_ACTIVATE														1004
+#define ACTION_NUMBER_AP_GET_DOWNLOAD_INFO												1005
+
+
