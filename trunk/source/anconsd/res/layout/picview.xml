@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/picview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.andconsd.widget.DuoleVideoView
+        android:id="@+id/vv"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/horizontalview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true" />
+
+    <RelativeLayout
+        android:id="@+id/rlSlidShow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/ivSlidShow"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+</RelativeLayout>

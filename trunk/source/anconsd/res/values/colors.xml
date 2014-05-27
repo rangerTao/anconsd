@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <drawable name="ab_bg_black">#aa000000</drawable>
+    <drawable name="transparent_drawable">#00000000</drawable>
+    <color name="topic_description">#8c8c8c</color>
+    <color name="common_divider">#eeeeee</color>
+    <color name="custom_dialog_btn_tv_normal_color">#333333</color>
+</resources>
