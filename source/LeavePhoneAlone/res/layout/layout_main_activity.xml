@@ -25,4 +25,11 @@
         android:onClick="bluetoothservice"
         android:text="Stop Service" />
 
+    <TextView
+        android:id="@+id/tv_log"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textColor="#ffffff"
+        android:textSize="15sp" />
+
 </LinearLayout>

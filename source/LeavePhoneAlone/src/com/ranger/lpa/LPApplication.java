@@ -13,4 +13,15 @@ import android.app.Application;
  */
 public class LPApplication extends Application{
 
+	private static LPApplication _instants;
+	
+	public static LPApplication getLPApplication(){
+		return _instants;
+	}
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		_instants = this;
+	}
 }

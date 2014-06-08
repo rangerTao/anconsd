@@ -17,4 +17,5 @@ public class LPAWifiManager {
 		
 		return _instance;
 	}
+	
 }
