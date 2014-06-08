@@ -30,6 +30,14 @@
             android:name="com.ranger.lpa.ui.activity.LPAMainActivity"
             android:launchMode="singleTask" />
         
-    </application>
+        <receiver android:name="com.ranger.lpa.receiver.BlueToothReceiver">
+            <intent-filter>
+                <action android:name="android.bluetooth.device.action.FOUND"/>
+                <action android:name="android.bluetooth.adapter.action.DISCOVERY_FINISHED"/>
+            </intent-filter>
+        </receiver>
+        
+        <!-- for test -->
+        <activity android:name="com.ranger.lpa.test.act.DiscoveryDevicesActivity" />    </application>
 
 </manifest>
