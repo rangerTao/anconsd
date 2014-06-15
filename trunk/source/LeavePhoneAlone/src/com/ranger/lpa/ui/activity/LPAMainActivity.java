@@ -28,6 +28,7 @@ import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
 import com.ranger.lpa.pojos.IncomeResult;
 import com.ranger.lpa.receiver.BlueToothReceiver;
 import com.ranger.lpa.test.act.DiscoveryDevicesActivity;
+import com.ranger.lpa.test.act.WifiApTestActivity;
 
 /**
  * 
@@ -62,6 +63,9 @@ public class LPAMainActivity extends BaseActivity {
 
 	public void bluetoothservice(View view) {
 		switch (view.getId()) {
+		case R.id.btn_wifi_test:
+			startActivity(new Intent(getApplicationContext(),WifiApTestActivity.class));
+			break;
 		case R.id.btn_start_service:
 
 			if (!btManager.getBluetoothAdapter().isEnabled()) {

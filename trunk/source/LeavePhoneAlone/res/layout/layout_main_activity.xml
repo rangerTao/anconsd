@@ -25,6 +25,13 @@
         android:onClick="bluetoothservice"
         android:text="Stop Service" />
 
+        <Button
+        android:id="@+id/btn_wifi_test"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="bluetoothservice"
+        android:text="Wifi Test" />
+    
     <TextView
         android:id="@+id/tv_log"
         android:layout_width="fill_parent"
