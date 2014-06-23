@@ -1,5 +1,15 @@
 <resources>
 
-    <string name="app_name">LeavePhoneAlone</string>
+    <string name="app_name">不要玩手机</string>
+    <string name="login_weixin">微信登录</string>
+    <string name="unlogin_try">免登录试用</string>
+
+    <string name="mode_promotion_hint_1">情侣用了它\n更加幸福了，再也不用担心家务谁来做了</string>
+    <string name="mode_promotion_hint_2">朋友们用了它\n更加融洽了，大宝今天见，大宝天天见</string>
+    <string name="mode_promotion_hint_3">同事用了它\工作更有效率了，升职加薪杠杠滴</string>
+
+    <string name="mode_button_text_couple">进入情侣模式</string>
+    <string name="mode_button_text_party">进入聚会模式</string>
+    <string name="mode_button_text_work">进入工作模式</string>
 
 </resources>

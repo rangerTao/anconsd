@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.UUID;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
@@ -18,6 +19,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -41,6 +44,8 @@ import com.ranger.lpa.test.act.WifiApTestActivity;
  */
 public class LPAMainActivity extends BaseActivity {
 
+    private static final int FLAG_HOMEKEY_DISPATCHED = 0x80000000;
+
 	LPABlueToothManager btManager;
 	String blueName = "LPA";
 	UUID mUuid;
@@ -53,6 +58,7 @@ public class LPAMainActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(FLAG_HOMEKEY_DISPATCHED,FLAG_HOMEKEY_DISPATCHED);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_main_activity);
 
