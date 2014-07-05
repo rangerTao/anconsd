@@ -26,15 +26,10 @@ public class BlueToothReceiver extends BroadcastReceiver{
 
 			if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
 
-				if(device.createBond()){
-				}
-				
 				if (device != null) {
-					Log.d("TAG","name :" + device.getName());
 					LPABlueToothManager.getInstance(context).addBlueToothDevice(device);
 				}
 			}else{
-				Log.d("TAG","bonded name :" + device.getName());
 				LPABlueToothManager.getInstance(context).addBlueToothDevice(device);
 			}
 		} else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED

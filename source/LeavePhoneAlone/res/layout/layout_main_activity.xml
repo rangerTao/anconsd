@@ -1,27 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
 
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="0dp"
-                  android:layout_weight="1.0"
-                  android:background="@drawable/mode_selection_bg_couple"
-                  android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"
+        android:background="@drawable/mode_selection_bg_couple"
+        android:orientation="vertical">
 
-        <TextView android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:textColor="#70ffffff"
-                  android:textSize="38sp"
-                  android:text="@string/mode_promotion_hint_1"/>
-        <Button android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#00000000"
-                android:text="@string/mode_button_text_couple"
-                android:drawableRight="@drawable/mode_icon_couple"/>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/mode_promotion_hint_1"
+            android:textColor="#70ffffff"
+            android:textSize="35sp"/>
+
+        <Button
+            android:id="@+id/btn_enter_couple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="#00000000"
+            android:drawableRight="@drawable/mode_icon_couple"
+            android:onClick="enter_pattern"
+            android:text="@string/mode_button_text_couple"/>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"
+        android:background="@drawable/mode_selection_bg_party"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/mode_promotion_hint_2"
+            android:textColor="#70ffffff"
+            android:textSize="35sp"/>
+
+        <Button
+            android:id="@+id/btn_enter_party"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="#00000000"
+            android:drawableRight="@drawable/mode_icon_party"
+            android:onClick="enter_pattern"
+            android:text="@string/mode_button_text_party"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"
+        android:background="@drawable/mode_selection_bg_work"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/mode_promotion_hint_3"
+            android:textColor="#70ffffff"
+            android:textSize="35sp"/>
+
+        <Button
+            android:id="@+id/btn_enter_work"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:background="#00000000"
+            android:drawableRight="@drawable/mode_icon_word"
+            android:onClick="enter_pattern"
+            android:text="@string/mode_button_text_work"/>
+
+    </LinearLayout>
 </LinearLayout>
