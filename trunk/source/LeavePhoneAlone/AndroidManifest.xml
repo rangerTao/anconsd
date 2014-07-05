@@ -31,6 +31,8 @@
         <activity
             android:name="com.ranger.lpa.ui.activity.LPAMainActivity"
             android:launchMode="singleTask" />
+
+        <activity android:name=".ui.activity.LPAFoundPhoneCenter" android:launchMode="singleTask"/>
         
         <receiver android:name="com.ranger.lpa.receiver.BlueToothReceiver">
             <intent-filter>
@@ -43,7 +45,7 @@
         <activity android:name="com.ranger.lpa.test.act.DiscoveryDevicesActivity" />    
     
         <activity android:name="com.ranger.lpa.test.act.WifiApTestActivity" />
-	</application>
+    </application>
     
     
 </manifest>

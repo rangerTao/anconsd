@@ -34,121 +34,136 @@ import com.ranger.lpa.test.act.DiscoveryDevicesActivity;
 import com.ranger.lpa.test.act.WifiApTestActivity;
 
 /**
- * 
- * @Description: TODO
- * 
  * @author taoliang(taoliang@baidu-mgame.com)
- * @date 2014年5月31日 下午8:33:46
  * @version V
- * 
+ * @Description: TODO
+ * @date 2014年5月31日 下午8:33:46
  */
 public class LPAMainActivity extends BaseActivity {
 
     private static final int FLAG_HOMEKEY_DISPATCHED = 0x80000000;
 
-	LPABlueToothManager btManager;
-	String blueName = "LPA";
-	UUID mUuid;
+    LPABlueToothManager btManager;
+    String blueName = "LPA";
+    UUID mUuid;
 
-	TextView tv_log;
+    TextView tv_log;
 
-	Handler mHandler = new Handler() {
+    Handler mHandler = new Handler() {
 
-	};
+    };
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-        getWindow().setFlags(FLAG_HOMEKEY_DISPATCHED,FLAG_HOMEKEY_DISPATCHED);
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_main_activity);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(FLAG_HOMEKEY_DISPATCHED, FLAG_HOMEKEY_DISPATCHED);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout_main_activity);
 
-		btManager = LPABlueToothManager.getInstance(getApplicationContext());
+        btManager = LPABlueToothManager.getInstance(getApplicationContext());
 
-		tv_log = (TextView) findViewById(R.id.tv_log);
-	}
+    }
 
-	public void bluetoothservice(View view) {
-		switch (view.getId()) {
-		case R.id.btn_wifi_test:
-			startActivity(new Intent(getApplicationContext(),WifiApTestActivity.class));
-			break;
-		case R.id.btn_start_service:
+    ///
+    public void enter_pattern(View view) {
 
-			if (!btManager.getBluetoothAdapter().isEnabled()) {
-				// btManager.startDiscovery();
+        switch (view.getId()) {
+            case R.id.btn_enter_couple:
+            case R.id.btn_enter_party:
+            case R.id.btn_enter_work:
+                startFindingPhoneView(0);
+                break;
+        }
 
-			}
-			btManager.getBluetoothAdapter().setName("test");
-			btManager.setDeviceVisiable(this);
-			new Thread() {
-				public void run() {
+    }
 
-					try {
-						BluetoothServerSocket bts = btManager
-								.getBluetoothAdapter()
-								.listenUsingRfcommWithServiceRecord(blueName,
-										Constants.mUUID);
+    public void startFindingPhoneView(int type){
+        Intent findingPhone = new Intent(this,LPAFoundPhoneCenter.class);
+        findingPhone.putExtra("type",type);
+        startActivity(findingPhone);
+    }
 
-						mHandler.post(new Runnable() {
-
-							@Override
-							public void run() {
-
-								tv_log.append("waiting client \n");
-							}
-						});
-						final BluetoothSocket bs = bts.accept();
-						mHandler.post(new Runnable() {
-
-							@Override
-							public void run() {
-								tv_log.append(bs.getRemoteDevice().getName()
-										+ "\n");
-							}
-						});
-						
-						if(bs!=null){
-							InputStream inputStream = bs.getInputStream();
-							
-							BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-							
-							String strIncome = br.readLine();
-							
-							Gson gsonIncome = new Gson();
-							IncomeResult ir = gsonIncome.fromJson(strIncome, IncomeResult.class);
-							
-							while (ir.getErrcode() != 10000) {
-								
-								Log.d("TAG", ir.getErrmsg());
-								
-								strIncome = br.readLine();
-								
-								ir = gsonIncome.fromJson(strIncome, IncomeResult.class);
-							}
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}.start();
-
-			break;
-		case R.id.btn_connect_service:
-			if (!btManager.getBluetoothAdapter().isEnabled()) {
-				btManager.getBluetoothAdapter().enable();
-			}
-
-			btManager.getBluetoothAdapter().startDiscovery();
-
-			startActivity(new Intent(this, DiscoveryDevicesActivity.class));
-
-			break;
-		case R.id.btn_stop_service:
-			break;
-
-		default:
-			break;
-		}
-	}
+//	public void bluetoothservice(View view) {
+//		switch (view.getId()) {
+//		case R.id.btn_wifi_test:
+//			startActivity(new Intent(getApplicationContext(),WifiApTestActivity.class));
+//			break;
+//		case R.id.btn_start_service:
+//
+//			if (!btManager.getBluetoothAdapter().isEnabled()) {
+//				// btManager.startDiscovery();
+//
+//			}
+//			btManager.getBluetoothAdapter().setName("test");
+//			btManager.setDeviceVisiable(this);
+//			new Thread() {
+//				public void run() {
+//
+//					try {
+//						BluetoothServerSocket bts = btManager
+//								.getBluetoothAdapter()
+//								.listenUsingRfcommWithServiceRecord(blueName,
+//										Constants.mUUID);
+//
+//						mHandler.post(new Runnable() {
+//
+//							@Override
+//							public void run() {
+//
+//								tv_log.append("waiting client \n");
+//							}
+//						});
+//						final BluetoothSocket bs = bts.accept();
+//						mHandler.post(new Runnable() {
+//
+//							@Override
+//							public void run() {
+//								tv_log.append(bs.getRemoteDevice().getName()
+//										+ "\n");
+//							}
+//						});
+//
+//						if(bs!=null){
+//							InputStream inputStream = bs.getInputStream();
+//
+//							BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+//
+//							String strIncome = br.readLine();
+//
+//							Gson gsonIncome = new Gson();
+//							IncomeResult ir = gsonIncome.fromJson(strIncome, IncomeResult.class);
+//
+//							while (ir.getErrcode() != 10000) {
+//
+//								Log.d("TAG", ir.getErrmsg());
+//
+//								strIncome = br.readLine();
+//
+//								ir = gsonIncome.fromJson(strIncome, IncomeResult.class);
+//							}
+//						}
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			}.start();
+//
+//			break;
+//		case R.id.btn_connect_service:
+//			if (!btManager.getBluetoothAdapter().isEnabled()) {
+//				btManager.getBluetoothAdapter().enable();
+//			}
+//
+//			btManager.getBluetoothAdapter().startDiscovery();
+//
+//			startActivity(new Intent(this, DiscoveryDevicesActivity.class));
+//
+//			break;
+//		case R.id.btn_stop_service:
+//			break;
+//
+//		default:
+//			break;
+//		}
+//	}
 
 }

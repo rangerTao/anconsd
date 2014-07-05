@@ -12,4 +12,13 @@
     <string name="mode_button_text_party">进入聚会模式</string>
     <string name="mode_button_text_work">进入工作模式</string>
 
+    <!--<string name="lock_period_setting_hint">设定锁定时间</string>-->
+    <string name="lock_period_setting_hint">00:59:59</string>
+    <string name="lock_hint_click_to_lock">点击锁定图标开始锁定TA</string>
+
+    <string name="usage_net_hint">请确认双方具有蓝牙功能或WIFI功能</string>
+    <string name="send_phone_lock_request_hint">发送锁定邀请</string>
+
+    <string name="btn_cancel">取消</string>
+
 </resources>
