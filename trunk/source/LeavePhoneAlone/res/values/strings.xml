@@ -16,6 +16,10 @@
     <string name="lock_period_setting_hint">00:59:59</string>
     <string name="lock_hint_click_to_lock">点击锁定图标开始锁定TA</string>
 
+    <!-- 寻找配对手机 -->
+    <string name="text_finding_phone_hint">正在搜寻对方手机...</string>
+    <string name="text_phone_found">搜寻到“%s”</string>
+
     <string name="usage_net_hint">请确认双方具有蓝牙功能或WIFI功能</string>
     <string name="send_phone_lock_request_hint">发送锁定邀请</string>
 
