@@ -76,19 +76,12 @@ public class LPABlueToothManager {
 		return devices;
 	}
 
-	// 查找蓝牙设备
-	private static final int REQUEST_DISCOVERABLE = 0x2;
 
 	public boolean setDeviceVisiable(Activity act) {
 
 		if (!mBluetoothAdapter.isEnabled()) {
 			mBluetoothAdapter.enable();
 		}
-
-		// 设置蓝牙可见
-		Intent enabler = new Intent(
-				BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-		act.startActivityForResult(enabler, REQUEST_DISCOVERABLE);
 
 		return false;
 	}
