@@ -1,0 +1,12 @@
+<MKM version="2.0" imageFileUrl="file:///Users/qizhi/Documents/9-ME/%E4%B8%8D%E8%A6%81%E7%9C%8B%E6%89%8B%E6%9C%BA/UI/%E6%A0%87%E6%B3%A8/%E5%88%97%E8%A1%A8/%E6%83%85%E6%99%AF%E6%A8%A1%E5%BC%8F.png">
+  <Marks>
+    <LengthMark direction="12" color="16711680" length="42" x="675" y="59"/>
+    <LengthMark direction="12" color="16711680" length="72" x="606" y="62"/>
+    <LengthMark direction="3" color="16711680" length="72" x="638" y="25"/>
+    <LengthMark direction="12" color="16711680" length="42" x="679" y="205"/>
+    <LengthMark direction="12" color="16711680" length="126" x="555" y="199"/>
+    <LengthMark direction="3" color="16711680" length="66" x="578" y="171"/>
+    <LengthMark direction="3" color="16711680" length="39" x="453" y="646"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="161" y="692" textMaxWidth="100" offsetX="65" offsetY="56" text="24px，#696969，方正兰亭黑"/>
+  </Marks>
+</MKM>

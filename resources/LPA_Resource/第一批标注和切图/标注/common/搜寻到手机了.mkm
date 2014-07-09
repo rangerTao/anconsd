@@ -1,0 +1,18 @@
+<MKM version="2.0" imageFileUrl="file:///Users/qizhi/Documents/9-ME/%E4%B8%8D%E8%A6%81%E7%9C%8B%E6%89%8B%E6%9C%BA/UI/%E6%A0%87%E6%B3%A8/common/%E6%90%9C%E5%AF%BB%E5%88%B0%E6%89%8B%E6%9C%BA%E4%BA%86.png">
+  <Marks>
+    <LengthMark direction="12" color="16711680" length="57" x="0" y="61"/>
+    <LengthMark direction="3" color="16711680" length="33" x="266" y="121"/>
+    <LengthMark direction="3" color="16711680" length="120" x="76" y="120"/>
+    <LengthMark direction="3" color="16711680" length="267" x="342" y="120"/>
+    <LengthMark direction="12" color="16711680" length="291" x="1" y="455"/>
+    <LengthMark direction="3" color="16711680" length="15" x="359" y="522"/>
+    <LengthMark direction="3" color="16711680" length="78" x="404" y="388"/>
+    <LengthMark direction="12" color="16711680" length="81" x="296" y="498"/>
+    <LengthMark direction="3" color="16711680" length="159" x="358" y="520"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="399" y="166" textMaxWidth="100" offsetX="51" offsetY="51" text="#909090，36px，方正兰亭黑，左右上下相对于消息条居中"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="106" y="50" textMaxWidth="100" offsetX="31" offsetY="31" text="36px，#000000，相对于标题栏上下居中显示"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="430" y="557" textMaxWidth="100" offsetX="58" offsetY="40" text="#676767，27px，方正兰亭黑，左右居中"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="412" y="798" textMaxWidth="100" offsetX="73" offsetY="73" text="相对于圆上下左右居中，36px&#xD;,#f6f6f6,方正兰亭黑"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="441" y="680" textMaxWidth="100" offsetX="69" offsetY="69" text="此处光晕效果请自己考虑实现吧，哈哈，要像水波纹那样晕开，反复进行"/>
+  </Marks>
+</MKM>

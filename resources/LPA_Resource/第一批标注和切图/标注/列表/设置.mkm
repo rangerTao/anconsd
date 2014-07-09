@@ -1,0 +1,20 @@
+<MKM version="2.0" imageFileUrl="file:///Users/qizhi/Documents/9-ME/%E4%B8%8D%E8%A6%81%E7%9C%8B%E6%89%8B%E6%9C%BA/UI/%E6%A0%87%E6%B3%A8/%E5%88%97%E8%A1%A8/%20%E8%AE%BE%E7%BD%AE.png">
+  <Marks>
+    <LengthMark direction="12" color="16711680" length="33" x="0" y="59"/>
+    <LengthMark direction="3" color="16711680" length="33" x="57" y="1"/>
+    <LengthMark direction="12" color="16711680" length="15" x="62" y="73"/>
+    <LengthMark direction="3" color="16711680" length="177" x="417" y="120"/>
+    <LengthMark direction="12" color="16711680" length="30" x="0" y="215"/>
+    <LengthMark direction="12" color="16711680" length="30" x="134" y="209"/>
+    <LengthMark direction="3" color="16711680" length="54" x="252" y="120"/>
+    <LengthMark direction="3" color="16711680" length="12" x="264" y="210"/>
+    <LengthMark direction="12" color="16711680" length="54" x="667" y="209"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="151" y="60" textMaxWidth="100" offsetX="112" offsetY="24" text="42px，#4c4c4c，方正兰亭黑"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="291" y="182" textMaxWidth="100" offsetX="186" offsetY="77" text="36px,#000000,方正兰亭黑"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="70" y="159" textMaxWidth="100" offsetX="36" offsetY="36" text="上下居中显示"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="376" y="244" textMaxWidth="100" offsetX="98" offsetY="23" text="24px&#xD;,#969696,方正兰亭黑"/>
+    <TextMark defaultDirection="5" direction="5" color="16711680" x="641" y="185" textMaxWidth="100" offsetX="30" offsetY="18" text="上下居中显示"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="448" y="299" textMaxWidth="100" offsetX="52" offsetY="21" text="分割线 1px，#c1c1c1"/>
+    <TextMark defaultDirection="5" direction="5" color="16711680" x="680" y="136" textMaxWidth="100" offsetX="103" offsetY="99" text="列表点按颜色为#dedede"/>
+  </Marks>
+</MKM>

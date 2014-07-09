@@ -1,0 +1,18 @@
+<MKM version="2.0" imageFileUrl="file:///Users/qizhi/Documents/9-ME/%E4%B8%8D%E8%A6%81%E7%9C%8B%E6%89%8B%E6%9C%BA/UI/%E6%A0%87%E6%B3%A8/%E5%BC%B9%E6%A1%86/%E7%A1%AE%E8%AE%A4%E6%94%BE%E5%BC%83%E4%BB%BB%E5%8A%A1%E5%A4%B1%E8%B4%A5.png">
+  <Marks>
+    <LengthMark direction="3" color="16711680" length="906" x="98" y="271"/>
+    <LengthMark direction="12" color="16711680" length="633" x="45" y="866"/>
+    <LengthMark direction="3" color="16711680" length="48" x="315" y="270"/>
+    <LengthMark direction="3" color="16711680" length="66" x="257" y="361"/>
+    <LengthMark direction="12" color="16711680" length="66" x="44" y="515"/>
+    <LengthMark direction="3" color="16711680" length="66" x="414" y="862"/>
+    <LengthMark direction="12" color="16711680" length="54" x="624" y="519"/>
+    <LengthMark direction="3" color="16711680" length="18" x="368" y="1021"/>
+    <LengthMark direction="3" color="16711680" length="93" x="262" y="928"/>
+    <LengthMark direction="3" color="16711680" length="93" x="277" y="1041"/>
+    <LengthMark direction="12" color="16711680" length="327" x="205" y="970"/>
+    <LengthMark direction="12" color="16711680" length="327" x="204" y="1084"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="388" y="329" textMaxWidth="100" offsetX="79" offsetY="79" text="42px,方正兰亭黑，#000000"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="417" y="957" textMaxWidth="100" offsetX="75" offsetY="59" text="36px，方正兰亭黑，#ffffff"/>
+  </Marks>
+</MKM>

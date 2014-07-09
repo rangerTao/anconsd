@@ -1,0 +1,11 @@
+<MKM version="2.0" imageFileUrl="file:///Users/qizhi/Documents/9-ME/%E4%B8%8D%E8%A6%81%E7%9C%8B%E6%89%8B%E6%9C%BA/UI/%E8%81%9A%E4%BC%9A%E6%A8%A1%E5%BC%8F/%E6%A0%87%E6%B3%A8/%E4%BA%AE%E5%87%BA%E4%BA%8C%E7%BB%B4%E7%A0%81.png">
+  <Marks>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="449" y="684" textMaxWidth="100" offsetX="85" offsetY="85" text="位置和其他界面的圆形位置一致，只是里面换成了二维码"/>
+    <LengthMark direction="3" color="16711680" length="48" x="364" y="682"/>
+    <LengthMark direction="3" color="16711680" length="174" x="274" y="733"/>
+    <LengthMark direction="12" color="16711680" length="174" x="278" y="913"/>
+    <LengthMark direction="3" color="16711680" length="30" x="363" y="966"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="452" y="1000" textMaxWidth="100" offsetX="72" offsetY="72" text="33px，#7a7a7a，方正兰亭黑"/>
+    <TextMark defaultDirection="5" direction="5" color="16711680" x="270" y="660" textMaxWidth="100" offsetX="97" offsetY="49" text="这里也需要动效，有水波纹的效果"/>
+  </Marks>
+</MKM>
