@@ -1,0 +1,11 @@
+<MKM version="2.0" imageFileUrl="file:///Users/qizhi/Documents/9-ME/%E4%B8%8D%E8%A6%81%E7%9C%8B%E6%89%8B%E6%9C%BA/UI/%E8%81%9A%E4%BC%9A%E6%A8%A1%E5%BC%8F/%E6%A0%87%E6%B3%A8/%E6%89%AB%E6%8F%8F%E4%BA%8C%E7%BB%B4%E7%A0%81.png">
+  <Marks>
+    <LengthMark direction="3" color="16711680" length="318" x="535" y="0"/>
+    <LengthMark direction="12" color="16711680" length="118" x="2" y="521"/>
+    <LengthMark direction="12" color="16711680" length="118" x="607" y="508"/>
+    <LengthMark direction="3" color="16711680" length="538" x="246" y="318"/>
+    <LengthMark direction="12" color="16711680" length="483" x="122" y="713"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="364" y="256" textMaxWidth="100" offsetX="66" offsetY="66" text="33px，#7a7a7a，方正兰亭黑"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="440" y="633" textMaxWidth="100" offsetX="78" offsetY="69" text="#969696,这块需要透明，要能扫二维码"/>
+  </Marks>
+</MKM>

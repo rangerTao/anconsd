@@ -1,0 +1,17 @@
+<MKM version="2.0" imageFileUrl="file:///Users/qizhi/Documents/9-ME/%E4%B8%8D%E8%A6%81%E7%9C%8B%E6%89%8B%E6%9C%BA/UI/%E8%81%9A%E4%BC%9A%E6%A8%A1%E5%BC%8F/%E6%A0%87%E6%B3%A8/%E5%8F%91%E7%8E%B0%E6%96%B0%E7%94%A8%E6%88%B7.png">
+  <Marks>
+    <LengthMark direction="12" color="16711680" length="78" x="-1" y="222"/>
+    <LengthMark direction="3" color="16711680" length="36" x="145" y="121"/>
+    <LengthMark direction="12" color="16711680" length="81" x="213" y="219"/>
+    <LengthMark direction="12" color="16711680" length="81" x="427" y="224"/>
+    <LengthMark direction="12" color="16711680" length="78" x="643" y="221"/>
+    <LengthMark direction="3" color="16711680" length="75" x="172" y="162"/>
+    <LengthMark direction="12" color="16711680" length="81" x="80" y="265"/>
+    <LengthMark direction="3" color="16711680" length="87" x="139" y="294"/>
+    <LengthMark direction="3" color="16711680" length="15" x="157" y="294"/>
+    <LengthMark direction="3" color="16711680" length="498" x="703" y="120"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="372" y="535" textMaxWidth="100" offsetX="128" offsetY="128" text="27px，#676767，方正兰亭黑"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="371" y="180" textMaxWidth="100" offsetX="46" offsetY="46" text="背景的颜色一共提供几种，随机匹配就行了"/>
+    <TextMark defaultDirection="5" direction="5" color="16711680" x="621" y="58" textMaxWidth="100" offsetX="96" offsetY="27" text="36px，#169bef"/>
+  </Marks>
+</MKM>

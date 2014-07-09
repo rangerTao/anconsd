@@ -1,0 +1,28 @@
+<MKM version="2.0" imageFileUrl="file:///Users/qizhi/Documents/9-ME/%E4%B8%8D%E8%A6%81%E7%9C%8B%E6%89%8B%E6%9C%BA/UI/%E6%A0%87%E6%B3%A8/%E5%90%AF%E5%8A%A8%E5%92%8C%E5%BC%95%E5%AF%BC/%E6%83%85%E6%99%AF%E6%A8%A1%E5%BC%8F%E9%80%89%E6%8B%A9.png">
+  <Marks>
+    <LengthMark direction="3" color="16711680" length="428" x="11" y="0"/>
+    <LengthMark direction="3" color="16711680" length="36" x="98" y="1"/>
+    <LengthMark direction="12" color="16711680" length="24" x="0" y="56"/>
+    <LengthMark direction="3" color="16711680" length="18" x="85" y="91"/>
+    <LengthMark direction="3" color="16711680" length="285" x="625" y="0"/>
+    <LengthMark direction="3" color="16711680" length="36" x="624" y="392"/>
+    <LengthMark direction="12" color="16711680" length="9" x="676" y="327"/>
+    <LengthMark direction="12" color="16711680" length="15" x="704" y="336"/>
+    <LengthMark direction="12" color="16711680" length="15" x="555" y="336"/>
+    <LengthMark direction="3" color="16711680" length="69" x="434" y="359"/>
+    <LengthMark direction="3" color="16711680" length="33" x="123" y="429"/>
+    <LengthMark direction="12" color="16711680" length="24" x="0" y="503"/>
+    <LengthMark direction="3" color="16711680" length="411" x="38" y="428"/>
+    <LengthMark direction="3" color="16711680" length="18" x="103" y="161"/>
+    <LengthMark direction="3" color="16711680" length="18" x="156" y="511"/>
+    <LengthMark direction="3" color="16711680" length="18" x="154" y="585"/>
+    <LengthMark direction="12" color="16711680" length="21" x="700" y="555"/>
+    <LengthMark direction="3" color="16711680" length="263" x="624" y="429"/>
+    <LengthMark direction="3" color="16711680" length="36" x="621" y="800"/>
+    <LengthMark direction="3" color="16711680" length="442" x="14" y="839"/>
+    <LengthMark direction="3" color="16711680" length="294" x="596" y="839"/>
+    <LengthMark direction="3" color="16711680" length="36" x="622" y="1239"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="257" y="137" textMaxWidth="100" offsetX="141" offsetY="90" text="#ffffff，57px，方正中黑，70%透明度"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="359" y="331" textMaxWidth="100" offsetX="79" offsetY="79" text="#ffffff，36px，方正兰亭黑"/>
+  </Marks>
+</MKM>

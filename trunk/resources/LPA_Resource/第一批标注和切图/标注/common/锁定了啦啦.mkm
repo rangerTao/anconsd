@@ -1,0 +1,20 @@
+<MKM version="2.0" imageFileUrl="file:///Users/qizhi/Documents/9-ME/%E4%B8%8D%E8%A6%81%E7%9C%8B%E6%89%8B%E6%9C%BA/UI/%E6%A0%87%E6%B3%A8/common/%E9%94%81%E5%AE%9A%E4%BA%86%E5%95%A6%E5%95%A6.png">
+  <Marks>
+    <LengthMark direction="3" color="16711680" length="165" x="358" y="118"/>
+    <LengthMark direction="12" color="16711680" length="92" x="-1" y="556"/>
+    <LengthMark direction="3" color="16711680" length="93" x="388" y="288"/>
+    <LengthMark direction="3" color="16711680" length="96" x="394" y="419"/>
+    <LengthMark direction="12" color="16711680" length="27" x="93" y="563"/>
+    <LengthMark direction="12" color="16711680" length="27" x="605" y="547"/>
+    <LengthMark direction="3" color="16711680" length="117" x="333" y="615"/>
+    <LengthMark direction="3" color="16711680" length="54" x="351" y="826"/>
+    <LengthMark direction="3" color="16711680" length="39" x="358" y="1021"/>
+    <LengthMark direction="3" color="16711680" length="15" x="359" y="1194"/>
+    <LengthMark direction="3" color="16711680" length="39" x="363" y="1241"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="410" y="379" textMaxWidth="100" offsetX="82" offsetY="82" text="36px，#f6f6f6，方正兰亭黑，左右居中"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="418" y="526" textMaxWidth="100" offsetX="84" offsetY="84" text="#f6f6f6，123px，Helvetica Neue，上下左右相对于圆居中"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="368" y="731" textMaxWidth="100" offsetX="75" offsetY="75" text="24px,#ffffff，方正兰亭黑&#xD;"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="404" y="1226" textMaxWidth="100" offsetX="67" offsetY="67" text="24px，#676767，方正兰亭黑，左右居中"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="423" y="230" textMaxWidth="100" offsetX="81" offsetY="81" text="动态光晕效果，请自己实现吧，呵呵"/>
+  </Marks>
+</MKM>

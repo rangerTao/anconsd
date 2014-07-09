@@ -1,0 +1,30 @@
+<MKM version="2.0" imageFileUrl="file:///Users/qizhi/Documents/9-ME/%E4%B8%8D%E8%A6%81%E7%9C%8B%E6%89%8B%E6%9C%BA/UI/%E6%A0%87%E6%B3%A8/common/%E7%82%B9%E5%87%BB%E9%94%81%E5%AE%9A.png">
+  <Marks>
+    <LengthMark direction="12" color="16711680" length="40" x="0" y="55"/>
+    <LengthMark direction="3" color="16711680" length="27" x="78" y="0"/>
+    <LengthMark direction="3" color="16711680" length="42" x="335" y="0"/>
+    <LengthMark direction="12" color="16711680" length="39" x="682" y="55"/>
+    <LengthMark direction="3" color="16711680" length="27" x="642" y="0"/>
+    <LengthMark direction="3" color="16711680" length="121" x="164" y="0"/>
+    <LengthMark direction="3" color="16711680" length="69" x="118" y="120"/>
+    <LengthMark direction="12" color="16711680" length="60" x="-1" y="204"/>
+    <LengthMark direction="3" color="16711680" length="55" x="182" y="226"/>
+    <LengthMark direction="12" color="16711680" length="69" x="-1" y="329"/>
+    <LengthMark direction="12" color="16711680" length="69" x="648" y="328"/>
+    <LengthMark direction="3" color="16711680" length="129" x="396" y="375"/>
+    <LengthMark direction="12" color="16711680" length="219" x="-2" y="814"/>
+    <LengthMark direction="3" color="16711680" length="135" x="333" y="543"/>
+    <LengthMark direction="12" color="16711680" length="18" x="-1" y="829"/>
+    <LengthMark direction="12" color="16711680" length="18" x="701" y="827"/>
+    <LengthMark direction="3" color="16711680" length="216" x="632" y="542"/>
+    <LengthMark direction="3" color="16711680" length="216" x="75" y="540"/>
+    <LengthMark direction="3" color="16711680" length="156" x="359" y="967"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="381" y="60" textMaxWidth="100" offsetX="52" offsetY="41" text="36px，#4c4c4c,方正兰亭黑"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="265" y="206" textMaxWidth="100" offsetX="92" offsetY="65" text="36px，#909090，方正兰亭黑"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="338" y="289" textMaxWidth="100" offsetX="94" offsetY="79" text="Helvetica Neue，#000000，120px"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="436" y="514" textMaxWidth="100" offsetX="70" offsetY="70" text="36px，#909090，方正兰亭黑"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="421" y="1138" textMaxWidth="100" offsetX="60" offsetY="60" text="36px，#909090，方正兰亭黑"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="42" y="496" textMaxWidth="100" offsetX="79" offsetY="75" text="背景颜色 #f3f3f3"/>
+    <TextMark defaultDirection="9" direction="9" color="16711680" x="365" y="649" textMaxWidth="100" offsetX="76" offsetY="76" text="这里的光晕动态效果请使用其他方法实现，切图我就不提供了~"/>
+  </Marks>
+</MKM>
