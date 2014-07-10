@@ -64,13 +64,13 @@
             android:id="@+id/tv_phone_name_found_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/icon_phone"
+            android:drawableTop="@drawable/icon_phone_selected"
             android:textColor="#676767"
             android:textSize="18sp"
             android:visibility="invisible"/>
 
         <FrameLayout
-            android:id="@+id/fl_search_btn"
+            android:id="@+id/fl_btn_lock_selected_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"

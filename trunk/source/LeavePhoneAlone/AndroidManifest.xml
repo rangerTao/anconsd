@@ -14,12 +14,15 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name="com.ranger.lpa.LPApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:theme="@style/AppTheme" >
         <activity android:name="com.ranger.lpa.ui.activity.SplashActivity" >
             <intent-filter>
@@ -30,22 +33,27 @@
         </activity>
         <activity
             android:name="com.ranger.lpa.ui.activity.LPAMainActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.LPAFoundPhoneCenter"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.LPAFoundPhoneCenter" android:launchMode="singleTask"/>
-        
-        <receiver android:name="com.ranger.lpa.receiver.BlueToothReceiver">
+        <receiver android:name="com.ranger.lpa.receiver.BlueToothReceiver" >
             <intent-filter>
-                <action android:name="android.bluetooth.device.action.FOUND"/>
-                <action android:name="android.bluetooth.adapter.action.DISCOVERY_FINISHED"/>
+                <action android:name="android.bluetooth.device.action.FOUND" />
+                <action android:name="android.bluetooth.adapter.action.DISCOVERY_FINISHED" />
             </intent-filter>
         </receiver>
-        
+
         <!-- for test -->
-        <activity android:name="com.ranger.lpa.test.act.DiscoveryDevicesActivity" />    
-    
-        <activity android:name="com.ranger.lpa.test.act.WifiApTestActivity" />
+        <activity
+            android:name="com.ranger.lpa.test.act.DiscoveryDevicesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ranger.lpa.test.act.WifiApTestActivity"
+            android:screenOrientation="portrait" />
     </application>
-    
-    
+
 </manifest>
