@@ -27,7 +27,6 @@ import android.widget.Toast;
 
 public class DiscoveryDevicesActivity extends Activity implements OnItemClickListener{
 
-	ProgressBar pb_discovering;
 	ListView lv_devices;
 	
 	BtDeviceListAdapter btla;
@@ -47,7 +46,6 @@ public class DiscoveryDevicesActivity extends Activity implements OnItemClickLis
 	}
 
 	public void setupViews() {
-		pb_discovering = (ProgressBar) findViewById(R.id.pb_discovery_bt);
 		lv_devices = (ListView) findViewById(R.id.lv_bt_devices);
 		
 		btla = new BtDeviceListAdapter(getApplicationContext());
@@ -69,7 +67,6 @@ public class DiscoveryDevicesActivity extends Activity implements OnItemClickLis
 					public void run() {
 
 						btla.notifyDataSetChanged();
-						pb_discovering.setVisibility(View.GONE);
 					}
 				});
 			}

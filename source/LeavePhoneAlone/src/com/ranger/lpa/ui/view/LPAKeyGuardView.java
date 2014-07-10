@@ -19,11 +19,11 @@ public class LPAKeyGuardView {
 
     private boolean isLocked;
 
-    public static synchronized LPAKeyGuardView getInstance(Activity context){
+    public static synchronized LPAKeyGuardView getInstance(Activity context) {
 
         mActivity = context;
 
-        if(_instance == null){
+        if (_instance == null) {
             _instance = new LPAKeyGuardView(context);
         }
 
@@ -38,7 +38,7 @@ public class LPAKeyGuardView {
     }
 
     //初始化界面。将界面设置成异常的界面。屏蔽home键和其他按键。
-    private void init(){
+    private void init() {
         isLocked = false;
         mWindowManager = mActivity.getWindowManager();
         mLockViewLayoutParams = new LayoutParams();
@@ -51,13 +51,13 @@ public class LPAKeyGuardView {
     }
 
     //
-    public synchronized void setLockView(View v){
+    public synchronized void setLockView(View v) {
         mLockView = v;
     }
 
     //显示锁屏
     public synchronized void lock() {
-        if(mLockView!=null&&!isLocked){
+        if (mLockView != null && !isLocked) {
             mWindowManager.addView(mLockView, mLockViewLayoutParams);
         }
         isLocked = true;
@@ -65,7 +65,7 @@ public class LPAKeyGuardView {
 
     //隐藏锁屏
     public synchronized void unlock() {
-        if(mWindowManager!=null&&isLocked){
+        if (mWindowManager != null && isLocked) {
             mWindowManager.removeView(mLockView);
         }
         isLocked = false;
