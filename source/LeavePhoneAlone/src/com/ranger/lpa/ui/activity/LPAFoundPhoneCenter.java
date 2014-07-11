@@ -29,6 +29,7 @@ import com.ranger.lpa.Constants;
 import com.ranger.lpa.R;
 import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
 import com.ranger.lpa.pojos.IncomeResult;
+import com.ranger.lpa.pojos.SocketMessage;
 import com.ranger.lpa.test.adapter.BtDeviceListAdapter;
 import com.ranger.lpa.ui.view.LPAKeyGuardView;
 
@@ -57,6 +58,8 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
     String blueName = "LPA";
     UUID mUuid;
 
+    private BluetoothServerSocket bts;
+    
     private LPABlueToothManager btManager;
     private DiscoveryFinishReceiver mDiscoveryFinishReceiver;
 
@@ -115,33 +118,53 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
                 setFindingPhoneView();
 
-                break;
-            case R.id.fl_btn_lock_selected_phone:
-
                 new Thread(){
-
+                    
                     @Override
                     public void run() {
                         super.run();
                         
                         try {
                             Socket socket = new Socket("172.16.10.141",8999);
-
+                            
 //                            BluetoothSocket socket = dev.createRfcommSocketToServiceRecord(Constants.mUUID);
                             if(socket != null){
-//                                Toast.makeText(getApplicationContext(), socket.getRemoteDevice().getName(), 1000).show();
 //                                socket.connect();
-                                socket.getOutputStream().write("test\n".getBytes());
-                                socket.getOutputStream().flush();
-                                Log.e("TAG", "message sended");
+                                
+                                if(bts != null){
+                                    bts.close();
+                                }
+                                
+                                SocketMessage stopServer = new SocketMessage(SocketMessage.MSG_STOPSERVER);
+                                stopServer.sendMessage(socket);
+
+                                InputStream inputStream = socket.getInputStream();
+                                
+                                BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+                                
+                                String strIncome = br.readLine();
+                                
+                                Gson gson = new Gson();
+                                SocketMessage sm = gson.fromJson(strIncome, SocketMessage.class);
+                                
+                                while (sm != null && sm.getErrcode() != SocketMessage.MSG_STOPSERVER) {
+                                    
+                                    showErrorLog(strIncome);
+                                    
+                                    strIncome = br.readLine();
+                                    sm = gson.fromJson(strIncome, SocketMessage.class);
+                                }
                             }
+                            
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
                     
                 }.start();
-               
+                break;
+            case R.id.fl_btn_lock_selected_phone:
+
 
                 break;
             case R.id.btn_cancel_finding:
@@ -198,28 +221,12 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
             public void run() {
 
                 try {
-                    BluetoothServerSocket bts = btManager
+                    bts = btManager
                             .getBluetoothAdapter()
                             .listenUsingRfcommWithServiceRecord(blueName,
                                     Constants.mUUID);
 
-                    mHandler.post(new Runnable() {
-
-                        @Override
-                        public void run() {
-
-                            showErrorLog("waiting client \n");
-                        }
-                    });
                     final BluetoothSocket bs = bts.accept();
-                    mHandler.post(new Runnable() {
-
-                        @Override
-                        public void run() {
-
-                            showErrorLog(bs.getRemoteDevice().getName() + "\n");
-                        }
-                    });
 
                     if (bs != null) {
                         InputStream inputStream = bs.getInputStream();
@@ -231,7 +238,7 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                         Gson gsonIncome = new Gson();
                         IncomeResult ir = gsonIncome.fromJson(strIncome, IncomeResult.class);
 
-                        while (ir.getErrcode() != 10000 || !strIncome.equals("end")) {
+                        while (ir.getErrcode() != ir.MSG_STOPSERVER || !strIncome.equals("end")) {
 
                             showErrorLog(ir.getErrmsg());
 
@@ -240,7 +247,8 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                             ir = gsonIncome.fromJson(strIncome, IncomeResult.class);
                         }
                         
-                        Log.e("TAG", "server finished");
+                        bts.close();
+                        
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -373,8 +381,6 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
         public void onReceive(Context context, Intent intent) {
 
             if (intent.getAction().equals(Constants.action_bt_scan_finish)) {
-
-                showErrorLog("finding finish");
 
                 if (!isLoadingCancel.get()) {
                     LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(mDiscoveryFinishReceiver);
