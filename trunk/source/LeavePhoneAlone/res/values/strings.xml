@@ -25,4 +25,8 @@
 
     <string name="btn_cancel">取消</string>
 
+    <string name="lock_request_confirm_tip">要开始锁定吗？</string>
+    <string name="btn_start_lock">开始</string>
+    <string name="btn_refuse_lock">不想</string>
+
 </resources>
