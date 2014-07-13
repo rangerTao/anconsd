@@ -71,4 +71,8 @@ public class LPAKeyGuardView {
         isLocked = false;
     }
 
+    public boolean isShowing(){
+        return isLocked;
+    }
+
 }
