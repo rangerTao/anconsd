@@ -28,9 +28,13 @@ import com.google.gson.Gson;
 import com.ranger.lpa.Constants;
 import com.ranger.lpa.R;
 import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
+import com.ranger.lpa.pojos.BaseInfo;
 import com.ranger.lpa.pojos.IncomeResult;
 import com.ranger.lpa.pojos.SocketMessage;
+import com.ranger.lpa.receiver.IOnNotificationReceiver;
 import com.ranger.lpa.test.adapter.BtDeviceListAdapter;
+import com.ranger.lpa.thread.LPAClientThread;
+import com.ranger.lpa.tools.NotifyManager;
 import com.ranger.lpa.ui.view.LPAKeyGuardView;
 
 import java.io.BufferedReader;
@@ -39,6 +43,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.SortedMap;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -81,6 +86,8 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
         initView();
 
         btManager = LPABlueToothManager.getInstance(getApplicationContext());
+
+        NotifyManager.getInstance(this).registerOnNotificationReceiver(notifyReceiver);
     }
 
     private void initView() {
@@ -103,6 +110,8 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
     private LPAKeyGuardView lpa;
     private View view_lock_control;
+
+    private LPAClientThread lpact;
 
     @Override
     public void onClick(View v) {
@@ -134,26 +143,10 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                                 if(bts != null){
                                     bts.close();
                                 }
-                                
-                                SocketMessage stopServer = new SocketMessage(SocketMessage.MSG_STOPSERVER);
-                                stopServer.sendMessage(socket);
 
-                                InputStream inputStream = socket.getInputStream();
-                                
-                                BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-                                
-                                String strIncome = br.readLine();
-                                
-                                Gson gson = new Gson();
-                                SocketMessage sm = gson.fromJson(strIncome, SocketMessage.class);
-                                
-                                while (sm != null && sm.getErrcode() != SocketMessage.MSG_STOPSERVER) {
-                                    
-                                    showErrorLog(strIncome);
-                                    
-                                    strIncome = br.readLine();
-                                    sm = gson.fromJson(strIncome, SocketMessage.class);
-                                }
+                                lpact = new LPAClientThread(getApplicationContext(),socket);
+                                lpact.start();
+
                             }
                             
                         } catch (IOException e) {
@@ -185,6 +178,14 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                 if (lpa != null) {
                     lpa.unlock();
                 }
+                break;
+            case R.id.btn_request_accept:
+                showLockedView();
+                //
+                lpact.sendLockRequestAccept();
+                break;
+            case R.id.btn_request_refuse:
+                break;
         }
     }
 
@@ -196,6 +197,14 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
         view_lock_control = lock_view.findViewById(R.id.fl_lock_area);
         view_lock_control.setOnClickListener(this);
+    }
+
+    private void dismissLockedView(){
+
+        if(lpa != null && lpa.isShowing()){
+            lpa.unlock();
+        }
+
     }
 
     // 查找蓝牙设备
@@ -226,31 +235,13 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                             .listenUsingRfcommWithServiceRecord(blueName,
                                     Constants.mUUID);
 
-                    final BluetoothSocket bs = bts.accept();
+                    BluetoothSocket bs = bts.accept();
 
-                    if (bs != null) {
-                        InputStream inputStream = bs.getInputStream();
-
-                        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-
-                        String strIncome = br.readLine();
-
-                        Gson gsonIncome = new Gson();
-                        IncomeResult ir = gsonIncome.fromJson(strIncome, IncomeResult.class);
-
-                        while (ir.getErrcode() != ir.MSG_STOPSERVER || !strIncome.equals("end")) {
-
-                            showErrorLog(ir.getErrmsg());
-
-                            strIncome = br.readLine();
-
-                            ir = gsonIncome.fromJson(strIncome, IncomeResult.class);
-                        }
-                        
-                        bts.close();
-                        
+                    if(bs != null){
+                        lpact = new LPAClientThread(getApplicationContext(),null);
+                        lpact.start();
                     }
-                } catch (IOException e) {
+                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -299,10 +290,59 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
         }
     }
 
+    private IOnNotificationReceiver notifyReceiver = new IOnNotificationReceiver() {
+        @Override
+        public void onNotificated(int type) {
+
+            switch (type){
+                case SocketMessage.MSG_LOCK_REQUEST:
+                    showLockRequestDialog();
+                    break;
+                case SocketMessage.MSG_STOPSERVER:
+                    break;
+                case SocketMessage.MSG_LOCK_ACCEPT:
+                    showLockedView();
+                    break;
+                case SocketMessage.MSG_GIVEUP_ACCEPT:
+                    dismissLockedView();
+                    break;
+                case SocketMessage.MSG_GIVEUP_REQUEST:
+                    break;
+            }
+
+        }
+    };
+
     private View view_select_btdevices;
     private Dialog popup_select_btdevices;
     private ListView lv_devices;
     BtDeviceListAdapter btla;
+
+    private View view_lock_request_dialog;
+    private Dialog popup_lock_request_dialog;
+    private View btn_lock_request_confirm;
+    private View btn_lock_request_refuse;
+
+
+    //显示锁定请求弹窗
+    private void showLockRequestDialog(){
+
+        if(view_lock_request_dialog == null){
+            view_lock_request_dialog = getLayoutInflater().inflate(R.layout.dialog_lock_request_received,null);
+        }
+
+        if(popup_lock_request_dialog == null){
+            popup_lock_request_dialog = new Dialog(this);
+            popup_lock_request_dialog.setContentView(view_lock_request_dialog, new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+
+            view_lock_request_dialog.findViewById(R.id.btn_request_accept).setOnClickListener(this);
+            view_lock_request_dialog.findViewById(R.id.btn_request_refuse).setOnClickListener(this);
+        }
+
+        if(popup_lock_request_dialog != null && !popup_lock_request_dialog.isShowing()){
+            popup_lock_request_dialog.show();
+        }
+    }
 
     //显示选择设备弹窗
     private void showDeviceSelectDialog() {
@@ -367,6 +407,7 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
         dismissSelectPhonePopup();
 
+        NotifyManager.getInstance(this).unRegisterNotificationReceiver(notifyReceiver);
     }
 
     private void dismissSelectPhonePopup() {

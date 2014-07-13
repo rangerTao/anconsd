@@ -12,8 +12,18 @@ public class BaseInfo {
         errcode = errorcode;
     }
 
-    public static final int MSG_STOPSERVER = 1002;
-    public static final int MSG_LOCK_REQUEST = 1003;
+    //Stop the server
+    public static final int MSG_STOPSERVER = 2;
+    //A request of lock received.
+    public static final int MSG_LOCK_REQUEST = 2 << 2;
+    //Accept to lock phone.
+    public static final int MSG_LOCK_ACCEPT = 2 << 3;
+    //give up
+    public static final int MSG_GIVEUP_REQUEST = 2 << 4;
+    //give up accept
+    public static final int MSG_GIVEUP_ACCEPT = 2 << 5;
+
+
 
     private int errcode;
     private String errmsg;
@@ -70,4 +80,8 @@ public class BaseInfo {
 
     }
 
+    @Override
+    public String toString() {
+        return getMessageString();
+    }
 }

@@ -28,5 +28,7 @@
     <string name="lock_request_confirm_tip">要开始锁定吗？</string>
     <string name="btn_start_lock">开始</string>
     <string name="btn_refuse_lock">不想</string>
+    <string name="btn_giveup_confirm">放弃</string>
+    <string name="btn_giveup_cancel">坚持住</string>
 
 </resources>
