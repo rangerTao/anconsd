@@ -65,7 +65,7 @@ public class BaseInfo {
         return strMsg + "\n";
     }
 
-    public void sendMessage(BluetoothSocket serverSocket) {
+    public void sendMessage(Socket serverSocket) {
 
         try {
             serverSocket.getOutputStream().write(getMessageString().getBytes());

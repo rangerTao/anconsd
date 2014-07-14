@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.ranger.lpa.Constants;
 import com.ranger.lpa.R;
 import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
+import com.ranger.lpa.connectity.wifi.LPAWifiManager;
 import com.ranger.lpa.pojos.IncomeResult;
 import com.ranger.lpa.receiver.BlueToothReceiver;
 import com.ranger.lpa.test.act.DiscoveryDevicesActivity;
@@ -68,9 +69,14 @@ public class LPAMainActivity extends BaseActivity {
 
         switch (view.getId()) {
             case R.id.btn_enter_couple:
-            case R.id.btn_enter_party:
-            case R.id.btn_enter_work:
                 startFindingPhoneView(0);
+                break;
+            case R.id.btn_enter_party:
+                startFindingPhoneView(1);
+                break;
+            case R.id.btn_enter_work:
+                startFindingPhoneView(2);
+                LPAWifiManager.getInstance(getApplicationContext()).startWifiAp();
                 break;
         }
 
