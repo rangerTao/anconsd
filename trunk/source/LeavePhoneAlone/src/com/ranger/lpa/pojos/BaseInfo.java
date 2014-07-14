@@ -2,9 +2,11 @@ package com.ranger.lpa.pojos;
 
 import java.net.Socket;
 
+import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.ranger.lpa.receiver.BlueToothReceiver;
 
 public class BaseInfo {
 
@@ -18,10 +20,14 @@ public class BaseInfo {
     public static final int MSG_LOCK_REQUEST = 2 << 2;
     //Accept to lock phone.
     public static final int MSG_LOCK_ACCEPT = 2 << 3;
+    //Refuse to lock phone.
+    public static final int MSG_LOCK_REFUSE = 2 << 4;
     //give up
-    public static final int MSG_GIVEUP_REQUEST = 2 << 4;
+    public static final int MSG_GIVEUP_REQUEST = 2 << 5;
     //give up accept
-    public static final int MSG_GIVEUP_ACCEPT = 2 << 5;
+    public static final int MSG_GIVEUP_ACCEPT = 2 << 6;
+    //
+    public static final int MSG_GIVEUP_REFUSE = 2 << 7;
 
 
 
@@ -52,25 +58,24 @@ public class BaseInfo {
         return strMsg.getBytes();
     }
 
-    private byte[] getMessageString() {
+    private String getMessageString() {
         Gson gson = new Gson();
         String strMsg = gson.toJson(this);
 
-        return (strMsg + "\n").getBytes();
+        return strMsg + "\n";
     }
 
-    public void sendMessage(Socket serverSocket) {
+    public void sendMessage(BluetoothSocket serverSocket) {
 
         try {
-            serverSocket.getOutputStream().write(getMessageString());
+            serverSocket.getOutputStream().write(getMessageString().getBytes());
             serverSocket.getOutputStream().flush();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    public void sendMessage(Socket serverSocket, int msg) {
+    public void sendMessage(BluetoothSocket serverSocket, int msg) {
 
         try {
             serverSocket.getOutputStream().write(getMessageString(msg));
