@@ -58,6 +58,7 @@ public class NotifyManager {
                 }
 
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
