@@ -27,7 +27,6 @@ import android.widget.Toast;
 import com.ranger.lpa.Constants;
 import com.ranger.lpa.R;
 import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
-import com.ranger.lpa.pojos.BaseInfo;
 import com.ranger.lpa.pojos.SocketMessage;
 import com.ranger.lpa.receiver.IOnNotificationReceiver;
 import com.ranger.lpa.test.adapter.BtDeviceListAdapter;
@@ -38,7 +37,6 @@ import com.ranger.lpa.ui.view.LPAKeyGuardView;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -51,11 +49,8 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
     FrameLayout fl_btn_start_lock;
     FrameLayout fl_btn_lock_select_phone;
-    private FrameLayout fl_start_to_lock;
-    TextView tv_cancel_finding;
 
     String blueName = "LPA";
-    UUID mUuid;
 
     private LPAFoundPhoneCenter appref;
 
@@ -139,9 +134,13 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
     }
 
     private void resetFindingView(){
-        view_find_phone.setVisibility(View.VISIBLE);
+        if(view_find_phone!=null)
+            view_find_phone.setVisibility(View.VISIBLE);
 
-        view_phone_found.setVisibility(View.GONE);
+        if(view_phone_found != null)
+            view_phone_found.setVisibility(View.GONE);
+
+        finish();
     }
 
     private LPAKeyGuardView lpa;
@@ -172,11 +171,11 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                         super.run();
 
                         try {
-//                            Socket socket = new Socket("192.168.191.1",8999);
+                            Socket socket = new Socket("192.168.191.1",8999);
 
-                            BluetoothSocket socket = dev.createRfcommSocketToServiceRecord(Constants.mUUID);
+//                            BluetoothSocket socket = dev.createRfcommSocketToServiceRecord(Constants.mUUID);
                             if(socket != null){
-                                socket.connect();
+//                                socket.connect();
 
                                 if(bts != null){
                                     bts.close();
@@ -343,7 +342,6 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
         @Override
         public void onNotificated(int type) {
 
-            Log.e("TAG","notify type : + " + type);
             Message msg = new Message();
             msg.what = type;
             mHandler.sendMessage(msg);
@@ -370,7 +368,6 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
         }
 
         resetFindingView();
-
     }
 
     private View view_select_btdevices;

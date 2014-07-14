@@ -44,7 +44,7 @@ public class LPAWifiManager {
 		
 		Long time = System.currentTimeMillis();
 //		mPasswd = Md5Tools.toMd5((time + "").getBytes(), true);
-		mPasswd = "test";
+		mPasswd = "taoliang1985";
 	}
 	
 	public void enableWifiSpot(){
@@ -70,7 +70,7 @@ public class LPAWifiManager {
                     .set(WifiConfiguration.AuthAlgorithm.OPEN);  
             netConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);  
             netConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);  
-            netConfig.allowedKeyManagement  
+            netConfig.allowedKeyManagement
                     .set(WifiConfiguration.KeyMgmt.WPA_PSK);  
             netConfig.allowedPairwiseCiphers  
                     .set(WifiConfiguration.PairwiseCipher.CCMP);  
@@ -93,7 +93,9 @@ public class LPAWifiManager {
             e.printStackTrace();  
         } catch (NoSuchMethodException e) {  
             e.printStackTrace();  
-        }  
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 	
 	/**

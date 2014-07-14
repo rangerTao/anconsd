@@ -56,7 +56,7 @@ public class LPAClientThread extends Thread {
 
             if(isServer == true){
                 SocketMessage stopServer = new SocketMessage(SocketMessage.MSG_STOPSERVER);
-                stopServer.sendMessage(bSocket);
+                stopServer.sendMessage(mSocket);
 //
 //                try{
 //                    Thread.sleep(1000);
@@ -68,7 +68,7 @@ public class LPAClientThread extends Thread {
 //                lockRequest.sendMessage(bSocket);
             }
 
-            InputStream inputStream = bSocket.getInputStream();
+            InputStream inputStream = mSocket.getInputStream();
 
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -117,35 +117,35 @@ public class LPAClientThread extends Thread {
     public void sendLockRequestAccept(){
 
         SocketMessage smAccept = new SocketMessage(SocketMessage.MSG_LOCK_ACCEPT);
-        smAccept.sendMessage(bSocket);
+        smAccept.sendMessage(mSocket);
 
     }
 
     public void sendLockRequestRefuse(){
 
         SocketMessage smAccept = new SocketMessage(SocketMessage.MSG_LOCK_REFUSE);
-        smAccept.sendMessage(bSocket);
+        smAccept.sendMessage(mSocket);
 
     }
 
     public void sendGiveupRequestAccept(){
 
         SocketMessage smAccept = new SocketMessage(SocketMessage.MSG_GIVEUP_ACCEPT);
-        smAccept.sendMessage(bSocket);
+        smAccept.sendMessage(mSocket);
 
     }
 
     public void sendGiveupRequestRefuse(){
 
         SocketMessage smAccept = new SocketMessage(SocketMessage.MSG_GIVEUP_REFUSE);
-        smAccept.sendMessage(bSocket);
+        smAccept.sendMessage(mSocket);
 
     }
 
     public void sendGiveupRequest(){
 
         SocketMessage smAccept = new SocketMessage(SocketMessage.MSG_GIVEUP_REQUEST);
-        smAccept.sendMessage(bSocket);
+        smAccept.sendMessage(mSocket);
 
     }
 }
