@@ -50,8 +50,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
-        <activity android:name="com.example.qr_codescan.MipcaActivityCapture"/>
-
         <receiver android:name="com.ranger.lpa.receiver.BlueToothReceiver">
             <intent-filter>
                 <action android:name="android.bluetooth.device.action.FOUND"/>

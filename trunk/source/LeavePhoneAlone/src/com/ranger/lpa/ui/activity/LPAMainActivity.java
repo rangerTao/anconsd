@@ -1,39 +1,15 @@
 package com.ranger.lpa.ui.activity;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.UUID;
 
-import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
-import android.bluetooth.BluetoothSocket;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.qr_codescan.MipcaActivityCapture;
-import com.google.gson.Gson;
-import com.ranger.lpa.Constants;
 import com.ranger.lpa.R;
 import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
-import com.ranger.lpa.connectity.wifi.LPAWifiManager;
-import com.ranger.lpa.pojos.IncomeResult;
-import com.ranger.lpa.receiver.BlueToothReceiver;
-import com.ranger.lpa.test.act.DiscoveryDevicesActivity;
-import com.ranger.lpa.test.act.WifiApTestActivity;
 
 /**
  * @author taoliang(taoliang@baidu-mgame.com)
@@ -63,8 +39,6 @@ public class LPAMainActivity extends BaseActivity {
 
         btManager = LPABlueToothManager.getInstance(getApplicationContext());
 
-        Intent barcode = new Intent(this,BarcodeScannerActivity.class);
-        startActivity(barcode);
     }
 
     ///
