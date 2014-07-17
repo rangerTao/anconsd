@@ -16,4 +16,10 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout="@layout/layout_phone_find"/>
+
+    <ViewStub
+        android:id="@+id/stub_lock_center_party"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout="@layout/layout_lock_center_party"/>
 </LinearLayout>

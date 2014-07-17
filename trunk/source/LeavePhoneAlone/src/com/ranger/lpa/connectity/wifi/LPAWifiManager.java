@@ -2,8 +2,13 @@ package com.ranger.lpa.connectity.wifi;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 import java.util.Random;
 
+import com.ranger.lpa.pojos.WifiInfo;
 import com.ranger.lpa.utils.Md5Tools;
 
 import android.content.Context;
@@ -15,6 +20,8 @@ public class LPAWifiManager {
 
 	private String mSSID = "LeavePhoneAlone_";
 	private String mPasswd;
+
+    private WifiInfo mWifiInfo;
 	
 	private static LPAWifiManager _instance;
 	
@@ -56,7 +63,7 @@ public class LPAWifiManager {
 	}
 	
 	public void startWifiAp() {  
-        Method method1 = null;  
+        Method method1 = null;
         try {  
         	
             method1 = wifiManager.getClass().getMethod("setWifiApEnabled",  
@@ -82,8 +89,12 @@ public class LPAWifiManager {
                     .set(WifiConfiguration.GroupCipher.TKIP);  
   
             method1.invoke(wifiManager, netConfig, true);  
-  
-        } catch (IllegalArgumentException e) {  
+
+            String mip = getLocalIpAddress();
+
+            mWifiInfo = new WifiInfo(mSSID,mPasswd,mip);
+
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();  
         } catch (IllegalAccessException e) {  
             e.printStackTrace();  
@@ -97,8 +108,16 @@ public class LPAWifiManager {
             e.printStackTrace();
         }
     }
-	
-	/**
+
+    /**
+     * Get the wifi host's ip address.
+     * @return
+     */
+    public WifiInfo getmWifiInfo() {
+        return mWifiInfo;
+    }
+
+    /**
 	 * 关闭wifi热点。连接到可用网络
 	 */
 	public void stopWifiAP(){
@@ -140,10 +159,9 @@ public class LPAWifiManager {
             method.setAccessible(true);  
             return (Boolean) method.invoke(wifiManager);  
   
-        } catch (NoSuchMethodException e) {  
-            // TODO Auto-generated catch block  
-            e.printStackTrace();  
-        } catch (Exception e) {  
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();  
         }  
   
@@ -186,5 +204,35 @@ public class LPAWifiManager {
 		Log.d("TAG", "is enabled " + wifiManager.enableNetwork(newWID, true));
 		
 	}
+
+    /**
+     * Get the local IP address
+     *
+     * @return IP address
+     */
+    public static String getLocalIpAddress() {
+        try {
+
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+
+                NetworkInterface intf = en.nextElement();
+
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+
+                    Log.d("TAG","ip :" + inetAddress.getHostAddress().toString());
+
+                    if (!inetAddress.isLoopbackAddress()
+                            && (inetAddress.getHostAddress().toString().startsWith("192")  || inetAddress
+                            .getHostAddress().toString().startsWith("172"))) {
+                        return inetAddress.getHostAddress().toString();
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+        }
+        return null;
+    }
 	
 }

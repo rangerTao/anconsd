@@ -10,76 +10,9 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="114dp">
+        <include layout="@layout/layout_lock_center_header"/>
 
-            <ImageView
-                android:id="@+id/btn_screen_select"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="26dp"
-                android:src="@drawable/btn_screen_select"/>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_toLeftOf="@+id/btn_settings"
-                android:layout_toRightOf="@+id/btn_screen_select"
-                android:gravity="center"
-                android:text="LOCKLOCK"
-                android:textColor="#4c4c4c"
-                android:textSize="24sp"/>
-
-            <ImageView
-                android:id="@+id/btn_settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="26dp"
-                android:gravity="right"
-                android:src="@drawable/btn_setting"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_setting_period"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp">
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lock_period_setting_hint"
-                    android:textColor="#909090"
-                    android:textSize="24sp"/>
-
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_marginTop="33dp"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="@string/lock_period_setting_hint"
-                    android:textColor="#000"
-                    android:textSize="40sp"/>
-            </LinearLayout>
-
-        </RelativeLayout>
+        <include layout="@layout/layout_lock_center_timer_hint"/>
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -97,7 +30,7 @@
                 android:textColor="#909090"
                 android:textSize="24sp"/>
 
-            <FrameLayout
+            <RelativeLayout
                 android:id="@+id/fl_search_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -108,16 +41,16 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_centerInParent="true"
                     android:src="@drawable/btn_red_bg_selector"/>
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_gravity="center"
+                    android:layout_centerInParent="true"
                     android:src="@drawable/ic_launcher"/>
 
-            </FrameLayout>
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/iv_left_phone_icon"
