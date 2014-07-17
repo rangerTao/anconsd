@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,13 +21,16 @@ import android.view.ViewStub;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ranger.lpa.Constants;
 import com.ranger.lpa.R;
 import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
+import com.ranger.lpa.connectity.wifi.LPAWifiManager;
 import com.ranger.lpa.pojos.SocketMessage;
 import com.ranger.lpa.receiver.IOnNotificationReceiver;
 import com.ranger.lpa.test.adapter.BtDeviceListAdapter;
@@ -44,10 +48,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
+    public static String EXTRA_TYPE = "type";
+
+    private int TYPE_PATTERN = 0;
+
     View view_find_phone;
     View view_phone_found;
 
-    FrameLayout fl_btn_start_lock;
+    RelativeLayout fl_btn_start_lock;
     FrameLayout fl_btn_lock_select_phone;
 
     String blueName = "LPA";
@@ -106,6 +114,8 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_phone_found_center);
 
+        TYPE_PATTERN = getIntent().getIntExtra(EXTRA_TYPE,0);
+
         appref = this;
 
         initView();
@@ -116,10 +126,36 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
     }
 
     private void initView() {
+
+        switch (TYPE_PATTERN){
+            case 0:
+                initCouplePattern();
+                break;
+            case 1:
+            case 2:
+                initPartyPattern();
+                break;
+            default:
+                initCouplePattern();
+                break;
+        }
+
+    }
+
+    private void initCouplePattern(){
         view_find_phone = ((ViewStub) findViewById(R.id.stub_lock_center)).inflate();
 
-        fl_btn_start_lock = (FrameLayout) view_find_phone.findViewById(R.id.fl_search_btn);
+        fl_btn_start_lock = (RelativeLayout) view_find_phone.findViewById(R.id.fl_search_btn);
         fl_btn_start_lock.setOnClickListener(this);
+    }
+
+    private void initPartyPattern(){
+        view_find_phone = ((ViewStub) findViewById(R.id.stub_lock_center_party)).inflate();
+
+//        fl_btn_start_lock = (RelativeLayout) view_find_phone.findViewById(R.id.fl_search_btn);
+//        fl_btn_start_lock.setOnClickListener(this);
+        view_find_phone.findViewById(R.id.btn_join_party_server).setOnClickListener(this);
+        view_find_phone.findViewById(R.id.btn_start_party_server).setOnClickListener(this);
     }
 
     private void initFindingView() {
@@ -233,6 +269,18 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
             case R.id.btn_giveup_cancel:
                 dismissGiveupRequestDialog();
                 lpact.sendGiveupRequestRefuse();
+                break;
+            case R.id.btn_join_party_server:
+                break;
+            case R.id.btn_start_party_server:
+                LPAWifiManager.getInstance(getApplicationContext()).startWifiAp();
+                try{
+                    ImageView ivBarcode = (ImageView) view_find_phone.findViewById(R.id.iv_barcode);
+//                    Bitmap barcode = EncodingHandler.createQRCode(LPAWifiManager.getInstance(getApplicationContext()).getmWifiInfo().getMessageString(), ivBarcode.getWidth());
+//                    ivBarcode.setImageBitmap(barcode);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
         }
     }

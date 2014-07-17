@@ -15,6 +15,7 @@
     <!--<string name="lock_period_setting_hint">设定锁定时间</string>-->
     <string name="lock_period_setting_hint">00:59:59</string>
     <string name="lock_hint_click_to_lock">点击锁定图标开始锁定TA</string>
+    <string name="lock_hint_click_to_lock_party">设备还没有锁定，请选择建立或者加入</string>
 
     <!-- 寻找配对手机 -->
     <string name="text_finding_phone_hint">正在搜寻对方手机...</string>
@@ -30,5 +31,11 @@
     <string name="btn_refuse_lock">不想</string>
     <string name="btn_giveup_confirm">放弃</string>
     <string name="btn_giveup_cancel">坚持住</string>
+
+    <string name="barcode_hint">锁屏码</string>
+    <string name="hint_click_to_startserver">下滑建立</string>
+    <string name="hint_click_to_joinserver">点击加入</string>
+
+    <string name="scan_text"></string>
 
 </resources>

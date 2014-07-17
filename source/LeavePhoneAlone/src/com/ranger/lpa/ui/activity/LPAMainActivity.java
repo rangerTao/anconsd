@@ -24,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.qr_codescan.MipcaActivityCapture;
 import com.google.gson.Gson;
 import com.ranger.lpa.Constants;
 import com.ranger.lpa.R;
@@ -62,6 +63,8 @@ public class LPAMainActivity extends BaseActivity {
 
         btManager = LPABlueToothManager.getInstance(getApplicationContext());
 
+        Intent barcode = new Intent(this,BarcodeScannerActivity.class);
+        startActivity(barcode);
     }
 
     ///
@@ -75,8 +78,7 @@ public class LPAMainActivity extends BaseActivity {
                 startFindingPhoneView(1);
                 break;
             case R.id.btn_enter_work:
-                startFindingPhoneView(2);
-                LPAWifiManager.getInstance(getApplicationContext()).startWifiAp();
+                startFindingPhoneView(1);
                 break;
         }
 
@@ -84,7 +86,7 @@ public class LPAMainActivity extends BaseActivity {
 
     public void startFindingPhoneView(int type){
         Intent findingPhone = new Intent(this,LPAFoundPhoneCenter.class);
-        findingPhone.putExtra("type",type);
+        findingPhone.putExtra(LPAFoundPhoneCenter.EXTRA_TYPE,type);
         startActivity(findingPhone);
     }
 

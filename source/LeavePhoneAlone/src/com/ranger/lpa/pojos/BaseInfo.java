@@ -14,6 +14,8 @@ public class BaseInfo {
         errcode = errorcode;
     }
 
+    //normal
+    public static final int MSG_ERROR_OK = 0;
     //Stop the server
     public static final int MSG_STOPSERVER = 2;
     //A request of lock received.
@@ -58,7 +60,7 @@ public class BaseInfo {
         return strMsg.getBytes();
     }
 
-    private String getMessageString() {
+    public String getMessageString() {
         Gson gson = new Gson();
         String strMsg = gson.toJson(this);
 
