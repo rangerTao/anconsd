@@ -21,9 +21,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 
-import com.example.qr_codescan.MipcaActivityCapture;
 import com.google.zxing.BinaryBitmap;
 import com.ranger.lpa.R;
 import com.google.zxing.DecodeHintType;
@@ -95,12 +93,10 @@ final class DecodeHandler extends Handler {
 
     if (rawResult != null) {
       long end = System.currentTimeMillis();
-      Log.d(TAG, "Found barcode (" + (end - start) + " ms):\n" + rawResult.toString());
       Message message = Message.obtain(activity.getHandler(), R.id.decode_succeeded, rawResult);
       Bundle bundle = new Bundle();
       bundle.putParcelable(DecodeThread.BARCODE_BITMAP, source.renderCroppedGreyscaleBitmap());
       message.setData(bundle);
-      //Log.d(TAG, "Sending decode succeeded message...");
       message.sendToTarget();
     } else {
       Message message = Message.obtain(activity.getHandler(), R.id.decode_failed);
