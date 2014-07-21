@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:color="@color/custom_dialog_btn_tv_press_color" android:state_pressed="true"/>
+    <item android:color="@color/custom_dialog_btn_tv_normal_color"/>
+
+</selector>

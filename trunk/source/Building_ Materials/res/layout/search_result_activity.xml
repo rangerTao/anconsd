@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mine_mainview_bg"
+    android:orientation="vertical" >
+
+    <include layout="@layout/layout_search_bar_with_back" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.ranger.bmaterials.view.pull.PullToRefreshListView
+            xmlns:ptr="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/layout_search_result_list"
+            style="@style/content_list_seach"
+            android:overScrollMode="ifContentScrolls"
+            android:visibility="visible"
+            ptr:ptrAnimationStyle="flip"
+            ptr:ptrHeaderTextAppearance="@style/pull_header_TextAppearance"
+            ptr:ptrListViewExtrasEnabled="false"
+            ptr:ptrMode="disabled"
+            ptr:ptrOverScroll="false"
+            ptr:ptrScrollingWhileRefreshingEnabled="true"
+            ptr:ptrShowIndicator="false" />
+
+        <!-- 无搜索搜索词界面 -->
+
+        <LinearLayout
+            android:id="@+id/layout_search_subview_no_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tv_no_searchresult_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="44dp"
+                android:drawablePadding="16dp"
+                android:drawableTop="@drawable/no_keywords"
+                android:gravity="center"
+                android:textColor="#999999"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/label_recomend_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_marginTop="15dp"
+                android:background="@color/hint_background_color"
+                android:gravity="center"
+                android:minHeight="28dp"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:text="@string/search_no_result_recom_hint"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4" >
+
+                <GridView
+                    android:id="@+id/search_recomend_gv"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:cacheColorHint="#00000000"
+                    android:gravity="center_vertical"
+                    android:numColumns="4"
+                    android:overScrollMode="never"
+                    android:paddingLeft="@dimen/gridview_padding_horizontal"
+                    android:paddingRight="@dimen/gridview_padding_horizontal"
+                    android:scrollbars="none"
+                    android:listSelector="@drawable/home_boutique_selector"
+                    android:stretchMode="columnWidth"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <include
+            android:id="@+id/progress_bar"
+            android:layout_gravity="center"
+            layout="@layout/network_loading"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/error_hint"
+            android:layout_gravity="center"
+            layout="@layout/loading_error_layout"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

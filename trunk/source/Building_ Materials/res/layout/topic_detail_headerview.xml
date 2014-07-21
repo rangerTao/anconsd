@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_card_item_selector"
+    android:paddingLeft="@dimen/shadow_padding"
+    android:paddingRight="@dimen/shadow_padding"
+    android:layout_marginTop="8dp"
+    android:paddingTop="0dp">
+
+    <com.ranger.bmaterials.ui.RoundCornerImageView
+        android:id="@+id/picture"
+        android:layout_width="match_parent"
+        android:layout_height="138dp"
+        android:contentDescription="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/ad_default" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/picture"
+        android:layout_alignLeft="@+id/picture"
+        android:layout_alignRight="@+id/picture"
+        android:layout_alignTop="@+id/picture"
+        android:background="@drawable/classes_item_corner"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/titile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/picture"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="none"
+        android:textColor="@color/topic_description"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/titile"
+        android:paddingTop="8dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:scaleType="fitCenter"
+        android:paddingBottom="8dp"
+        android:focusable="true"
+        android:src="@drawable/topic_expand_button_fold_selector"
+        android:contentDescription="@null" />
+    
+    <View android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:id="@+id/bottom"
+        android:visibility="gone"
+        android:layout_below="@+id/titile"/>
+
+</RelativeLayout>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout style="@style/content_list_item_style_for_card" >
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="10dp" >
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:visibility="invisible"
+                android:background="@drawable/icon_under_shade_game_list"
+                android:contentDescription="@string/dumy" />
+
+            <com.ranger.bmaterials.ui.RoundCornerImageView
+                android:id="@+id/manager_activity_updatable_list_item_icon"
+                style="@style/content_list_item_imageview_style"
+                android:contentDescription="@string/dumy" />
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/icon_front_shade_game_list"
+                android:visibility="invisible"
+                android:contentDescription="@string/dumy" />
+        </FrameLayout>
+
+        <LinearLayout
+            style="@style/content_list_item_linear_layout_style"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/manager_activity_updatable_list_item_name"
+                style="@style/content_list_item_title_style" />
+
+            <LinearLayout
+                android:id="@+id/game_version_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible" >
+
+                <TextView
+                    android:id="@+id/manager_activity_updatable_list_item_version"
+                    style="@style/content_list_item_text_style" />
+
+                <TextView
+                    android:id="@+id/manager_activity_updatable_list_item_new_version"
+                    style="@style/content_list_item_text_style"
+                    android:layout_marginLeft="3dp"
+                    android:drawableLeft="@drawable/icon_version_arrow_update_diff_msg"
+                    android:drawablePadding="3dp" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/game_download_progressbar"
+                style="@style/content_list_item_progressbar_style"
+                android:layout_height="8dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:progress="20"
+                android:progressDrawable="@drawable/progress_horizontal_yellow"
+                android:secondaryProgress="30"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:id="@+id/manager_activity_updatable_list_item_size_layout_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible" >
+
+                <FrameLayout
+                    android:id="@+id/manager_activity_updatable_list_item_size_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true" >
+
+                    <TextView
+                        android:id="@+id/manager_activity_updatable_list_item_size"
+                        style="@style/content_list_item_text_style"
+                        android:layout_gravity="center" />
+
+                    <ImageView
+                        android:id="@+id/manager_activity_updatable_list_item_size_strike"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/dumy"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/icon_line_update_diff" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/manager_activity_updatable_list_item_size_layout"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:id="@+id/ivSavedSizeFace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/dumy"
+                        android:src="@drawable/icon_face" />
+
+                    <TextView
+                        android:id="@+id/manager_activity_updatable_list_item_new_size"
+                        style="@style/update_list_item_text_style_incremental_size" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/manager_activity_updatable_list_item_progress_layout_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/manager_activity_updatable_list_item_saved_size"
+                    style="@style/content_list_item_text_style"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/manager_activity_updatable_list_item_progress"
+                    style="@style/content_list_item_text_style"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!--
+         <com.ranger.bmaterials.view.DontPressWithParentButton
+        android:id="@+id/manager_activity_updatable_list_item_update_button"
+        style="@style/content_list_item_button_style"
+        android:text="update" />
+        -->
+
+        <LinearLayout
+            android:id="@+id/manager_activity_updatable_list_item_update_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:minWidth="70dp"
+            android:orientation="vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" >
+
+            <com.ranger.bmaterials.view.AnimationDrawableView
+                android:id="@+id/manager_activity_updatable_list_item_action_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icon_update_list" />
+
+            <TextView
+                android:id="@+id/manager_activity_updatable_list_item_action_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:minWidth="56dp"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

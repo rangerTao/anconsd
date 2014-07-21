@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    android:orientation="vertical" >
+
+    <!-- title -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp" >
+
+        <RelativeLayout
+            android:id="@+id/rl_header"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/header_bg" >
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/back_selector" />
+
+            <TextView
+                android:id="@+id/header_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:padding="0px"
+                android:text="@string/title_more_recommend_game_activity"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <View
+                android:id="@+id/v_more_types_more_class_games"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/header_title" />
+
+            <ImageView
+                android:id="@+id/iv_icon_more_types_more_class_games"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@id/header_title"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icon_title_more_types_more_class_games"
+                android:visibility="invisible" />
+
+<!--             <include
+                android:id="@+id/hall_header_coin"
+                layout="@layout/header_coin_layout" /> -->
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_loading_more_rd_games_act"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/view_loading" />
+    </LinearLayout> 
+
+    <ListView
+        android:id="@+id/lv_more_recommend_games_act"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="6dp"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0.0px"
+        android:fastScrollEnabled="true"
+        android:listSelector="@android:color/transparent"
+        android:overScrollMode="never"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:scrollbars="none" />
+
+</LinearLayout>

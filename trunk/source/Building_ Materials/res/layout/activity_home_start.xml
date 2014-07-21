@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="215dp" >
+
+    <RelativeLayout
+        android:id="@+id/rl_title_area"
+        android:layout_width="match_parent"
+        android:layout_height="164dp" >
+		<ImageView 
+		    android:id="@+id/iv_background"
+		    android:layout_height="164dp"
+		    android:layout_width="match_parent"
+		    android:scaleType="fitXY"
+		    android:src="@drawable/bg_home_start_text_content"/>
+        <TextView
+            android:id="@+id/tv_start_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="16dp"
+            android:text="自定义活动"
+            android:textColor="#ffffff"
+            android:textSize="25sp" />
+
+        <ImageView
+            android:id="@+id/iv_start_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/home_start_close_selector" />
+
+        <GridView
+            android:id="@+id/gv_start_games"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_start_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="18dp"
+            android:cacheColorHint="#00000000"
+            android:fadingEdgeLength="0.0px"
+            android:gravity="center"
+            android:horizontalSpacing="14dp"
+            android:listSelector="@drawable/recommend_game_item_bg_selector"
+            android:numColumns="4"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="16dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_start_content_area"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_below="@+id/rl_title_area"
+        android:background="@drawable/bg_home_start_text_content"
+        android:orientation="horizontal"
+        android:visibility="invisible" >
+
+        <TextView
+            android:id="@+id/tv_active_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:textColor="#777777"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_start_games_content_area"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_below="@+id/rl_title_area"
+        android:background="@drawable/bg_home_start_text_content"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/tv_games_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_toLeftOf="@+id/iv_games_install"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:text="内容文本最多显示两行，内容文本最多显示两行，内容文本最多显示两行，内容文本最多显示两行，内容文本最多显示两行，"
+            android:textColor="#777777"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/iv_games_install"
+            android:layout_width="66dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/bg_home_rec_install"
+            android:gravity="center"
+            android:text="一键安装"
+            android:textColor="#448bdc"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_loading_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/view_loading" />
+    </LinearLayout>
+
+</RelativeLayout>

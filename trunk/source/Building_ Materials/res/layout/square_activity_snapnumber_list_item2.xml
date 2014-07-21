@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ranger.bmaterials.view.LargeTouchableAreasViewSquare xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/content_list_item_style_for_square"
+    android:orientation="horizontal"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp" />

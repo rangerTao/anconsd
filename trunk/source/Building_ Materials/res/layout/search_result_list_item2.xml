@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ranger.bmaterials.view.LargeTouchableAreasViewSearch xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/content_list_item_style"
+     />

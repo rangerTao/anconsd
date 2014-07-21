@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MyTextView">
+        <attr name="textColor" format="color" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="linespace" format="dimension" />
+        <attr name="paddingLeft" format="dimension" />
+        <attr name="paddingRight" format="dimension" />
+        <attr name="paddingTop" format="dimension" />
+        <attr name="paddingBottom" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="CustomizedProgress">
+        <attr name="maxProgress" format="integer" />
+        <attr name="currentProgress" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="RoundProgressBar">
+        <attr name="roundColor" format="color" />
+        <attr name="roundProgressColor" format="color" />
+        <attr name="roundWidth" format="dimension" />
+        <attr name="max" format="integer"></attr>
+        <attr name="textIsDisplayable" format="boolean"/>
+        <attr name="style">
+            <enum name="STROKE" value="0"></enum>
+            <enum name="FILL" value="1"></enum>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="CircleView">
+        <attr name="circlecolor" format="color" />
+        <attr name="radisSize" format="dimension" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <item type="id" name="square_snapnumber_listview" />
+     <item type="id" name="square_addserver_listview" />
+     <item type="id" name="square_activity_listview" />
+     
+     <item type="id" name="home_activity_grid" />
+     <item type="id" name="home_activity_grid_listener" />
+     
+    <item type="id" name="expandable_toggle_button" />
+	<item type="id" name="expandable" /> 
+</resources>
