@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:oneshot="false"
+    >
+    <item android:drawable="@drawable/icon_installing_1_list" android:duration="350"></item>  
+    <item android:drawable="@drawable/icon_installing_2_list" android:duration="350"></item>  
+    <item android:drawable="@drawable/icon_installing_3_list" android:duration="350"></item>
+
+</animation-list>

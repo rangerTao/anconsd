@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:background="@drawable/item_list_game_guide_game_detail_selector"
+        >
+        <View 
+                android:layout_width="12dp"
+    			android:layout_height="match_parent"
+                />
+        <LinearLayout 
+            android:layout_width="0dp"
+    		android:layout_height="match_parent"
+    		android:layout_weight="1.0"
+    		android:orientation="vertical"
+            >
+            <View 
+                android:layout_width="match_parent"
+    			android:layout_height="12dp"
+                />
+            
+            <TextView 
+                android:layout_width="match_parent"
+    			android:layout_height="wrap_content"
+    			android:id="@+id/tv_guide_title_item_game_guide_game_detail"
+    			android:textSize="16sp"
+    			android:textColor="#000000"
+    			android:gravity="left|center_vertical"
+    			android:singleLine="true"
+    			android:ellipsize="end"
+                />
+            
+            <View 
+                android:layout_width="match_parent"
+    			android:layout_height="16dp"
+                />
+            
+            <TextView 
+                android:layout_width="match_parent"
+    			android:layout_height="wrap_content"
+    			android:id="@+id/tv_guide_time_item_game_guide_game_detail"
+    			android:textSize="12sp"
+    			android:textColor="#9A9A9A"
+    			android:gravity="left|center_vertical"
+    			android:singleLine="true"
+    			android:ellipsize="end"
+                />
+            
+            <View 
+                android:layout_width="match_parent"
+    			android:layout_height="12dp"
+                />
+        </LinearLayout>
+        
+        <ImageView 
+            android:layout_width="wrap_content"
+    		android:layout_height="match_parent"
+    		android:src="@drawable/mine_markicon"
+            />
+        
+        <View 
+            android:layout_width="8dp"
+    		android:layout_height="match_parent"
+            />
+        
+    </LinearLayout>
+

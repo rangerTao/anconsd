@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center" >
+
+        <com.ranger.bmaterials.view.IndexableStickyHeaderListView
+            android:id="@+id/manager_installed_list"
+            android:overScrollMode="never"
+            style="@style/content_list" />
+
+        <LinearLayout
+            android:id="@+id/install_null"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="invisible" >
+
+                <LinearLayout style="@style/manager_btn_layout_layout_style" >
+
+                    <Button
+                        android:id="@+id/manager_download_downloadall"
+                        style="@style/button_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/manager_btn_left_selector" />
+
+                    <Button
+                        android:id="@+id/manager_download_pauseall"
+                        style="@style/button_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0px"
+                        android:layout_weight="1"
+                        android:background="@drawable/manager_btn_right_selector" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="#E9E8E8" />
+                <!-- android:background="#E9E8E8" -->
+
+                <LinearLayout
+                    android:id="@+id/manager_activity_download_hint_text"
+                    style="@style/list_sep_layout_style_for_manager"
+                    android:background="#D2D2D2"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical" >
+
+                    <include layout="@layout/red_notifier" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:visibility="visible" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:drawablePadding="16dp"
+                    android:drawableTop="@drawable/none"
+                    android:gravity="center_horizontal"
+                    android:text="@string/hint_install_null"
+                    android:textColor="#999999"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <include
+        android:id="@+id/manager_installed_list_progressbar"
+        android:layout_gravity="center"
+        layout="@layout/network_loading" />
+
+</FrameLayout>

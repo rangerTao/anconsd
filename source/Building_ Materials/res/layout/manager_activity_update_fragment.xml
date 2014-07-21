@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/manager_pager"
+            style="@style/manager_btn_layout_layout_style"
+            android:paddingLeft="46dp"
+            android:paddingRight="46dp">
+
+            <Button
+                android:id="@+id/manager_activity_update_update_button"
+                style="@style/button_style"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_marginRight="0dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="@color/tab_hall_pressed"
+                android:textSize="12sp"
+                android:text="全部更新" />
+
+            <Button
+                android:id="@+id/manager_activity_update_view_button"
+                style="@style/button_style"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="@color/tab_hall_pressed"
+                android:textSize="12sp"
+                android:text="查看忽略" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="#E9E8E8" />
+
+        <LinearLayout
+            android:id="@+id/manager_activity_update_hint_text"
+            style="@style/list_sep_layout_style_for_manager"
+            android:background="#D2D2D2"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <include
+                android:layout_gravity="center_vertical"
+                layout="@layout/red_notifier" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center" >
+
+            <ListView
+                android:id="@+id/manager_activity_update_list"
+                android:overScrollMode="never"
+                style="@style/content_list" />
+
+            <View
+                android:id="@+id/download_no_use"
+                android:layout_width="2dp"
+                android:layout_height="2dp"
+                android:layout_centerInParent="true"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/update_null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/download_no_use"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:drawablePadding="16dp"
+                android:drawableTop="@drawable/no_update"
+                android:gravity="center_horizontal"
+                android:text="@string/hint_update_null"
+                android:singleLine="true"
+                android:textColor="#999999"
+                android:textSize="14sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/manager_update_progressbar"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        layout="@layout/network_loading" />
+
+</FrameLayout>

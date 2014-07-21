@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mtext="http://schemas.android.com/apk/res/com.ranger.bmaterials"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EAEAEA"
+    android:orientation="vertical" >
+    
+   <RelativeLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+	    android:id="@+id/loading">
+    	
+	    <include 
+	        layout="@layout/network_loading"
+	        android:id="@+id/view_loading"/>
+	    
+	    <ImageView 
+	        android:contentDescription="@null"
+            android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:id="@+id/view_game_not_found"
+    		android:src="@drawable/icon_no_game_found_game_detail"
+    		android:layout_centerHorizontal="true"
+    		android:layout_centerVertical="true"
+    		android:visibility="gone"/>
+	    
+    </RelativeLayout>
+   
+    <com.ranger.bmaterials.view.MyScrollView 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:fadingEdgeLength="0.0px"
+	    android:fadingEdge="none"
+	    android:scrollbars="none"
+	    android:overScrollMode="never"
+	    android:layout_below="@+id/loading"
+	    android:id="@+id/sv_out_game_summary_game_detail">
+	    
+        <LinearLayout 
+            android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:orientation="vertical"
+            >
+            <!-- game msg -->
+            <LinearLayout 
+                android:layout_width="match_parent"
+    			android:layout_height="wrap_content"
+    			android:id="@+id/ll_game_msg_game_summary_game_detail"
+    			android:orientation="vertical"
+    			android:clickable="true"
+    			android:background="#ECECEC"
+                >
+                <View 
+                    android:layout_width="match_parent"
+    				android:layout_height="14dp"
+                    />
+                
+                <LinearLayout 
+                    android:layout_width="match_parent"
+    				android:layout_height="wrap_content"
+    				android:gravity="center_vertical"
+                    >
+                    <View 
+                        android:layout_width="12dp"
+    					android:layout_height="1dp"
+                        />
+                    <!-- 游戏图标 -->
+                    <RelativeLayout 
+                        android:layout_width="76dp"
+	    				android:layout_height="76dp"
+                        >
+                        <ImageView 
+				            android:layout_width="match_parent"
+					    	android:layout_height="match_parent"
+					    	android:scaleType="fitXY"
+					    	android:id="@+id/iv_under_shade_game_icon_game_detail_summary"
+				            />
+                        
+                        <com.ranger.bmaterials.view.ImageViewForList
+	                        android:layout_width="match_parent"
+	    					android:layout_height="match_parent"
+	    					android:scaleType="fitXY"
+	    					android:id="@+id/iv_game_icon_game_detail_summary"
+	                        />
+                        
+                        <ImageView 
+				            android:layout_width="match_parent"
+					    	android:layout_height="match_parent"
+					    	android:scaleType="fitXY"
+					    	android:id="@+id/iv_front_shade_game_icon_game_detail_summary"
+				            />
+                    </RelativeLayout>
+                    
+                    
+                    <View 
+                        android:layout_width="8dp"
+    					android:layout_height="1dp"
+                        />
+                    <!-- 游戏文字信息 -->
+                    <LinearLayout 
+                        android:layout_width="0dp"
+    					android:layout_height="wrap_content"
+    					android:orientation="vertical"
+    					android:layout_weight="1.0"
+                        >
+                        <!-- game name -->
+                        <TextView 
+                            android:layout_width="match_parent"
+    						android:layout_height="24dp"
+    						android:id="@+id/tv_game_name_game_detail_summary"
+    						android:textColor="#000000"
+    						android:textSize="16sp"
+    						android:gravity="top|left"
+    						android:singleLine="true"
+					        android:ellipsize="end"
+                            />
+                        <LinearLayout 
+                            android:layout_width="match_parent"  
+					        android:layout_height="20dp" 
+					        android:gravity="center_vertical"
+                            >
+                            <LinearLayout 
+                                android:layout_width="0dp"  
+						        android:layout_height="match_parent" 
+						        android:layout_weight="1.0" 
+						        android:gravity="center_vertical"
+                                >
+                                <RatingBar  
+							        android:id="@+id/rb_game_detail_summary"  
+							        android:layout_width="wrap_content"  
+							        android:layout_height="wrap_content"  
+							        android:max="255"  
+							        android:numStars="5"  
+							        android:progress="153"  
+							        android:stepSize="1.0" 
+							        android:isIndicator="true"
+							        style="@style/starRatingBar2"
+							        /> 
+                            </LinearLayout>
+                            
+                            <!-- size -->
+                            <TextView 
+                                android:layout_width="0dp"  
+					        	android:layout_height="match_parent"
+					        	android:id="@+id/tv_game_size_game_detail_summary"
+					        	android:layout_weight="1.0" 
+					        	android:textSize="12sp"
+					        	android:textColor="#333333"
+					        	android:gravity="center_vertical"
+					        	android:singleLine="true"
+					        	android:ellipsize="end"
+                                />
+                        </LinearLayout>
+                        
+					        
+                        <LinearLayout 
+                            android:layout_width="match_parent"  
+					        android:layout_height="20dp" 
+                            >
+                            <!-- version -->
+                            <TextView 
+                                android:layout_width="0dp"  
+					        	android:layout_height="match_parent"
+					        	android:id="@+id/tv_version_game_detail_summary"
+					        	android:layout_weight="1.0" 
+					        	android:textSize="12sp"
+					        	android:textColor="#333333"
+					        	android:gravity="bottom|left"
+					        	android:singleLine="true"
+					        	android:ellipsize="end"
+                                />
+                            
+                            <!-- download times -->
+                            <TextView 
+                                android:layout_width="0dp"  
+					        	android:layout_height="match_parent"
+					        	android:id="@+id/tv_download_times_game_detail_summary"
+					        	android:layout_weight="1.0" 
+					        	android:textSize="12sp"
+					        	android:textColor="#333333"
+					        	android:gravity="bottom|left"
+					        	android:singleLine="true"
+					        	android:ellipsize="end"
+                                />
+                        </LinearLayout>
+                        
+                        <LinearLayout 
+                            android:layout_width="match_parent"  
+					        android:layout_height="20dp" 
+                            >
+                            <!-- game type -->
+                            <TextView 
+                                android:layout_width="0dp"  
+					        	android:layout_height="match_parent"
+					        	android:id="@+id/tv_game_type_game_detail_summary"
+					        	android:layout_weight="1.0" 
+					        	android:textSize="12sp"
+					        	android:textColor="#333333"
+					        	android:gravity="left"
+					        	android:singleLine="true"
+					        	android:ellipsize="end"
+                                />
+                            
+                            <!-- update time -->
+                            <TextView 
+                                android:layout_width="0dp"  
+					        	android:layout_height="match_parent"
+					        	android:id="@+id/tv_update_time_game_detail_summary"
+					        	android:layout_weight="1.0" 
+					        	android:textSize="12sp"
+					        	android:textColor="#333333"
+					        	android:gravity="left"
+					        	android:singleLine="true"
+					        	android:ellipsize="end"
+                                />
+                            
+                        </LinearLayout>
+                       
+                    </LinearLayout>
+                    
+                    <View 
+                        android:layout_width="12dp"
+    					android:layout_height="1dp"
+                        />
+                </LinearLayout>
+                
+                <View 
+                    android:layout_width="match_parent"
+    				android:layout_height="14dp"
+                    />
+            </LinearLayout>
+            
+           <!--  <View 
+                android:layout_width="match_parent"
+    			android:layout_height="1px"
+    			android:background="#D5D3D5"
+                />
+            <View 
+                android:layout_width="match_parent"
+    			android:layout_height="1px"
+    			android:background="#F8F8F8"
+                /> -->
+            
+            <!-- pics -->
+            <LinearLayout 
+                android:layout_width="match_parent"
+    			android:layout_height="wrap_content"
+    			android:background="@color/light_gray_bg_game_detail"
+                >
+                <HorizontalScrollView 
+                    android:layout_width="match_parent"
+    				android:layout_height="wrap_content"
+    				android:id="@+id/sv_game_pics_game_detail_summary"
+    				android:fadingEdgeLength="0.0px"
+				    android:fadingEdge="none"
+				    android:scrollbars="none"
+				    android:overScrollMode="never"
+                    >
+                    
+                </HorizontalScrollView>
+            </LinearLayout>
+            
+          <!--   <View 
+                android:layout_width="match_parent"
+    			android:layout_height="1px"
+    			android:background="#D5D3D5"
+                />
+            <View 
+                android:layout_width="match_parent"
+    			android:layout_height="1px"
+    			android:background="#F8F8F8"
+                />
+             -->
+            <!-- description -->
+            <LinearLayout 
+                android:layout_width="match_parent"
+    			android:layout_height="wrap_content"
+    			android:orientation="vertical"
+    			android:background="@color/light_gray_bg_game_detail"
+    			>    
+                
+			    <TextView 
+					android:id="@+id/tv_description_game_detail_summary_new"
+			        android:layout_width="match_parent"
+			    	android:layout_height="wrap_content"
+			    	android:textColor="#777777"
+			    	android:textSize="12sp"
+			    	android:singleLine="false"
+					android:paddingLeft="12dp"
+					android:paddingRight="12dp"
+					android:paddingTop="8dp"
+					android:paddingBottom="10dp"
+					/>
+			         
+                <LinearLayout 
+                    android:layout_width="match_parent"
+    				android:layout_height="20dp"
+    				android:gravity="center_vertical|right"
+    				android:id="@+id/parent_ll_open_description_game_detail_summary"
+                    >
+                    <LinearLayout 
+                        android:layout_width="wrap_content"
+    					android:layout_height="match_parent"
+    					android:layout_marginRight="14dp"
+    					android:id="@+id/ll_open_description_game_detail_summary"
+                        >
+                        <TextView 
+	                        android:layout_width="wrap_content"
+	    					android:layout_height="match_parent"
+	    					android:id="@+id/tv_open_description_game_detail_summary"
+	    					android:text="展开"
+	    					android:textColor="#448bdc"
+	    					android:textSize="12sp"
+	    					android:singleLine="true"
+	                        />
+                        
+                        <ImageView 
+                            android:layout_width="wrap_content"
+	    					android:layout_height="match_parent"
+	    					android:id="@+id/iv_open_description_game_detail_summary"
+	    					android:src="@drawable/icon_open_description_game_detail_summary"
+                            />
+                    </LinearLayout>
+                    
+                </LinearLayout>
+                
+                <View 
+                    android:layout_width="match_parent"
+	    			android:layout_height="8dp"
+	    			android:background="@color/light_gray_bg_game_detail"
+                    />
+            </LinearLayout>
+            
+            <View 
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:background="@color/line_bg_game_detail"
+                />
+           
+            <TextView 
+                android:layout_width="match_parent"
+    			android:layout_height="24dp"
+    			android:text="@string/label_game_recommend_game_detail_summary"
+    			android:textSize="14sp"
+    			android:layout_marginTop="8dp"
+    			android:textColor="@color/black"
+    			android:paddingLeft="6dp"
+    			android:gravity="center_vertical"
+    			android:background="@color/light_gray_bg_game_detail"
+                />
+            
+            <LinearLayout 
+                android:layout_width="match_parent"
+    			android:layout_height="wrap_content"
+    			android:background="@color/light_gray_bg_game_detail"
+                >
+                <GridView 
+			        android:layout_width="match_parent"   
+				    android:layout_height="wrap_content"
+				    android:id="@+id/gv_game_detail_summary"
+				    android:numColumns="4"
+				    android:stretchMode="columnWidth"
+				    android:horizontalSpacing="4dp"
+				    android:verticalSpacing="15dp"
+				    android:gravity="center"
+				    android:cacheColorHint="#00000000"
+				    android:layout_marginBottom="22dp"
+				    android:layout_marginTop="5dp"
+				    android:layout_marginLeft="6dp"
+				    android:layout_marginRight="6dp"
+				    android:fadingEdgeLength="0.0px"
+				    android:scrollbars="none"
+				    android:listSelector="@drawable/home_boutique_selector"
+				    android:overScrollMode="never"
+			        />
+            </LinearLayout>
+            
+            <!-- <View 
+                android:layout_width="match_parent"
+    			android:layout_height="46dp"
+                /> -->
+        </LinearLayout>
+    </com.ranger.bmaterials.view.MyScrollView>
+    
+    
+
+</RelativeLayout>

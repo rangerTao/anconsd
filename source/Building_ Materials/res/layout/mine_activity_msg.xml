@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mine_mainview_bg"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/item_titlebar_mine" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+<!--         <RelativeLayout
+            android:id="@+id/layout_loading_msg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <com.ranger.bmaterials.view.AnimationDrawableView
+                android:id="@+id/network_loading_pb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/network_loading" />
+        </RelativeLayout> -->
+        <include layout="@layout/network_loading" android:id="@+id/layout_loading_msg"/>
+
+        <LinearLayout
+            android:id="@+id/layout_mine_msg_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <com.ranger.bmaterials.view.pull.PullToRefreshListView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:ptr="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/listview_mine_msgs"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:cacheColorHint="#00000000"
+                android:divider="@drawable/icon_list_divider"
+                android:dividerHeight="2px"
+                ptr:ptrAnimationStyle="flip"
+                ptr:ptrHeaderBackground="@android:color/transparent"
+                ptr:ptrHeaderTextAppearance="@style/pull_header_TextAppearance"
+                ptr:ptrMode="pullFromStart" />
+
+            <RelativeLayout
+                android:id="@+id/layout_mine_msg_editpane"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@android:color/white"
+                android:paddingBottom="5dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="5dp" >
+
+                <TextView
+                    android:id="@+id/btn_msg_select_all"
+                    android:layout_width="120dp"
+                    android:layout_height="35dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/mine_btn_edit_bg_selecor"
+                    android:gravity="center"
+                    android:text="全选" />
+
+                <TextView
+                    android:id="@+id/btn_msg_delete"
+                    android:layout_width="120dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/mine_btn_edit_bg_selecor"
+                    android:gravity="center"
+                    android:text="删除" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/label_mine_msg_none_pane"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="54dp"
+                android:src="@drawable/mine_no_msg" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/error_hint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            layout="@layout/loading_error_layout"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+</LinearLayout>

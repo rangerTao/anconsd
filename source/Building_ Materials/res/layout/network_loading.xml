@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/network_loading_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include layout="@layout/loading_error_layout" />
+
+    <LinearLayout
+        android:id="@+id/network_loading_pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateDrawable="@drawable/network_loading"
+            android:minHeight="54dp"
+            android:minWidth="54dp" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/dumy"
+            android:paddingTop="4dp"
+            android:src="@drawable/network_loading_shadow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:singleLine="true"
+            android:text="@string/home_loading_tip"
+            android:textColor="#999999"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</RelativeLayout>

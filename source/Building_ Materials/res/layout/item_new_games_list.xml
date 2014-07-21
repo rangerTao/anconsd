@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_card_item_selector"
+        android:baselineAligned="false"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical" >
+
+      <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="10dp">
+
+            <com.ranger.bmaterials.ui.RoundCornerImageView
+                android:id="@+id/iv_item_list_more_games_rd_act"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:orientation="vertical" >
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tv_name_item_list_more_games_rd_act"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="left|bottom"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <!-- update normal -->
+
+            <LinearLayout
+                android:id="@+id/ll_download_status_item_list_more_games_rd_act"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="30dp"
+                    android:gravity="center" >
+
+                    <ProgressBar
+                        android:id="@+id/pbra_downlaod_item_list_more_games_rd_act"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:background="@null"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/progress_bar_layer_list_more_games" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_marginRight="30dp" >
+
+                    <TextView
+                        android:id="@+id/tv_percent_item_list_more_games_rd_act"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:gravity="left|top"
+                        android:singleLine="true"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_current_item_list_more_games_rd_act"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.0"
+                        android:ellipsize="end"
+                        android:gravity="right|top"
+                        android:singleLine="true"
+                        android:textColor="#FF7200"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_total_item_list_more_games_rd_act"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:gravity="left|top"
+                        android:singleLine="true"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- update diff -->
+
+            <LinearLayout
+                android:id="@+id/ll_diff_download_status_item_list_more_games_rd_act"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="13dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="bottom" >
+
+                    <ProgressBar
+                        android:id="@+id/pbra_diff_downlaod_item_list_more_games_rd_act"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:background="@null"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/progress_bar_layer_list_more_games" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_marginRight="10dp" >
+
+                    <TextView
+                        android:id="@+id/tv_save_size_item_list_more_games_rd_act"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_traffic_saved_list"
+                        android:ellipsize="end"
+                        android:gravity="left|top"
+                        android:singleLine="true"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_diff_current_item_list_more_games_rd_act"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="7dp"
+                        android:layout_weight="1.0"
+                        android:ellipsize="end"
+                        android:gravity="right|top"
+                        android:singleLine="true"
+                        android:textColor="#91B329"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_diff_total_item_list_more_games_rd_act"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="7dp"
+                        android:ellipsize="end"
+                        android:gravity="left|top"
+                        android:singleLine="true"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- normal msg -->
+
+            <LinearLayout
+                android:id="@+id/ll_rating_item_list_more_games_rd_act"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:gravity="center_vertical" >
+
+                <RatingBar
+                    android:id="@+id/rating_item_list_more_games_rd_act"
+                    style="@style/starRatingBar2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="true"
+                    android:max="255"
+                    android:numStars="5"
+                    android:progress="153"
+                    android:stepSize="1.0"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_info_item_list_more_games_rd_act"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:visibility="gone" >
+
+                <com.ranger.bmaterials.view.GameLabelView
+                    android:id="@+id/item_card_label_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"
+                    android:gravity="center"
+                    android:minWidth="34dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:layout_marginRight="6dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tv_downloaded_item_list_more_games_rd_act"
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"
+                    android:ellipsize="end"
+                    android:gravity="left|center_vertical"
+                    android:singleLine="true"
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/tv_size_item_list_more_games_rd_act"
+                    android:layout_width="0dp"
+                    android:layout_height="16dp"
+                    android:layout_weight="4.0"
+                    android:ellipsize="end"
+                    android:gravity="left|center_vertical"
+                    android:singleLine="true"
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- update diff msg -->
+
+            <LinearLayout
+                android:id="@+id/ll_update_diff_msg_item_list_more_games_rd_act"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="版本"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_lower_version_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2dp"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="1.0.0"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:src="@drawable/icon_version_arrow_update_diff_msg" />
+
+                    <TextView
+                        android:id="@+id/tv_higher_version_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="2dp"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="1.2.0"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:gravity="center_vertical" >
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/tv_old_size_item_list_more_games_rd_act"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:singleLine="true"
+                            android:text="83.25M"
+                            android:textColor="#666666"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:id="@+id/iv_line_update_diff"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignBottom="@id/tv_old_size_item_list_more_games_rd_act"
+                            android:layout_alignLeft="@id/tv_old_size_item_list_more_games_rd_act"
+                            android:layout_alignRight="@id/tv_old_size_item_list_more_games_rd_act"
+                            android:layout_alignTop="@id/tv_old_size_item_list_more_games_rd_act"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/icon_line_update_diff" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_label_patch_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="left|top"
+                        android:singleLine="true"
+                        android:textColor="#d87205"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_patch_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:gravity="left|top"
+                        android:drawablePadding="2dp"
+                        android:drawableLeft="@drawable/icon_face"
+                        android:singleLine="true"
+                        android:layout_gravity="center_vertical"
+                        android:text="60.25M"
+                        android:textColor="#d87205"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_tv_bt_download_item_list_more_games_rd_act"
+            android:layout_width="76dp"
+            android:layout_height="72dp" >
+
+            <ImageView
+                android:id="@+id/iv_comingsoon_game_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icon_comingsoon_game_list" />
+
+            <TextView
+                android:id="@+id/tv_bt_download_item_list_more_games_rd_act"
+                android:layout_width="56dp"
+                android:layout_height="28dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_bt_game_download_normal"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/label_download"
+                android:textColor="#333333"
+                android:textSize="12sp"
+                android:visibility="invisible" />
+
+            <LinearLayout
+                android:id="@+id/ll_tv_bt_download_item_list_more_games_rd_act"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:orientation="vertical" >
+
+                <!-- android:background="@drawable/item_list_more_rd_games_act_selector" -->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.0" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/iv_download_bt_item_list_more_games_rd_act"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:src="@drawable/btn_download_selector" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp" />
+
+                    <TextView
+                        android:id="@+id/tv_percent_item_list_more_games_rd_act2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="省流量更新"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.0" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

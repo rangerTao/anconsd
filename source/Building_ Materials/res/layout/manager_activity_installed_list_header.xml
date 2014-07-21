@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_full_color">
+    <FrameLayout style="@style/list_sep_layout_style" >
+        <TextView
+            android:id="@+id/manager_activity_installed_list_header_text"
+            style="@style/list_sep_text_style"/>
+    </FrameLayout>
+</FrameLayout>

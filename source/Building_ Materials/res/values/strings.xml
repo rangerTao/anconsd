@@ -1,0 +1,327 @@
+<resources>
+
+    <string name="app_name">建材询价</string>
+    <string name="more">更多</string>
+    <string name="prompt_for_exiting_app">您确认要离开百度游戏吗？</string>
+
+    <!-- DKGameHallActivity -->
+    <string name="tab_name_home_hall">首页</string>
+    <string name="tab_name_hot_hall">排行</string>
+    <string name="tab_name_class_hall">分类</string>
+    <string name="tab_name_discover_hall">发现</string>
+    <string name="title_must_play">必玩</string>
+    <string name="share_content">我最近正在使用一个叫“百度游戏”的产品，推荐的游戏都好好玩噢，还有各种给力的抢号、抽奖活动。快来http://youxi.duoku.com/hall/ 下载吧，意想不到的惊喜在等着你！</string>
+
+    <!-- GameDetailsActivity -->
+    <string name="label_comment_after_download">下载安装后发表评论</string>
+    <string name="label_comment_after_install">安装后发表评论</string>
+    <string name="label_comment">发表评论</string>
+    <string name="hint_publish_comment">请输入评论内容</string>
+    <string name="label_game_update_time_game_detail_summary">更新：</string>
+    <string name="label_game_version_game_detail_summary">版本：</string>
+    <string name="label_game_size_game_detail_summary">大小：</string>
+    <string name="label_game_download_times_game_detail_summary">下载：</string>
+    <string name="label_game_describe_game_detail_summary">简介</string>
+    <string name="label_game_recommend_game_detail_summary">其他人正在玩</string>
+    <string name="label_game_no_comment_game_detail_comment">大家都不说话，这里好安静~</string>
+
+    <!-- GameActivity -->
+    <string name="label_more_games">更多游戏</string>
+    <string name="label_today">New</string>
+    <string name="title_more_recommend_game_activity">更多推荐</string>
+    <string name="title_more_hot_game_activity">排行</string>
+    <string name="title_more_new_game_activity">更多最新</string>
+    <string name="label_checking_diff_update">安全检查中</string>
+    <string name="label_diff_update">省流量更新</string>
+    <string name="label_update">更新</string>
+    <string name="label_download">下载</string>
+    <string name="label_pause">暂停</string>
+    <string name="label_continue">继续</string>
+    <string name="label_delete">删除</string>
+    <string name="label_cancel">取消</string>
+    <string name="label_retry">重试</string>
+    <string name="label_start">启动</string>
+    <string name="label_install">安装</string>
+    <string name="label_installing">安装中</string>
+    <string name="label_waiting">等待</string>
+    <string name="label_download_times_more_rd_games">次下载</string>
+    <string name="title_manager">管理</string>
+    <string name="channel_name">BaiduMobAd_CHANNEL</string>
+    <string name="search_error_hint2">抱歉,没有找到 \"%s\" 相关的游戏\n建议您检查输入的关键字或搜索其他游戏</string>
+    <string name="network_error_hint">网络异常，请检查网络设置~</string>
+    <string name="network_fail_hint">触屏即可重试</string>
+    <string name="search_hint"><i>请输入关键字</i></string>
+    <string name="error_checksdcard">请检查您的SD卡</string>
+
+    <!-- &lt;font color= \'#FFB90F\'> %1$d &lt;/font> -->
+    <string name="exit_app_hint">再按一次退出应用</string>
+    <string name="alert_network_inavailble">网络不给力！</string>
+    <string name="alert_search_cannot_be_null">搜索内容不可为空！</string>
+    <string name="open">启动</string>
+    <string name="open_game">启动游戏</string>
+    <string name="install">安装</string>
+    <string name="update">更新</string>
+    <string name="update_diff">省流量更新</string>
+    <string name="download">下载</string>
+    <string name="downloading">下载中</string>
+    <string name="uncompeleted">未完成</string>
+    <string name="installing">安装中</string>
+    <string name="hint_installing">下载完成，正在安装&#8230;</string>
+    <string name="installed">已安装</string>
+    <string name="install_failed">安装失败,点击手动安装</string>
+    <string name="download_failed">下载失败！</string>
+    <string name="file_deleted">下载文件已经删除</string>
+    <string name="parse_file_error">解析文件出现错误</string>
+    <string name="resume">继续</string>
+    <string name="try_again">重试</string>
+    <string name="waitting">正在等待</string>
+    <string name="paused">已暂停</string>
+    <string name="download_failed_and_try">下载失败，点击重试</string>
+    <string name="download_successful_and_install">下载完成， 点击安装</string>
+    <string name="download_successful_and_merging">安全检查中&#8230;</string>
+    <string name="view_detail">查看详情</string>
+    <string name="download_game">下载游戏</string>
+    <string name="view_game_detail">查看游戏详情</string>
+    <string name="sdcard_unmounted">SD卡已经拔出或者不可访问，无法下载!</string>
+    <string name="sdcard_lack_space">SD卡存储空间不足!</string>
+    <string name="refuse_root">您已经拒绝了ROOT请求!</string>
+    <string name="no_new_data">没有新的内容</string>
+    <string name="get_more_data_failed">获取更多内容失败</string>
+    <string name="get_data_failed">获取内容失败！</string>
+    <string name="login_to_snap">请登录后再抢号</string>
+    <string name="snap_bad_luck">对不起，您未抢中，您可以重新尝试！</string>
+    <string name="snap_null">对不起，号码已被抢光！</string>
+    <string name="snap_over">对不起，活动已结束！</string>
+    <string name="snap_pending">对不起，活动还没开始！</string>
+    <string name="snap_failed">抢号失败！</string>
+    <string name="snapped">您已经抢过了</string>
+    <string name="copy_successfully">复制成功</string>
+    <string name="hint_download_null">没有下载任务了耶~</string>
+    <string name="hint_install_null">亲耐的，说好的游戏呢~</string>
+    <string name="hint_update_null">太棒了！都是最新的啦~</string>
+    <string name="share_game_text">这两天发现一个特好玩的游戏：%s,是在“百度游戏”下载的噢，来玩玩吧！下载地址：http://youxi.duoku.com/hall</string>
+
+    <!-- 登录注册 -->
+    <string name="register_protocol_title">百度游戏使用协议</string>
+    <string name="get_verifycode">获取验证码</string>
+    <string name="input_phonenum_hint">请输入手机号(11位数字)</string>
+    <string name="get_verifycode_hint">短信验证码 (4位数字 )</string>
+    <string name="bind_now">立刻绑定</string>
+    <string name="bind_phonenum_title">绑定手机</string>
+    <string name="committing_tip">提交中&#8230;</string>
+    <string name="registing_tip">正在努力注册&#8230;</string>
+    <string name="get_verifycode_left">再次获取(</string>
+    <string name="get_verifycode_right">)</string>
+    <string name="change_bind_phone_title">更改绑定手机</string>
+    <string name="current_bind_phonenum">当前绑定手机号码</string>
+    <string name="next_step">下一步</string>
+    <string name="old_pwd_hint">旧密码:6&#8211;16位字母或数字</string>
+    <string name="new_pwd_hint">新密码:6&#8211;16位字母或数字</string>
+    <string name="confirm_change_pwd">确认修改</string>
+    <string name="change_pwd_title">修改密码</string>
+    <string name="get_pwd_back_title">找回密码</string>
+    <string name="get_pwd_succeed">找回密码成功</string>
+    <string name="btn_ok_tip">知道了</string>
+    <string name="btn_get_pwd_tip">找回密码</string>
+    <string name="btn_dial_servicenum_tip">拨打电话</string>
+    <string name="input_username_hint">请输入手机号或账号</string>
+    <string name="forget_pwd">忘记密码</string>
+    <string name="login_title">登录个人中心</string>
+    <string name="register_protocol">《多酷游戏使用协议》</string>
+    <string name="fast_register_account">手机号一键注册</string>
+    <string name="phone_register">手机号注册安全又快捷</string>
+    <string name="smsc_cnmobile">1065750204886666</string>
+    <string name="smsc_cnunicom">106550200096386</string>
+    <string name="smsc_cntelecom">106590571003386</string>
+    <string name="smsc_common">123</string>
+    <string name="login">登录</string>
+    <string name="logout">注销</string>
+
+    <!-- Setting -->
+    <string name="wifior3g_prompting">2G/3G网络下载提示</string>
+    <string name="down_more_duoku_app">下载更多精彩应用</string>
+    <string name="lottery_act_default_title">精彩活动</string>
+    <string name="rootuser_down_prompt">您是root权限用户,确定要下载游戏后自动安装吗?</string>
+
+    <!-- 意见反馈 -->
+    <string name="feedback_title">意见反馈</string>
+    <string name="feedback_content_hint">请填写您要反馈的问题，我们会及时与您联系，并及时解决问题</string>
+    <string name="content_tip_right">字</string>
+    <string name="content_tip_left">还可以输入</string>
+    <string name="contact_email_phonenum">联系方式（手机号/邮箱）</string>
+    <string name="commit_feedback">提交</string>
+
+    <!-- 关于我们 -->
+    <string name="about_us_title">关于</string>
+    <string name="about_us_des">本软件的下载、安装和使用完全免费。在使用时产生的上网流量费由网络运营商收取，建议您配合上网流量套餐使用。游戏过程中产生的费用，由游戏开发商收取。</string>
+    <string name="service_num_tip">客服电话 :</string>
+    <string name="official_weibo_hint">官方微博 :</string>
+    <string name="official_weibo">百度移动游戏</string>
+    <string name="about_us_servicenum">4000&#8211;826&#8211;898</string>
+
+    <!-- 推荐应用 -->
+    <string name="defalt_recomapp_name">多酷书城</string>
+    <string name="default_recomapp_url">http://duokoo.baidu.com/wap/?pageid\u003d2489</string>
+
+    <!-- MineActivity -->
+    <string name="mine_title">我的</string>
+    <string name="nickname_hint">未设置昵称</string>
+    <string name="edit_nickname">编辑</string>
+    <string name="mine_msgs">消息</string>
+    <string name="mine_collections">收藏</string>
+
+    <!-- MineEditActivity -->
+    <string name="mine_edit_title">编辑</string>
+    <string name="change_nickname">修改昵称</string>
+    <string name="change_pwd">修改密码</string>
+    <string name="bind_phone">绑定手机</string>
+    <string name="unbind_phone">未绑定</string>
+    <string name="switch_account">切换帐号</string>
+
+    <!-- 网络请求及输入验证错误提示 -->
+    <string name="invalid_phonenum_tip">请输入正确的手机号</string>
+    <string name="valid_nickname_tip">请输入正确的昵称(2&#8211;12位字母、数字或汉字)</string>
+    <string name="valid_verifycode_tip">验证码过期或不存在！</string>
+    <string name="change_nickname_succeed_tip">修改昵称成功</string>
+    <string name="bind_phone_succeed_tip">绑定手机成功</string>
+    <string name="change_pwd_succeed_tip">密码修改成功</string>
+    <string name="feedback_succeed_tip">提交成功，感谢您的反馈！</string>
+    <string name="clear_pic_cache_tip">清除图片缓存完成</string>
+    <string name="delete_pkg_tip">删除安装包完成</string>
+    <string name="latest_version_tip">程序已是最新版本</string>
+    <string name="network_error_tip">网络不给力，请重试</string>
+    <string name="request_failed_tip">请求失败，请重试</string>
+    <string name="json_parser_error_tip">数据解析错误</string>
+    <string name="need_login_tip">登录状态过期，需要重新登录</string>
+    <string name="login_sms_send_failed">短信发送失败</string>
+    <string name="sensitive_error_tip">敏感词错误</string>
+    <string name="once_in_seven_days_tip">7天内只可修改一次昵称哦！</string>
+    <string name="exist_nickname_tip">昵称已存在</string>
+    <string name="nickname_not_change_tip">昵称未修改</string>
+    <string name="verifycode_error_tip">请输入正确的验证码(4位数字)</string>
+    <string name="have_bind_tip">此号码已经被使用，请直接进行登录</string>
+    <string name="badpwd_tip">旧密码不正确，请重新输入</string>
+    <string name="old_pwd_empty_tip">旧密码不能为空</string>
+    <string name="new_pwd_empty_tip">新密码不能为空</string>
+    <string name="invalid_pwd_tip">密码格式有误（6&#8211;16位字母或数字）</string>
+    <string name="invalid_oldpwd_tip">旧密码格式有误（6&#8211;16位字母或数字）</string>
+    <string name="invalid_feedback_content_tip">请输入有效内容</string>
+    <string name="invalid_contact_tip">请输入正确的手机号或邮箱地址</string>
+    <string name="invalide_username_phonenum_tip">请输入正确的用户名或手机号</string>
+    <string name="user_not_exist_tip">用户不存在</string>
+    <string name="invalid_username_tip">请输入正确的用户名(4&#8211;14位字母或数字)</string>
+    <string name="invalid_username_tip2">用户名不能为1开头的11位数字</string>
+    <string name="invalide_username_pwd_tip">用户名或密码错误，请重新输入</string>
+    <string name="login_expired_tip">登录失败：密码已过期，请重新输入密码</string>
+    <string name="get_root_failed_tip">获取root权限失败</string>
+    <string name="exist_username_tip">此用户名已存在，请重新输入</string>
+    <string name="exist_phonenum_tip">此号码已被使用，请直接进行登录</string>
+    <string name="nickname_inuse_tip">昵称已经被使用</string>
+    <string name="nickname_bad_format_tip">昵称不符合规则</string>
+    <string name="get_verifycode_failed_tip">获取验证码失败</string>
+    <string name="username_cannot_be_phonenum_tip">用户名不能为手机号</string>
+    <string name="no_more_data_tip">没有更多数据</string>
+    <string name="new_pwd_cannot_be_old_pwd_tip">新密码不能和旧密码一样，请重新输入</string>
+    <string name="checking_failed">安全检查失败</string>
+    <string name="fast_register_failed">很遗憾，注册失败，将为您转至手动注册</string>
+
+    <!-- Manager : Update -->
+    <string name="btn_show_ignore_list">查看忽略</string>
+    <string name="update_managment_hint_totalsize">全部更新%s</string>
+    <string name="update_managment_hint_patchsize">只需:%s</string>
+
+    <!-- coin center -->
+    <string name="str_competition_title">争霸赛</string>
+    <string name="str_exchange">兑换</string>
+
+    <!-- Exchange history list -->
+    <string name="exchange_history_detail_title">兑换详情</string>
+    <string name="exchange_history_list_item_card_number">充值卡号</string>
+    <string name="exchange_history_list_item_card_pwd">充值密码</string>
+    <string name="exchange_history_list_item_date">%s</string>
+    <string name="exchange_history_list_item_expire_date">%s</string>
+    <string name="exchange_history_list_loading_error_hint">获取兑换详情列表失败</string>
+    <string name="exchange_history_list_no_record">什么也没有，好桑心~</string>
+    <string name="exchange_history_list_error_session_invalid">请登录后查询兑换详情！</string>
+
+    <!-- competition -->
+    <string name="competition_timer">即将开赛</string>
+    <string name="competition_joinin">立即参赛</string>
+    <string name="competition_over">查看游戏</string>
+    <string name="competition_rewards">参赛奖品</string>
+    <string name="competition_rule">参赛规则</string>
+
+    <!-- square -->
+    <string-array name="square_tab_title">
+        <item>测评</item>
+        <item>资讯</item>
+        <item>活动</item>
+        <item>抢号</item>
+        <item>开服</item>
+    </string-array>
+
+    <string name="square_snap_num_success">哎呦，超屌~抢到咯~</string>
+    <string name="square_activity_detail_title">活动详情</string>
+    <string name="square_openserver_detail_title">开服详情</string>
+    <string name="square_apraisal_detail_title">测评详情</string>
+    <string name="square_information_detail_title">资讯详情</string>
+    <string name="close">关闭</string>
+    <string name="start_download">开始下载</string>
+
+    <!-- home -->
+    <string name="home_loading_tip">正在努力加载&#8230;</string>
+    <string name="home_continue_download_dialog_title">下载任务提示</string>
+    <string name="home_continue_download_dialog_cancel">暂不下载</string>
+    <string name="home_continue_download_dialog_confirm">继续下载</string>
+    <string name="home_continue_download_dialog_msg">您有%d个下载任务未完成，是否继续？</string>
+    <string name="home_guide_tip2">下载，更新，已安装管理</string>
+    <string name="home_section_title">新品</string>
+    <string name="home_section_title2">必玩</string>
+    <string name="home_section_title3">争霸赛</string>
+    <string name="home_section_title4">专题</string>
+    <string name="home_footer_tip">去别处逛逛</string>
+
+    <!-- speed download -->
+    <string name="speed_download_installed"> 已安装</string>
+    <string name="speed_download_start"> 高速下载开始！</string>
+    <string name="dumy"></string>
+
+    <!-- splash ad -->
+    <string name="splash_ad_copyright">© 2014  百度移动游戏  版权所有</string>
+
+    <!-- 无内容文案 -->
+    <string name="no_network_hint">网络不给力，小伙伴很受伤</string>
+    <string name="no_guide">没有攻略，好无奈呀~</string>
+    <string name="no_keywords">肿么找不到，搜搜看</string>
+    <string name="string_with_quote">\"%s\"</string>
+
+    <!-- 网络对话框提示 -->
+    <string name="no_network_dialog_hint">当前未连接Wifi网络,如果下载游戏将消耗2G/3G流量,是否继续？</string>
+    <string name="no_network_dialog_confirm">继续下载</string>
+    <string name="no_network_dialog_cancel">取消</string>
+    <string name="no_network_dialog_title">2G/3G下载提示</string>
+    
+    <!-- Title of tabs -->
+    <string name="tab_download_manager_download">下载</string>
+    <string name="tab_download_manager_update">更新</string>
+    <string name="tab_download_manager_installed">已安装</string>
+
+    <!-- SharedPreference Key -->
+    <string name="sp_key_home_page_last_date">home_page_last_date</string>
+    
+    <string name="search_shake_to_surprise">摇一摇有惊喜</string>
+    <string name="search_click_to_shake_button">换一批搜索热词</string>
+    <string name="search_result_no_more_data">没有更多了，点我看看 </string>
+    <string name="footer_no_more_see_more">到别处逛逛</string>
+    <string name="app_info_version_dis">版本：%s</string>
+
+    <string name="search_no_result_recom_hint">搜不到相关游戏，以下游戏您可能喜欢</string>
+    <string name="hall_home_search_hint">大家都在搜\'%s\'</string>
+    <string name="none_appraisal_data">没有此测评信息</string>
+    <string name="none_information_data">没有此资讯信息</string>
+    <string name="none_openserver_data">没有此开服信息</string>
+    <string name="none_snapnumber_data">没有此抢号信息</string>
+    <string name="none_activity_data">没有此活动信息</string>
+
+    <string name="http_website">mgame.baidu.com</string>
+</resources>

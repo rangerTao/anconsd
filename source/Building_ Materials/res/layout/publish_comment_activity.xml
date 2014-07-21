@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- title -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/header_bg" >
+
+        <ImageView
+            android:id="@+id/ll_iv_back_publish_comment_activity"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/back_selector" />
+
+        <!--  -->
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/label_comment"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <View
+            android:id="@+id/v_bottom_space_publish_comment_activity"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_alignParentBottom="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/v_bottom_space_publish_comment_activity"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="28dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:gravity="bottom|left" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="请评分："
+                    android:textColor="#2B2B2B"
+                    android:textSize="14sp" />
+
+                <RatingBar
+                    android:id="@+id/rb_publish_comment_activity"
+                    style="@style/starRatingBar4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:max="255"
+                    android:numStars="5"
+                    android:progress="204"
+                    android:stepSize="1.0" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp" />
+
+            <EditText
+                android:id="@+id/et_publish_comment_activity"
+                android:layout_width="match_parent"
+                android:layout_height="155dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/bg_et_publish_comment_selector"
+                android:gravity="top|left"
+                android:hint="@string/hint_publish_comment"
+                android:padding="8dp"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="14dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:gravity="bottom" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="还可以输入"
+                        android:textColor="#000000"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_words_count_publish_comment_activity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="140"
+                        android:textColor="#81B537"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="字"
+                        android:textColor="#000000"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+<!--         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/icon_tab_item_hall_bg" > -->
+
+            <LinearLayout
+                android:id="@+id/ll_bt_publish_comment_activity"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_height="51dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:background="@drawable/bt_download_game_detail_selector"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/tv_bt_publish_comment_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_comment"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
+            </LinearLayout>
+<!--         </LinearLayout> -->
+    </RelativeLayout>
+
+</LinearLayout>

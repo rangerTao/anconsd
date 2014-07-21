@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    android:paddingBottom="0dp"
+    android:paddingTop="0dp" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:paddingBottom="0dp"
+        android:paddingTop="0dp" >
+
+        <LinearLayout 
+            android:id="@+id/item_head"
+            style="@style/content_list_item_style_for_card" >
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="10dp" >
+
+                <ImageView
+                    android:id="@+id/mine_game_icon"
+                    style="@style/content_list_item_imageview_style"
+                    android:contentDescription="image" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/mine_game_name"
+                    style="@style/content_list_item_title_style"
+                    android:text="怪物猎人" />
+
+                <TextView
+                    android:id="@+id/game_name_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="#777777"
+                    android:textSize="12sp" />
+                
+                <TextView
+                    android:id="@+id/game_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="#777777"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/expandable_toggle_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp" >
+
+                <ImageButton
+                    android:id="@+id/toggle_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/fold_normal" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent" >
+
+                <LinearLayout
+                    android:id="@+id/search_item_action_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_vertical"
+                    android:minWidth="75dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" >
+
+                    <com.ranger.bmaterials.view.AnimationDrawableView
+                        android:id="@+id/search_item_action_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/icon_start_list" />
+
+                    <TextView
+                        android:id="@+id/search_item_action_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center_horizontal"
+                        android:minWidth="56dp"
+                        android:text="启动"
+                        android:textColor="#448bdc"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/search_item_comingsoon_iv"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:src="@drawable/icon_comingsoon_game_list"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/expandable"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        >
+            
+    <include android:id="@+id/network_loading"
+        layout="@layout/network_loading" 
+        android:visibility="invisible"/>
+    
+    
+    <include
+        android:id="@+id/error_hint"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        layout="@layout/wangluobugeili_layout"
+        android:visibility="invisible"/>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:id="@+id/item_related_info"
+        android:visibility="invisible">
+
+        <LinearLayout android:id="@+id/mine_item1"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/mine_item_expand_gray_middle">
+            <ImageView android:id="@+id/mine_item1_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:src="@drawable/mine_item_icon_gonglve"/>
+            <TextView android:id="@+id/mine_item1_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="111111111111111"
+                android:textColor="#414141"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+        
+        <LinearLayout android:id="@+id/mine_item2"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/mine_item_expand_white_middle">
+            <ImageView android:id="@+id/mine_item2_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:src="@drawable/mine_item_icon_qianghao"/>
+            <TextView android:id="@+id/mine_item2_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="111111111111111"
+                android:textColor="#414141"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout android:id="@+id/mine_item3"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/mine_item_expand_gray_middle">
+            <ImageView android:id="@+id/mine_item3_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:src="@drawable/mine_item_icon_pingce"/>
+            <TextView android:id="@+id/mine_item3_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="111111111111111"
+                android:textColor="#414141"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+        
+        
+        <LinearLayout android:id="@+id/mine_item4"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/mine_item_expand_white_tail">
+            <ImageView android:id="@+id/mine_item4_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:src="@drawable/mine_item_icon_zixun"/>
+            <TextView android:id="@+id/mine_item4_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="111111111111111"
+                android:textColor="#414141"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+        
+        
+                
+        <LinearLayout android:id="@+id/mine_item5"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/mine_item_expand_white_tail"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="游戏详情"
+                android:gravity="center"
+                android:textColor="#414141"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+        
+    </LinearLayout>
+        
+    </RelativeLayout >
+
+
+
+</LinearLayout>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/header_back_coin_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" >
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="-1dp"
+            android:fadingEdge="none"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:id="@+id/content_global_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="20dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="12dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/title_text"
+                        style="@style/content_list_item_title_style"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:singleLine="false"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="8dp" >
+
+                        <TextView
+                            android:id="@+id/time_text"
+                            style="@style/content_list_item_text_style"
+                            android:textColor="#777777"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/appraisal_source_text"
+                            style="@style/content_list_item_text_style"
+                            android:layout_marginLeft="22dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:textColor="#777777"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/square_detail_content"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="70dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!--
+             <RelativeLayout
+            android:id="@+id/game_detail_button_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/appraisal_detail_bottom_item_bg"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/game_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_launcher" />
+
+            <LinearLayout
+                android:id="@+id/viewdetail_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_toLeftOf="@+id/download_fragment_item"
+                android:layout_toRightOf="@id/game_icon"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/appraisal_title_text"
+                    style="@style/content_list_item_title_style"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="怪物猎人"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/appraisal_version_text"
+                    style="@style/content_list_item_text_style"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="3dp"
+                    android:text="版本 1.3  3.5MB"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@id/download_fragment_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" >
+
+                <LinearLayout
+                    android:id="@+id/search_item_action_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical" >
+
+                    <com.ranger.bmaterials.view.AnimationDrawableView
+                        android:id="@+id/search_item_action_iv"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/btn_download_selector" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/search_item_comingsoon_iv"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="18dp"
+                    android:src="@drawable/icon_comingsoon_game_list"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </RelativeLayout>
+        -->
+
+        <LinearLayout
+            android:id="@+id/snapnumber_detail_viewdetail_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/appraisal_detail_bottom_item_bg"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:onClick="onClick"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/game_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/ic_launcher" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/game_title_text"
+                    style="@style/content_list_item_title_style"
+                    android:singleLine="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+                <ProgressBar
+                    android:id="@+id/snapnumber_progress_bar"
+                    style="@style/content_list_item_progressbar_style"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginTop="3dp"
+                    android:progressDrawable="@drawable/progress_horizontal_green" />
+
+                <TextView
+                    android:id="@+id/percent_text"
+                    style="@style/content_list_item_text_style"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+<!--             <Button
+                android:id="@+id/snapnumber_detail_snapnumber_button"
+                style="@style/content_list_item_button_style"
+                android:text="抢号" /> -->
+                    <ImageView
+            android:id="@+id/snapnumber_detail_snapnumber_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/square_snap_num"
+            android:contentDescription="@string/dumy"
+            android:layout_gravity="center_vertical"
+            android:visibility="visible" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/square_detail_base_network"
+            layout="@layout/network_loading"
+            android:visibility="gone" />
+        <include
+            android:id="@+id/no_data_hint_container"
+            layout="@layout/no_data_layout"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

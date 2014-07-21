@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="95dp"
+    android:background="#eeeeee"
+    android:padding="8dp" >
+
+    <LinearLayout
+        android:id="@+id/home_section_newgames"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bt_home_section_selector" />
+
+            <ImageView
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_above="@+id/textview1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:src="@drawable/icon_section_home_newgames" />
+
+            <TextView
+                android:id="@+id/textview1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="2dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/home_section_title"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+            <TextView 
+                android:id="@+id/tv_new_games_count"
+                android:layout_height="14dp"
+                android:layout_width="14dp"
+                android:background="@drawable/bg_new_games_count"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="3dp"
+                android:gravity="center"
+                android:textSize="10sp"
+                android:textColor="#ffffff"
+                android:visibility="invisible"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/home_section_mustplay"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="4dp"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bt_home_section_selector" />
+
+            <ImageView
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_above="@+id/textview2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:src="@drawable/icon_section_home_mustplay" />
+
+            <TextView
+                android:id="@+id/textview2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="2dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/home_section_title2"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/home_section_competition"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="4dp"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bt_home_section_selector" />
+
+            <ImageView
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_above="@+id/textview3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:src="@drawable/icon_section_home_competition" />
+
+            <TextView
+                android:id="@+id/textview3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="2dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/home_section_title3"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/home_section_classgames"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="4dp"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bt_home_section_selector" />
+
+            <ImageView
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_above="@+id/textview4"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:src="@drawable/icon_section_home_classgames" />
+
+            <TextView
+                android:id="@+id/textview4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="2dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/home_section_title4"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

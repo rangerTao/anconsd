@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+
+                android:gravity="center">
+    <!-- android:background="@drawable/search_recommed_gv_item_bg_selector" -->
+    <!-- @drawable/search_recommed_gv_item_bg_selector -->
+
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_margin="4dp"
+                  android:orientation="vertical" android:background="@drawable/home_boutique_selector"
+
+                  android:layout_centerInParent="true">
+        <FrameLayout
+                android:id="@+id/game_icon_layout"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp">
+
+            <com.ranger.bmaterials.ui.RoundCornerImageView
+                    android:id="@+id/game_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_launcher"/>
+
+            <!-- android:background="@drawable/icon_front_shade_game_list"  -->
+            <ImageView
+                    android:id="@+id/game_icon_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dp"
+                android:visibility="invisible"
+                    android:background="@drawable/icon_front_shade_game_list"
+                    />
+        </FrameLayout>
+
+        <TextView
+                android:id="@+id/game_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+                android:layout_below="@id/game_icon_layout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="4dp"
+                android:singleLine="true"
+                android:textColor="#555"
+                android:textSize="14sp"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

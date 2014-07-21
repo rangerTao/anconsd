@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="106dp"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="#f3f3f3"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/ivExchangeItemIcon"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/recharge_card_large" />
+
+            <ImageView
+                android:id="@+id/ivExchangeItemOperator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|top"
+                android:src="@drawable/operator_ct" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="6dp" >
+
+            <LinearLayout
+                android:id="@+id/llCardNumber"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    style="@style/content_list_item_exchange_style"
+                    android:text="@string/exchange_history_list_item_card_number"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/exchange_card_number"
+                    style="@style/content_list_item_exchange_style"
+                    android:paddingLeft="16dp"
+                    android:text="1234567890123"
+                    android:textColor="#333333"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llCardPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp" >
+
+                <TextView
+                    style="@style/content_list_item_exchange_style"
+                    android:text="@string/exchange_history_list_item_card_pwd"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/exchange_card_pwd"
+                    style="@style/content_list_item_exchange_style"
+                    android:paddingLeft="16dp"
+                    android:singleLine="true"
+                    android:text="1234567890123"
+                    android:textColor="#333333"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp" >
+
+                <TextView
+                    style="@style/content_list_item_exchange_style"
+                    android:text="兑换日期"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/exchange_card_date"
+                    style="@style/content_list_item_exchange_style"
+                    android:paddingLeft="16dp"
+                    android:singleLine="true"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp" >
+
+                <TextView
+                    style="@style/content_list_item_exchange_style"
+                    android:text="截止日期"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/exchange_card_expire_date"
+                    style="@style/content_list_item_exchange_style"
+                    android:paddingLeft="16dp"
+                    android:singleLine="true"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

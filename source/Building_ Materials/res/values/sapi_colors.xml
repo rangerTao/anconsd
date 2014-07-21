@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- regist & login start -->
+    <color name="sapi_background_color">#F7F7F7</color>
+    <color name="sapi_title_text_color">#ffffff</color>
+    <color name="sapi_btn_text_color">#ffffff</color>
+    <color name="sapi_tab_pressed_color">#3289cb</color>
+    <color name="sapi_tab_normal_color">#333333</color>
+    <color name="sapi_error_text_color">#e00000</color>
+    <color name="sapi_tip_text_color">#333333</color>
+    <color name="sapi_edit_text_color">#333333</color>
+    <color name="sapi_edit_hint_color">#dddddd</color>
+    <color name="sapi_edit_neting_color">#888888</color>
+    <color name="sapi_show_text_color">#333333</color>
+    <color name="sapi_qr_scan_tip_text_color">#b2b6ba</color>
+    <!-- regist & login end -->
+
+    <color name="possible_result_points">#c0ffbd21</color> <!-- Android standard ICS color -->
+    <color name="result_points">#c099cc00</color> <!-- Android standard ICS color -->
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_laser">#ffcc0000</color> <!-- Android standard ICS color -->
+    <color name="viewfinder_mask">#b0000000</color>
+    
+    <color name="sapi_qr_tips_background">#30FFFFFF</color>
+
+</resources>

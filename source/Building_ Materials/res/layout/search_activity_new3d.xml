@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- android:background="@drawable/mine_mainview_bg" -->
+
+	<include layout="@layout/layout_search_bar_with_back"/>
+	
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/layout_search_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="26dp"
+            android:orientation="vertical"
+            android:visibility="visible" >
+
+            <com.ranger.bmaterials.view.TagCloudView
+                android:id="@+id/tagclouview"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+        <!-- 搜索结果界面 -->
+
+        <ListView
+            android:id="@+id/layout_search_result_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible" >
+        </ListView>
+
+        <!-- 无搜索搜索词界面 -->
+
+        <LinearLayout
+            android:id="@+id/layout_search_subview_no_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="invisible" >
+
+            <TextView
+                android:id="@+id/label_no_result_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:lineSpacingExtra="10dp"
+                android:text="抱歉，没有找到“关键字”相关的游戏，建议您检查输入的关键字或搜索其他游戏" />
+
+            <TextView
+                android:id="@+id/label_recomend_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:background="@color/blue"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/label_game_recommend_game_detail_summary"
+                android:textSize="18sp" />
+
+            <GridView
+                android:id="@+id/search_recomend_gv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:cacheColorHint="#00000000"
+                android:fadingEdgeLength="0.0px"
+                android:gravity="center"
+                android:horizontalSpacing="20dp"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="12dp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

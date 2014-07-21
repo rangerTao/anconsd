@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@drawable/header_bg" >
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:padding="8dp"
+        android:contentDescription="@string/dumy"
+        android:scaleType="centerInside"
+        android:src="@drawable/back_selector" />
+
+    <com.ranger.bmaterials.view.AlwaysMarqueeTextView
+        android:id="@+id/header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:gravity="center_horizontal"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+<!--     <include
+        android:id="@+id/hall_header_coin"
+        layout="@layout/header_coin_layout" /> -->
+
+</RelativeLayout>

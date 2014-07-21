@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!--
+         <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="-1dp"
+        android:background="@drawable/bg_home_rec_title" />
+    -->
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/iv_title_tree"
+        android:background="@drawable/home_rec_tree" />
+
+    <RelativeLayout
+        android:id="@+id/rl_rec_title"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="18dp"
+            android:text="为我推荐"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_rec_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/home_rec_close_selector" />
+    </RelativeLayout>
+    <View 
+        android:layout_height="2dp"
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_below="@+id/iv_title_tree"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="385dp"
+        android:layout_below="@+id/iv_title_tree"
+        android:layout_marginTop="-2dp"
+        android:background="@drawable/bg_home_rec"
+        android:orientation="vertical" >
+
+        <GridView
+            android:id="@+id/gv_rec_games"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:cacheColorHint="#00000000"
+            android:fadingEdgeLength="0.0px"
+            android:gravity="center"
+            android:horizontalSpacing="16dp"
+            android:listSelector="@drawable/recommend_game_item_bg_selector"
+            android:numColumns="4"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="16dp"
+            android:background="#00ffffff" />
+
+        <ListView
+            android:id="@+id/list_rec_infos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="1dp"
+            android:fadingEdge="none"
+            android:fadingEdgeLength="0.0px"
+            android:fastScrollEnabled="true"
+            android:listSelector="@android:color/transparent"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_loading_progress"
+        android:layout_width="400dp"
+        android:layout_height="350dp"
+        android:layout_centerInParent="true" >
+
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/view_loading" />
+    </LinearLayout>
+
+</RelativeLayout>

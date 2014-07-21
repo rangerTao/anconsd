@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <View
+        android:id="@+id/v_none_space"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <include layout="@layout/network_loading" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0.0px"
+        android:overScrollMode="never"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:id="@+id/game_recommend_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <com.ranger.bmaterials.view.ADsWorkspace
+                android:id="@+id/ws_ad_recommend_game_activity"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="8dp"
+                android:gravity="bottom|center_horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/ll_ad_points_game_recommend_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dp"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+
+            <com.ranger.bmaterials.view.ExpandableHeightGridView
+                android:id="@+id/gv_game_recommend_activity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"
+                android:cacheColorHint="#00000000"
+                android:fadingEdgeLength="0.0px"
+                android:gravity="center"
+                android:horizontalSpacing="6dp"
+                android:listSelector="@drawable/recommend_game_item_bg_selector"
+                android:numColumns="4"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="18dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

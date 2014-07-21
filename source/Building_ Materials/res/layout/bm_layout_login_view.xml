@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#e8f3fe"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#196bc8"
+        >
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/back_selector"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="用户登录--建材询价"
+            android:textColor="#fff"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="25dp"
+        android:background="#fff"
+        android:minHeight="20dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:src="@drawable/bm_login_top_bg"/>
+
+        <EditText
+            android:id="@+id/edit_login_username"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/bm_user_header_unlogin"
+            android:drawablePadding="3dp"
+            android:hint="请输入中国建材在线账号"/>
+
+        <EditText
+            android:id="@+id/edit_login_pwd"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:inputType="textPassword"
+            android:drawableLeft="@drawable/bm_user_login_passwd"
+            android:drawablePadding="3dp"
+            android:hint="请输入密码"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/btn_commit_login"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:contentDescription="@null"
+            android:background="@drawable/bm_btn_login"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/bm_ck_is_auto_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="自动登录"/>
+
+        <TextView
+            android:id="@+id/btn_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="注册新账号"
+            android:textColor="#81afe3"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

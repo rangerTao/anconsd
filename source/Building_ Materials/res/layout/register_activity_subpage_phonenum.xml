@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" >
+
+        <!-- 手机号注册 -->
+
+        <LinearLayout
+            android:id="@+id/layout_phone_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <EditText
+                    android:id="@+id/edit_p_username"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/inputbox_bg_selector"
+                    android:hint="手机号 ( 11位数字 )"
+                    android:inputType="number"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:textColor="#999999"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/btn_p_send_verifycode"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/mine_btn_get_verifycode_bg_selector"
+                    android:padding="5dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="获取验证码"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edit_p_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/inputbox_bg_selector"
+                android:hint="昵称 ( 2-12位字母、数字或汉字 )"
+                android:paddingLeft="5dp"
+                android:singleLine="true"
+                android:textColor="#999999"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/edit_p_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/inputbox_bg_selector"
+                android:hint="密码 ( 6-16位字母或数字 )"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="5dp"
+                android:password="true"
+                android:singleLine="true"
+                android:textColor="#999999"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/edit_p_verifycode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/inputbox_bg_selector"
+                android:hint="短信验证码 (4位数字 )"
+                android:inputType="number"
+                android:paddingLeft="5dp"
+                android:singleLine="true"
+                android:textColor="#999999"
+                android:textSize="14sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp" >
+
+                <CheckBox
+                    android:id="@+id/checkbox_p_agree_protocol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/item_checkbox_bg_selector"
+                    android:text="已阅读并同意"
+                    android:textColor="#999999"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/label_p_agree_protocol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/checkbox_p_agree_protocol"
+                    android:layout_toRightOf="@id/checkbox_p_agree_protocol"
+                    android:text="《多酷游戏使用协议》"
+                    android:textColor="#999999"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/btn_p_commit_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/btn_register_bg"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="立即注册"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
