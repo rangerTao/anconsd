@@ -1,5 +1,6 @@
 package com.ranger.bmaterials.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -11,7 +12,6 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.baidu.mobstat.StatActivity;
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.app.MineProfile;
@@ -20,7 +20,7 @@ import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.tools.StringUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 
-public class ChangePwdActivity extends StatActivity implements OnClickListener, IRequestListener, OnCancelListener {
+public class ChangePwdActivity extends Activity implements OnClickListener, IRequestListener, OnCancelListener {
 
 	private CustomProgressDialog progressDialog;
 	//private ProgressDialog progressDialog;

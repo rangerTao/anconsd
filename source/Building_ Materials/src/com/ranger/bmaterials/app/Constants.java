@@ -3,21 +3,19 @@ package com.ranger.bmaterials.app;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
-import android.R.integer;
+import com.ranger.bmaterials.mode.KeywordsList;
+
 import android.os.Environment;
 
-import com.ranger.bmaterials.mode.KeywordsList;
 
 public final class Constants {
 
 	private static final String FORMATTER_DATE_STRING = "yyyy-MM-dd";
 	public static final SimpleDateFormat FORMATER_DATE_FORMAT = new SimpleDateFormat(FORMATTER_DATE_STRING);
 
-	public static int ACT_CANCELLED = 0xFFEE;
-	public static int ACT_FAILED = 0xFFFF;
-	public static int ACT_SUCCESS = 0xFF00;
-
 	public static final boolean DEBUG = true;
+	
+	public static KeywordsList keywordsListForSearch;
 
 	public static final int SHOW_GUIDE_ONLY_FIRST_INSTALLED = 1;// 只有首次安装有引导页
 	public static final int SHOW_GUIDE_NONE = 2;// 首次安装和覆盖安装都没有引导页
@@ -27,7 +25,6 @@ public final class Constants {
 
 	public static boolean isFirstStartWhenVersionChanged;// 当版本号变化时的首次启动
 	public static boolean isFirstInstalled;// 应用第一次启动 不包含覆盖安装时的情况
-	public static boolean speedServiceStarted = false;// 高速下载服务是否已经启动
 
 	public static final boolean speed_download_enable = false;// 高速下载开关
 
@@ -41,14 +38,9 @@ public final class Constants {
 
 	public static final int keywordCount = 50;
 	public static final int IMAGE_LOADER_MAX_MEMCACHE = 512 * 1024;
-	public static KeywordsList keywordsListForSearch;
-	public static boolean isFirstDownload = true;
-	public static HashMap<String, Integer> mergeFailedCountMap = new HashMap<String, Integer>();
 
 	public static final String SDCARD = Environment.getExternalStorageDirectory().getPath();
 	public static final String PHOTO_LOCAL_FILE = "headphoto.jpg";
-//	public static final String PHOTO_UNCOMMIT_FILE = "unused_photo.jpg";
-//	public static final String TEMPFILE_NAME = "headphoto_temp";
 	public static final String IMAGE_PATH = SDCARD + Constants.IMAGE_CACHE;
     /**
      * String constants
@@ -56,17 +48,8 @@ public final class Constants {
 	/** 程序设置 */
 	public static final String SETTINGS_PREFERENCE = "settings_preference";
 	/** 设备地址 */
-	public static final String MACADDRESS = "macaddress";
 
 	/** 服务器地址 */
-//	public static final String GAMESEARCH_SERVER = "http://apitest.duoku.com:9090/gamehall/service2";
-//    public static final String GAMESEARCH_KEYWORDS = "http://itest.client.duoku.com:10086/atcmlt/bookNotice.php?channel=game&key=";
-
-	public static final String GAMESEARCH_SERVER =	"http://gamehall.m.duoku.com/gamehall/service2";
-    public static final String GAMESEARCH_KEYWORDS = "http://api.m.duoku.com/atcmlt/bookNotice.php?channel=game&key=";
-		
-	public static final String ONLINE_GAME = "1";
-	public static final String OFFLINE_GAME = "2";
 
     /** tag定义：激活 */
     public static final int NET_TAG_GET_PROVINCE = 100;
@@ -252,15 +235,6 @@ public final class Constants {
 	/* 必玩 */
 	public static final int NET_TAG_GET_MUST_PLAY_GAMES = 806;
 
-	/**
-	 * Main content in Coin Center
-	 */
-	public static final int NET_TAG_MAIN_CONTENT_IN_COIN_CENTER = 802;
-
-	/**
-	 * Exchange action in coin center
-	 */
-	public static final int NET_TAG_EXCHANGE_ACTION_IN_COIN_CENTER = 803;
 	/**
 	 * 获取推荐应用.
 	 */

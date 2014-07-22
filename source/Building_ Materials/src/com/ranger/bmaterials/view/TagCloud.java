@@ -20,15 +20,6 @@ public class TagCloud implements Iterable{
 	
 	//#E066FF #ADFF2F #8B0A50 #1C86EE #2B2B2B #00EE76
 	
-	private Integer[] backgrounds = {
-			R.drawable.search_keyword_bg_dark_blue,
-			R.drawable.search_keyword_bg_green,
-			R.drawable.search_keyword_bg_light_blue,
-			R.drawable.search_keyword_bg_purple,
-			R.drawable.search_keyword_bg_red,
-			R.drawable.search_keyword_bg_yellow
-	};
-
 	public TagCloud(){
 		this(new ArrayList<Tag>());
 	}
@@ -72,9 +63,7 @@ public class TagCloud implements Iterable{
 			largest = Math.max(largest, j);
 			smallest = Math.min(smallest, j);
 		}
-		 List<Integer> bgs = Arrays.asList(backgrounds);
 		int bgSize = textColors.length;
-		Collections.shuffle(bgs);
 		
 		//figuring out and assigning the colors/ textsize
 		Tag tempTag;

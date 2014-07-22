@@ -1,7 +1,6 @@
 package com.ranger.bmaterials.ui.gametopic;
 
 import com.ranger.bmaterials.R;
-import com.ranger.bmaterials.view.AlwaysMarqueeTextView;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

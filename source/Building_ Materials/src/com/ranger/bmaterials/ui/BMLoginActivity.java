@@ -30,7 +30,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.Toast;
 
-import com.baidu.mobstat.StatActivity;
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.app.MineProfile;
@@ -42,7 +41,7 @@ import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.tools.StringUtil;
 import com.ranger.bmaterials.view.MyPopupWindows;
 
-public class BMLoginActivity extends StatActivity implements OnClickListener,
+public class BMLoginActivity extends Activity implements OnClickListener,
 		NetUtil.IRequestListener, OnCancelListener, TextWatcher, OnDismissListener,
 		OnItemClickListener {
 
@@ -247,8 +246,6 @@ public class BMLoginActivity extends StatActivity implements OnClickListener,
 	@Override
 	public void onDismiss() {
 		accountMenu = null;
-		ImageView imgView = (ImageView) findViewById(R.id.img_account_button);
-		imgView.setImageResource(R.drawable.ic_account_down);
 	}
 
 	private void disMissProgressDialog() {

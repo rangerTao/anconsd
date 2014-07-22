@@ -11,16 +11,12 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
-import com.baidu.android.common.util.CommonParam;
-import com.baidu.mobstat.StatService;
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.GameTingApplication;
 import com.ranger.bmaterials.app.MineProfile;
-import com.ranger.bmaterials.mode.InstalledAppInfo;
 import com.ranger.bmaterials.tools.ConnectManager;
 import com.ranger.bmaterials.tools.PhoneHelper;
-import com.ranger.bmaterials.ui.MineMsgItemInfo;
 /**
  * 
  * @author wenzutong
@@ -39,7 +35,6 @@ public final class JSONBuilder {
 			jsonObject.put(Constants.JSON_OS, Build.VERSION.RELEASE);
 			jsonObject.put(Constants.JSON_IMEI, PhoneHelper.getIMEI());
 			jsonObject.put(Constants.JSON_UDID, PhoneHelper.getUdid());
-            jsonObject.put(Constants.JSON_BDCUID, CommonParam.getCUID(context));
 
 			jsonObject.put(Constants.JSON_CHANNEL, PhoneHelper.getChannelData(context.getString(R.string.channel_name)));
 
@@ -49,12 +44,6 @@ public final class JSONBuilder {
 
 			jsonObject.put(Constants.JSON_PUSH_CHANNELID, MineProfile.getInstance().getPush_channelid());
 			jsonObject.put(Constants.JSON_PUSH_USERID, MineProfile.getInstance().getPush_userid());
-
-			if (Constants.EXCLUDE_ONLINE_GAME) {
-				jsonObject.put(Constants.JSON_CONTENT_TYPE, Constants.ONLINE_GAME);
-			} else {
-				jsonObject.put(Constants.JSON_CONTENT_TYPE, Constants.OFFLINE_GAME);
-			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -676,48 +665,6 @@ public final class JSONBuilder {
 		return res;
 	}
 
-	public String buildDeleteMessage(String userid, String sessionid, int msgtype, List<MineMsgItemInfo> msgarray) {
-		String res = "";
-		try {
-			JSONObject jsonObj = createJsonObject();
-			jsonObj.put(Constants.JSON_TAG, String.valueOf(Constants.NET_TAG_DEL_SETREAD_MESSAGE));
-			jsonObj.put(Constants.JSON_USERID, userid);
-			jsonObj.put(Constants.JSON_SESSIONID, sessionid);
-			jsonObj.put(Constants.JSON_MSGTYPE, msgtype);
-
-			JSONArray array = new JSONArray();
-			for (MineMsgItemInfo item : msgarray) {
-				JSONObject obj = new JSONObject();
-				obj.put(Constants.JSON_MSGID, item.msgID);
-				array.put(obj);
-			}
-
-			jsonObj.put(Constants.JSON_MSGLIST, array);
-			res = jsonObj.toString();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
-		return res;
-	}
-
-	public String buildMessageDetail(String userid, String sessionid, String msgid) {
-		String res = "";
-		try {
-			JSONObject jsonObj = createJsonObject();
-			jsonObj.put(Constants.JSON_TAG, String.valueOf(Constants.NET_TAG_GET_MESSAGE_DETAIL));
-			jsonObj.put(Constants.JSON_USERID, userid);
-			jsonObj.put(Constants.JSON_SESSIONID, sessionid);
-			jsonObj.put(Constants.JSON_MSGID, msgid);
-
-			res = jsonObj.toString();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
-		return res;
-	}
-
 	public String buildDynamicData(String userid, String sessionid) {
 		String res = "";
 		try {
@@ -1064,38 +1011,6 @@ public final class JSONBuilder {
 			jsonObj.put(Constants.JSON_PACKAGES, ja);
 			res = jsonObj.toString();
 		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
-		return res;
-	}
-
-	public String buildUpdateGames(List<InstalledAppInfo> apps) {
-		String res = "";
-		try {
-			JSONObject jsonObj = createJsonObject();
-			jsonObj.put(Constants.JSON_TAG, String.valueOf(Constants.NET_TAG_UPDATE_GAMES));
-			int size = apps.size();
-			JSONArray ja = new JSONArray();
-			for (int i = 0; i < size; i++) {
-				InstalledAppInfo app = apps.get(i);
-				JSONObject innerObj = new JSONObject();
-				innerObj.put(Constants.JSON_VERSION, String.valueOf(app.getVersion()));
-				innerObj.put(Constants.JSON_VERSION_INT, String.valueOf(app.getVersionInt()));
-				innerObj.put(Constants.JSON_GAME_SIGN, "");
-				innerObj.put(Constants.JSON_APKMD5, app.getFileMd5());
-				// Just for test.
-				/*
-				 * if("com.yinhan.hunter.dk".equals(app.getPackageName())){
-				 * innerObj.put(Constants.JSON_APKMD5,
-				 * "e49e33084aa97d131c3ff3c6cbc48475"); }
-				 */
-				innerObj.put(Constants.JSON_PKGNAME, app.getPackageName());
-				ja.put(innerObj);
-			}
-			jsonObj.put(Constants.JSON_PACKAGES, ja);
-			res = jsonObj.toString();
-		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

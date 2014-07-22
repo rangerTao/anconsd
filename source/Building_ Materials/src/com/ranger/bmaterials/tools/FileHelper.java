@@ -225,24 +225,6 @@ public final class FileHelper {
 		return file.getPath();
 	}
 	
-	public static String getFileMd5(String path) {
-		 MessageDigest messageDigest = null;  
-		    try {  
-		        messageDigest = MessageDigest.getInstance("MD5");  
-		        FileInputStream in = new FileInputStream(path);  
-		        byte[] buffer = new byte[2048];  
-		        int len = 0;  
-		        while ((len = in.read(buffer)) > 0) {  
-		            messageDigest.update(buffer, 0, len);  
-		        }  
-		        in.close();  
-		    } catch (Exception e) {  
-		    	e.printStackTrace();
-		        return "";  
-		    }  
-		    return AppUtil.toHexString(messageDigest.digest());  
-	}
-
 	public static void saveResultToLogFile(String res , String filename,boolean isappend){
 		
 		if(!Constants.DEBUG)

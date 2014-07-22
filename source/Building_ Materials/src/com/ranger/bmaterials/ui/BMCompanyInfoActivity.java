@@ -39,7 +39,7 @@ public class BMCompanyInfoActivity extends FragmentActivity implements PageCallb
         userid = getIntent().getIntExtra(USER_ID, 0);
         name = getIntent().getStringExtra(USER_NAME);
 
-        setContentView(R.layout.mine_activity_collection2);
+        setContentView(R.layout.bm_layout_company_info);
 
         findViewById(R.id.btn_back).setOnClickListener(this);
 
@@ -112,7 +112,7 @@ public class BMCompanyInfoActivity extends FragmentActivity implements PageCallb
     public void onClick(View v) {
         int id = v.getId();
 
-        if (id == R.id.img_back) {
+        if (id == R.id.btn_back) {
             this.finish();
         }
     }

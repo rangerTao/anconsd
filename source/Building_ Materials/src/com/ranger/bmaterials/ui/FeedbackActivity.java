@@ -1,5 +1,6 @@
 package com.ranger.bmaterials.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -15,17 +16,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.baidu.mobstat.StatActivity;
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.netresponse.BaseResult;
-import com.ranger.bmaterials.sapi.SapiLoginActivity;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.tools.StringUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 
-public class FeedbackActivity extends StatActivity implements OnClickListener,
+public class FeedbackActivity extends Activity implements OnClickListener,
 		TextWatcher, IRequestListener, OnCancelListener {
 
 	private EditText content;// 文本输入框
@@ -89,8 +88,8 @@ public class FeedbackActivity extends StatActivity implements OnClickListener,
 				return;
 			}
 
-			requestId = NetUtil.getInstance().requestFeedback(userid,
-					sessionid, content, contact, this);
+//			requestId = NetUtil.getInstance().requestFeedback(userid,
+//					sessionid, content, contact, this);
 
 			try {
 				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -190,10 +189,6 @@ public class FeedbackActivity extends StatActivity implements OnClickListener,
 		switch (errorCode) {
 		case DcError.DC_NEEDLOGIN:
 			MineProfile.getInstance().setIsLogin(false);
-			Intent intent = new Intent(this, SapiLoginActivity.class);
-			startActivity(intent);
-			CustomToast.showToast(this,
-					getResources().getString(R.string.need_login_tip));
 			break;
 		default:
 			break;

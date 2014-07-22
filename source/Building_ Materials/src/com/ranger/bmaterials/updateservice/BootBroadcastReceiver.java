@@ -15,9 +15,6 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		if (intent.getAction().equals(ACTION)) {
 			logger.d("start service--");
-			
-			Intent i = new Intent(context, CheckGameUpdateService.class);
-			context.startService(i);
 		}
 	}
 }

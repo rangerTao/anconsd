@@ -54,9 +54,6 @@ public class ImageLoaderHelper {
     private static boolean STORE_ON_SDCARD = true;
 
     static{
-        if(DeviceUtil.getUsableSpace() < 0){
-            STORE_ON_SDCARD = false;
-        }
     }
 
 	/**
@@ -132,10 +129,6 @@ public class ImageLoaderHelper {
 
 	private static DisplayImageOptions options = getCustomOption(R.drawable.game_icon_list_default);
 
-	public static DisplayImageOptions optionForDownload = getOptionForDownloadManage(R.drawable.game_icon_list_default);
-
-	public static DisplayImageOptions optionsForLargImage = getCustomOption(R.drawable.ad_default);
-
 	public static DisplayImageOptions getDefaultImageOptions(boolean cacheOnDisc) {
 		return new DisplayImageOptions.Builder().cacheInMemory(false)
 				.considerExifParams(true).cacheOnDisc(cacheOnDisc)
@@ -198,10 +191,6 @@ public class ImageLoaderHelper {
 	public static void displayImage(String imageUrl, ImageView imageView) {
 		displayImage(imageUrl, imageView, options);
 
-	}
-
-	public static void displayLargeImage(String imageUrl, ImageView imageView) {
-		displayImage(imageUrl, imageView, optionsForLargImage);
 	}
 
 	public static void displayImage(String imageUrl, ImageView imageView,

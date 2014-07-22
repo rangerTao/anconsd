@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.netresponse.BMProvinceListResult;
-import com.ranger.bmaterials.tools.install.PackageUtils;
 import com.ranger.bmaterials.view.StickyListHeadersAdapter;
 
 import java.util.ArrayList;
@@ -28,8 +27,6 @@ public class BMProvinceAdapter extends AbstractListAdapter<BMProvinceListResult.
     private SharedPreferences spSize;
 
     private Context mContext;
-
-    private PackageUtils pUtil;
 
     private final int REFRESH_SINGLE_SIZE = 1;
 

@@ -18,15 +18,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.baidu.mobstat.StatService;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.adapter.AbstractListAdapter;
 import com.ranger.bmaterials.adapter.BMProvinceAdapter;
-import com.ranger.bmaterials.app.AppCache;
-import com.ranger.bmaterials.app.AppManager;
 import com.ranger.bmaterials.app.Constants;
-import com.ranger.bmaterials.app.PackageHelper;
 import com.ranger.bmaterials.bitmap.ImageLoaderHelper;
 import com.ranger.bmaterials.listener.SearchKeywordsPreloadListener;
 import com.ranger.bmaterials.net.NetManager;
@@ -34,7 +30,6 @@ import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.tools.MyLogger;
 import com.ranger.bmaterials.utils.NetUtil;
-import com.ranger.bmaterials.tools.install.BackAppListener;
 import com.ranger.bmaterials.view.CustomFragmentTabHost;
 import com.ranger.bmaterials.work.SplashTask;
 import com.ranger.bmaterials.work.SplashTask.IEnterHallCallBack;
@@ -115,12 +110,6 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
     @Override
     public void onResume() {
         super.onResume();
-        if (JUMP_TO_TAB_EXTRA != -1) {
-            mTabHost.setCurrentTab(JUMP_TO_TAB_EXTRA);
-            JUMP_TO_TAB_EXTRA = -1;
-        }
-
-        StatService.onResume(this);
 
     }
 
@@ -128,7 +117,6 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
     protected void onPause() {
         // TODO Auto-generated method stub
         super.onPause();
-        StatService.onPause(this);
     }
 
     @Override
@@ -161,15 +149,8 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
         // @Override
         // public void run() {
         try {
-            PackageHelper.removeDownloadProgressListener();
 
             ImageLoaderHelper.onDestroy();
-            BackAppListener.getInstance().onDestroy();
-            AppCache.getInstance().onDestroy();
-            AppManager manager = AppManager.getInstance(getApplicationContext());
-
-            // manager.pauseDownloadGames();
-            manager.onDestroy();
         } catch (Exception e) {
         }
         //
@@ -185,14 +166,6 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             int code = event.getKeyCode();
             if (code == KeyEvent.KEYCODE_BACK) {
-                // 按返回键返回首页
-                if (mTabHost != null && mTabHost.getCurrentTabTag() != null && mTabHost.getCurrentTabTag().equals(getString(CustomFragmentTabHost.TAB_HOME_ID))) {
-                    if (HomeFragment.turn2TabFourTag) {
-                        mTabHost.setCurrentTab(2);
-                        HomeFragment.turn2TabFourTag = false;
-                        return true;
-                    }
-                }
 
                 long currentTime = System.currentTimeMillis();
                 if ((currentTime - touchTime) >= 2000) {

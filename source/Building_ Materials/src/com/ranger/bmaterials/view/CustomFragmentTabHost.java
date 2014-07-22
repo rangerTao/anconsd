@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.ranger.bmaterials.R;
-import com.ranger.bmaterials.statistics.ClickNumStatistics;
 import com.ranger.bmaterials.ui.BMMineFragment;
 import com.ranger.bmaterials.ui.BMSearchFragment;
 
@@ -102,25 +101,6 @@ public class CustomFragmentTabHost extends FragmentTabHost {
 
 	public void init(FragmentManager fm) {
 		setup(getContext(), fm, R.id.realtabcontent);
-
-		setOnTabChangedListener(new OnTabChangeListener() {
-			@Override
-			public void onTabChanged(String tabId) {
-				Context cx = getContext();
-				current_tab_id = tabId;
-				if (tabId.equals(cx.getString(TAB_HOT_ID))) {
-					ClickNumStatistics.addHallTabGameStatistics(cx);
-				} else if (tabId.equals(cx.getString(TAB_CLASS_ID))) {
-					ClickNumStatistics.addHallTabSquareStatistics(cx);
-				} else if (tabId.equals(cx.getString(TAB_HOME_ID))) {
-					ClickNumStatistics.addHallTabHomeStatistics(cx);
-				} else if (tabId.equals(cx.getString(TAB_DISCOVER_ID))) {
-					ClickNumStatistics.addHallTabSearchStatistics(cx);
-				} else if (tabId.equals(cx.getString(TAB_MINE_ID))) {
-					ClickNumStatistics.addMineTabClickNumStatistics(cx);
-				}
-			}
-		});
 	}
 
 	public static final int TAB_HOT_ID = R.string.tab_name_hot_hall;

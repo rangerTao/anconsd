@@ -8,7 +8,6 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.ranger.bmaterials.R;
-import com.ranger.bmaterials.tools.ApkUtil;
 
 public abstract class BackBaseActivity extends Activity implements OnClickListener {
 	protected Intent intent;
@@ -34,7 +33,6 @@ public abstract class BackBaseActivity extends Activity implements OnClickListen
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.img_msgedit:
-			ApkUtil.shareApp(this, actshare);
 			break;
 		default:
 			break;

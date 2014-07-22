@@ -19,51 +19,6 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="popup_down_animation" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/popup_down_enter</item>
-        <item name="android:windowExitAnimation">@anim/popup_down_exit</item>
-        <item name="android:backgroundDimEnabled">true</item>
-        <!--
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:windowSoftInputMode">stateUnchanged|adjustResize</item>
-        -->
-    </style>
-
-    <style name="popup_up_animation" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/popup_up_enter</item>
-        <item name="android:windowExitAnimation">@anim/popup_up_exit</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-    </style>
-
-    <style name="starRatingBar4" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/star_rating_bar_comment_game_detail</item>
-        <item name="android:minHeight">27dip</item>
-        <item name="android:maxHeight">32dip</item>
-    </style>
-
-    <style name="starRatingBar3" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/star_rating_bar_game_detail</item>
-        <item name="android:minHeight">18dip</item>
-        <item name="android:maxHeight">18dip</item>
-    </style>
-
-    <style name="starRatingBar2" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/star_rating_bar_full</item>
-        <item name="android:minHeight">12dip</item>
-        <item name="android:maxHeight">12dip</item>
-    </style>
-
-    <style name="starRatingBar" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/star_rating_bar_full</item>
-        <item name="android:minHeight">15dip</item>
-        <item name="android:maxHeight">15dip</item>
-    </style>
-
     <style name="dialog_style_base" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
@@ -75,88 +30,11 @@
         <item name="android:windowSoftInputMode">stateUnchanged|adjustResize</item>
     </style>
 
-    <style name="dialog_style_push_up" parent="@style/dialog_style_base">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowAnimationStyle">@style/push_up_animation</item>
-    </style>
-
-    <style name="dialog_style_zoom" parent="@style/dialog_style_base">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-    </style>
-
-    <style name="push_up_animation" parent="@android:style/Animation.Dialog">
-        <item name="android:windowEnterAnimation">@anim/push_up_in</item>
-    </style>
-
-    <style name="zoom_in_out_animation" parent="@android:style/Animation.Dialog">
-        <item name="android:windowEnterAnimation">@anim/zoom_in</item>
-        <item name="android:windowExitAnimation">@anim/zoom_out</item>
-    </style>
-
     <style name="translucent">
         <item name="android:windowBackground">@color/transparent2</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="manager_popupwindow_item_style">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:minWidth">66dp</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:layout_marginBottom">5dp</item>
-        <item name="android:textColor">@color/popup_text_colors</item>
-    </style>
-
-    <style name="manager_popupwindow_layout_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/manager_activity_popupwindow_down_bg</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingRight">10dp</item>
-        <item name="android:gravity">center_vertical</item>
-    </style>
-
-    <style name="manager_popupwindow_layout_up_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/manager_activity_popupwindow_up_bg</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingRight">10dp</item>
-        <item name="android:gravity">center_vertical</item>
-    </style>
-
-    <style name="manager_popupwindow_item_up_style">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:minWidth">66dp</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:layout_marginBottom">5dp</item>
-        <item name="android:textColor">@color/popup_text_colors</item>
-    </style>
-
-    <!--
-          <item name="android:layout_marginLeft">8dp</item>
-        <item name="android:layout_marginRight">8dp</item>
-    -->
-
-
-    <!--
-     @android:style/Widget.ListView.White 
-     <item name="android:background">@android:color/transparent</item>
-      <item name="android:listSelector">@android:color/transparent</item>
-      parent="android:Widget.ListView.White"
-    -->
     <style name="content_list">
         <item name="android:background">@drawable/background_full_color</item>
         <item name="android:layout_width">fill_parent</item>
@@ -183,61 +61,6 @@
         <item name="android:fadingEdge">none</item>
     </style>
 
-    <style name="content_list_item_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:baselineAligned">false</item>
-        <item name="android:descendantFocusability">blocksDescendants</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:background">@drawable/list_item_bg_selector</item>
-        <item name="android:paddingBottom">10dp</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">12dp</item>
-    </style>
-
-    <style name="content_list_item_style_for_square">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-         <!--       <item name="android:layout_height">fill_parent</item>
-        <item name="android:baselineAligned">false</item>
-        <item name="android:descendantFocusability">blocksDescendants</item>
-        <item name="android:gravity">center_vertical</item>-->
-        <item name="android:orientation">horizontal</item>
-    </style>
-
-    <style name="content_list_item_style_for_card">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginRight">6dp</item>
-        <item name="android:layout_marginLeft">6dp</item>
-        <item name="android:layout_marginTop">6dp</item>
-        <item name="android:baselineAligned">false</item>
-        <item name="android:descendantFocusability">blocksDescendants</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:background">@drawable/list_card_item_selector</item>
-    </style>
-
-    <style name="content_list_item_button_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/list_item_button_selector</item>
-        <item name="android:duplicateParentState">false</item>
-        <item name="android:textSize">13sp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:minWidth">56dp</item>
-        <item name="android:minHeight">28dp</item>
-        <item name="android:textColor">#333</item>
-    </style>
-
-    <!--
-        <item name="android:paddingLeft">18dp</item>
-        <item name="android:paddingRight">18dp</item>
-        <item name="android:paddingTop">7dp</item>
-        <item name="android:paddingBottom">7dp</item>
-    -->
     <style name="content_list_item_title_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -292,39 +115,6 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">8dp</item>
         <item name="android:max">100</item>
-    </style>
-
-    <style name="content_loading_progress_style" parent="@android:style/Widget.ProgressBar.Small">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:indeterminateDrawable">@drawable/custom_progress</item>
-    </style>
-
-    <style name="content_loading_progress_blue_style" parent="@android:style/Widget.ProgressBar.Large">
-        <item name="android:minWidth">30dip</item>
-        <item name="android:maxWidth">30dip</item>
-        <item name="android:minHeight">30dip</item>
-        <item name="android:maxHeight">30dip</item>
-        <item name="android:indeterminateDrawable">@drawable/custom_progress_blue</item>
-    </style>
-
-    <style name="segment_item_style">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">33dp</item>
-        <item name="android:button">@null</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/radio_colors</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
-    </style>
-
-    <style name="segment_layout_style">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/square_topbar_bg</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:orientation">horizontal</item>
     </style>
 
     <style name="pull_header_TextAppearance" parent="@android:style/TextAppearance.Small">
@@ -431,12 +221,6 @@
     <style name="CustomProgressDialog" parent="@style/CustomDialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <style name="home_guide_popup_animation" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/alpha_in</item>
-        <item name="android:windowExitAnimation">@anim/alpha_out</item>
-        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
     <style name="exchange_card_text_style">

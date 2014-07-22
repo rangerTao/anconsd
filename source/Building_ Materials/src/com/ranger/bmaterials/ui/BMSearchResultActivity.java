@@ -27,13 +27,9 @@ import android.widget.TextView;
 
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.adapter.BMSearchResultAdapter;
-import com.ranger.bmaterials.adapter.SearchRecommedAdapter;
 import com.ranger.bmaterials.adapter.AbstractListAdapter.OnListItemClickListener;
-import com.ranger.bmaterials.app.AppManager;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
-import com.ranger.bmaterials.app.AppManager.GameStatus;
-import com.ranger.bmaterials.app.PackageHelper.PackageCallback;
 import com.ranger.bmaterials.mode.*;
 import com.ranger.bmaterials.netresponse.BMSearchResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
@@ -75,7 +71,6 @@ public class BMSearchResultActivity extends Activity implements
     private GridView recomendGv;
 
     private View errorView;
-    private SearchRecommedAdapter recommedAdapter;
 
     private View footer;
 
@@ -423,7 +418,6 @@ public class BMSearchResultActivity extends Activity implements
                     // Toast.LENGTH_LONG).show();
                     host.showNoMoreView();
                 } else {
-                        host.checkAndFillSearchResult(searchData);
                         host.showLoadingMoreFooter();
                         host.setFooterVisible(false);
 
@@ -485,35 +479,6 @@ public class BMSearchResultActivity extends Activity implements
 
     private Map<String, Long> observersIds = new HashMap<String, Long>();
     private Map<String, String> downloadedIds = new HashMap<String, String>();
-
-    private void checkAndFillSearchResult(final List<BMSearchResult.BMSearchData> data) {
-
-        // 将搜索设置下载以及安装的状态
-        new AsyncTask<Void, Void, Map<String, GameStatus>>() {
-
-            protected void onPreExecute() {
-                // registerListener();
-            }
-
-            ;
-
-            @Override
-            protected Map<String, GameStatus> doInBackground(Void... params) {
-                try {
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            protected void onPostExecute(
-                    java.util.Map<String, GameStatus> result) {
-                doFillSearchResult(data);
-            }
-
-            ;
-        }.execute();
-    }
 
     private void doFillSearchResult(List<BMSearchResult.BMSearchData> data) {
         if (data == null) {
@@ -605,19 +570,6 @@ public class BMSearchResultActivity extends Activity implements
     public void onItemClick(AdapterView<?> adapterView, View arg1,
                             int position, long id) {
         BMSearchResult.BMSearchData item = null;
-        final AppManager manager = AppManager
-                .getInstance(getApplicationContext());
-        // final SearchItem item = null ;
-        if (adapterView instanceof ListView) {
-            Object item2 = adapterView.getAdapter().getItem(position);
-            if (item2 != null) {
-                item = (BMSearchResult.BMSearchData) item2;
-                if (item2 == item) {
-                    // Toast.makeText(getApplicationContext(), "same",
-                    // 0).show();
-                }
-            }
-        }
         if (item != null){
 
             Intent intentDetail = new Intent(this, BMProductDetailActivity.class);
@@ -630,7 +582,6 @@ public class BMSearchResultActivity extends Activity implements
 
     // //////////////////////////////////////////////////////////////////////////////////////
     private boolean needRequery = false;
-    private PackageCallback packageCallback;
 
     private void registerListener() {
     }
