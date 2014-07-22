@@ -42,16 +42,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
 
-    <!-- Add permission for baidu account -->
-    <permission
-        android:name="com.baidu.permission.SHARE"
-        android:description="@string/sapi_share_description"
-        android:label="@string/sapi_share_label"
-        android:permissionGroup="android.permission-group.PERSONAL_INFO"
-        android:protectionLevel="dangerous" />
-
-    <uses-permission android:name="com.baidu.permission.SHARE" />
-
     <application
         android:name=".app.GameTingApplication"
         android:allowBackup="true"
@@ -59,45 +49,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
-        <!-- 百度移动统计 -->
-        <!-- 渠道商编号，其中name请不要改，将value修改为渠道商编号。渠道名称请到mtj.baidu.com的渠道管理中修改 -->
-        <meta-data
-            android:name="BaiduMobAd_CHANNEL"
-            android:value="202" />
-        <meta-data
-            android:name="BaiduMobAd_STAT_ID"
-            android:value="6499e1e234" />
-
-        <!-- 以下是可选的 -->
-        <!-- 是否开启错误日志统计，默认为f alse -->
-        <meta-data
-            android:name="BaiduMobAd_EXCEPTION_LOG"
-            android:value="true" />
-        <!-- 日志发送策略，可选值：APP_START、ONCE_A_DAY、SET_TIME_INTERVAL，默认为APP_START -->
-        <meta-data
-            android:name="BaiduMobAd_SEND_STRATEGY"
-            android:value="APP_START" />
-        <!-- 上面的日志发送策略 为SET_TIME_INTERVAL时，需设定时间间隔。取值为1-24（小时）的整数，默认为1 -->
-        <meta-data
-            android:name="BaiduMobAd_TIME_INTERVAL"
-            android:value="1" />
-        <!-- 日志仅在wifi网络下发送，默认为false -->
-        <meta-data
-            android:name="BaiduMobAd_ONLY_WIFI"
-            android:value="false" />
-        <!-- 是否获取基站位置信息，默认为true(获取基站位置) -->
-        <meta-data
-            android:name="BaiduMobAd_CELL_LOCATION"
-            android:value="false" />
-        <!-- 是否获取GPS位置信息，默认为获取GPS位置但需开启FINE_LOCATION权限 -->
-        <meta-data
-            android:name="BaiduMobAd_GPS_LOCATION"
-            android:value="false" />
-        <!-- 是否获取WIFI位置信息，默认为true(获取WIFI位置) -->
-        <meta-data
-            android:name="BaiduMobAd_WIFI_LOCATION"
-            android:value="true" />
 
         <activity
             android:name=".ui.MainHallActivity"
@@ -162,37 +113,13 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.ranger.bmaterials.ui.BindPhoneActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ranger.bmaterials.ui.BindPhoneVerifyActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.ranger.bmaterials.ui.ChangePwdActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".ui.gametopic.BMProductDetailActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.ranger.bmaterials.ui.AboutUsActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:name="com.ranger.bmaterials.ui.ManagerActivity"
-            android:exported="true"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ranger.bmaterials.ui.GameGuideDetailActivity2"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ranger.bmaterials.ui.IgnoredUpdatableAppsActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name="com.ranger.bmaterials.ui.ActivityDetailActivity"
             android:screenOrientation="portrait" />

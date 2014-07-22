@@ -46,7 +46,6 @@ public class UpdateHelper implements IRequestListener, OnClickListener, OnCancel
 	
 	/**
 	 * Check GameTing update.
-	 * @param manualCheck If true, means auto-check, should check update more than 2 days.
 	 * If false, means manually check, then should always check update without any limitation.
 	 */
 	public void checkGameTingUpdate(boolean autoCheck) {
@@ -137,7 +136,6 @@ public class UpdateHelper implements IRequestListener, OnClickListener, OnCancel
 				CustomToast.showLoginRegistSuccessToast(this.context, CustomToast.DC_OK_CHECK_VERSION);
 			}
 			MineProfile.getInstance().setUpdateAvailable(false);
-			MineProfile.getInstance().setAppversion(AppUtil.getAppVersion(context));
 		} else {// if (updateType == 1) {
 
 			MineProfile.getInstance().setUpdateAvailable(true);

@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import com.ranger.bmaterials.app.AppManager;
 import com.ranger.bmaterials.app.GameTingApplication;
 
 import android.annotation.SuppressLint;
@@ -44,21 +43,6 @@ public class DeviceUtil {
 		return maxMemory ;
 	}
 	
-    @TargetApi(9)
-    public static long getUsableSpace() {
-    	long ret = -1 ;
-    	try {
-        	File path = Environment.getExternalStorageDirectory().getAbsoluteFile();
-        	ret = getUsableSpace(path);
-        	long ret2 = getUsableSpace(new File(AppManager.DOWNLOAD_FOLDER));
-        	//Log.i("DeviceUtil", "getUsableSpace(/) "+ret);
-        	//Log.i("DeviceUtil", "getUsableSpace("+AppManager.DOWNLOAD_FOLDER+") "+ret2);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-       return ret ;
-    }
-    
 	@SuppressLint("NewApi")
 	private static long getUsableSpace(File path) {
 		try {

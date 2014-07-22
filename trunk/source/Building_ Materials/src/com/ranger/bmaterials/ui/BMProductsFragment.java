@@ -21,10 +21,8 @@ import android.widget.ListView;
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.MineProfile;
-import com.ranger.bmaterials.broadcast.BroadcaseSender;
 import com.ranger.bmaterials.netresponse.BMSearchResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
-import com.ranger.bmaterials.netresponse.MineGuidesResult;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 import com.ranger.bmaterials.view.PagerSlidingTabStrip;
@@ -163,12 +161,6 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		MineGuideItemInfo guideInfo = (MineGuideItemInfo) parent.getAdapter().getItem(position);
-
-		Intent in = new Intent(getActivity(), GameGuideDetailActivity2.class);
-		//in.putExtra("gamename", guideInfo.guideTitle);
-		in.putExtra("guideid", guideInfo.guideID);
-		this.startActivity(in);
 	}
 
 	@Override

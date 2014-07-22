@@ -9,14 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.ranger.bmaterials.broadcast.BroadcaseSender;
-import com.ranger.bmaterials.download.DownloadConfiguration;
 import com.ranger.bmaterials.netresponse.BaseResult;
-import com.ranger.bmaterials.netresponse.DynamicDataResult;
 import com.ranger.bmaterials.tools.MyLogger;
 import com.ranger.bmaterials.tools.StringUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
-import com.ranger.bmaterials.tools.install.BackAppListener;
 
 public class MineProfile implements IRequestListener {
 
@@ -250,10 +246,6 @@ public class MineProfile implements IRequestListener {
 			}
 		}
 
-		DownloadConfiguration config = DownloadConfiguration
-				.getInstance(GameTingApplication.getAppInstance());
-		config.setMaxTaskNumber(simultaneousDownloadNum);
-		config.setMobileNetworkAllowed(!downloadOnlyWithWiFi);
 	}
 
 	public boolean Save() {
@@ -471,25 +463,6 @@ public class MineProfile implements IRequestListener {
 		if (this.isLogin != isLogin) {
 			this.isLogin = isLogin;
 		}
-
-		if (this.isLogin) {
-			/**
-			 * 通知用户已经登陆
-			 */
-			BroadcaseSender sender = BroadcaseSender
-					.getInstance(GameTingApplication.getAppInstance()
-							.getApplicationContext());
-			sender.notifyUserLogin();
-		} else {
-
-			/**
-			 * 通知用户退出登陆
-			 */
-			BroadcaseSender sender = BroadcaseSender
-					.getInstance(GameTingApplication.getAppInstance()
-							.getApplicationContext());
-			sender.notifyUserLogout();
-		}
 	}
 
     public String getToken() {
@@ -568,9 +541,6 @@ public class MineProfile implements IRequestListener {
 		if (this.downloadOnlyWithWiFi != downloadOnlyWithWiFi) {
 			this.downloadOnlyWithWiFi = downloadOnlyWithWiFi;
 		}
-		DownloadConfiguration config = DownloadConfiguration
-				.getInstance(GameTingApplication.getAppInstance());
-		config.setMobileNetworkAllowed(!downloadOnlyWithWiFi, true);
 	}
 
 	public boolean isNoPicture() {
@@ -593,9 +563,6 @@ public class MineProfile implements IRequestListener {
 		if (this.simultaneousDownloadNum != simultaneousDownloadNum) {
 			this.simultaneousDownloadNum = simultaneousDownloadNum;
 		}
-		DownloadConfiguration config = DownloadConfiguration
-				.getInstance(GameTingApplication.getAppInstance());
-		config.setMaxTaskNumber(simultaneousDownloadNum);
 	}
 
 	public boolean isDeletePkgAfterInstallation() {
@@ -631,8 +598,6 @@ public class MineProfile implements IRequestListener {
 			this.installAutomaticllyAfterDownloading = installAutomaticllyAfterDownloading;
 		}
 		Save(GameTingApplication.getAppInstance());
-		BackAppListener backAppListener = BackAppListener.getInstance();
-		backAppListener.changeAutoInstall(installAutomaticllyAfterDownloading);
 	}
 
 	public String getGamenum() {
@@ -751,14 +716,6 @@ public class MineProfile implements IRequestListener {
 
 	@Override
 	public void onRequestSuccess(BaseResult responseData) {
-		DynamicDataResult result = (DynamicDataResult) responseData;
-		this.gamenum = result.gamenum;
-		this.totalmsgnum = result.totalmsgnum;
-		this.messagenum = result.unreadmsgnum;
-		this.collectnum = result.collectnum;
-		this.coinnum = result.coinnum;
-
-		broadcastEvent();
 	}
 
 	@Override

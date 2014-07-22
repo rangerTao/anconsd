@@ -3,6 +3,7 @@ package com.ranger.bmaterials.ui;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,19 +26,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
-import com.baidu.mobstat.StatActivity;
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.netresponse.UserNameRegisterResult;
-import com.ranger.bmaterials.statistics.UserStatistics;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.tools.StringUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 
-public class BMRegisterActivity extends StatActivity implements OnClickListener,
+public class BMRegisterActivity extends Activity implements OnClickListener,
 		OnCheckedChangeListener, IRequestListener, OnCancelListener, TextWatcher {
 
 	private static final int INPUT_ERROR_USERNAME = 0;
@@ -178,7 +177,6 @@ public class BMRegisterActivity extends StatActivity implements OnClickListener,
 			MineProfile.getInstance().addCoinnum(result.getCoinnum());
 			
 			MineProfile.getInstance().Save();
-			UserStatistics.addManualRegSuccessStatistics(this);
 			
 			registerFinished();
 		} else {
@@ -273,7 +271,6 @@ public class BMRegisterActivity extends StatActivity implements OnClickListener,
             case R.id.btn_back:
                 this.finish();
                 break;
-            case R.id.label_u_agree_protocol:
             case R.id.label_p_agree_protocol:
                 break;
             case R.id.btn_p_send_verifycode:
@@ -420,7 +417,6 @@ public class BMRegisterActivity extends StatActivity implements OnClickListener,
 	}
 
 	private void registerFinished() {
-		UserStatistics.addRegisterNumStatistics(this);
 		MineProfile.getInstance().Print();// for debug
 		if (flag) {
 			// Intent intent = new Intent(this, MineActivity.class);

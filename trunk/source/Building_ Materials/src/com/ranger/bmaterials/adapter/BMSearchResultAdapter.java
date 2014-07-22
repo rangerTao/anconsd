@@ -19,27 +19,18 @@ import android.widget.TextView;
 import com.ranger.bmaterials.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.ranger.bmaterials.bitmap.ImageLoaderHelper;
-import com.ranger.bmaterials.mode.PackageMode;
-import com.ranger.bmaterials.mode.SearchResult.SearchItem;
 import com.ranger.bmaterials.netresponse.BMSearchResult;
-import com.ranger.bmaterials.tools.StringUtil;
-import com.ranger.bmaterials.ui.RoundCornerImageView;
-import com.ranger.bmaterials.view.GameLabelView;
-import com.ranger.bmaterials.view.ImageViewForList;
 
 public class BMSearchResultAdapter extends AbstractListAdapter<BMSearchResult.BMSearchData> {
 
 	private static final String TAG = null;
 	private static final boolean DEBUG = true;
 	
-	DisplayImageOptions options = ImageLoaderHelper.optionForDownload;
-
 	ImageSpan imageSpanFace;
 
 	public BMSearchResultAdapter(Context context) {
 		super(context);
 		this.data = new CopyOnWriteArrayList<BMSearchResult.BMSearchData>();
-		imageSpanFace = new ImageSpan(context, R.drawable.icon_face);
 	}
 
 	static class Holder {

@@ -26,7 +26,6 @@
               android:indeterminateDrawable="@drawable/custom_progress_blue" -->
             <ProgressBar
                 android:id="@+id/pull_to_refresh_progress"
-                style="@style/content_loading_progress_blue_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

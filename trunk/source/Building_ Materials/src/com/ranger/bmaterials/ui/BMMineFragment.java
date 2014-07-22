@@ -48,19 +48,12 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.utils.DiscCacheUtils;
 import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
-import com.ranger.bmaterials.adapter.MyGamesExpandAdapter;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.app.GameTingApplication;
 import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.bitmap.ImageLoaderHelper;
-import com.ranger.bmaterials.broadcast.BroadcaseSender;
-import com.ranger.bmaterials.mode.RecommendAppItemInfo;
 import com.ranger.bmaterials.netresponse.BaseResult;
-import com.ranger.bmaterials.netresponse.DynamicDataResult;
-import com.ranger.bmaterials.netresponse.UserLoginResult;
-import com.ranger.bmaterials.statistics.ClickNumStatistics;
-import com.ranger.bmaterials.statistics.UserStatistics;
 import com.ranger.bmaterials.tools.ConnectManager;
 import com.ranger.bmaterials.tools.Logger;
 import com.ranger.bmaterials.utils.NetUtil;
@@ -68,11 +61,9 @@ import com.ranger.bmaterials.tools.PhoneHelper;
 import com.ranger.bmaterials.tools.StringUtil;
 import com.ranger.bmaterials.tools.UpdateHelper;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
-import com.ranger.bmaterials.view.slideexpand.MyExpandListView;
 
 public class BMMineFragment extends Fragment implements
-        android.view.View.OnClickListener, IRequestListener,
-        OnItemClickListener {
+        android.view.View.OnClickListener, IRequestListener {
 
     private static final String TAG = "BMMineFragment";
     private WindowManager mWindowManager;
@@ -103,13 +94,10 @@ public class BMMineFragment extends Fragment implements
     String SENT_SMS_ACTION = "SENT_SMS_ACTION";
     String DELIVERY_SMS_ACTION = "SENT_SMS_ACTION";
     private String message;
-    private CustomProgressDialog progressDialog = null;
     private boolean hasProgressDlg = false;
     private boolean flag = false;
     private Dialog alertDialog;
     private String nickname;
-
-    private List<RecommendAppItemInfo> recomdAppList;
 
     /**
      * 是否应该重试一键注册请求，如果请求已成功或者请求被用户取消，则不应该再重试，初始状态为true
@@ -152,35 +140,6 @@ public class BMMineFragment extends Fragment implements
         }
     };
 
-    protected BroadcastReceiver mRefreshDataReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(MineProfile.MINE_DYNAMIC_DATA_REFRESH) && isLogin) {
-                NetUtil.getInstance().requestDynamicData(
-                        MineProfile.getInstance().getUserID(),
-                        MineProfile.getInstance().getSessionID(),
-                        BMMineFragment.this);
-            }
-        }
-    };
-
-    private void registerReceiver() {
-        // IntentFilter intentFilter = new
-        // IntentFilter(BroadcaseSender.ACTION_MANAGER_APPS_CHANGED);
-        // popNumberReceiver = new PopNumberReceiver();
-        // getActivity().registerReceiver(popNumberReceiver, intentFilter);
-
-        // baidu pass 登录后刷新用户头像
-        IntentFilter userLoginFilter = new IntentFilter(
-                Constants.refresh_head_action);
-        refreshUserHeadReceiver = new RefreshUserHeadReceiver();
-
-        LocalBroadcastManager.getInstance(
-                GameTingApplication.getAppInstance().getApplicationContext())
-                .registerReceiver(refreshUserHeadReceiver, userLoginFilter);
-    }
-
     private void unregisterReceiver() {
 
         if (refreshUserHeadReceiver != null) {
@@ -214,20 +173,6 @@ public class BMMineFragment extends Fragment implements
 
     View view_exit_pop;
 
-    private void initExitPopView() {
-        view_exit_pop = View.inflate(getActivity(),
-                R.layout.pop_exit_home_activity, null);
-
-        TextView tv_exit_pop_exit_home_activity = (TextView) view_exit_pop
-                .findViewById(R.id.tv_exit_pop_exit_home_activity);
-        tv_exit_pop_exit_home_activity.setOnClickListener(this);
-
-        TextView tv_cancel_pop_exit_home_activity = (TextView) view_exit_pop
-                .findViewById(R.id.tv_cancel_pop_exit_home_activity);
-        tv_cancel_pop_exit_home_activity.setOnClickListener(this);
-
-    }
-
     PopupWindow mExitPop;
 
     private View ll_iv_menu_home_activity;
@@ -243,8 +188,6 @@ public class BMMineFragment extends Fragment implements
             mExitPop.setOutsideTouchable(true);
         }
     }
-
-    private MyGamesExpandAdapter adapter;
 
     @SuppressLint("NewApi")
     @Override
@@ -280,15 +223,7 @@ public class BMMineFragment extends Fragment implements
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(MineProfile.MINE_DYNAMIC_DATA_NOTIFICATION);
-        filter.addAction(BroadcaseSender.ACTION_USER_LOGIN);
-        filter.addAction(BroadcaseSender.ACTION_USER_LOGOUT);
         getActivity().registerReceiver(mDynamicDataReceiver, filter);
-
-        IntentFilter refreshFilter = new IntentFilter(
-                MineProfile.MINE_DYNAMIC_DATA_REFRESH);
-        getActivity().registerReceiver(mRefreshDataReceiver, refreshFilter);
-
-        initExitPopView();
 
         ScrollView scrollview = (ScrollView) root
                 .findViewById(R.id.scroll_view_pane);
@@ -307,7 +242,6 @@ public class BMMineFragment extends Fragment implements
 
     public AtomicBoolean isRegisterPackage = new AtomicBoolean();
 
-    MyExpandListView listView;
     private ReentrantLock rl = new ReentrantLock();
 
     @Override
@@ -362,14 +296,6 @@ public class BMMineFragment extends Fragment implements
 
             setDynamicData();
 
-            NetUtil.getInstance().requestDynamicData(
-                    MineProfile.getInstance().getUserID(),
-                    MineProfile.getInstance().getSessionID(), this);
-            if (!(MineProfile.getInstance().getNickName().length() > 0)
-                    && MineProfile.getInstance().isNewUser()) {
-                checkNickName();
-                MineProfile.getInstance().setIsNewUser(false);
-            }
             // refreshUserHead();
         } else {
 //			if (btn_login != null)
@@ -479,79 +405,49 @@ public class BMMineFragment extends Fragment implements
             } else {
                 requestHasCancel = true;// 请求成功则设置状态为取消后续的请求
             }
-            UserLoginResult result = (UserLoginResult) responseData;
-            UserStatistics.addFastRegSuccessStatistics(getActivity());
-            MineProfile.getInstance().setUserID(result.getUserid());
-            MineProfile.getInstance().setSessionID(result.getSessionid());
-            MineProfile.getInstance().setUserName(result.getUsername());
-
-            MineProfile.getInstance().setNickName(result.getNickname());
-            MineProfile.getInstance().setUserType(result.getRegistertype());
-            MineProfile.getInstance().setIsLogin(true);
-            MineProfile.getInstance().setIsNewUser(true);
-            MineProfile.getInstance().setPhonenum(result.getPhonenum());
-
-            MineProfile.getInstance().setGamenum(result.getGamenum());
-            MineProfile.getInstance().setTotalmsgnum(result.getTotalmsgnum());
-            MineProfile.getInstance().setMessagenum(result.getMessagenum());
-            MineProfile.getInstance().setCollectnum(result.getCollectnum());
-
-            MineProfile.getInstance().setCoinnum(0);
-            if (result.getIsloginReq() == Constants.FASTREG_REQTYPE_REGISTER) {
-                MineProfile.getInstance().addCoinnum(result.getCoinnum());
-            }
-            MineProfile.getInstance().addAccount(result.getUsername());
-
-            if (MineProfile.getInstance().getNickName().length() > 0) {
-                loginSucceed();
-            } else {// 没有昵称
-                disMissProgressDialog();
-                refreshView();
-            }
-            return;
-        }
-
-        DynamicDataResult result = (DynamicDataResult) responseData;
-
-        MineProfile.getInstance().setGamenum(result.gamenum);
-        MineProfile.getInstance().setMessagenum(result.unreadmsgnum);
-        MineProfile.getInstance().setTotalmsgnum(result.totalmsgnum);
-        MineProfile.getInstance().setCollectnum(result.collectnum);
-        MineProfile.getInstance().setCoinnum(result.coinnum);
+//            UserLoginResult result = (UserLoginResult) responseData;
+//            MineProfile.getInstance().setUserID(result.getUserid());
+//            MineProfile.getInstance().setSessionID(result.getSessionid());
+//            MineProfile.getInstance().setUserName(result.getUsername());
+//
+//            MineProfile.getInstance().setNickName(result.getNickname());
+//            MineProfile.getInstance().setUserType(result.getRegistertype());
+//            MineProfile.getInstance().setIsLogin(true);
+//            MineProfile.getInstance().setIsNewUser(true);
+//            MineProfile.getInstance().setPhonenum(result.getPhonenum());
+//
+//            MineProfile.getInstance().setGamenum(result.getGamenum());
+//            MineProfile.getInstance().setTotalmsgnum(result.getTotalmsgnum());
+//            MineProfile.getInstance().setMessagenum(result.getMessagenum());
+//            MineProfile.getInstance().setCollectnum(result.getCollectnum());
+//
+//            MineProfile.getInstance().setCoinnum(0);
+//            if (result.getIsloginReq() == Constants.FASTREG_REQTYPE_REGISTER) {
+//                MineProfile.getInstance().addCoinnum(result.getCoinnum());
+//            }
+//            MineProfile.getInstance().addAccount(result.getUsername());
+//
+//            if (MineProfile.getInstance().getNickName().length() > 0) {
+//                loginSucceed();
+//            } else {// 没有昵称
+//                disMissProgressDialog();
+//                refreshView();
+//            }
+//            return;
+//        }
+//
+//        DynamicDataResult result = (DynamicDataResult) responseData;
+//
+//        MineProfile.getInstance().setGamenum(result.gamenum);
+//        MineProfile.getInstance().setMessagenum(result.unreadmsgnum);
+//        MineProfile.getInstance().setTotalmsgnum(result.totalmsgnum);
+//        MineProfile.getInstance().setCollectnum(result.collectnum);
+//        MineProfile.getInstance().setCoinnum(result.coinnum);
 
         MineProfile.getInstance().broadcastEvent();
-    }
+    }}
 
-    private void checkNickName() {
-        LayoutInflater factory = LayoutInflater.from(getActivity());
-        View dialogView = factory.inflate(R.layout.mine_change_nickname, null);
-
-        ((EditText) dialogView.findViewById(R.id.edit_change_nickname))
-                .setText(MineProfile.getInstance().getNickName());
-        CharSequence text = ((EditText) dialogView
-                .findViewById(R.id.edit_change_nickname)).getText();
-        if (text instanceof Spannable) {
-            Spannable spanText = (Spannable) text;
-            Selection.setSelection(spanText, text.length());
-        }
-        dialogView.findViewById(R.id.btn_change_nickname_cancel)
-                .setOnClickListener(this);
-        dialogView.findViewById(R.id.btn_change_nickname_commit)
-                .setOnClickListener(this);
-        alertDialog = new Dialog(getActivity(), R.style.dialog);
-
-        DisplayMetrics dm = GameTingApplication.getAppInstance().getResources()
-                .getDisplayMetrics();
-        int width = dm.widthPixels - PhoneHelper.dip2px(getActivity(), 13) * 2;
-        alertDialog.addContentView(dialogView, new ViewGroup.LayoutParams(
-                width, LayoutParams.WRAP_CONTENT));
-        alertDialog.setCancelable(true);
-        disMissProgressDialog();
-        alertDialog.show();
-    }
-
-    private void loginSucceed() {
-        UserStatistics.addLoginNumStatistics(getActivity());
+   private void loginSucceed() {
         /*
          * Intent intent = new Intent(getActivity(), DKGameHallActivity.class);
 		 * 
@@ -565,11 +461,11 @@ public class BMMineFragment extends Fragment implements
     }
 
     private void disMissProgressDialog() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-            progressDialog = null;
-            hasProgressDlg = false;
-        }
+//        if (progressDialog != null) {
+//            progressDialog.dismiss();
+//            progressDialog = null;
+//            hasProgressDlg = false;
+//        }
     }
 
     private void setDynamicData() {
@@ -622,7 +518,6 @@ public class BMMineFragment extends Fragment implements
         super.onDestroy();
         unregisterReceiver();
         getActivity().unregisterReceiver(mDynamicDataReceiver);
-        getActivity().unregisterReceiver(mRefreshDataReceiver);
     }
 
     public final static int REQCODE_LOGIN = 1;
@@ -666,21 +561,19 @@ public class BMMineFragment extends Fragment implements
 
             }
             break;
-            case R.id.tv_item_feedback_pop_menu_home_activity: {
-                mPop.dismiss();
-                ClickNumStatistics.addMenuFeedBackClickStatistis(getActivity());
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), FeedbackActivity.class);
-                startActivity(intent);
-            }
-            break;
-            case R.id.ll_checkupdate_pop_item_home:
-                mPop.dismiss();
-
-                ClickNumStatistics.addMenuCheckUpdateClickStatis(getActivity());
-                UpdateHelper updateHelper = new UpdateHelper(getActivity(), false);
-                updateHelper.checkGameTingUpdate(false);
-                break;
+//            case R.id.tv_item_feedback_pop_menu_home_activity: {
+//                mPop.dismiss();
+//                Intent intent = new Intent();
+//                intent.setClass(getActivity(), FeedbackActivity.class);
+//                startActivity(intent);
+//            }
+//            break;
+//            case R.id.ll_checkupdate_pop_item_home:
+//                mPop.dismiss();
+//
+//                UpdateHelper updateHelper = new UpdateHelper(getActivity(), false);
+//                updateHelper.checkGameTingUpdate(false);
+//                break;
             default:
                 break;
         }
@@ -741,49 +634,6 @@ public class BMMineFragment extends Fragment implements
     // }
     //
     // }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,
-                            long id) {
-        ClickNumStatistics.addSettingRecomdAppClickStatis(getActivity());
-        RecommendAppItemInfo itemInfo = recomdAppList.get(position);
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), WebviewActivity.class);
-        intent.putExtra("title",
-                getResources().getString(R.string.down_more_duoku_app));
-        intent.putExtra("url", itemInfo.getRecommendUrl());
-        startActivity(intent);
-    }
-
-    private Runnable fastRegRunable = new Runnable() {
-        @Override
-        public void run() {
-            int RETRY_TIMES = 60 * 1000; // 60s
-            int duration = 5000;
-            int retry_counts = 0;
-            int maxTimes = RETRY_TIMES / duration;
-            while (retry_counts < maxTimes && !requestHasCancel) {
-                requestId = NetUtil.getInstance().requestFastPhoneRegister(
-                        message, BMMineFragment.this);
-                fastRegReqList.add(requestId);
-                Logger.w(TAG, "retry fast register:" + message);
-                try {
-                    // 最后一次重试完后不sleep，方便及时处理最后一次请求的response
-                    if (retry_counts != maxTimes - 1) {
-                        Thread.sleep(duration);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                retry_counts++;
-            }
-            // 如果重试了一分钟依然没成功，则最后一次请求出错时应该跳到手动注册
-            Logger.w(TAG, "retry" + retry_counts
-                    + " times,abandon fast register.");
-            // cancelRequest();
-            mHandler.obtainMessage(MSG_CANCEL_TO_MANUAL).sendToTarget();
-        }
-    };
 
     protected void cancelRequest() {
         resetFastRegStatus("cancel");

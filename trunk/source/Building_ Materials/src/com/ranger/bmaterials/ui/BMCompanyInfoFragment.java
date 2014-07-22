@@ -173,7 +173,6 @@ public class BMCompanyInfoFragment extends Fragment implements NetUtil.IRequestL
                             }else{
                                 CustomToast.showToast(getActivity(),"收藏失败");
                             }
-
                         }
 
                         @Override

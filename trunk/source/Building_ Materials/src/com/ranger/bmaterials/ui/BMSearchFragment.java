@@ -33,16 +33,12 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.ranger.bmaterials.R;
-import com.ranger.bmaterials.adapter.SuggestAdapter;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
-import com.ranger.bmaterials.db.CommonDao;
-import com.ranger.bmaterials.db.DbManager;
 import com.ranger.bmaterials.listener.onTagCloudViewLayoutListener;
 import com.ranger.bmaterials.mode.KeywordsList;
 import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
-import com.ranger.bmaterials.statistics.ClickNumStatistics;
 import com.ranger.bmaterials.tools.DeviceUtil;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.tools.StringUtil;
@@ -51,7 +47,6 @@ import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 import com.ranger.bmaterials.view.Tag;
 import com.ranger.bmaterials.view.TagCloudView;
 import com.ranger.bmaterials.view.TagCloudView.TagClickListener;
-import com.ranger.bmaterials.work.DBTaskManager;
 
 public class BMSearchFragment extends Fragment implements OnClickListener, OnItemClickListener, TagClickListener, onTagCloudViewLayoutListener {
 
@@ -165,80 +160,43 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
             }
         });
 
-        loadHistroyData();
+//        loadHistroyData();
     }
 
     List<String> suggestWords = null;
 
-    private void initSuggest(List<String> keywords) {
-        suggestWords = keywords;
-        suggestAdapter = new SuggestAdapter(getActivity(), suggestWords, 10);
-        searchEt.setDropDownBackgroundResource(R.drawable.transparent_drawable);
-        searchEt.setAdapter(suggestAdapter);
-        searchEt.setOnItemClickListener(new OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-
-            }
-        });
-
-    }
-
-    private void addSuggest(String key) {
-        if (suggestWords == null) {
-            return;
-        }
-        boolean find = false;
-        for (String k : suggestWords) {
-            if (k.startsWith(key)) {
-                find = true;
-                break;
-            }
-        }
-        List<String> allItems = suggestAdapter.getAllItems();
-        if (find) {
-            allItems.remove(key);
-            // suggestAdapter.notifyDataSetChanged();
-        } else {
-            saveHistroy(key);
-        }
-        allItems.add(0, key);
-
-    }
-
-    private void loadHistroyData() {
-        new AsyncTask<Void, Void, List<String>>() {
-
-            @Override
-            protected List<String> doInBackground(Void... params) {
-                CommonDao handler = DbManager.getCommonDbHandler();
-                return handler.getKeywords();
-            }
-
-            protected void onPostExecute(java.util.List<String> result) {
-                if (result == null || result.size() == 0) {
-                    initSuggest(new ArrayList<String>());
-                } else {
-                    initSuggest(result);
-                }
-            }
-
-            ;
-
-        }.execute();
-    }
-
-    private void saveHistroy(final String keyword) {
-        // save keywords
-        DBTaskManager.submitTask(new Runnable() {
-            @Override
-            public void run() {
-                CommonDao handler = DbManager.getCommonDbHandler();
-                handler.saveKeywords(keyword);
-            }
-        });
-    }
+//    private void loadHistroyData() {
+//        new AsyncTask<Void, Void, List<String>>() {
+//
+//            @Override
+//            protected List<String> doInBackground(Void... params) {
+//                CommonDao handler = DbManager.getCommonDbHandler();
+//                return handler.getKeywords();
+//            }
+//
+//            protected void onPostExecute(java.util.List<String> result) {
+//                if (result == null || result.size() == 0) {
+//                    initSuggest(new ArrayList<String>());
+//                } else {
+//                    initSuggest(result);
+//                }
+//            }
+//
+//            ;
+//
+//        }.execute();
+//    }
+//
+//    private void saveHistroy(final String keyword) {
+//        // save keywords
+//        DBTaskManager.submitTask(new Runnable() {
+//            @Override
+//            public void run() {
+//                CommonDao handler = DbManager.getCommonDbHandler();
+//                handler.saveKeywords(keyword);
+//            }
+//        });
+//    }
 
     private void listenInput() {
         String text = String.format(getString(R.string.search_hint));
@@ -380,7 +338,6 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
     private int popularity = 5;
     private AutoCompleteTextView searchEt;
-    private SuggestAdapter suggestAdapter;
     private View clearView;
 
     private void search() {
@@ -392,7 +349,6 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
         } else {
             jumpSearch(keyword);
             // fakeResult();
-            addSuggest(keyword);
         }
     }
 

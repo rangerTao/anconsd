@@ -26,7 +26,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.ranger.bmaterials.adapter.HomeGuideViewPagerAdapter;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.bitmap.ImageLoaderHelper;
-import com.ranger.bmaterials.speeddownload.SpeedDonwloadService;
 import com.ranger.bmaterials.tools.UIUtil;
 import com.ranger.bmaterials.view.FixTouchView;
 import com.ranger.bmaterials.view.SlowScrollViewpager;
@@ -62,11 +61,6 @@ public class SplashTask implements OnPageChangeListener {
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				// 首次进入大厅时启动监听高速下载请求的service，如果服务已启动则返回
-				if (Constants.speed_download_enable) {
-					Intent speedDownIntent = new Intent(cx, SpeedDonwloadService.class);
-					cx.startService(speedDownIntent);
-				}
 				enterHall(splash);
 			}
 		}, SPLASH_DELAY_TIME);
@@ -228,8 +222,6 @@ public class SplashTask implements OnPageChangeListener {
 	}
 
 	private void checkUnCompletedDownloadTask() {
-		CheckUnCompletedDownloadTask checkUnCompletedDownloadTask = new CheckUnCompletedDownloadTask(cx);
-		checkUnCompletedDownloadTask.checkPauseDownloadTask();
 	}
 
 	private void guideViewPagerDismiss() {

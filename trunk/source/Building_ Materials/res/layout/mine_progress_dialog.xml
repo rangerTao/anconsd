@@ -16,7 +16,6 @@
 
         <ProgressBar
             android:id="@+id/network_loading_pb"
-            style="@style/content_loading_progress_blue_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
