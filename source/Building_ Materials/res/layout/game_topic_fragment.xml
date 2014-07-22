@@ -147,6 +147,7 @@
                     android:textColor="#fff"/>
 
                 <Button
+                    android:id="@+id/bm_btn_view_com_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_alignParentRight="true"

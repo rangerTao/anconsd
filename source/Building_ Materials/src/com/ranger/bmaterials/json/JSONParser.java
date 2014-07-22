@@ -48,6 +48,7 @@ import com.ranger.bmaterials.mode.OpenServerDetail.OpenServerItem;
 import com.ranger.bmaterials.mode.SearchResult.SearchItem;
 import com.ranger.bmaterials.mode.SnapNumber.SnapNumberStatus;
 import com.ranger.bmaterials.mode.SnapNumberDetail.SnapNumberItem;
+import com.ranger.bmaterials.netresponse.BMCompanyInfoResult;
 import com.ranger.bmaterials.netresponse.BMProductInfoResult;
 import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BMSearchResult;
@@ -2630,7 +2631,6 @@ public class JSONParser {
         BMSearchResult searchResult = new BMSearchResult();
         try {
 
-
                 JSONObject outterObj = new JSONObject(resData);
                 JSONArray jsonList = outterObj.getJSONArray(Constants.BM_JSON_DATA_LIST);
                 int length = jsonList.length();
@@ -2655,5 +2655,22 @@ public class JSONParser {
             e.printStackTrace();
         }
         return searchResult;
+    }
+
+    /**
+     * BmUser
+     */
+    public static BMCompanyInfoResult parserBMComInfoResult(String res){
+
+        BMCompanyInfoResult result = null;
+        Gson gson = new Gson();
+        try{
+            result = gson.fromJson(res,BMCompanyInfoResult.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return result;
+
     }
 }

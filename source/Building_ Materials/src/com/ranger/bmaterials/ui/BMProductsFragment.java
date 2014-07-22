@@ -20,9 +20,9 @@ import android.widget.ListView;
 
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.app.Constants;
-import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.broadcast.BroadcaseSender;
+import com.ranger.bmaterials.netresponse.BMSearchResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.netresponse.MineGuidesResult;
 import com.ranger.bmaterials.utils.NetUtil;
@@ -33,22 +33,21 @@ import com.ranger.bmaterials.view.pull.PullToRefreshListView;
 import com.ranger.bmaterials.view.pull.PullToRefreshBase.OnLastItemVisibleListener;
 import com.ranger.bmaterials.view.pull.PullToRefreshBase.OnRefreshListener2;
 
-public class MineCollectionGuideSubFragment extends Fragment implements OnClickListener, IRequestListener, OnRefreshListener2<ListView>,
+public class BMProductsFragment extends Fragment implements OnClickListener, IRequestListener, OnRefreshListener2<ListView>,
 		OnItemClickListener {
 
 	private boolean guideRequestSend = false;
 	private boolean noMoreGuide;
 	private int requestId = 0;
 
-	private List<MineGuideItemInfo> guideListInfo;
-	private MineGuideAdapter guideInfoListAdapter = null;
+	private List<BMSearchResult.BMSearchData> guideListInfo;
+	private BMProductLiteAdapter guideInfoListAdapter = null;
 	private PullToRefreshListView plvGuide;
 
 	private ViewGroup guideViewContainer;
 	private int pageGuideIndex;
 	private int pageGuideNum;
 	private int totalNum = 0;
-	private GuideReceiver guideReceiver;
 
 	public PagerSlidingTabStrip tabStrip;
 	private boolean update = false;
@@ -66,16 +65,14 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 		pageGuideIndex = 1;
 		noMoreGuide = false;
 		pageGuideNum = 20;
-		guideListInfo = new ArrayList<MineGuideItemInfo>();
-		guideInfoListAdapter = new MineGuideAdapter(getActivity(), guideListInfo);
+		guideListInfo = new ArrayList<BMSearchResult.BMSearchData>();
+		guideInfoListAdapter = new BMProductLiteAdapter(getActivity(), guideListInfo);
 		plvGuide = (PullToRefreshListView) getActivity().findViewById(R.id.listview_mine_collection_guides);
 		plvGuide.setOnRefreshListener(this);
 		plvGuide.setAdapter(guideInfoListAdapter);
 		plvGuide.setOnItemClickListener(this);
 
 		guideViewContainer = (ViewGroup) getActivity().findViewById(R.id.layout_mine_guide_view_container);
-
-		registerReceiver();
 
 		plvGuide.setOnLastItemVisibleListener(OnLastItemVisibleListener);
 		footer = createFooter();
@@ -91,7 +88,7 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 				requestGuide();
 			} else if (showNoMoreTip && !isLoadingMore) {
 				showNoMoreTip = false;
-				CustomToast.showLoginRegistErrorToast(MineCollectionGuideSubFragment.this.getActivity(), CustomToast.DC_ERR_NO_MORE_DATA);
+				CustomToast.showLoginRegistErrorToast(BMProductsFragment.this.getActivity(), CustomToast.DC_ERR_NO_MORE_DATA);
 			}
 		}
 	};
@@ -141,7 +138,6 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 	public void onDestroy() {
 		super.onDestroy();
 
-		unregisterReceiver();
 		if (requestId > 0) {
 			NetUtil.getInstance().cancelRequestById(requestId);
 		}
@@ -189,16 +185,16 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 
 	@Override
 	public void onRequestSuccess(BaseResult responseData) {
-		MineGuidesResult result = (MineGuidesResult) responseData;
+		BMSearchResult result = (BMSearchResult) responseData;
 
-		totalNum = result.totalcount;
+		totalNum = result.getTotal();
 
 		if (pageGuideIndex == 1) {
 			guideListInfo.clear();
 		}
 
-		if (result.guideListInfo.size() > 0) {
-			guideListInfo.addAll(result.guideListInfo);
+		if (result.getDataList().size() > 0) {
+			guideListInfo.addAll(result.getDataList());
 			guideInfoListAdapter.notifyDataSetChanged();
 			pageGuideIndex++;
 		}
@@ -240,9 +236,8 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 			CustomToast.showLoginRegistErrorToast(getActivity(), CustomToast.DC_ERR_NO_MORE_DATA);
 			requestFinished(true);
 		} else {
-			String userid = MineProfile.getInstance().getUserID();
-			String sessionid = MineProfile.getInstance().getSessionID();
-			requestId = NetUtil.getInstance().requestCollectionGuide(userid, sessionid, pageGuideIndex, pageGuideNum, this);
+            int userid = getArguments().getInt(BMCompanyInfoActivity.USER_ID);
+			requestId = NetUtil.getInstance().requestForProductsPerCom(userid,pageGuideIndex, this);
 		}
 	}
 
@@ -261,55 +256,7 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 		updateTitle(totalNum);
 	}
 
-	private void registerReceiver() {
-		IntentFilter intentFilter = new IntentFilter(BroadcaseSender.ACTION_COLLECT_GUIDE_CANCEL);
-		intentFilter.addAction(BroadcaseSender.ACTION_COLLECT_GUIDE_SUCCESS);
-		guideReceiver = new GuideReceiver();
-		getActivity().registerReceiver(guideReceiver, intentFilter);
-	}
-
-	private void unregisterReceiver() {
-		if (guideReceiver != null) {
-			getActivity().unregisterReceiver(guideReceiver);
-			guideReceiver = null;
-		}
-	}
-
-	class GuideReceiver extends BroadcastReceiver {
-
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			if (intent.getAction().equals(BroadcaseSender.ACTION_COLLECT_GUIDE_CANCEL)) {
-				String guideID = intent.getStringExtra(Constants.JSON_GUIDEID);
-
-				for (MineGuideItemInfo item : guideListInfo) {
-					if (item.guideID.equals(guideID)) {
-						guideListInfo.remove(item);
-						if (guideListInfo.size() <=0) {
-							update = true;
-							onResume();
-						}
-						guideInfoListAdapter.notifyDataSetChanged();
-						totalNum--;
-						updateTitle(totalNum);
-						break;
-					}
-				}
-			} else if (intent.getAction().equals(BroadcaseSender.ACTION_COLLECT_GUIDE_SUCCESS)) {
-				update = true;
-			}
-
-			showContentView();
-		}
-	}
-
 	private void updateTitle(int total) {
-		if (tabStrip != null) {
-			if (total > 0) {
-				tabStrip.updateTitle(1, "供应商(" + total + ")");
-			} else {
-				tabStrip.updateTitle(1, "供应商");
-			}			
-		}
+
 	}
 }

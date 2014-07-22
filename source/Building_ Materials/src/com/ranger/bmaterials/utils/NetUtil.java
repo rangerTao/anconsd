@@ -1292,7 +1292,7 @@ public class NetUtil implements INetListener {
         SoapObject rpc = new SoapObject(nameSpace, methodName);
 
 //        rpc.addProperty("token", MineProfile.getInstance().getToken());
-        rpc.addProperty("token","4d4ae560916a4883dbfafe4131681de3");
+        rpc.addProperty("token","36ba725304d33e2b2b189bd855d8f614");
         rpc.addProperty("keyword",keyword);
         rpc.addProperty("area",area);
         rpc.addProperty("bigtype",area);
@@ -1361,7 +1361,7 @@ public class NetUtil implements INetListener {
         SoapObject rpc = new SoapObject(nameSpace, methodName);
 
 //        rpc.addProperty("token", MineProfile.getInstance().getToken());
-        rpc.addProperty("token","4d4ae560916a4883dbfafe4131681de3");
+        rpc.addProperty("token","36ba725304d33e2b2b189bd855d8f614");
         rpc.addProperty("supplyId",supplyid);
 
         // 生成调用WebService方法的SOAP请求信息,并指定SOAP的版本
@@ -1409,7 +1409,7 @@ public class NetUtil implements INetListener {
      * @return
      * @author liushuohui
      */
-    public int requestCollectProduct(int supplyid,IRequestListener observer) {
+    public int requestCollectProduct(int supplyid,int type,IRequestListener observer) {
 
 
         // 调用的方法名称
@@ -1421,9 +1421,9 @@ public class NetUtil implements INetListener {
         SoapObject rpc = new SoapObject(nameSpace, methodName);
 
 //        rpc.addProperty("token", MineProfile.getInstance().getToken());
-        rpc.addProperty("token","4d4ae560916a4883dbfafe4131681de3");
+        rpc.addProperty("token","36ba725304d33e2b2b189bd855d8f614");
         rpc.addProperty("id",supplyid);
-        rpc.addProperty("type",1);
+        rpc.addProperty("type",type);
 
         // 生成调用WebService方法的SOAP请求信息,并指定SOAP的版本
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER10);
@@ -1448,6 +1448,128 @@ public class NetUtil implements INetListener {
             String result = object.getProperty(0).toString();
 
             BaseResult baseResult = JSONParser.parserBMUserLoginResult(result);
+            baseResult.setTag(Constants.NET_TAG_SEARCH + "");
+
+            baseResult.setErrorCode(DcError.DC_OK);
+
+            Log.e("TAG","webservice result " + result);
+
+            observer.onRequestSuccess(baseResult);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "error");
+        }
+
+        return mCurrentRequestId;
+    }
+
+    /**
+     *
+     * @param observer
+     * @return
+     * @author liushuohui
+     */
+    public int requestComDetail(int userid,IRequestListener observer) {
+
+
+        // 调用的方法名称
+        String methodName = "getCompanyInfo";
+
+        soapAction += methodName;
+
+        // 指定WebService的命名空间和调用的方法名
+        SoapObject rpc = new SoapObject(nameSpace, methodName);
+
+//        rpc.addProperty("token", MineProfile.getInstance().getToken());
+        rpc.addProperty("token","36ba725304d33e2b2b189bd855d8f614");
+        rpc.addProperty("userid",userid);
+
+        // 生成调用WebService方法的SOAP请求信息,并指定SOAP的版本
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER10);
+
+        envelope.bodyOut = rpc;
+        // 设置是否调用的是dotNet开发的WebService
+        envelope.dotNet = true;
+        // 等价于envelope.bodyOut = rpc;
+        envelope.setOutputSoapObject(rpc);
+
+        HttpTransportSE transport = new HttpTransportSE(endPoint);
+
+        mCurrentRequestId = transport.hashCode();
+
+        try {
+            // 调用WebService
+            transport.call(soapAction, envelope);
+
+            // 获取返回的数据
+            SoapObject object = (SoapObject) envelope.bodyIn;
+            // 获取返回的结果
+            String result = object.getProperty(0).toString();
+
+            BaseResult baseResult = JSONParser.parserBMComInfoResult(result);
+            baseResult.setTag(Constants.NET_TAG_SEARCH + "");
+
+            baseResult.setErrorCode(DcError.DC_OK);
+
+            Log.e("TAG","webservice result " + result);
+
+            observer.onRequestSuccess(baseResult);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "error");
+        }
+
+        return mCurrentRequestId;
+    }
+
+    /**
+     * 根据关键字搜索游戏 tag = 242
+     *
+     * @param observer
+     * @return
+     */
+    public int requestForProductsPerCom(int userid,int page,IRequestListener observer) {
+
+        // 调用的方法名称
+        String methodName = "getProducts";
+
+        soapAction += methodName;
+
+        // 指定WebService的命名空间和调用的方法名
+        SoapObject rpc = new SoapObject(nameSpace, methodName);
+
+//        rpc.addProperty("token", MineProfile.getInstance().getToken());
+        rpc.addProperty("token","36ba725304d33e2b2b189bd855d8f614");
+        rpc.addProperty("userid",userid);
+        rpc.addProperty("pageNo",page);
+        rpc.addProperty("row",20);
+
+
+        // 生成调用WebService方法的SOAP请求信息,并指定SOAP的版本
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER10);
+
+        envelope.bodyOut = rpc;
+        // 设置是否调用的是dotNet开发的WebService
+        envelope.dotNet = true;
+        // 等价于envelope.bodyOut = rpc;
+        envelope.setOutputSoapObject(rpc);
+
+        HttpTransportSE transport = new HttpTransportSE(endPoint);
+
+        mCurrentRequestId = transport.hashCode();
+
+        try {
+            // 调用WebService
+            transport.call(soapAction, envelope);
+
+            // 获取返回的数据
+            SoapObject object = (SoapObject) envelope.bodyIn;
+            // 获取返回的结果
+            String result = object.getProperty(0).toString();
+
+            BaseResult baseResult = JSONParser.parseBMSearchProducts(result);
             baseResult.setTag(Constants.NET_TAG_SEARCH + "");
 
             baseResult.setErrorCode(DcError.DC_OK);

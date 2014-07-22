@@ -1,8 +1,6 @@
 package com.ranger.bmaterials.ui;
 
 import android.annotation.TargetApi;
-import android.bluetooth.BluetoothClass.Device;
-import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,11 +8,10 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.TextView;
 
 import com.ranger.bmaterials.R;
-import com.ranger.bmaterials.adapter.MineCollectionPagerAdapter;
-import com.ranger.bmaterials.adapter.MineCollectionPagerAdapter.PageCallback;
+import com.ranger.bmaterials.adapter.BMMineCollectionPagerAdapter;
+import com.ranger.bmaterials.adapter.BMMineCollectionPagerAdapter.PageCallback;
 import com.ranger.bmaterials.tools.DeviceUtil;
 import com.ranger.bmaterials.view.PagerSlidingTabStrip;
 
@@ -37,7 +34,7 @@ public class BMMineCollectionActivity extends FragmentActivity implements PageCa
 	@TargetApi(9)
 	private void setupViews(){
 		pager = (ViewPager) findViewById(R.id.mine_activity_pager);
-		pager.setAdapter(new MineCollectionPagerAdapter(getSupportFragmentManager(), this));
+		pager.setAdapter(new BMMineCollectionPagerAdapter(getSupportFragmentManager(), this));
 		
 		tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs_indicator);
 
@@ -53,13 +50,13 @@ public class BMMineCollectionActivity extends FragmentActivity implements PageCa
 		
 		switch (page) {
 		case 0:
-			MineCollectionGameSubFragment tmp = new MineCollectionGameSubFragment();
+			BMCompanyInfoFragment tmp = new BMCompanyInfoFragment();
 			tmp.tabStrip = this.tabStrip;
 			fragment = tmp;
 			
 			break;
 		case 1:
-			MineCollectionGuideSubFragment tmp2 = new MineCollectionGuideSubFragment();
+			BMProductsFragment tmp2 = new BMProductsFragment();
 			tmp2.tabStrip = this.tabStrip;
 			fragment = tmp2;
 		default:
