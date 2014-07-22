@@ -16,6 +16,7 @@ import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.bitmap.ImageLoaderHelper;
 import com.ranger.bmaterials.netresponse.BMProductInfoResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
+import com.ranger.bmaterials.ui.BMCompanyInfoActivity;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 import com.ranger.bmaterials.ui.CustomToast;
@@ -32,13 +33,14 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
     private TextView bm_tv_product_price;
     private TextView bm_tv_product_detail;
 
+    private ImageView bm_iv_product_logo;
+
     private TextView bm_tv_company_info_name;
     private TextView bm_tv_company_info_contact;
     private TextView bm_tv_company_info_phone;
     private TextView bm_tv_company_info_mphone;
-    private TextView bm_tv_company_info_level;
 
-    private ImageView bm_iv_product_logo;
+    private TextView bm_tv_company_info_level;
 
     private FrameLayout bm_fl_save_product;
 
@@ -115,6 +117,8 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
 
         bm_fl_save_product = (FrameLayout) root.findViewById(R.id.bm_fl_save_product);
         bm_fl_save_product.setOnClickListener(this);
+
+        root.findViewById(R.id.bm_btn_view_com_detail).setOnClickListener(this);
     }
 
     @Override
@@ -166,28 +170,28 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
 
     private void requestSave() {
 
-        try{
+        try {
             final int mid = Integer.parseInt(supplyid);
 
             LoadingTask task = new LoadingTask(getActivity(), new ILoading() {
 
                 @Override
                 public void loading(IRequestListener listener) {
-                    NetUtil.getInstance().requestCollectProduct(mid, new IRequestListener() {
+                    NetUtil.getInstance().requestCollectProduct(mid, 1, new IRequestListener() {
                         @Override
                         public void onRequestSuccess(BaseResult responseData) {
 
-                            if(responseData.getErrorCode() == 1){
-                                CustomToast.showToast(getActivity(),"收藏成功");
-                            }else{
-                                CustomToast.showToast(getActivity(),"收藏失败");
+                            if (responseData.getErrorCode() == 1) {
+                                CustomToast.showToast(getActivity(), "收藏成功");
+                            } else {
+                                CustomToast.showToast(getActivity(), "收藏失败");
                             }
 
                         }
 
                         @Override
                         public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
-                            CustomToast.showToast(getActivity(),msg);
+                            CustomToast.showToast(getActivity(), msg);
                         }
                     });
                 }
@@ -214,16 +218,19 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
 
             task.setRootView(root);
             task.loading();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
     }
 
+    private BMProductInfoResult data;
+
     @Override
     public void onRequestSuccess(BaseResult responseData) {
-        initViewWithData((BMProductInfoResult) responseData);
+        data = (BMProductInfoResult) responseData;
+        initViewWithData(data);
     }
 
     @Override
@@ -239,6 +246,14 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
                 break;
             case R.id.bm_fl_save_product:
                 requestSave();
+                break;
+            case R.id.bm_btn_view_com_detail:
+
+                Intent intent = new Intent(getActivity(), BMCompanyInfoActivity.class);
+                intent.putExtra(BMCompanyInfoActivity.USER_ID, data.getmCom().getUserid());
+                intent.putExtra(BMCompanyInfoActivity.USER_NAME,data.getmCom().getCompanyName());
+                startActivity(intent);
+
                 break;
             default:
                 break;

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:background="#fff"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bm_bg_company_info_upper"/>
+
+                <TextView
+                    android:id="@+id/bm_tv_company_info_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bm_bg_company_info"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#000"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/bm_tv_company_info_contact"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bm_bg_company_info"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#000"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/bm_tv_company_info_phone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bm_bg_company_info"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#000"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/bm_tv_company_info_mphone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bm_bg_company_info"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#000"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/bm_tv_company_info_level"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bm_bg_company_info"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#000"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/bm_tv_company_info_addres"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bm_bg_company_info"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#000"
+                    android:textSize="15sp"/>
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bm_bg_company_info_bottom"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/bm_rl_product_detail"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:background="#4996ed">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center"
+                    android:text="关于我们"
+                    android:textColor="#fff"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/bm_tv_company_info_detail"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <FrameLayout
+        android:id="@+id/bm_fl_save_product"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="1.0"
+        android:background="@color/gray_words_item_pop_home">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/bm_icon_unsaved"/>
+    </FrameLayout>
+</RelativeLayout>

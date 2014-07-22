@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class MineCollectionPagerAdapter extends FragmentPagerAdapter {
+public class BMMineCollectionPagerAdapter extends FragmentPagerAdapter {
 
 	public interface PageCallback{
 		Fragment getFragment(int page);
@@ -14,7 +14,7 @@ public class MineCollectionPagerAdapter extends FragmentPagerAdapter {
 	
 	private PageCallback callback ;
 	
-	public MineCollectionPagerAdapter(FragmentManager fm,PageCallback callback) {
+	public BMMineCollectionPagerAdapter(FragmentManager fm, PageCallback callback) {
 		super(fm);
 		this.callback = callback ;
 	}
