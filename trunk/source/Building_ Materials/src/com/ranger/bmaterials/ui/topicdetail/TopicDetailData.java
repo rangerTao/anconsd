@@ -60,7 +60,7 @@ public class TopicDetailData extends BaseResult implements Serializable
         super(json);
         
         JSONUtil    util    = JSONUtil.instance();
-        JSONArray   array   = util.getArray(json, Constants.JSON_GAME_LIST);
+        JSONArray   array   = util.getArray(json, Constants.BM_JSON_DATA_LIST);
         
         mDetailIcon         = util.getString(json, Constants.JSON_BANNER_ICON);
         mDetailName         = util.getString(json, Constants.JSON_TOPIC_NAME);

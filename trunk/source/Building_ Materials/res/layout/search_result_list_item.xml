@@ -1,187 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#e8f3fe"
+                android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/list_card_item_selector"
-        android:orientation="horizontal" >
-
-        <com.ranger.bmaterials.ui.RoundCornerImageView
-            android:id="@+id/game_icon"
-            style="@style/content_list_item_imageview_style"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginTop="10dp"
-            android:contentDescription="@null" />
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_toLeftOf="@+id/arrow_right"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/ll_game_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/game_name"
+                android:id="@+id/product_name"
                 style="@style/content_list_item_title_style"
-                android:text="怪物猎人" />
+                android:text="怪物猎人"/>
 
-            <RatingBar
-                android:id="@+id/game_rating"
-                style="@style/starRatingBar2"
+            <TextView
+                android:id="@+id/mode_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:layout_marginTop="4dp"
-                android:isIndicator="true"
-                android:numStars="5"
-                android:rating="1.0" />
+                android:layout_marginTop="3dp"
+                android:text="JJD"/>
 
-            <LinearLayout
-                android:id="@+id/game_version_layout"
+            <TextView
+                android:id="@+id/company_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone" >
+                android:layout_marginTop="3dp"
+                android:text="JJD"/>
 
-                <TextView
-                    android:id="@+id/item_version"
-                    style="@style/content_list_item_text_style"
-                    android:text="version" />
-
-                <TextView
-                    android:id="@+id/item_new_version"
-                    style="@style/content_list_item_text_style"
-                    android:layout_marginLeft="3dp"
-                    android:drawableLeft="@drawable/icon_version_arrow_update_diff_msg"
-                    android:drawablePadding="3dp"
-                    android:text="new_version" />
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/game_download_times_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <com.ranger.bmaterials.view.GameLabelView
-                    android:id="@+id/game_label_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="16dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="8dp"
-                    android:gravity="center"
-                    android:minWidth="34dp"
-                    android:paddingLeft="6dp"
-                    android:paddingRight="6dp"
-                    android:textColor="@android:color/white"
-                    android:textSize="11sp"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/game_download_times"
-                    style="@style/content_list_item_text_style"
-                    android:layout_toRightOf="@id/game_label_name"
-                    android:text="40人下载" />
-
-                <TextView
-                    android:id="@+id/game_size"
-                    style="@style/content_list_item_text_style"
-                    android:layout_marginLeft="12dp"
-                    android:layout_toRightOf="@id/game_download_times"
-                    android:text="12M" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/game_size_layout_parent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone" >
-
-                <FrameLayout
-                    android:id="@+id/game_size_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true" >
-
-                    <TextView
-                        android:id="@+id/item_size"
-                        style="@style/content_list_item_text_style"
-                        android:layout_gravity="center" />
-
-                    <ImageView
-                        android:id="@+id/item_size_strike"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/icon_line_update_diff" />
-                </FrameLayout>
-
-                <TextView
-                    android:id="@+id/item_new_size"
-                    style="@style/content_list_item_text_style"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toRightOf="@id/game_size_layout" />
-            </RelativeLayout>
         </LinearLayout>
 
-        <FrameLayout
+
+        <LinearLayout
+            android:id="@+id/search_item_action_layout"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent" >
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:minWidth="75dp"
+            android:orientation="vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="18dp">
 
-            <LinearLayout
-                android:id="@+id/search_item_action_layout"
+            <TextView
+                android:id="@+id/bm_tv_price"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:gravity="center_vertical"
-                android:minWidth="75dp"
-                android:orientation="vertical"
-                android:paddingLeft="5dp"
-                android:paddingRight="18dp" >
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:textColor="#ffa200"
+                android:text="JJD"/>
 
-                <com.ranger.bmaterials.view.AnimationDrawableView
-                    android:id="@+id/search_item_action_iv"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/btn_download_selector" />
+            <TextView
+                android:id="@+id/bm_tv_price_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="JJD"/>
 
-                <TextView
-                    android:id="@+id/search_item_action_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:minWidth="56dp"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/search_item_comingsoon_iv"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:paddingLeft="5dp"
-                android:paddingRight="18dp"
-                android:src="@drawable/icon_comingsoon_game_list"
-                android:visibility="gone" />
-        </FrameLayout>
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/arrow_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1.0"
+        android:text=">"/>
+
+</RelativeLayout>

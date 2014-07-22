@@ -18,8 +18,6 @@
             android:src="@drawable/network_loading" />
     </RelativeLayout> -->
     
-    <include layout="@layout/network_loading" android:id="@+id/layout_loading_game"/>
-
     <LinearLayout
         android:id="@+id/layout_mine_game_view_container"
         android:layout_width="match_parent"
@@ -40,41 +38,5 @@
             ptr:ptrHeaderTextAppearance="@style/pull_header_TextAppearance"
             ptr:ptrMode="pullFromStart" />
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_mine_game_none_pane"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="invisible" >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="54dp"
-            android:src="@drawable/mine_no_game" />
-
-        <TextView
-            android:id="@+id/btn_collection_game_goto_gamehall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/mine_btn_login_register_ect_bg_selector"
-            android:gravity="center"
-            android:text="去首页"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <include
-        android:id="@+id/error_hint"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        layout="@layout/loading_error_layout"
-        android:visibility="gone"/>
 
 </LinearLayout>

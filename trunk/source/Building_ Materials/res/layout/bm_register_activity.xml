@@ -121,7 +121,6 @@
                     android:hint="设置账号(6-15位字母或数字)"
                     android:inputType="textEmailAddress"
                     android:paddingLeft="5dp"
-                    android:password="true"
                     android:singleLine="true"
                     android:textColor="#999999"
                     android:textSize="14sp"/>

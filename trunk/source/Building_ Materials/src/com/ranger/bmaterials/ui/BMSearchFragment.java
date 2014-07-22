@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.AsyncTask;
@@ -22,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
@@ -38,6 +40,7 @@ import com.ranger.bmaterials.db.CommonDao;
 import com.ranger.bmaterials.db.DbManager;
 import com.ranger.bmaterials.listener.onTagCloudViewLayoutListener;
 import com.ranger.bmaterials.mode.KeywordsList;
+import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.statistics.ClickNumStatistics;
 import com.ranger.bmaterials.tools.DeviceUtil;
@@ -55,7 +58,6 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
     private static final int KEYWORDS_COUNT = 50;
     private ViewGroup tagLayout;
     private TagCloudView tagView;
-    private Button replaceKeywordsButton;
 
     private ListView searchResultLayout;
 
@@ -79,8 +81,13 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
         root = inflater.inflate(R.layout.search_activity_new3d, null);
         root.findViewById(R.id.btn_back).setOnClickListener(this);
+        tv_back = (TextView) root.findViewById(R.id.btn_back);
         initView();
         initTagCloudViewData();
+
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(imm.isActive())
+            imm.hideSoftInputFromWindow(searchEt.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
 
         return root;
     }
@@ -330,8 +337,11 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
     }
 
     private void jumpSearch(String keyword) {
-        Intent intent = new Intent(getActivity(), SearchResultActivity.class);
-        intent.putExtra(SearchResultActivity.ARG_KEYWORD, keyword);
+        Intent intent = new Intent(getActivity(), BMSearchResultActivity.class);
+        intent.putExtra(BMSearchResultActivity.ARG_KEYWORD, keyword);
+        intent.putExtra(BMSearchResultActivity.ARG_PID, mPi==null? "":mPi.getId());
+        intent.putExtra(BMSearchResultActivity.ARG_PNAME, mPi==null? "":mPi.getName());
+
         startActivity(intent);
     }
 
@@ -344,8 +354,6 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
                 searchKeywords();
             } else {
                 CustomToast.showToast(getActivity(), getString(R.string.alert_network_inavailble));
-                // Toast.makeText(getActivity(), "网络不给力",
-                // Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -406,7 +414,6 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
                     // Toast.makeText(getActivity(), "网络不给力",
                     // Toast.LENGTH_LONG).show();
                 }
-                ClickNumStatistics.addSearchButtonClickStatis(getActivity());
 
                 break;
             case R.id.search_clear:
@@ -416,6 +423,7 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 
     private class KeywordsRequestListener implements IRequestListener {
@@ -463,6 +471,15 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
     public void onTagCloudViewLayoutInitialize() {
 
         dealWithPreloadedCloudViewData();
+    }
+
+    private static BMProvinceListResult.ProviceItem mPi;
+    private static TextView tv_back;
+
+    public static void setCityName(BMProvinceListResult.ProviceItem pi){
+
+        mPi = pi;
+        tv_back.setText(pi.getName());
     }
 
 }

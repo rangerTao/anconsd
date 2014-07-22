@@ -17,35 +17,35 @@ import android.widget.ImageView;
 * @version V
 *
  */
-public class GameTopicActivity extends FragmentActivity implements OnClickListener{
+public class BMProductDetailActivity extends FragmentActivity implements OnClickListener{
 
 	private ImageView iv_btn_back;
-	private AlwaysMarqueeTextView tv_topic_name;
+    public static final String SUPPLY_ID = "supplyId";
+
+    private String supplyId;
 	
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
-		setContentView(R.layout.game_topic_activity_layout);
-		
+        supplyId = getIntent().getStringExtra(SUPPLY_ID);
+
+        setContentView(R.layout.game_topic_activity_layout);
+
 		initView();
 	}
 
 	//初始化界面
 	public void initView() {
-		iv_btn_back = (ImageView) findViewById(R.id.img_back);
-		tv_topic_name = (AlwaysMarqueeTextView) findViewById(R.id.header_title);
-		
+		iv_btn_back = (ImageView) findViewById(R.id.btn_back);
+
 		iv_btn_back.setOnClickListener(this);
-		tv_topic_name.setOnClickListener(this);
-		
-		tv_topic_name.setText(R.string.home_section_title4);
 	}
 
 	@Override
 	public void onClick(View v) {
 		
 		switch (v.getId()) {
-		case R.id.img_back:
+		case R.id.btn_back:
 			finish();
 			break;
 		}

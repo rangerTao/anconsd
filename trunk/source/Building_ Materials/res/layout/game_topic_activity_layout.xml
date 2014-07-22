@@ -4,11 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <include layout="@layout/header_back_coin_layout" />
-
     <fragment
         android:id="@+id/fragment_game_topic"
-        android:name="com.ranger.bmaterials.ui.gametopic.GameTopicFragment"
+        android:name="com.ranger.bmaterials.ui.gametopic.BMProductDetailFragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 

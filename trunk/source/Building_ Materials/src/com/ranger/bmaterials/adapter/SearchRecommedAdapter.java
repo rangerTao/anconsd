@@ -2,22 +2,15 @@ package com.ranger.bmaterials.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,12 +18,8 @@ import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.app.AppManager;
 import com.ranger.bmaterials.bitmap.ImageLoaderHelper;
 import com.ranger.bmaterials.mode.SearchResult.SearchItem;
-import com.ranger.bmaterials.statistics.ClickNumStatistics;
 import com.ranger.bmaterials.tools.DeviceUtil;
-import com.ranger.bmaterials.ui.GameDetailsActivity;
-import com.ranger.bmaterials.ui.MoreGameActivity;
 import com.ranger.bmaterials.ui.RoundCornerImageView;
-import com.ranger.bmaterials.ui.SearchResultActivity;
 
 public class SearchRecommedAdapter extends AbstractListAdapter<SearchItem> {
     private int off = 3 ;

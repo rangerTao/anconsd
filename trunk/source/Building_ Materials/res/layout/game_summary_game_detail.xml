@@ -6,28 +6,7 @@
     android:background="#EAEAEA"
     android:orientation="vertical" >
     
-   <RelativeLayout 
-        android:layout_width="match_parent"
-    	android:layout_height="match_parent"
-	    android:id="@+id/loading">
-    	
-	    <include 
-	        layout="@layout/network_loading"
-	        android:id="@+id/view_loading"/>
-	    
-	    <ImageView 
-	        android:contentDescription="@null"
-            android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:id="@+id/view_game_not_found"
-    		android:src="@drawable/icon_no_game_found_game_detail"
-    		android:layout_centerHorizontal="true"
-    		android:layout_centerVertical="true"
-    		android:visibility="gone"/>
-	    
-    </RelativeLayout>
-   
-    <com.ranger.bmaterials.view.MyScrollView 
+    <com.ranger.bmaterials.view.MyScrollView
         android:layout_width="match_parent"
     	android:layout_height="match_parent"
     	android:fadingEdgeLength="0.0px"

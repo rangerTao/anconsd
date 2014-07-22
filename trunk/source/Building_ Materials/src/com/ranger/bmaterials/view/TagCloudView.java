@@ -245,7 +245,6 @@ public class TagCloudView extends RelativeLayout implements
 			// int textSize = (int)(tempTag.getTextSize() * tempTag.getScale());
 			// textView.setTextSize(textSize);
 
-			textView.setTextColor(Color.rgb(0xff, 0xff, 0xff));
 			textView.setGravity(Gravity.CENTER);
 			addView(textView);
 			// textView.setOnClickListener(OnTagClickListener2(tempTag.getText()));
@@ -281,7 +280,8 @@ public class TagCloudView extends RelativeLayout implements
 		textView.setBackgroundResource(newTag.getBackgroudRes());
 		// textView.setBackgroundColor(Color.argb(0x77, 0xa6, 0x96, 0x56));
 		textView.setSingleLine(true);
-		textView.setTextColor(Color.rgb(0xff, 0xff, 0xff));
+//		textView.setTextColor(Color.rgb(0xff, 0xff, 0xff));
+        textView.setTextColor(newTag.getColor());
 		textView.setGravity(Gravity.CENTER_VERTICAL);
 		layoutTag(newTag);
 
@@ -381,8 +381,11 @@ public class TagCloudView extends RelativeLayout implements
 
 			mAngleX = 0;
 			mAngleY = 0;
-			mTagCloud.clear();
-			textViews.clear();
+            if(mTagCloud != null)
+			    mTagCloud.clear();
+            if(textViews != null)
+			    textViews.clear();
+
 			params.clear();
 
 			// List<Tag> filter = Filter(tagList);

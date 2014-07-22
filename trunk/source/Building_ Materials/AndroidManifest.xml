@@ -133,13 +133,13 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.ranger.bmaterials.ui.MineCollectionActivity2"
+            android:name=".ui.BMMineCollectionActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.ranger.bmaterials.ui.MineSettingsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.ranger.bmaterials.ui.LoginActivity"
+            android:name=".ui.BMLoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.BMRegisterActivity"
@@ -170,7 +170,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.ranger.bmaterials.ui.gametopic.GameTopicActivity"
+            android:name=".ui.gametopic.BMProductDetailActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -218,7 +218,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.ranger.bmaterials.ui.SearchResultActivity"
+            android:name=".ui.BMSearchResultActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

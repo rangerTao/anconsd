@@ -177,7 +177,7 @@ public class BindPhoneActivity extends StatActivity implements OnClickListener, 
 
 		case DcError.DC_NEEDLOGIN:// 需要登录
 			MineProfile.getInstance().setIsLogin(false);
-			Intent intent = new Intent(this, LoginActivity.class);
+			Intent intent = new Intent(this, BMLoginActivity.class);
 			startActivity(intent);
 			CustomToast.showToast(this, getResources().getString(R.string.need_login_tip));
 

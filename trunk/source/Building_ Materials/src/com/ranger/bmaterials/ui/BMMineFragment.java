@@ -346,8 +346,10 @@ public class BMMineFragment extends Fragment implements
 
         refreshHeadPhoto();
         if (isLogin) {
-            btn_login.setVisibility(View.GONE);
-            ucView.setVisibility(View.VISIBLE);
+            if(btn_login != null)
+                btn_login.setVisibility(View.GONE);
+            if(ucView != null)
+                ucView.setVisibility(View.VISIBLE);
 
             String nickName = MineProfile.getInstance().getNickName();
             if (TextUtils.isEmpty(nickName)) {
@@ -631,14 +633,17 @@ public class BMMineFragment extends Fragment implements
 
         switch (viewID) {
             case R.id.bm_rl_change_pass:
-                if (!isLogin()) {
+                if (!isLogin) {
                     Intent intent = new Intent();
-                    intent.setClass(getActivity(), LoginActivity.class);
+                    intent.setClass(getActivity(), BMLoginActivity.class);
+                    startActivity(intent);
+                    break;
+                }else{
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), ChangePwdActivity.class);
                     startActivity(intent);
                     break;
                 }
-
-                break;
             case R.id.bm_rl_userinfo:
                 break;
             case R.id.img_logo:
@@ -647,34 +652,18 @@ public class BMMineFragment extends Fragment implements
                 }
                 break;
             case R.id.bm_rl_my_collect: {
-                String userId = MineProfile.getInstance().getUserID();
-                String sessionId = MineProfile.getInstance().getSessionID();
-                NetUtil.getInstance().requestCheckUserLogin(userId, sessionId,
-                        new IRequestListener() {
+                if (!isLogin) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), BMLoginActivity.class);
+                    startActivity(intent);
+                    break;
+                }else{
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(),
+                            BMMineCollectionActivity.class);
+                    startActivity(intent);
+                }
 
-                            @Override
-                            public void onRequestSuccess(BaseResult responseData) {
-                                ClickNumStatistics
-                                        .addMineCollectionClickNumStatistics(getActivity());
-                                Intent intent = new Intent();
-                                intent.setClass(getActivity(),
-                                        MineCollectionActivity2.class);
-                                startActivity(intent);
-                            }
-
-                            @Override
-                            public void onRequestError(int requestTag,
-                                                       int requestId, int errorCode, String msg) {
-                                MineProfile.getInstance().setIsLogin(false);
-                                Intent intent = new Intent(getActivity(),
-                                        LoginActivity.class);
-                                startActivity(intent);
-                                // CustomToast.showToast(MineCollectionActivity2.this,
-                                // MineCollectionActivity2.this.getResources()
-                                // .getString(R.string.need_login_tip));
-                            }
-                        }
-                );
             }
             break;
             case R.id.tv_item_feedback_pop_menu_home_activity: {

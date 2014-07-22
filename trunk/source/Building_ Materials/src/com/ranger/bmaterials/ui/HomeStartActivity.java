@@ -36,10 +36,10 @@ import com.ranger.bmaterials.mode.GameInfo;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.netresponse.HomeDailyResult;
 import com.ranger.bmaterials.tools.ConnectManager;
+import com.ranger.bmaterials.ui.gametopic.BMProductDetailActivity;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 import com.ranger.bmaterials.ui.enumeration.StatusLoading;
-import com.ranger.bmaterials.ui.gametopic.GameTopicActivity;
 import com.ranger.bmaterials.view.NetImageView;
 
 public class HomeStartActivity extends Activity {
@@ -186,7 +186,7 @@ public class HomeStartActivity extends Activity {
 										public void onClick(View v) {
 											if (skiptype.equals("0")) {
 												// 跳转至专题
-												Intent intentTopic = new Intent(HomeStartActivity.this, GameTopicActivity.class);
+												Intent intentTopic = new Intent(HomeStartActivity.this, BMProductDetailActivity.class);
 												intentTopic.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 												startActivity(intentTopic);
 											} else {

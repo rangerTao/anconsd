@@ -173,7 +173,7 @@ public class ExchangeHistoryAcitivty extends StatActivity implements OnRefreshLi
 	}
 
 	private void jumpToLogin() {
-		Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+		Intent loginIntent = new Intent(getApplicationContext(), BMLoginActivity.class);
 
 		MineProfile.getInstance().setIsLogin(false);
 		startActivity(loginIntent);

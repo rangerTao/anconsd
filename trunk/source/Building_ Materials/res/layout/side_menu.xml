@@ -5,4 +5,9 @@
     android:background="#3f3f3f"
     android:orientation="vertical" >
 
+    <com.ranger.bmaterials.view.IndexableStickyHeaderListView
+        android:id="@+id/bm_province_list"
+        android:overScrollMode="never"
+        style="@style/content_list" />
+
 </LinearLayout>

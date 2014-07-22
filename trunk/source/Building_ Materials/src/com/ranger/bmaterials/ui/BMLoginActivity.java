@@ -42,13 +42,12 @@ import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.tools.StringUtil;
 import com.ranger.bmaterials.view.MyPopupWindows;
 
-public class LoginActivity extends StatActivity implements OnClickListener,
+public class BMLoginActivity extends StatActivity implements OnClickListener,
 		NetUtil.IRequestListener, OnCancelListener, TextWatcher, OnDismissListener,
 		OnItemClickListener {
 
-	private static final String TAG = "LoginActivity"; 
-	// ViewGroup verifycodeViewGroup;
-	// ViewGroup verifycodeSubviewGroup;
+	private static final String TAG = "LoginActivity";
+
 	private CustomProgressDialog progressDialog = null;
 	private boolean hasProgressDlg = false;
 	// private ProgressDialog progressDialog;
@@ -191,7 +190,9 @@ public class LoginActivity extends StatActivity implements OnClickListener,
 		BMUserLoginResult result = (BMUserLoginResult) responseData;
 
         if(result.getSuccess() == 1){
-//            MineProfile.getInstance().setUserName(user);
+            MineProfile.getInstance().setToken(result.getToken());
+            MineProfile.getInstance().setIsLogin(true);
+            MineProfile.getInstance().Save();
             loginSucceed();
         }else{
             Toast.makeText(getApplicationContext(),result.getMessage(), Toast.LENGTH_LONG).show();
