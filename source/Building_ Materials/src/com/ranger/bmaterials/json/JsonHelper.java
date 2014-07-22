@@ -15,7 +15,7 @@ public final class JsonHelper {
 			Log.i("JsonHelper", "[parserWithTag] request Tag: " + requestTag + " resData: " + resData);
 		switch (requestTag) {
 		case Constants.NET_TAG_USERNAME_REGISTER: {
-			res = JSONParser.parseUserNameRegister(resData);
+			res = JSONParser.parseBMUserNameRegister(resData);
 			break;
 		}
 		case Constants.NET_TAG_PHONENUM__REGISTER: {
@@ -27,7 +27,7 @@ public final class JsonHelper {
 			break;
 		}
 		case Constants.NET_TAG_GET_PHONE_VERIFYCODE: {
-			res = JSONParser.parsePhoneVerifyCode(resData);
+			res = JSONParser.parseBMPhoneVerifyCode(resData);
 			break;
 		}
 		case Constants.NET_TAG_CHECK_USER_LOGIN: {
@@ -159,11 +159,11 @@ public final class JsonHelper {
 			break;
 		}
 		case Constants.NET_TAG_KEYWORDS: {
-			res = JSONParser.parseKeywords(resData);
+			res = JSONParser.parseBMKeywords(resData);
 			break;
 		}
 		case Constants.NET_TAG_SEARCH: {
-			res = JSONParser.parseSearchGames(resData);
+			res = JSONParser.parseBMSearchProducts(resData);
 			break;
 		}
 		case Constants.NET_TAG_BAIDU_SAPI:

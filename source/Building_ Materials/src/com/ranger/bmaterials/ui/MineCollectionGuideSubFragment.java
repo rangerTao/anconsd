@@ -25,7 +25,6 @@ import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.broadcast.BroadcaseSender;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.netresponse.MineGuidesResult;
-import com.ranger.bmaterials.sapi.SapiLoginActivity;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 import com.ranger.bmaterials.view.PagerSlidingTabStrip;
@@ -45,10 +44,7 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 	private MineGuideAdapter guideInfoListAdapter = null;
 	private PullToRefreshListView plvGuide;
 
-	private View layout_loading_guide;
 	private ViewGroup guideViewContainer;
-	private ViewGroup noGuideViewContainer;
-	private ViewGroup errorContainer;
 	private int pageGuideIndex;
 	private int pageGuideNum;
 	private int totalNum = 0;
@@ -71,7 +67,6 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 		noMoreGuide = false;
 		pageGuideNum = 20;
 		guideListInfo = new ArrayList<MineGuideItemInfo>();
-		getActivity().findViewById(R.id.btn_collection_guide_goto_gamehall).setOnClickListener(this);
 		guideInfoListAdapter = new MineGuideAdapter(getActivity(), guideListInfo);
 		plvGuide = (PullToRefreshListView) getActivity().findViewById(R.id.listview_mine_collection_guides);
 		plvGuide.setOnRefreshListener(this);
@@ -79,10 +74,6 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 		plvGuide.setOnItemClickListener(this);
 
 		guideViewContainer = (ViewGroup) getActivity().findViewById(R.id.layout_mine_guide_view_container);
-		noGuideViewContainer = (ViewGroup) getActivity().findViewById(R.id.layout_mine_guide_none_pane);
-		layout_loading_guide = getActivity().findViewById(R.id.layout_loading_guide);
-		errorContainer = (ViewGroup) getActivity().findViewById(R.id.error_hint_guide);
-		errorContainer.setOnClickListener(this);
 
 		registerReceiver();
 
@@ -132,14 +123,6 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 	public void onResume() {
 		super.onResume();
 
-		if ((errorContainer.getVisibility() == View.VISIBLE || update) && MineProfile.getInstance().getIsLogin()) {
-
-			guideListInfo.clear();
-			pageGuideIndex = 1;
-			noMoreGuide = false;
-			refreshGuide();
-			update = false;
-		}
 	}
 
 	@Override
@@ -166,29 +149,19 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 
 	private void showLoadingView() {
 		guideViewContainer.setVisibility(View.GONE);
-		noGuideViewContainer.setVisibility(View.GONE);
-		layout_loading_guide.setVisibility(View.VISIBLE);
-		errorContainer.setVisibility(View.GONE);
 	}
 
 	private void showErrorView() {
 		guideViewContainer.setVisibility(View.GONE);
-		noGuideViewContainer.setVisibility(View.GONE);
-		layout_loading_guide.setVisibility(View.GONE);
-		errorContainer.setVisibility(View.VISIBLE);
 	}
 
 	private void showContentView() {
 
-		errorContainer.setVisibility(View.GONE);
-		layout_loading_guide.setVisibility(View.GONE);
 
 		if (guideListInfo.size() > 0) {
 			guideViewContainer.setVisibility(View.VISIBLE);
-			noGuideViewContainer.setVisibility(View.GONE);
 		} else {
 			guideViewContainer.setVisibility(View.GONE);
-			noGuideViewContainer.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -220,7 +193,6 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 
 		totalNum = result.totalcount;
 
-		layout_loading_guide.setVisibility(View.INVISIBLE);
 		if (pageGuideIndex == 1) {
 			guideListInfo.clear();
 		}
@@ -244,13 +216,6 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 		requestFinished(false);
 
 		switch (errorCode) {
-		case DcError.DC_NEEDLOGIN:// 需要登�?
-			MineProfile.getInstance().setIsLogin(false);
-			Intent intent = new Intent(getActivity(), SapiLoginActivity.class);
-			startActivity(intent);
-			CustomToast.showToast(getActivity(), getActivity().getResources().getString(R.string.need_login_tip));
-			getActivity().finish();
-			break;
 		default:
 			break;
 		}
@@ -259,12 +224,6 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == R.id.btn_collection_guide_goto_gamehall) {
-			MainHallActivity.jumpToTab(getActivity(), 0);
-		} else if (v.getId() == R.id.error_hint_guide) {
-			showLoadingView();
-			refreshGuide();
-		}
 	}
 
 	private void refreshGuide() {
@@ -347,9 +306,9 @@ public class MineCollectionGuideSubFragment extends Fragment implements OnClickL
 	private void updateTitle(int total) {
 		if (tabStrip != null) {
 			if (total > 0) {
-				tabStrip.updateTitle(1, "攻略(" + total + ")");
+				tabStrip.updateTitle(1, "供应商(" + total + ")");
 			} else {
-				tabStrip.updateTitle(1, "攻略");
+				tabStrip.updateTitle(1, "供应商");
 			}			
 		}
 	}

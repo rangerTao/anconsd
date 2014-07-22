@@ -14,6 +14,7 @@ import android.widget.BaseAdapter;
 public abstract class AbstractListAdapter<T /* extends BaseAppInfo */> extends
 		BaseAdapter implements OnClickListener {
 	public interface OnListItemClickListener {
+
 		void onItemIconClick(View view, int position);
 
 		void onItemButtonClick(View view, int position);

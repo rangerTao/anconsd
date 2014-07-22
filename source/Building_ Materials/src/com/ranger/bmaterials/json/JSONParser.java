@@ -9,7 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ranger.bmaterials.app.Constants;
@@ -33,7 +32,6 @@ import com.ranger.bmaterials.mode.OpenServer;
 import com.ranger.bmaterials.mode.OpenServerDetail;
 import com.ranger.bmaterials.mode.OpenServerList;
 import com.ranger.bmaterials.mode.RecommendAppItemInfo;
-import com.ranger.bmaterials.mode.SearchResult;
 import com.ranger.bmaterials.mode.SnapNumber;
 import com.ranger.bmaterials.mode.SnapNumberDetail;
 import com.ranger.bmaterials.mode.SnapNumberList;
@@ -50,6 +48,9 @@ import com.ranger.bmaterials.mode.OpenServerDetail.OpenServerItem;
 import com.ranger.bmaterials.mode.SearchResult.SearchItem;
 import com.ranger.bmaterials.mode.SnapNumber.SnapNumberStatus;
 import com.ranger.bmaterials.mode.SnapNumberDetail.SnapNumberItem;
+import com.ranger.bmaterials.netresponse.BMProductInfoResult;
+import com.ranger.bmaterials.netresponse.BMProvinceListResult;
+import com.ranger.bmaterials.netresponse.BMSearchResult;
 import com.ranger.bmaterials.netresponse.BMUserLoginResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.netresponse.BindPhoneResult;
@@ -108,7 +109,7 @@ import com.ranger.bmaterials.ui.topicdetail.TopicDetailMoreGamesData;
 public class JSONParser {
 
 	// 用户注册
-	public static BaseResult parseUserNameRegister(String resData) {
+	public static BaseResult parseBMUserNameRegister(String resData) {
 
 		UserNameRegisterResult result = new UserNameRegisterResult();
 
@@ -272,7 +273,7 @@ public class JSONParser {
 	}
 
 	// 得到手机验证码
-	public static BaseResult parsePhoneVerifyCode(String resData) {
+	public static BaseResult parseBMPhoneVerifyCode(String resData) {
 		BaseResult result = new BaseResult();
 		do {
 			try {
@@ -1473,112 +1474,6 @@ public class JSONParser {
 		return acitivityDetail;
 	}
 
-	/**
-	 * tag 241 获取搜索关键字
-	 */
-	public static BaseResult parseKeywords(String resData) {
-		KeywordsList keywordsList = KeywordsList.getInstance();
-		try {
-			CommonResp commonResp = pareseCommonResp(resData);
-			keywordsList.setTag(commonResp.tag);
-			keywordsList.setErrorCode(commonResp.errorCode);
-			keywordsList.setErrorString(commonResp.errorString);
-
-			if (commonResp.errorCode == DcError.DC_OK) {
-				JSONObject outterObj = new JSONObject(resData);
-				JSONArray jsonList = outterObj.getJSONArray(Constants.JSON_KEYWORDS_LIST);
-				int length = jsonList.length();
-				List<String> dataList = new ArrayList<String>(length);
-				for (int i = 0; i < length; i++) {
-					String keyword = jsonList.getString(i);
-					dataList.add(keyword);
-				}
-				keywordsList.setKeywords(dataList);
-
-			}
-
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return keywordsList;
-	}
-
-	/**
-	 * tag 242 根据关键字搜索游戏
-	 */
-	public static BaseResult parseSearchGames(String resData) {
-		SearchResult searchResult = new SearchResult();
-		try {
-			CommonResp commonResp = pareseCommonResp(resData);
-			searchResult.setTag(commonResp.tag);
-			searchResult.setErrorCode(commonResp.errorCode);
-			searchResult.setErrorString(commonResp.errorString);
-
-			if (commonResp.errorCode == DcError.DC_OK) {
-
-				JSONObject outterObj = new JSONObject(resData);
-				int hasSearchResult = outterObj.getInt(Constants.JSON_HAS_SEARCH_RESULT);
-				searchResult.setSearch((hasSearchResult == 1));
-				JSONArray jsonList = outterObj.getJSONArray(Constants.JSON_GAME_LIST);
-				int length = jsonList.length();
-				List<SearchItem> dataList = new ArrayList<SearchItem>(length);
-				for (int i = 0; i < length; i++) {
-					JSONObject innerObj = jsonList.getJSONObject(i);
-					String gameId = innerObj.getString(Constants.JSON_GAME_ID);
-					String gameName = innerObj.getString(Constants.JSON_GAME_NAME);
-					float star = Float.parseFloat(innerObj.getString(Constants.JSON_GAME_STAR));
-					int downloadTimes = StringUtil.parseInt(innerObj.getString(Constants.JSON_GAME_DOWNLOAD_TIMES));
-					String packageName = innerObj.getString(Constants.JSON_GAME_PACKAGE);
-
-					String iconUrl = innerObj.getString(Constants.JSON_GAME_ICON);
-					String downloadUrl = innerObj.getString(Constants.JSON_GAME_DOWNLOAD_URL);
-					/*
-					 * if (TextUtils.isEmpty(packageName) ||
-					 * TextUtils.isEmpty(downloadUrl)) { continue; }
-					 */
-					String version = innerObj.getString(Constants.JSON_GAME_VERSION);
-					int versionInt = StringUtil.parseInt(innerObj.getString(Constants.JSON_GAME_VERSION_INT));
-					long packageSize = 0;
-					try {
-						packageSize = Long.parseLong(innerObj.getString(Constants.JSON_GAME_PACKAGE_SIZE));
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-
-					Date date = DateUtil.pareseDate(innerObj.getString(Constants.JSON_PUBLISH_DATE));
-					long d = date.getTime();
-
-					String key = null;
-					if (innerObj.has(Constants.JSON_GAME_KEY)) {
-						key = innerObj.getString(Constants.JSON_GAME_KEY);
-					}
-					boolean needLogin = false;
-					if (innerObj.has(Constants.JSON_NEED_LOGIN)) {
-						int parseInt = StringUtil.parseInt(innerObj.getString(Constants.JSON_NEED_LOGIN));
-						needLogin = (parseInt == 1);
-					}
-					boolean comingSoon = false;
-					if (innerObj.has(Constants.JSON_COMING)) {
-						int parseInt = StringUtil.parseInt(innerObj.getString(Constants.JSON_COMING));
-						comingSoon = (parseInt == 2);
-					}
-
-					SearchItem searchItem = new SearchItem(gameId, gameName, star, downloadTimes, packageName, iconUrl, downloadUrl, packageSize, version, versionInt, d, key, needLogin, comingSoon);
-
-					searchItem.labelName = innerObj.getString("labelname");
-					searchItem.labelColor = innerObj.getString("labelcolor");
-					dataList.add(searchItem);
-				}
-				searchResult.setData(dataList);
-				searchResult.setTotalCount(outterObj.getInt(Constants.JSON_SEARCH_TOTAL_COUNT));
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return searchResult;
-	}
-
 	// 手机号一键注册登陆
 	public static BaseResult parseChangeNickname(String resData) {
 		BaseResult result = new BaseResult();
@@ -2657,6 +2552,8 @@ public class JSONParser {
 		return result;
 	}
 
+    /************************************************************************************************/
+
     /**
      * BmUser
      */
@@ -2672,5 +2569,91 @@ public class JSONParser {
 
         return result;
 
+    }
+
+    /**
+     * tag 241 获取搜索关键字
+     */
+    public static BaseResult parseBMKeywords(String resData) {
+        KeywordsList keywordsList = KeywordsList.getInstance();
+        try {
+
+            JSONArray outter = new JSONArray(resData);
+            int length = outter.length();
+            List<String> dataList = new ArrayList<String>(length);
+            for (int i = 0; i < length; i++) {
+                String keyword = outter.getString(i);
+                dataList.add(keyword);
+            }
+            keywordsList.setKeywords(dataList);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return keywordsList;
+    }
+
+    public static BaseResult parseBMProvinceList(String res){
+        BMProvinceListResult result = new BMProvinceListResult();
+        try{
+            JSONArray jsonArray = new JSONArray(res);
+            for(int i=0;i<jsonArray.length();i++){
+                String item = jsonArray.getString(i);
+                result.addItem(item);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return result;
+
+    }
+
+    public static BaseResult parseBMProductInfo(String res){
+        BMProductInfoResult result = new BMProductInfoResult();
+        try{
+            Gson gson = new Gson();
+
+            result = gson.fromJson(res,BMProductInfoResult.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return result;
+
+    }
+
+    /**
+     * tag 242 根据关键字搜索游戏
+     */
+    public static BaseResult parseBMSearchProducts(String resData) {
+        BMSearchResult searchResult = new BMSearchResult();
+        try {
+
+
+                JSONObject outterObj = new JSONObject(resData);
+                JSONArray jsonList = outterObj.getJSONArray(Constants.BM_JSON_DATA_LIST);
+                int length = jsonList.length();
+                ArrayList<BMSearchResult.BMSearchData> dataList = new ArrayList<BMSearchResult.BMSearchData>(length);
+                for (int i = 0; i < length; i++) {
+                    try{
+
+                        Gson gson = new Gson();
+                        BMSearchResult.BMSearchData bmsd = gson.fromJson(jsonList.getJSONObject(i).toString(),BMSearchResult.BMSearchData.class);
+
+                        dataList.add(bmsd);
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+
+                }
+
+            searchResult.setDataList(dataList);
+            searchResult.setTotal(outterObj.getInt(Constants.JSON_SEARCH_TOTAL_COUNT));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return searchResult;
     }
 }

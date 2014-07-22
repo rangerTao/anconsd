@@ -73,7 +73,7 @@ public class TagCloud implements Iterable{
 			smallest = Math.min(smallest, j);
 		}
 		 List<Integer> bgs = Arrays.asList(backgrounds);
-		int bgSize = bgs.size();
+		int bgSize = textColors.length;
 		Collections.shuffle(bgs);
 		
 		//figuring out and assigning the colors/ textsize
@@ -87,10 +87,11 @@ public class TagCloud implements Iterable{
 			//tempTag.setColorR(tempColor[0]);
 			//tempTag.setColorG(tempColor[1]);
 			//tempTag.setColorB(tempColor[2]);
-			tempTag.setColor(textColors[random.nextInt(textColors.length)]);
+            int index = ((i>bgSize)?(i-bgSize):i);
+			tempTag.setColor(textColors[index % textColors.length]);
 			tempTag.setTextSize(tempTextSize);
-			int index = ((i>bgSize)?(i-bgSize):i);
-			tempTag.setBackgroudRes(bgs.get(index % bgs.size()));
+
+//			tempTag.setBackgroudRes(bgs.get(index % bgs.size()));
 		}		
 		
 		//this.size= tagCloud.size();

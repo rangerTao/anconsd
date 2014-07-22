@@ -171,32 +171,32 @@ public class SubjectResultAdapter extends AbstractListAdapter<SearchItem> {
 	}
 
 	private void setViewForUpdate(View view, SearchItem item) {
-		view.findViewById(R.id.game_rating).setVisibility(View.GONE);
-		ViewGroup versionViewGroup = (ViewGroup) view.findViewById(R.id.game_version_layout);
-		versionViewGroup.setVisibility(View.VISIBLE);
-		TextView versionText = (TextView) versionViewGroup.findViewById(R.id.item_version);
-		TextView newVersionText = (TextView) versionViewGroup.findViewById(R.id.item_new_version);
-
-		String localVersion = item.getLocalVersion();
-		String version = item.getVersion();
-		versionText.setText(localVersion);
-		newVersionText.setText(version);
-
-		view.findViewById(R.id.game_download_times_layout).setVisibility(View.GONE);
-		ViewGroup sizeViewGroup = (ViewGroup) view.findViewById(R.id.game_size_layout_parent);
-		TextView sizeText = (TextView) sizeViewGroup.findViewById(R.id.item_size);
-		ImageView sizeTextStrike = (ImageView) sizeViewGroup.findViewById(R.id.item_size_strike);
-		TextView newSizeText = (TextView) sizeViewGroup.findViewById(R.id.item_new_size);
-
-		if (item.isDiffDownload()) {
-			sizeText.setText(Formatter.formatFileSize(context, item.getPackageSize()));
-			sizeTextStrike.setVisibility(View.VISIBLE);
-			newSizeText.setText(Formatter.formatFileSize(context, item.getPatchSize()));
-		} else {
-			sizeText.setText(Formatter.formatFileSize(context, item.getPackageSize()));
-			sizeTextStrike.setVisibility(View.GONE);
-			newSizeText.setVisibility(View.GONE);
-		}
+//		view.findViewById(R.id.game_rating).setVisibility(View.GONE);
+//		ViewGroup versionViewGroup = (ViewGroup) view.findViewById(R.id.game_version_layout);
+//		versionViewGroup.setVisibility(View.VISIBLE);
+//		TextView versionText = (TextView) versionViewGroup.findViewById(R.id.item_version);
+//		TextView newVersionText = (TextView) versionViewGroup.findViewById(R.id.item_new_version);
+//
+//		String localVersion = item.getLocalVersion();
+//		String version = item.getVersion();
+//		versionText.setText(localVersion);
+//		newVersionText.setText(version);
+//
+//		view.findViewById(R.id.game_download_times_layout).setVisibility(View.GONE);
+//		ViewGroup sizeViewGroup = (ViewGroup) view.findViewById(R.id.game_size_layout_parent);
+//		TextView sizeText = (TextView) sizeViewGroup.findViewById(R.id.item_size);
+//		ImageView sizeTextStrike = (ImageView) sizeViewGroup.findViewById(R.id.item_size_strike);
+//		TextView newSizeText = (TextView) sizeViewGroup.findViewById(R.id.item_new_size);
+//
+//		if (item.isDiffDownload()) {
+//			sizeText.setText(Formatter.formatFileSize(context, item.getPackageSize()));
+//			sizeTextStrike.setVisibility(View.VISIBLE);
+//			newSizeText.setText(Formatter.formatFileSize(context, item.getPatchSize()));
+//		} else {
+//			sizeText.setText(Formatter.formatFileSize(context, item.getPackageSize()));
+//			sizeTextStrike.setVisibility(View.GONE);
+//			newSizeText.setVisibility(View.GONE);
+//		}
 
 	}
 

@@ -36,7 +36,7 @@ public final class Constants {
     public static String PREFIX = "com.duoku.gamesearch";
     static{
     	try {
-			Class<?> loadClass = Constants.class.getClassLoader().loadClass("com.duoku.gamesearch.download.config.Config");
+			Class<?> loadClass = Constants.class.getClassLoader().loadClass("com.ranger.bmaterials.download.config.Config");
 			Field field = loadClass.getField("prefix");
 			String f = (String) field.get(null);
 			PREFIX = f ;

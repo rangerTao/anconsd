@@ -18,7 +18,7 @@ import com.ranger.bmaterials.adapter.MineCollectionPagerAdapter.PageCallback;
 import com.ranger.bmaterials.tools.DeviceUtil;
 import com.ranger.bmaterials.view.PagerSlidingTabStrip;
 
-public class MineCollectionActivity2 extends FragmentActivity implements PageCallback, OnClickListener {
+public class BMMineCollectionActivity extends FragmentActivity implements PageCallback, OnClickListener {
 
 	private static final String TAG = "mineCollectionActivity";
 	private ViewPager pager;
@@ -29,8 +29,7 @@ public class MineCollectionActivity2 extends FragmentActivity implements PageCal
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.mine_activity_collection2);
 		
-		((TextView) findViewById(R.id.label_title)).setText("我的收藏");
-		findViewById(R.id.img_back).setOnClickListener(this);
+		findViewById(R.id.btn_back).setOnClickListener(this);
 		
 		setupViews();
 	}
@@ -70,7 +69,7 @@ public class MineCollectionActivity2 extends FragmentActivity implements PageCal
 		return fragment;
 	}
 	
-	String[] titles = {"游戏","攻略"};
+	String[] titles = {"材料","供应商"};
 	private PagerSlidingTabStrip tabStrip;
 	
 	@Override

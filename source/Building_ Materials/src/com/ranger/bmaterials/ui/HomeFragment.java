@@ -45,10 +45,10 @@ import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.netresponse.HomePageDataResult;
 import com.ranger.bmaterials.statistics.ClickNumStatistics;
 import com.ranger.bmaterials.tools.ConnectManager;
+import com.ranger.bmaterials.ui.gametopic.BMProductDetailActivity;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.tools.UIUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
-import com.ranger.bmaterials.ui.gametopic.GameTopicActivity;
 import com.ranger.bmaterials.view.AdsPoints;
 import com.ranger.bmaterials.view.AdsViewPager;
 import com.ranger.bmaterials.view.ExpandableHeightGridView;
@@ -551,7 +551,7 @@ public class HomeFragment extends HeaderHallBaseFragment implements OnClickListe
 			ClickNumStatistics.addHomeCompetitionClickStatistics(getActivity());
 			break;
 		case R.id.home_section_classgames:
-			Intent intentTopic = new Intent(getActivity(), GameTopicActivity.class);
+			Intent intentTopic = new Intent(getActivity(), BMProductDetailActivity.class);
 			intentTopic.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intentTopic);
 			ClickNumStatistics.addHomeTabClassGames(getActivity());

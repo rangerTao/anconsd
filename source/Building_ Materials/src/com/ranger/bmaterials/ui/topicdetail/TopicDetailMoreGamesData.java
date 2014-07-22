@@ -31,7 +31,7 @@ public class TopicDetailMoreGamesData extends BaseResult
         super(json);
         
         JSONUtil util = JSONUtil.instance();
-        JSONArray array = util.getArray(json, Constants.JSON_GAME_LIST);
+        JSONArray array = util.getArray(json, Constants.BM_JSON_DATA_LIST);
         
         mTotalCount = util.getInt(json, Constants.JSON_GAMECOUNT);
         

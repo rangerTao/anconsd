@@ -25,7 +25,6 @@ import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.broadcast.BroadcaseSender;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.netresponse.MineGamesResult;
-import com.ranger.bmaterials.sapi.SapiLoginActivity;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 import com.ranger.bmaterials.view.PagerSlidingTabStrip;
@@ -46,10 +45,7 @@ public class MineCollectionGameSubFragment extends Fragment implements
 	private MineGamesAdapter gameInfoListAdapter = null;
 	private PullToRefreshListView plvGame;
 
-	private View layout_loading_game;
 	private ViewGroup gameViewContainer;
-	private ViewGroup noGameViewContainer;
-	private ViewGroup errorContainer;
 
 	private int pageGameIndex;
 	private int pageGameNum;
@@ -76,8 +72,6 @@ public class MineCollectionGameSubFragment extends Fragment implements
 		noMoreGame = false;
 		pageGameNum = 20;
 		gameListInfo = new ArrayList<MineGameItemInfo>();
-		getActivity().findViewById(R.id.btn_collection_game_goto_gamehall)
-				.setOnClickListener(this);
 		gameInfoListAdapter = new MineGamesAdapter(getActivity(), gameListInfo,
 				MineGamesAdapter.LISTTYPE_COLLECTED_GAMES);
 		plvGame = (PullToRefreshListView) getActivity().findViewById(
@@ -88,13 +82,6 @@ public class MineCollectionGameSubFragment extends Fragment implements
 
 		gameViewContainer = (ViewGroup) getActivity().findViewById(
 				R.id.layout_mine_game_view_container);
-		noGameViewContainer = (ViewGroup) getActivity().findViewById(
-				R.id.layout_mine_game_none_pane);
-		layout_loading_game = getActivity().findViewById(
-				R.id.layout_loading_game);
-		errorContainer = (ViewGroup) getActivity()
-				.findViewById(R.id.error_hint);
-		errorContainer.setOnClickListener(this);
 
 		registerReceiver();
 
@@ -153,16 +140,6 @@ public class MineCollectionGameSubFragment extends Fragment implements
 	@Override
 	public void onResume() {
 		super.onResume();
-
-		if ((errorContainer.getVisibility() == View.VISIBLE || update)
-				&& MineProfile.getInstance().getIsLogin()) {
-
-			gameListInfo.clear();
-			pageGameIndex = 1;
-			noMoreGame = false;
-			refreshGame();
-			update = false;
-		}
 	}
 
 	@Override
@@ -189,29 +166,19 @@ public class MineCollectionGameSubFragment extends Fragment implements
 
 	private void showLoadingView() {
 		gameViewContainer.setVisibility(View.GONE);
-		noGameViewContainer.setVisibility(View.GONE);
-		layout_loading_game.setVisibility(View.VISIBLE);
-		errorContainer.setVisibility(View.GONE);
 	}
 
 	private void showErrorView() {
 		gameViewContainer.setVisibility(View.GONE);
-		noGameViewContainer.setVisibility(View.GONE);
-		layout_loading_game.setVisibility(View.GONE);
-		errorContainer.setVisibility(View.VISIBLE);
 	}
 
 	private void showContentView() {
 
-		errorContainer.setVisibility(View.GONE);
-		layout_loading_game.setVisibility(View.GONE);
 
 		if (gameListInfo.size() > 0) {
 			gameViewContainer.setVisibility(View.VISIBLE);
-			noGameViewContainer.setVisibility(View.GONE);
 		} else {
 			gameViewContainer.setVisibility(View.GONE);
-			noGameViewContainer.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -271,30 +238,15 @@ public class MineCollectionGameSubFragment extends Fragment implements
 		requestFinished(false);
 		switch (errorCode) {
 		case DcError.DC_NEEDLOGIN:// 需要登录
-			MineProfile.getInstance().setIsLogin(false);
-			if(getActivity()!=null){
-			Intent intent = new Intent(getActivity(), SapiLoginActivity.class);
-			startActivity(intent);
-			CustomToast.showToast(getActivity(), getActivity().getResources()
-					.getString(R.string.need_login_tip));
-			getActivity().finish();
-			}
 			break;
 		default:
 			break;
 		}
-		CustomToast.showLoginRegistErrorToast(getActivity(), errorCode);
 	}
 
 	@Override
 	public void onClick(View v) {
 
-		if (v.getId() == R.id.btn_collection_game_goto_gamehall) {
-			MainHallActivity.jumpToTab(getActivity(), 0);
-		} else if (v.getId() == R.id.error_hint) {
-			showLoadingView();
-			refreshGame();
-		}
 	}
 
 	private void refreshGame() {
@@ -382,9 +334,9 @@ public class MineCollectionGameSubFragment extends Fragment implements
 	private void updateTitle(int total) {
 		if(tabStrip!=null)
 		if (total > 0) {
-			tabStrip.updateTitle(0, "游戏(" + total + ")");
+			tabStrip.updateTitle(0, "材料(" + total + ")");
 		} else {
-			tabStrip.updateTitle(0, "游戏");
+			tabStrip.updateTitle(0, "材料");
 		}
 	}
 }

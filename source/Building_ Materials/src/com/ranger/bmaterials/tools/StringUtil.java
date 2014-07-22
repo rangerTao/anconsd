@@ -243,7 +243,7 @@ public class StringUtil {
     public static boolean checkValidVerifyCode(String verifyCode) {
 		//4位数字
 		
-		String verifyCodePattern = "^\\d{4}$";
+		String verifyCodePattern = "^\\d{6}$";
 		Pattern pattern = Pattern.compile(verifyCodePattern);  
 		boolean ret = pattern.matcher(verifyCode).matches();
 		

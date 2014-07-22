@@ -68,6 +68,10 @@ public final class Constants {
 	public static final String ONLINE_GAME = "1";
 	public static final String OFFLINE_GAME = "2";
 
+    /** tag定义：激活 */
+    public static final int NET_TAG_GET_PROVINCE = 100;
+
+
 	/** tag定义：激活 */
 	public static final int NET_TAG_APP_ACTIVE = 100;
 
@@ -504,7 +508,7 @@ public final class Constants {
 	public static final String JSON_KEYWORDS_COUNT = "count";
 
 	/* 游戏列表 */
-	public static final String JSON_GAME_LIST = "gamelist";
+	public static final String BM_JSON_DATA_LIST = "data";
 	/* 关键字 */
 	public static final String JSON_KEYWORD = "keyword";
 	/* 是否有搜索结果 */
@@ -512,7 +516,7 @@ public final class Constants {
 	/*
 	 * 搜索结果总数
 	 */
-	public static final String JSON_SEARCH_TOTAL_COUNT = "totalcount";
+	public static final String JSON_SEARCH_TOTAL_COUNT = "total";
 
 	public static final String JSON_PACKAGES = "packages";
 

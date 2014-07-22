@@ -25,6 +25,7 @@ public class MineProfile implements IRequestListener {
 	public static int USERTYPE_UNBINDINGPHONE = 2;
 	public static int USERTYPE_PHONEUSER = 3;
 
+    private String token;
 	private String userID;
 	private String userName;
 	private String nickName;
@@ -71,6 +72,7 @@ public class MineProfile implements IRequestListener {
 	private List<String> accountList;
 
 	private MineProfile() {
+        token = "";
 		userID = "";
 		userName = "";
 		nickName = "";
@@ -129,6 +131,7 @@ public class MineProfile implements IRequestListener {
 		userName = "";
 		nickName = "";
 		sessionID = "";
+        token = "";
 		userType = USERTYPE_UNBINDINGPHONE;
 		phonenum = "";
 		gamenum = "0";
@@ -150,6 +153,7 @@ public class MineProfile implements IRequestListener {
 		MyLogger logger = MyLogger.getLogger(this.getClass().getSimpleName());
 
 		logger.d("MineProfile Debug Print --- begin");
+        logger.d("TOKEN" + this.token);
 		logger.d("userID: " + this.userID);
 		logger.d("userName: " + this.userName);
 		logger.d("nickName: " + this.nickName);
@@ -189,6 +193,7 @@ public class MineProfile implements IRequestListener {
 		SharedPreferences settings = context.getSharedPreferences(
 				Constants.SETTINGS_PREFERENCE, Activity.MODE_MULTI_PROCESS);
 
+        this.token = settings.getString("token","");
 		this.userID = settings.getString("userID", "");
 		this.userName = settings.getString("userName", "");
 		this.nickName = settings.getString("nickName", "");
@@ -262,6 +267,7 @@ public class MineProfile implements IRequestListener {
 		SharedPreferences settings = context.getSharedPreferences(
 				Constants.SETTINGS_PREFERENCE, Activity.MODE_MULTI_PROCESS);
 		SharedPreferences.Editor editor = settings.edit();
+        editor.putString("token",this.token);
 		editor.putString("userID", this.userID);
 		editor.putString("userName", this.userName);
 		editor.putString("nickName", this.nickName);
@@ -486,7 +492,15 @@ public class MineProfile implements IRequestListener {
 		}
 	}
 
-	public boolean isNewUser() {
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public boolean isNewUser() {
 		return isNewUser;
 	}
 
