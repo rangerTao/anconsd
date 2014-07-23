@@ -4,9 +4,6 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.duoku.gamesearch.AESKey;
-
-
 /**
  * Java��ES���瑙ｅ�锛���ㄤ�PHP��ES���瑙ｅ�(PHP璇��寮����CRYPT_3DES绠����CRYPT_MODE_ECB妯″�
  * �� PKCS5濉���瑰�)
@@ -21,7 +18,7 @@ public class AES {
 	private static AES mInstance;
 	private SecretKey sSecretKey = null;// key瀵硅薄
 	private Cipher sCipher = null; // 绉�拷���瀵硅薄Cipher
-	private String sKeyString = AESKey.getAESKey();// 瀵��
+	private String sKeyString = "1934567820bacDQF";// 瀵��
 
 	public synchronized static AES getInstance() {
 		if (mInstance == null) {

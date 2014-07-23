@@ -1,7 +1,0 @@
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-
-    <!-- Pressed -->
-    <item android:state_pressed="true" android:drawable="@drawable/popupwindow_icon_uninstall_pressed" />
-    <item  android:drawable="@drawable/popupwindow_icon_uninstall_normal" />
-</selector>
