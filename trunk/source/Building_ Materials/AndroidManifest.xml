@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
     package="com.ranger.bmaterials"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="internalOnly"
     android:versionCode="100"
-    android:versionName="1.0.0" >
+    android:versionName="1.0.0">
 
     <uses-sdk
         android:minSdkVersion="7"
-        android:targetSdkVersion="8" />
+        android:targetSdkVersion="8"/>
 
     <!-- 必须申明的权限 -->
     <!-- 百度移动统计需要的权限 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <!-- <uses-permission android:name="android.permission.INSTALL_PACKAGES" /> -->
-    <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_SUPERUSER"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
 
     <!-- 可选的权限 -->
     <!-- 启用错误分析功能，须添加该权限 -->
-    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.READ_LOGS"/>
 
     <!-- 百度push的权限 -->
     <!-- 监听系统启动的权限,和上面重复 -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <!-- <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> -->
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <application
         android:name=".app.GameTingApplication"
@@ -48,292 +49,61 @@
         android:debuggable="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <activity
             android:name=".ui.MainHallActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Start" >
+            android:theme="@style/Theme.Start">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.BMCompanyInfoActivity"
-                  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.BMCompanyInfoActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
-            android:name="com.ranger.bmaterials.ui.topicdetail.TopicDetailActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ranger.bmaterials.ui.MineEditActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ranger.bmaterials.ui.MineGamesActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ranger.bmaterials.ui.MineMsgActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ranger.bmaterials.ui.MineMsgDetailActivity"
-            android:hardwareAccelerated="false"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name=".ui.BMMineCollectionActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ranger.bmaterials.ui.MineSettingsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.BMLoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.BMRegisterActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
-        <activity
-            android:name="com.ranger.bmaterials.ui.RegisterProtocolActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name="com.ranger.bmaterials.ui.FeedbackActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
-        <activity
-            android:name="com.ranger.bmaterials.ui.ForgetPwdActivity"
-            android:screenOrientation="portrait" >
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name="com.ranger.bmaterials.ui.ChangePwdActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.ranger.bmaterials.ui.AboutUsActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ranger.bmaterials.ui.ActivityDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ranger.bmaterials.ui.AppraisalDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ranger.bmaterials.ui.OpenServerDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ranger.bmaterials.ui.SnapNumberDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ranger.bmaterials.ui.MoreGameActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ranger.bmaterials.ui.MoreClassGameActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ranger.bmaterials.ui.GameDetailsActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ranger.bmaterials.ui.PublishCommentActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.BMSearchResultActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ranger.bmaterials.ui.ExchangeHistoryAcitivty"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ranger.bmaterials.ui.DownloadDialogActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/dialog_activity_theme" />
-        <activity
-            android:name="com.ranger.bmaterials.ui.WebviewActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ranger.bmaterials.ui.HomeStartActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/dialog_activity_theme" />
-		 <activity
-            android:name="com.ranger.bmaterials.ui.NewGamesActivity"
-            android:screenOrientation="portrait" />
-        <service
-            android:name="com.ranger.bmaterials.tools.install.SilentInstallService"
-            android:process=":installservice" />
-        <service
-            android:name="com.ranger.bmaterials.uservice.DKUserInfoRemoteService"
-            android:process=":dkuservice" >
-            <intent-filter>
-                <action android:name="com.ranger.bmaterials.uservice.IDKUserService" />
-            </intent-filter>
-        </service>
+            android:screenOrientation="portrait"/>
 
-        <receiver android:name="com.ranger.bmaterials.broadcast.AppMonitorReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <action android:name="android.intent.action.PACKAGE_REPLACED" />
-                <action android:name="android.intent.action.PACKAGE_CHANGED" />
 
-                <data android:scheme="package" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MEDIA_MOUNTED" />
-                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
+        <uses-library android:name="android.test.runner"/>
 
-                <data android:scheme="file" />
-            </intent-filter>
+        <receiver android:name="com.ranger.bmaterials.updateservice.BootBroadcastReceiver">
             <intent-filter>
-                <action android:name="com.ranger.bmaterials.intent.action.DOWNLOAD_COMPLETE" />
-                <action android:name="com.ranger.bmaterials.intent.action.DOWNLOAD_PAUSE" />
-                <action android:name="com.ranger.bmaterials.intent.action.DOWNLOAD_START" />
-                <action android:name="com.ranger.bmaterials.intent.action.DOWNLOAD_PAUSE_BY_USER" />
-                <action android:name="com.ranger.bmaterials.intent.action.DOWNLOAD_CANCLE" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.ranger.bmaterials.broadcast.PackageReceiver"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.ranger.bmaterials.intent.action.DOWNLOAD_COMPLETE" />
-                <action android:name="com.ranger.bmaterials.intent.action.DOWNLOAD_PAUSE" />
-                <action android:name="com.ranger.bmaterials.intent.action.DOWNLOAD_START" />
-                <action android:name="com.ranger.bmaterials.intent.action.DOWNLOAD_PAUSE_BY_USER" />
-                <action android:name="com.ranger.bmaterials.intent.action.DOWNLOAD_CANCLE" />
-                <action android:name="com.ranger.bmaterials.intent.action.DOWNLOAD_RUNNING" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
 
-        <provider
-            android:name="com.ranger.bmaterials.download.DownloadProvider"
-            android:authorities="com.ranger.bmaterials.download"
-            android:exported="true" />
-
-        <service android:name="com.ranger.bmaterials.download.DownloadService" />
-
-        <receiver
-            android:name="com.ranger.bmaterials.download.DownloadReceiver"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MEDIA_MOUNTED" />
-
-                <data android:scheme="file" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.ranger.bmaterials.download.OpenDownloadReceiver"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.ranger.bmaterials.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
-
-                <data
-                    android:mimeType="vnd.android.cursor.item/download"
-                    android:scheme="content" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name="com.ranger.bmaterials.broadcast.PushServiceReceiver" >
-            <intent-filter>
-                <action android:name="com.baidu.android.pushservice.action.MESSAGE" />
-                <action android:name="com.baidu.android.pushservice.action.RECEIVE" />
-                <action android:name="com.baidu.android.pushservice.action.notification.CLICK" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.baidu.android.pushservice.PushServiceReceiver"
-            android:process=":push_service" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="com.baidu.android.pushservice.action.notification.SHOW" />
-                <action android:name="com.baidu.android.pushservice.action.media.CLICK" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.baidu.android.pushservice.RegistrationReceiver"
-            android:process=":push_service" >
-            <intent-filter>
-                <action android:name="com.baidu.android.pushservice.action.METHOD" />
-                <action android:name="com.baidu.android.pushservice.action.BIND_SYNC" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="com.baidu.android.pushservice.PushService"
-            android:process=":push_service" />
-
-        <activity
-            android:name="com.ranger.bmaterials.download.SizeLimitActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
-            android:launchMode="singleTask"
-            android:theme="@android:style/Theme.Translucent" />
-
-        <uses-library android:name="android.test.runner" />
-
-        <receiver android:name="com.ranger.bmaterials.updateservice.BootBroadcastReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name="com.ranger.bmaterials.updateservice.CheckGameUpdateService" />
-        <service
-            android:name="com.ranger.bmaterials.speeddownload.SpeedDonwloadService"
-            android:exported="true"
-            android:process="com.ranger.bmaterials.speedservice" />
-
-        <receiver android:name=".broadcast.SpeedDownloadReceiver" >
-            <intent-filter>
-                <action android:name="com.ranger.bmaterials.speeddownload.REQUESTRECEIVER" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".broadcast.UnInstallReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-
-        <activity
-            android:name=".ui.CompetitionActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ranger.bmaterials.sapi.SapiLoginActivity"
-            android:launchMode="singleTask" />
-
-        <receiver
-            android:name="com.baidu.sapi2.share.ShareReceiver"
-            android:permission="com.baidu.permission.SHARE" >
-            <intent-filter>
-                <action android:name="baidu.intent.action.SHARE" />
-                <action android:name="baidu.intent.action.NEWSHARE" />
-                <action android:name="baidu.intent.action.SHARE_V6" />
-            </intent-filter>
-        </receiver>
     </application>
 </manifest>
