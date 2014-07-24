@@ -13,9 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
-import android.text.SpannableString;
 import android.text.TextWatcher;
-import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -111,13 +109,6 @@ public class BMRegisterActivity extends Activity implements OnClickListener,
 	}
 
 	private void enableRigisterBtn() {
-//		CheckBox ckBox = (CheckBox) findViewById(R.id.checkbox_p_agree_protocol);
-//		if (ckBox.isChecked()) {
-//			this.findViewById(R.id.btn_p_commit_register).setEnabled(true);
-//			((TextView) findViewById(R.id.btn_p_commit_register)).setTextColor(Color.WHITE);
-//			this.findViewById(R.id.btn_p_commit_register).setBackgroundResource(
-//					R.drawable.mine_btn_login_register_ect_bg_selector);
-//		}
 		this.findViewById(R.id.btn_p_commit_register).setEnabled(true);
 		((TextView) findViewById(R.id.btn_p_commit_register)).setTextColor(Color.WHITE);
 		this.findViewById(R.id.btn_p_commit_register).setBackgroundResource(

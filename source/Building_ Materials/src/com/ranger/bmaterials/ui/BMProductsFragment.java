@@ -37,7 +37,6 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 	private BMProductLiteAdapter guideInfoListAdapter = null;
 	private PullToRefreshListView plvGuide;
 
-	private ViewGroup guideViewContainer;
 	private int pageGuideIndex;
 	private int pageGuideNum;
 	private int totalNum = 0;
@@ -64,8 +63,6 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 		plvGuide.setOnRefreshListener(this);
 		plvGuide.setAdapter(guideInfoListAdapter);
 		plvGuide.setOnItemClickListener(this);
-
-		guideViewContainer = (ViewGroup) getActivity().findViewById(R.id.layout_mine_guide_view_container);
 
 		plvGuide.setOnLastItemVisibleListener(OnLastItemVisibleListener);
 		footer = createFooter();
@@ -137,21 +134,13 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 	}
 
 	private void showLoadingView() {
-		guideViewContainer.setVisibility(View.GONE);
 	}
 
 	private void showErrorView() {
-		guideViewContainer.setVisibility(View.GONE);
 	}
 
 	private void showContentView() {
 
-
-		if (guideListInfo.size() > 0) {
-			guideViewContainer.setVisibility(View.VISIBLE);
-		} else {
-			guideViewContainer.setVisibility(View.GONE);
-		}
 	}
 
 	@Override
