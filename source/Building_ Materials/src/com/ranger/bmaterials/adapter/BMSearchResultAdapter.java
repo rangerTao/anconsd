@@ -67,7 +67,7 @@ public class BMSearchResultAdapter extends AbstractListAdapter<BMSearchResult.BM
 		}
 
         holder.productName.setText(bd.getProductName());
-        holder.modeName.setText(bd.getModel());
+        holder.modeName.setText(bd.getStandard());
         holder.comName.setText(bd.getCompanyName());
         holder.price.setText(bd.getPrice() + "/" + bd.getUnit());
         holder.from.setText(bd.getArea());

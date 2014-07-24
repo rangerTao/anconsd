@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" 
+	android:layout_width="320dp"
+	android:layout_height="fill_parent"
+	android:background="@drawable/avatar_shader_bg"
+	android:padding="10dp">
+	<TextView android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="请选择图片"
+	    android:textSize="20sp"
+	    android:textColor="#fff"
+	    android:layout_gravity="center_horizontal"
+	    />
+    <Button
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/gl_choose_img"
+        android:text="相册"
+        android:textSize="20sp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        />
+    <Button
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/gl_choose_phone"
+        android:text="拍照"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="8dp"
+        />
+    <Button
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:id="@+id/gl_choose_cancel"
+        android:text="取消"
+        android:textSize="20sp"
+        android:layout_marginTop="8dp"
+        />
+</LinearLayout>

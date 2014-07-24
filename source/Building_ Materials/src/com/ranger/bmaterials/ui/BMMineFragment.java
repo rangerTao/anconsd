@@ -53,6 +53,7 @@ import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.app.GameTingApplication;
 import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.bitmap.ImageLoaderHelper;
+import com.ranger.bmaterials.netresponse.BMUserLoginResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.tools.ConnectManager;
 import com.ranger.bmaterials.tools.Logger;
@@ -71,33 +72,14 @@ public class BMMineFragment extends Fragment implements
 
     boolean isLogin;
 
-    private PopupWindow mPop;
-    private View layout_menu;
-    private TextView loginMenuBtn;
-
-    private TextView tv_item_exit_pop_menu_home_activity;
-    private TextView tv_item_settings_pop_menu_home_activity;
-    private TextView tv_item_share_pop_menu_home_activity;
-    private LinearLayout ll_checkupdate_pop_item_home;
-    private View ll_logout_pop_item_home;
-    private TextView tv_item_feedback_pop_menu_home_activity;
-
     private ImageView ivUserHead;
-
-    private TextView popText;
-
-    private RefreshUserHeadReceiver refreshUserHeadReceiver;
 
     // Add below code for fast register.
     private SendReceiver smsReceiver;
     // private SMSDeliveryReceiver deliveryReceiver;
     String SENT_SMS_ACTION = "SENT_SMS_ACTION";
     String DELIVERY_SMS_ACTION = "SENT_SMS_ACTION";
-    private String message;
-    private boolean hasProgressDlg = false;
     private boolean flag = false;
-    private Dialog alertDialog;
-    private String nickname;
 
     /**
      * 是否应该重试一键注册请求，如果请求已成功或者请求被用户取消，则不应该再重试，初始状态为true
@@ -139,17 +121,6 @@ public class BMMineFragment extends Fragment implements
             }
         }
     };
-
-    private void unregisterReceiver() {
-
-        if (refreshUserHeadReceiver != null) {
-            LocalBroadcastManager.getInstance(
-                    GameTingApplication.getAppInstance()
-                            .getApplicationContext()
-            ).unregisterReceiver(
-                    refreshUserHeadReceiver);
-        }
-    }
 
     class RefreshUserHeadReceiver extends BroadcastReceiver {
 
@@ -280,9 +251,9 @@ public class BMMineFragment extends Fragment implements
 
         refreshHeadPhoto();
         if (isLogin) {
-            if(btn_login != null)
+            if (btn_login != null)
                 btn_login.setVisibility(View.GONE);
-            if(ucView != null)
+            if (ucView != null)
                 ucView.setVisibility(View.VISIBLE);
 
             String nickName = MineProfile.getInstance().getNickName();
@@ -310,16 +281,7 @@ public class BMMineFragment extends Fragment implements
             ivUserHead = (ImageView) root.findViewById(R.id.img_logo);
         }
         if (isLogin()) {
-            String filepath = Constants.IMAGE_PATH + Constants.PHOTO_LOCAL_FILE;
-            Bitmap bitmap = ImageLoaderHelper.decodeBitmap(filepath);
-            if (bitmap != null) {
-                ivUserHead.setImageBitmap(ImageLoaderHelper
-                        .getRoundedBitmap(bitmap));
-            } else {
-                // ivUserHead.setImageResource(R.drawable.mine_nickname_bk);
-                ivUserHead.setImageBitmap(BitmapFactory.decodeResource(
-                        getResources(), R.drawable.mine_nickname_bk));
-            }
+            ImageLoaderHelper.displayImage(MineProfile.getInstance().getStrUserHead(),ivUserHead);
         } else {
             // ivUserHead.setImageResource(R.drawable.mine_nickname_bk);
             ivUserHead.setImageBitmap(BitmapFactory.decodeResource(
@@ -327,85 +289,26 @@ public class BMMineFragment extends Fragment implements
         }
     }
 
-    // pass 登录后，由于是异步操作。需要异步处理头像。
-    private void refreshUserHead() {
-        if (ivUserHead == null)
-            ivUserHead = (ImageView) root.findViewById(R.id.img_logo);
-        String user_head = MineProfile.getInstance().getStrUserHead();
-        final String imageUri = user_head;
-        if (user_head != null && !user_head.equals("")
-                && !user_head.equals("null")) {
-            // ImageLoaderHelper.displayImage(user_head, ivUserHead,
-            // ImageLoaderHelper.getCustomRoundeOption(true,
-            // R.drawable.mine_nickname_bk));
-            ImageLoader.getInstance().loadImage(user_head,
-                    new ImageLoadingListener() {
-                        boolean cacheFound;
-
-                        @Override
-                        public void onLoadingStarted(String arg0, View arg1) {
-                            List<String> memCache = MemoryCacheUtils
-                                    .findCacheKeysForImageUri(imageUri,
-                                            ImageLoader.getInstance()
-                                                    .getMemoryCache()
-                                    );
-                            cacheFound = !memCache.isEmpty();
-                            if (!cacheFound) {
-                                File discCache = DiscCacheUtils.findInCache(
-                                        imageUri, ImageLoader.getInstance()
-                                                .getDiscCache()
-                                );
-                                if (discCache != null) {
-                                    cacheFound = discCache.exists();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onLoadingFailed(String arg0, View arg1,
-                                                    FailReason arg2) {
-
-                        }
-
-                        @Override
-                        public void onLoadingComplete(String arg0, View arg1,
-                                                      Bitmap bitmap) {
-                            if (cacheFound) {
-                                MemoryCacheUtils.removeFromCache(imageUri,
-                                        ImageLoader.getInstance()
-                                                .getMemoryCache()
-                                );
-                                DiscCacheUtils.removeFromCache(imageUri,
-                                        ImageLoader.getInstance()
-                                                .getDiscCache()
-                                );
-                                // ImageLoader.getInstance().loadImageSync(imageUri);
-                                // ImageLoader.getInstance().displayImage(imageUri,ivUserHead);
-                            }
-                            ivUserHead.setImageBitmap(ImageLoaderHelper
-                                    .getRoundedBitmap(bitmap));
-                        }
-
-                        @Override
-                        public void onLoadingCancelled(String arg0, View arg1) {
-                        }
-                    }
-            );
-        }
-    }
-
     @Override
     public void onRequestSuccess(BaseResult responseData) {
         int requestTag = StringUtil.parseInt(responseData.getTag());
 
-        if (requestTag == Constants.NET_TAG_FAST_PHONE_REGESTER) {
-            // 如果请求成功，则停止重试
-            if (requestHasCancel) {
-                return; // 如果请求已经被取消，则直接返回，不处理结果
-            } else {
-                requestHasCancel = true;// 请求成功则设置状态为取消后续的请求
-            }
-//            UserLoginResult result = (UserLoginResult) responseData;
+        // 如果请求成功，则停止重试
+        if (requestHasCancel) {
+            return; // 如果请求已经被取消，则直接返回，不处理结果
+        } else {
+            requestHasCancel = true;// 请求成功则设置状态为取消后续的请求
+        }
+        BMUserLoginResult result = (BMUserLoginResult) responseData;
+        MineProfile.getInstance().setNickName(result.getNickname());
+        MineProfile.getInstance().setSessionID(result.getToken());
+
+        if (MineProfile.getInstance().getNickName().length() > 0) {
+            loginSucceed();
+        } else {
+            disMissProgressDialog();
+            refreshView();
+        }
 //            MineProfile.getInstance().setUserID(result.getUserid());
 //            MineProfile.getInstance().setSessionID(result.getSessionid());
 //            MineProfile.getInstance().setUserName(result.getUsername());
@@ -445,9 +348,9 @@ public class BMMineFragment extends Fragment implements
 //        MineProfile.getInstance().setCoinnum(result.coinnum);
 
         MineProfile.getInstance().broadcastEvent();
-    }}
+    }
 
-   private void loginSucceed() {
+    private void loginSucceed() {
         /*
          * Intent intent = new Intent(getActivity(), DKGameHallActivity.class);
 		 * 
@@ -469,10 +372,6 @@ public class BMMineFragment extends Fragment implements
     }
 
     private void setDynamicData() {
-        String msgNum = MineProfile.getInstance().getMessagenum();
-
-        int unreadMsgNum = 0;
-        unreadMsgNum = StringUtil.parseInt(msgNum);
 
     }
 
@@ -480,30 +379,6 @@ public class BMMineFragment extends Fragment implements
     public void onRequestError(int requestTag, int requestId, int errorCode,
                                String msg) {
 
-        if (requestTag == Constants.NET_TAG_GET_RECOMMEND_APP) {
-            // Toast.makeText(getActivity(), "获取推荐app出错",
-            // Toast.LENGTH_SHORT).show();
-            disMissProgressDialog();
-            return;
-        }
-
-        if (requestTag == Constants.NET_TAG_FAST_PHONE_REGESTER) {// 一键注册登陆
-            if (requestHasCancel) {
-                return;
-            }
-            /** 如果当前还在持续请求，则不处理本次请求的错误。所以这里只有最后一次尝试仍然出错时候才会处理 */
-            if (errorCode == DcError.DC_NET_TIME_OUT
-                    || errorCode == DcError.DC_NET_DATA_ERROR
-                    || errorCode == DcError.DC_NET_GENER_ERROR) {
-                CustomToast.showLoginRegistErrorToast(getActivity(), errorCode);
-                enableFastRegBtn();
-                cancelRequest();
-            } else if (requestHasCancel && !ignoreRegResult) {
-                // 手动注册
-                jump2ManualReg();
-                cancelRequest();
-            }
-        }
         if (ConnectManager.isNetworkConnected(getActivity())) {
             MineProfile.getInstance().setIsLogin(false);
         }
@@ -516,7 +391,6 @@ public class BMMineFragment extends Fragment implements
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unregisterReceiver();
         getActivity().unregisterReceiver(mDynamicDataReceiver);
     }
 
@@ -533,13 +407,23 @@ public class BMMineFragment extends Fragment implements
                     intent.setClass(getActivity(), BMLoginActivity.class);
                     startActivity(intent);
                     break;
-                }else{
+                } else {
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), ChangePwdActivity.class);
                     startActivity(intent);
                     break;
                 }
             case R.id.bm_rl_userinfo:
+                if (!isLogin) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), BMLoginActivity.class);
+                    startActivity(intent);
+                    break;
+                } else {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), BMUserinfoActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.img_logo:
                 if (isLogin()) {
@@ -552,7 +436,7 @@ public class BMMineFragment extends Fragment implements
                     intent.setClass(getActivity(), BMLoginActivity.class);
                     startActivity(intent);
                     break;
-                }else{
+                } else {
                     Intent intent = new Intent();
                     intent.setClass(getActivity(),
                             BMMineCollectionActivity.class);

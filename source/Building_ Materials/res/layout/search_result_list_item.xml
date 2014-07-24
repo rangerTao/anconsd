@@ -6,12 +6,13 @@
                 android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="3dp"
-        android:layout_toLeftOf="@+id/arrow_right"
+        android:layout_toLeftOf="@+id/search_item_action_layout"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -28,51 +29,53 @@
             <TextView
                 android:id="@+id/product_name"
                 style="@style/content_list_item_title_style"
-                android:text="怪物猎人"/>
+                />
 
             <TextView
                 android:id="@+id/mode_name"
+                android:singleLine="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="JJD"/>
+                android:layout_marginTop="3dp"/>
 
             <TextView
                 android:id="@+id/company_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="JJD"/>
+                android:layout_marginTop="3dp"/>
 
         </LinearLayout>
 
 
-        <LinearLayout
-            android:id="@+id/search_item_action_layout"
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/search_item_action_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical|right"
+        android:minWidth="75dp"
+        android:layout_marginRight="15dp"
+        android:orientation="vertical"
+        android:paddingRight="18dp">
+
+        <TextView
+            android:id="@+id/bm_tv_price"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:gravity="center_vertical"
-            android:minWidth="75dp"
-            android:orientation="vertical"
-            android:paddingLeft="5dp"
-            android:paddingRight="18dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textColor="#ffa200"
+            android:text="JJD"/>
 
-            <TextView
-                android:id="@+id/bm_tv_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:textColor="#ffa200"
-                android:text="JJD"/>
+        <TextView
+            android:id="@+id/bm_tv_price_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="JJD"/>
 
-            <TextView
-                android:id="@+id/bm_tv_price_from"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="JJD"/>
-
-        </LinearLayout>
     </LinearLayout>
 
     <TextView

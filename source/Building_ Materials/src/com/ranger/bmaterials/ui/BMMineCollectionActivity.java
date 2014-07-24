@@ -50,13 +50,12 @@ public class BMMineCollectionActivity extends FragmentActivity implements PageCa
 		
 		switch (page) {
 		case 0:
-			BMCompanyInfoFragment tmp = new BMCompanyInfoFragment();
+			BMMineProductCollectionFragment tmp = new BMMineProductCollectionFragment();
 			tmp.tabStrip = this.tabStrip;
 			fragment = tmp;
-			
 			break;
 		case 1:
-			BMProductsFragment tmp2 = new BMProductsFragment();
+			BMMineCompanyCollectionFragment tmp2 = new BMMineCompanyCollectionFragment();
 			tmp2.tabStrip = this.tabStrip;
 			fragment = tmp2;
 		default:

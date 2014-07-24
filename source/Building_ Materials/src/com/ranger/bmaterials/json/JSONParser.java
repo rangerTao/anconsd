@@ -15,10 +15,12 @@ import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.mode.KeywordsList;
+import com.ranger.bmaterials.netresponse.BMCollectionResult;
 import com.ranger.bmaterials.netresponse.BMCompanyInfoResult;
 import com.ranger.bmaterials.netresponse.BMProductInfoResult;
 import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BMSearchResult;
+import com.ranger.bmaterials.netresponse.BMUserInfoResult;
 import com.ranger.bmaterials.netresponse.BMUserLoginResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.netresponse.CheckUpdateResult;
@@ -290,6 +292,31 @@ public class JSONParser {
     }
 
     /**
+     * BmUser
+     */
+    public static BMCollectionResult parseBMCollectionResult(String res){
+
+        BMCollectionResult result = new BMCollectionResult();
+        Gson gson = new Gson();
+        try {
+
+            JSONArray outter = new JSONArray(res);
+            int length = outter.length();
+            for (int i = 0; i < length; i++) {
+                BMCollectionResult.Collection col = gson.fromJson(outter.getString(i), BMCollectionResult.Collection.class);
+                if(col != null)
+                    result.addItem(col);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        return result;
+
+    }
+
+    /**
      * tag 241 获取搜索关键字
      */
     public static BaseResult parseBMKeywords(String resData) {
@@ -333,6 +360,21 @@ public class JSONParser {
             Gson gson = new Gson();
 
             result = gson.fromJson(res,BMProductInfoResult.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return result;
+
+    }
+
+
+    public static BaseResult parseBMUserInfo(String res){
+        BMUserInfoResult result = new BMUserInfoResult();
+        try{
+            Gson gson = new Gson();
+
+            result = gson.fromJson(res,BMUserInfoResult.class);
         }catch (Exception e){
             e.printStackTrace();
         }

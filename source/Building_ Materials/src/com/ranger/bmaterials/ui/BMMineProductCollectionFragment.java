@@ -1,8 +1,5 @@
 package com.ranger.bmaterials.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,40 +7,43 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.ranger.bmaterials.R;
+import com.ranger.bmaterials.adapter.BMProductCollectionAdapter;
 import com.ranger.bmaterials.adapter.BMProductLiteAdapter;
+import com.ranger.bmaterials.netresponse.BMCollectionResult;
 import com.ranger.bmaterials.netresponse.BMSearchResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 import com.ranger.bmaterials.view.PagerSlidingTabStrip;
 import com.ranger.bmaterials.view.pull.PullToRefreshBase;
-import com.ranger.bmaterials.view.pull.PullToRefreshListView;
 import com.ranger.bmaterials.view.pull.PullToRefreshBase.OnLastItemVisibleListener;
 import com.ranger.bmaterials.view.pull.PullToRefreshBase.OnRefreshListener2;
+import com.ranger.bmaterials.view.pull.PullToRefreshListView;
 
-public class BMProductsFragment extends Fragment implements OnClickListener, IRequestListener, OnRefreshListener2<ListView>,
+import java.util.ArrayList;
+import java.util.List;
+
+public class BMMineProductCollectionFragment extends Fragment implements OnClickListener, IRequestListener, OnRefreshListener2<ListView>,
 		OnItemClickListener {
 
 	private boolean guideRequestSend = false;
 	private boolean noMoreGuide;
 	private int requestId = 0;
 
-	private List<BMSearchResult.BMSearchData> guideListInfo;
-	private BMProductLiteAdapter guideInfoListAdapter = null;
+	private ArrayList<BMCollectionResult.Collection> guideListInfo;
+	private BMProductCollectionAdapter guideInfoListAdapter = null;
 	private PullToRefreshListView plvGuide;
 
 	private ViewGroup guideViewContainer;
 	private int pageGuideIndex;
-	private int pageGuideNum;
 	private int totalNum = 0;
 
 	public PagerSlidingTabStrip tabStrip;
-	private boolean update = false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,9 +57,8 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 
 		pageGuideIndex = 1;
 		noMoreGuide = false;
-		pageGuideNum = 20;
-		guideListInfo = new ArrayList<BMSearchResult.BMSearchData>();
-		guideInfoListAdapter = new BMProductLiteAdapter(getActivity(), guideListInfo);
+		guideListInfo = new ArrayList<BMCollectionResult.Collection>();
+		guideInfoListAdapter = new BMProductCollectionAdapter(getActivity(), guideListInfo);
 		plvGuide = (PullToRefreshListView) getActivity().findViewById(R.id.listview_mine_collection_guides);
 		plvGuide.setOnRefreshListener(this);
 		plvGuide.setAdapter(guideInfoListAdapter);
@@ -81,7 +80,7 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 				requestGuide();
 			} else if (showNoMoreTip && !isLoadingMore) {
 				showNoMoreTip = false;
-				CustomToast.showLoginRegistErrorToast(BMProductsFragment.this.getActivity(), CustomToast.DC_ERR_NO_MORE_DATA);
+				CustomToast.showLoginRegistErrorToast(BMMineProductCollectionFragment.this.getActivity(), CustomToast.DC_ERR_NO_MORE_DATA);
 			}
 		}
 	};
@@ -172,21 +171,19 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 
 	@Override
 	public void onRequestSuccess(BaseResult responseData) {
-		BMSearchResult result = (BMSearchResult) responseData;
-
-		totalNum = result.getTotal();
+		BMCollectionResult result = (BMCollectionResult) responseData;
 
 		if (pageGuideIndex == 1) {
 			guideListInfo.clear();
 		}
 
-		if (result.getDataList().size() > 0) {
-			guideListInfo.addAll(result.getDataList());
+		if (result.getData().size() > 0) {
+			guideListInfo.addAll(result.getData());
 			guideInfoListAdapter.notifyDataSetChanged();
 			pageGuideIndex++;
 		}
 
-		if (guideListInfo.size() >= totalNum) {
+		if (guideListInfo.size() >= result.getData().size()) {
 			noMoreGuide = true;
 			setFooterVisible(false);
 		}
@@ -223,8 +220,7 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 			CustomToast.showLoginRegistErrorToast(getActivity(), CustomToast.DC_ERR_NO_MORE_DATA);
 			requestFinished(true);
 		} else {
-            int userid = getArguments().getInt(BMCompanyInfoActivity.USER_ID);
-			requestId = NetUtil.getInstance().requestForProductsPerCom(userid,pageGuideIndex, this);
+			requestId = NetUtil.getInstance().requestGetCollection(1,pageGuideIndex, this);
 		}
 	}
 

@@ -104,14 +104,18 @@ public class ChangePwdActivity extends Activity implements OnClickListener, IReq
 
 	@Override
 	public void onRequestSuccess(BaseResult responseData) {
-		progressDialog.dismiss();
+        if(progressDialog != null && progressDialog.isShowing())
+            progressDialog.dismiss();
+
 		CustomToast.showLoginRegistSuccessToast(this, CustomToast.DC_OK_CHNAGE_PWD);
 		this.finish();
 	}
 
 	@Override
 	public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
-		progressDialog.dismiss();
+
+        if(progressDialog != null && progressDialog.isShowing())
+		    progressDialog.dismiss();
 
 		switch (errorCode) {
 		case DcError.DC_BADPWD:
