@@ -2,6 +2,7 @@ package com.ranger.bmaterials.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,7 +40,6 @@ public class BMMineProductCollectionFragment extends Fragment implements OnClick
 	private BMProductCollectionAdapter guideInfoListAdapter = null;
 	private PullToRefreshListView plvGuide;
 
-	private ViewGroup guideViewContainer;
 	private int pageGuideIndex;
 	private int totalNum = 0;
 
@@ -63,8 +63,6 @@ public class BMMineProductCollectionFragment extends Fragment implements OnClick
 		plvGuide.setOnRefreshListener(this);
 		plvGuide.setAdapter(guideInfoListAdapter);
 		plvGuide.setOnItemClickListener(this);
-
-		guideViewContainer = (ViewGroup) getActivity().findViewById(R.id.layout_mine_guide_view_container);
 
 		plvGuide.setOnLastItemVisibleListener(OnLastItemVisibleListener);
 		footer = createFooter();
@@ -136,21 +134,13 @@ public class BMMineProductCollectionFragment extends Fragment implements OnClick
 	}
 
 	private void showLoadingView() {
-		guideViewContainer.setVisibility(View.GONE);
 	}
 
 	private void showErrorView() {
-		guideViewContainer.setVisibility(View.GONE);
 	}
 
 	private void showContentView() {
 
-
-		if (guideListInfo.size() > 0) {
-			guideViewContainer.setVisibility(View.VISIBLE);
-		} else {
-			guideViewContainer.setVisibility(View.GONE);
-		}
 	}
 
 	@Override
@@ -179,7 +169,7 @@ public class BMMineProductCollectionFragment extends Fragment implements OnClick
 
 		if (result.getData().size() > 0) {
 			guideListInfo.addAll(result.getData());
-			guideInfoListAdapter.notifyDataSetChanged();
+            guideInfoListAdapter.notifyDataSetChanged();
 			pageGuideIndex++;
 		}
 

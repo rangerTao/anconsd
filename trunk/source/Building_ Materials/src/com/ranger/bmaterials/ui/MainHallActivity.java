@@ -182,41 +182,16 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
         return super.onKeyDown(keyCode, event);
     }
 
-    public static int JUMP_TO_TAB_EXTRA = -1;
-
-    // 回到主界面的某个tab
-    public static void jumpToTab(Activity cx, int tab_num) {
-        JUMP_TO_TAB_EXTRA = tab_num;
-        Intent intent = new Intent(cx, MainHallActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        cx.startActivity(intent);
-        cx.finish();
-    }
-
-    // 在主界面中跳到某个tab
-    public static void jumpToTabByChildActivity(Activity cx, int tab_num) {
-        CustomFragmentTabHost tabhost = ((MainHallActivity) cx).getTabHost();
-        if (tabhost != null)
-            tabhost.setCurrentTab(tab_num);
-    }
-
-    public static Fragment getHallFragment(Activity cx, int tabId) {
-        MainHallActivity main = (MainHallActivity) cx;
-        FragmentManager fm = main.getSupportFragmentManager();
-        CustomFragmentTabHost tabhost = main.getTabHost();
-        if (tabhost != null)
-            return tabhost.getFragment(fm, tabId);
-        return null;
-    }
-
     public void delayInit() {
         new Handler().postDelayed(new Runnable() {
 
             @Override
             public void run() {
-                preLoadSearchKeywords();
+
             }
         }, 300);
+
+        preLoadSearchKeywords();
     }
 
     private String checkVersion() {
@@ -241,26 +216,6 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
     private View firstMenu;
     private ListView lv_province_list;
     private BMProvinceAdapter bpa;
-
-    private void initSlidingMenu() {
-
-        firstMenu = getLayoutInflater().inflate(R.layout.side_menu, null);
-        lv_province_list = (ListView) firstMenu.findViewById(R.id.bm_province_list);
-
-        menu = new SlidingMenu(this);
-        menu.setMode(SlidingMenu.LEFT);
-        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        menu.setShadowWidthRes(R.dimen.shadow_width);
-        menu.setShadowDrawable(R.drawable.shadow);
-
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindow().getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int offset = (dm.widthPixels / 3) * 1;
-        menu.setBehindOffset(offset);
-        menu.setFadeDegree(0.35f);
-        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        menu.setMenu(firstMenu);
-    }
 
     @Override
     public void onRequestSuccess(BaseResult responseData) {

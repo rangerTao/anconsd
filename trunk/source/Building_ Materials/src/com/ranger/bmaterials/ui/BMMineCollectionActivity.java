@@ -24,7 +24,7 @@ public class BMMineCollectionActivity extends FragmentActivity implements PageCa
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.bm_layout_company_info);
+		setContentView(R.layout.bm_layout_collection_activity);
 		
 		findViewById(R.id.btn_back).setOnClickListener(this);
 		

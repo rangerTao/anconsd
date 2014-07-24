@@ -203,7 +203,7 @@ public class NetUtil implements INetListener {
         SoapObject rpc = new SoapObject(nameSpace, methodName);
 
         // 设置需调用WebService接口需要传入的两个参数mobileCode、userId
-        rpc.addProperty("in0",  phonenum );
+        rpc.addProperty("in0",  AES.getInstance().aesEncrypt(phonenum) );
 
         // 生成调用WebService方法的SOAP请求信息,并指定SOAP的版本
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER10);
@@ -257,7 +257,7 @@ public class NetUtil implements INetListener {
         SoapObject rpc = new SoapObject(nameSpace, methodName);
 
         // 设置需调用WebService接口需要传入的两个参数mobileCode、userId
-        rpc.addProperty("info", "{\"username\":\"" + username + ",\"password:\"" + password + ",\"telephone:\"" + telephone + "\",\"code:\"" + verifyCode + "\"}");
+        rpc.addProperty("info", AES.getInstance().aesEncrypt("{\"username\":\"" + username + ",\"password:\"" + password + ",\"telephone:\"" + telephone + "\",\"code:\"" + verifyCode + "\"}"));
 
         // 生成调用WebService方法的SOAP请求信息,并指定SOAP的版本
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER10);
@@ -1027,14 +1027,14 @@ public class NetUtil implements INetListener {
         // 指定WebService的命名空间和调用的方法名
         SoapObject rpc = new SoapObject(nameSpace, methodName);
 
-        rpc.addProperty("token",MineProfile.getInstance().getSessionID());
-        rpc.addProperty("fileName", filename);
         String base64 = ImgToBase64Util.imgToBase64(filepath);
         if(base64.equals("")){
-            observer.onRequestError(Constants.NET_TAG_UPLOAD_HEAD,-1,1001,"头像获取失败");
+            observer.onRequestError(Constants.NET_TAG_UPLOAD_HEAD, -1, 1001, "头像获取失败");
             return -1;
         }
         rpc.addProperty("data", base64);
+        rpc.addProperty("fileName", "123.png");
+        rpc.addProperty("token",MineProfile.getInstance().getSessionID());
 
         // 生成调用WebService方法的SOAP请求信息,并指定SOAP的版本
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER10);
