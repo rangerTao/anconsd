@@ -257,7 +257,7 @@ public class NetUtil implements INetListener {
         SoapObject rpc = new SoapObject(nameSpace, methodName);
 
         // 设置需调用WebService接口需要传入的两个参数mobileCode、userId
-        rpc.addProperty("info", AES.getInstance().aesEncrypt("{\"username\":\"" + username + ",\"password:\"" + password + ",\"telephone:\"" + telephone + "\",\"code:\"" + verifyCode + "\"}"));
+        rpc.addProperty("info", JSONBuilder.buildAddUserString(username,password,telephone,verifyCode));
 
         // 生成调用WebService方法的SOAP请求信息,并指定SOAP的版本
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER10);

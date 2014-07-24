@@ -107,6 +107,26 @@ public final class JSONBuilder {
         return res;
     }
 
+    public static String buildAddUserString(String username,String password,String telephone,String verify){
+        JSONObject json = new JSONObject();
+
+        String res = "";
+
+        try{
+            json.put("username",username);
+            json.put("password",password);
+            json.put("telephone",telephone);
+            json.put("code",verify);
+
+            res = AES.getInstance().aesEncrypt(json.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        return res;
+    }
+
     public static String buildUpdateUserinfoString(){
         String res = "";
         try {
