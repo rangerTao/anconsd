@@ -9,4 +9,7 @@ public class Constants {
 	
 	//***************  ACTION ******************//
 	public static final String action_bt_scan_finish = "com.ranger.lpa.bluetooth.scan_finish";
+
+    public final static int WIFI_STATUS = 999;
+    public final static int WIFI_CONNECTIONINFO = 998;
 }

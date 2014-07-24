@@ -10,6 +10,7 @@ import java.util.Random;
 
 import com.ranger.lpa.pojos.WifiInfo;
 import com.ranger.lpa.utils.Md5Tools;
+import com.ranger.lpa.utils.NetworkUtil;
 
 import android.content.Context;
 import android.net.wifi.WifiConfiguration;
@@ -179,31 +180,31 @@ public class LPAWifiManager {
 		return true;
 	}
 	
-	public void connectSpecificWIFI(String bssid, String pwd) {
-
-		WifiConfiguration wific = new WifiConfiguration();
-		wific.BSSID = mSSID;
-		wific.preSharedKey = mPasswd;
-
-		wific.allowedAuthAlgorithms
-				.set(WifiConfiguration.AuthAlgorithm.OPEN);
-		wific.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-		wific.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-		wific.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-		wific.allowedPairwiseCiphers
-				.set(WifiConfiguration.PairwiseCipher.CCMP);
-		wific.allowedPairwiseCiphers
-				.set(WifiConfiguration.PairwiseCipher.TKIP);
-		wific.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-		wific.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-		
-		int newWID = wifiManager.addNetwork(wific);
-		
-		Log.d("TAG", "network id " + newWID);
-
-		Log.d("TAG", "is enabled " + wifiManager.enableNetwork(newWID, true));
-		
-	}
+//	public void connectSpecificWIFI(String bssid, String pwd) {
+//
+//		WifiConfiguration wific = new WifiConfiguration();
+//		wific.BSSID = mSSID;
+//		wific.preSharedKey = mPasswd;
+//
+//		wific.allowedAuthAlgorithms
+//				.set(WifiConfiguration.AuthAlgorithm.OPEN);
+//		wific.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+//		wific.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+//		wific.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+//		wific.allowedPairwiseCiphers
+//				.set(WifiConfiguration.PairwiseCipher.CCMP);
+//		wific.allowedPairwiseCiphers
+//				.set(WifiConfiguration.PairwiseCipher.TKIP);
+//		wific.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+//		wific.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+//
+//		int newWID = wifiManager.addNetwork(wific);
+//
+//		Log.d("TAG", "network id " + newWID);
+//
+//		Log.d("TAG", "is enabled " + wifiManager.enableNetwork(newWID, true));
+//
+//	}
 
     /**
      * Get the local IP address
@@ -233,6 +234,31 @@ public class LPAWifiManager {
         } catch (SocketException ex) {
         }
         return null;
+    }
+
+    public boolean connectWifi(WifiInfo wInfo){
+        if(wInfo != null){
+
+            WifiConfiguration wc = new WifiConfiguration();
+            wc.SSID = "\"" + wInfo.getmSSID() + "\"";
+
+            wc.hiddenSSID = true;
+
+            wc.status = WifiConfiguration.Status.ENABLED;
+
+            NetworkUtil.setWifiConfigurationSettings(wc, wInfo.getmPWD());
+
+            int resId = wifiManager.addNetwork(wc);
+
+            if(resId != -1){
+                wifiManager.enableNetwork(resId, true);
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        return false;
     }
 	
 }

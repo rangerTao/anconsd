@@ -28,7 +28,7 @@ public class WifiApTestActivity extends Activity{
 		case R.id.btn_enable_wifi:
 			LPAWifiManager.getInstance(getApplicationContext()).enableWIFIConnection();
 		case R.id.btn_connect_ap:
-			LPAWifiManager.getInstance(getApplicationContext()).connectSpecificWIFI("", "");
+//			LPAWifiManager.getInstance(getApplicationContext()).connectSpecificWIFI("", "");
 		default:
 			break;
 		}

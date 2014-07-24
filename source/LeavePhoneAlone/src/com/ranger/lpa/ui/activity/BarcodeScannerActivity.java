@@ -26,6 +26,7 @@ import java.util.Vector;
 public class BarcodeScannerActivity extends BaseActivity implements View.OnClickListener, SurfaceHolder.Callback {
 
     public static int RESULT_BARCODE = 0x1;
+    public static final String RESULT_CONTENT = "result";
 
     private CaptureActivityHandler handler;
     private ViewfinderView mfindView;
@@ -93,7 +94,8 @@ public class BarcodeScannerActivity extends BaseActivity implements View.OnClick
         }else {
             Intent resultIntent = new Intent();
             Bundle bundle = new Bundle();
-            bundle.putString("result", resultString);
+            bundle.putString(RESULT_CONTENT, resultString);
+            resultIntent.putExtras(bundle);
             this.setResult(RESULT_BARCODE, resultIntent);
             finish();
         }
