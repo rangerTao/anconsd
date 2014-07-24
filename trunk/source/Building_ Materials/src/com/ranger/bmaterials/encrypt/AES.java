@@ -10,11 +10,7 @@ import javax.crypto.spec.SecretKeySpec;
  * 
  */
 public class AES {
-	
-	static{
-		System.loadLibrary("AESKey");
-	}
-	
+
 	private static AES mInstance;
 	private SecretKey sSecretKey = null;// key瀵硅薄
 	private Cipher sCipher = null; // 绉�拷���瀵硅薄Cipher

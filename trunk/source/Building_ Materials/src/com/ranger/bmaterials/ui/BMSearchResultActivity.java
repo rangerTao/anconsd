@@ -9,11 +9,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,16 +21,21 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.ranger.bmaterials.R;
+import com.ranger.bmaterials.adapter.BMProvinceAdapter;
 import com.ranger.bmaterials.adapter.BMSearchResultAdapter;
 import com.ranger.bmaterials.adapter.AbstractListAdapter.OnListItemClickListener;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.mode.*;
+import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BMSearchResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.tools.DeviceUtil;
@@ -41,9 +46,10 @@ import com.ranger.bmaterials.view.pull.PullToRefreshBase;
 import com.ranger.bmaterials.view.pull.PullToRefreshListView;
 import com.ranger.bmaterials.view.pull.PullToRefreshBase.OnLastItemVisibleListener;
 import com.ranger.bmaterials.view.pull.PullToRefreshBase.OnRefreshListener2;
+import com.ranger.bmaterials.work.LoadingTask;
 
 public class BMSearchResultActivity extends Activity implements
-/* IRequestListener, */OnClickListener, OnItemClickListener {
+/* IRequestListener, */OnClickListener, OnItemClickListener, CompoundButton.OnCheckedChangeListener, IRequestListener {
 
     private static final String TAG = "SearchResultActivity";
 
@@ -63,7 +69,11 @@ public class BMSearchResultActivity extends Activity implements
 
     private BMSearchResultAdapter searchResultAdapter;
     private int requestId;
-    private View searchRecomendHintView;
+
+    public static SlidingMenu menu;
+
+    private CheckBox cbIdentifyProvider;
+    private CheckBox cbGroupProvider;
 
     /**
      * 推荐的GridView
@@ -79,7 +89,10 @@ public class BMSearchResultActivity extends Activity implements
      */
     private int currentPage = 0;
 
-    private Dialog rootDialog;
+    private View firstMenu;
+    private View secondMenu;
+    private ListView lv_province_list;
+    private BMProvinceAdapter bpa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +119,80 @@ public class BMSearchResultActivity extends Activity implements
 
         search(currentPage + 1, false);
 
+        initSlidingMenu();
+
+    }
+
+    private void getProvinces(){
+        NetUtil.getInstance().requestForProvices(new IRequestListener() {
+            @Override
+            public void onRequestSuccess(BaseResult responseData) {
+                BMProvinceListResult blr = (BMProvinceListResult) responseData;
+
+                if (blr.getTag().equals(Constants.NET_TAG_GET_PROVINCE + "")) {
+                    bpa = new BMProvinceAdapter(getApplicationContext(),blr.getProviceList());
+                    lv_province_list.setAdapter(bpa);
+                    lv_province_list.setOnItemClickListener(new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            BMProvinceListResult.ProviceItem pi = (BMProvinceListResult.ProviceItem) parent.getAdapter().getItem(position);
+
+                            if(pi != null){
+                                try{
+                                    BMSearchFragment.setCityName(pi);
+
+                                    menu.toggle();
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                    bpa.setOnListItemClickListener(new OnListItemClickListener() {
+                        @Override
+                        public void onItemIconClick(View view, int position) {
+
+                        }
+
+                        @Override
+                        public void onItemButtonClick(View view, int position) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
+
+            }
+        });
+    }
+
+    private void initSlidingMenu() {
+
+        firstMenu = getLayoutInflater().inflate(R.layout.side_menu, null);
+        lv_province_list = (ListView) firstMenu.findViewById(R.id.bm_province_list);
+        secondMenu = getLayoutInflater().inflate(R.layout.band_menu, null);
+
+        menu = new SlidingMenu(this);
+        menu.setMode(SlidingMenu.LEFT_RIGHT);
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        menu.setShadowWidthRes(R.dimen.shadow_width);
+        menu.setShadowDrawable(R.drawable.shadow);
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindow().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int offset = (dm.widthPixels / 3) * 1;
+        menu.setBehindOffset(offset);
+        menu.setFadeDegree(0.35f);
+        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        menu.setMenu(firstMenu);
+        menu.setSecondaryMenu(secondMenu);
+
+        getProvinces();
+
+        loadBrandAndModel();
     }
 
     private void restore(Bundle savedInstanceState) {
@@ -119,41 +206,10 @@ public class BMSearchResultActivity extends Activity implements
         }
     }
 
-    private static final int MSG_REFRESH_PROGRESS = 300;
-    private static final int MSG_REFRESH_TITLE_COUNT = 301;
-
-    /**
-     * no use
-     *
-     * @author wangliang
-     */
-    /*
-     * class AllDownloadListener implements DownloadListener {
-	 * 
-	 * @Override public void onDownloadProcessing(List<DownloadItemOutput>
-	 * items) { List<SearchItem> data = searchResultAdapter.getData(); if (data
-	 * != null && items != null) { for (SearchItem item : data) { String
-	 * downloadUrl = item.getDownloadUrl(); for (DownloadItemOutput s : items) {
-	 * if (downloadUrl.equals(s.getUrl())) { long currentBytes =
-	 * s.getCurrentBytes(); long totalBytes = s.getTotalBytes();
-	 * item.setCurrentBytes(currentBytes); item.setTotalBytes(totalBytes);
-	 * DownloadStatus status = s.getStatus(); //
-	 * app.setSaveDest(file.getDest()); switch (status) { case STATUS_FAILED:
-	 * break; case STATUS_PAUSED: break; case STATUS_RUNNING: case
-	 * STATUS_PENDING: break; case STATUS_SUCCESSFUL: break; }
-	 * 
-	 * } }
-	 * 
-	 * } } }
-	 * 
-	 * }
-	 */
     private void initTitleBar() {
         TextView backView = (TextView) findViewById(R.id.btn_back);
         backView.setText(pname);
         backView.setOnClickListener(this);
-//		titleLeftText = (TextView) findViewById(R.id.label_title);
-//		titleLeftText.setText("搜索结果");
     }
 
     boolean isLoadingMore = false;
@@ -226,8 +282,6 @@ public class BMSearchResultActivity extends Activity implements
         searchResultLayout.getRefreshableView().addFooterView(footer);
 
         searchNoResultLayout = (ViewGroup) findViewById(R.id.layout_search_subview_no_result);
-        searchRecomendHintView = searchNoResultLayout
-                .findViewById(R.id.label_recomend_hint);
         recomendGv = (GridView) searchNoResultLayout
                 .findViewById(R.id.search_recomend_gv);
         // recomendGv.setScrollContainer(false);
@@ -236,6 +290,38 @@ public class BMSearchResultActivity extends Activity implements
         errorView = findViewById(R.id.error_hint);
         errorView.setVisibility(View.GONE);
         errorView.setOnClickListener(this);
+
+        cbIdentifyProvider = (CheckBox) findViewById(R.id.bm_cb_user_identify);
+        cbIdentifyProvider.setOnCheckedChangeListener(this);
+        cbGroupProvider = (CheckBox) findViewById(R.id.bm_btn_group_provider);
+        cbGroupProvider.setOnCheckedChangeListener(this);
+
+        findViewById(R.id.select_band).setOnClickListener(this);
+        findViewById(R.id.btn_back_bottom).setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+        int id = buttonView.getId();
+        switch (id){
+            case R.id.bm_cb_user_identify:
+                break;
+            case R.id.bm_btn_group_provider:
+                break;
+        }
+
+    }
+
+    @Override
+    public void onRequestSuccess(BaseResult responseData) {
+
+    }
+
+    @Override
+    public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
+
     }
 
     class MyOnRefreshListener2 implements OnRefreshListener2<ListView> {
@@ -379,6 +465,54 @@ public class BMSearchResultActivity extends Activity implements
         }
     }
 
+    private void loadBrandAndModel(){
+        LoadingTask task = new LoadingTask(BMSearchResultActivity.this, new LoadingTask.ILoading() {
+
+            @Override
+            public void loading(NetUtil.IRequestListener listener) {
+                NetUtil.getInstance().getMarketTypeAndBrand(new NetUtil.IRequestListener() {
+                    @Override
+                    public void onRequestSuccess(BaseResult responseData) {
+
+                        if (responseData.getErrorCode() == 0 && responseData.getSuccess() == 1) {
+                            CustomToast.showToast(getApplicationContext(), "上传成功");
+                            initView();
+                        } else {
+                            CustomToast.showToast(getApplicationContext(), responseData.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
+                        CustomToast.showToast(getApplicationContext(), msg);
+                    }
+                });
+            }
+
+            @Override
+            public void preLoading(View network_loading_layout, View network_loading_pb, View network_error_loading_tv) {
+            }
+
+            @Override
+            public boolean isShowNoNetWorkView() {
+                return true;
+            }
+
+            @Override
+            public NetUtil.IRequestListener getRequestListener() {
+                return BMSearchResultActivity.this;
+            }
+
+            @Override
+            public boolean isAsync() {
+                return false;
+            }
+        });
+
+        task.setRootView(getWindow().getDecorView());
+        task.loading();
+    }
+
     static class LoadMoreContentListener implements IRequestListener {
 
         WeakReference<BMSearchResultActivity> hostRef;
@@ -418,8 +552,9 @@ public class BMSearchResultActivity extends Activity implements
                     // Toast.LENGTH_LONG).show();
                     host.showNoMoreView();
                 } else {
-                        host.showLoadingMoreFooter();
-                        host.setFooterVisible(false);
+                    host.checkAndFillSearchResult(searchData);
+                    host.showLoadingMoreFooter();
+                    host.setFooterVisible(false);
 
                     if (searchResult.getDataList().size() < 20) {
                         host.setHasMore(false);
@@ -480,6 +615,11 @@ public class BMSearchResultActivity extends Activity implements
     private Map<String, Long> observersIds = new HashMap<String, Long>();
     private Map<String, String> downloadedIds = new HashMap<String, String>();
 
+    private void checkAndFillSearchResult(final List<BMSearchResult.BMSearchData> data) {
+
+        doFillSearchResult(data);
+    }
+
     private void doFillSearchResult(List<BMSearchResult.BMSearchData> data) {
         if (data == null) {
             Log.e(TAG, "Fatal Error!");
@@ -532,8 +672,15 @@ public class BMSearchResultActivity extends Activity implements
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.img_back:
+            case R.id.btn_back:
+                if(!menu.isShown())
+                    menu.showMenu();
+            case R.id.btn_back_bottom:
                 finish();
+                break;
+            case R.id.select_band:
+                if(!menu.isShown())
+                    menu.showSecondaryMenu();
                 break;
             case R.id.error_hint:
                 if (!DeviceUtil.isNetworkAvailable(getApplicationContext())) {
@@ -570,6 +717,17 @@ public class BMSearchResultActivity extends Activity implements
     public void onItemClick(AdapterView<?> adapterView, View arg1,
                             int position, long id) {
         BMSearchResult.BMSearchData item = null;
+        // final SearchItem item = null ;
+        if (adapterView instanceof ListView) {
+            Object item2 = adapterView.getAdapter().getItem(position);
+            if (item2 != null) {
+                item = (BMSearchResult.BMSearchData) item2;
+                if (item2 == item) {
+                    // Toast.makeText(getApplicationContext(), "same",
+                    // 0).show();
+                }
+            }
+        }
         if (item != null){
 
             Intent intentDetail = new Intent(this, BMProductDetailActivity.class);

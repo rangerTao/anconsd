@@ -10,8 +10,27 @@ import com.ranger.bmaterials.json.JSONUtil;
 import com.ranger.bmaterials.tools.MyLogger;
 
 public class BaseResult {
-	
-	protected static MyLogger mLogger = MyLogger.getLogger(JSONParser.class.getName());
+
+    protected int success;
+    protected String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(int success) {
+        this.success = success;
+    }
+
+    protected static MyLogger mLogger = MyLogger.getLogger(JSONParser.class.getName());
 	protected int		mErrorCode = DcError.DC_Error;
 	protected String	mErrorString;
 	protected String    mTag;

@@ -155,17 +155,19 @@ public class BMLoginActivity extends Activity implements OnClickListener,
 				return;
 			}
 
+            try {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+            } catch (Exception e) {
+            }
+            progressDialog = CustomProgressDialog.createDialog(this);
+            progressDialog.setMessage(getResources().getString(R.string.committing_tip));
+            progressDialog.show();
+
             NetUtil.getInstance().requestUserLogin(username,password,this);
 
-			try {
-				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),
-						InputMethodManager.HIDE_NOT_ALWAYS);
-			} catch (Exception e) {
-			}
-			progressDialog = CustomProgressDialog.createDialog(this);
-			progressDialog.setMessage(getResources().getString(R.string.committing_tip));
-			progressDialog.show();
+
 		} else if (id == R.id.btn_register) {
 
             Intent regisIntent = new Intent(this,BMRegisterActivity.class);
@@ -189,7 +191,9 @@ public class BMLoginActivity extends Activity implements OnClickListener,
 		BMUserLoginResult result = (BMUserLoginResult) responseData;
 
         if(result.getSuccess() == 1){
-            MineProfile.getInstance().setToken(result.getToken());
+            MineProfile.getInstance().setSessionID(result.getToken());
+            MineProfile.getInstance().setNickName(result.getNickname());
+            MineProfile.getInstance().setStrUserHead(result.getPhoto());
             MineProfile.getInstance().setIsLogin(true);
             MineProfile.getInstance().Save();
             loginSucceed();
@@ -249,7 +253,7 @@ public class BMLoginActivity extends Activity implements OnClickListener,
 	}
 
 	private void disMissProgressDialog() {
-		if (progressDialog != null && progressDialog.isShowing() && !isFinishing()) {
+		if (progressDialog != null && progressDialog.isShowing()) {
 			progressDialog.dismiss();
 			progressDialog = null;
 			hasProgressDlg = false;

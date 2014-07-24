@@ -78,16 +78,12 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
         // 为了让程序快速启动 不会出现黑屏 延迟初始化 初始化操作都加这个方法里
         delayInit();
 
-        preLoadSearchKeywords();
-
         intentNotification = getIntent();
 
     }
 
     private void preLoadSearchKeywords() {
         NetUtil.getInstance().requestForKeywords(Constants.keywordCount, new SearchKeywordsPreloadListener());
-
-        NetUtil.getInstance().requestForProvices(this);
     }
 
     @Override
@@ -218,12 +214,9 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
 
             @Override
             public void run() {
-                // TODO Auto-generated method stub
-
+                preLoadSearchKeywords();
             }
         }, 300);
-
-        initSlidingMenu();
     }
 
     private String checkVersion() {

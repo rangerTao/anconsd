@@ -31,7 +31,26 @@ public class MineProfile implements IRequestListener {
 	private boolean isNewUser;
 	private boolean isRootUser;
 
-	private int userType;
+    private String area;
+    private String signture;
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getSignture() {
+        return signture;
+    }
+
+    public void setSignture(String signture) {
+        this.signture = signture;
+    }
+
+    private int userType;
 	private String phonenum;
 
 	// settings
@@ -61,6 +80,7 @@ public class MineProfile implements IRequestListener {
 	public static final String MINE_DYNAMIC_DATA_NOTIFICATION = "com.duoku.gamesearch.mydynamicdata";
 	public static final String MINE_DYNAMIC_DATA_REFRESH = "com.duoku.gamesearch.refreshdata";
 
+    // use as area;
 	private String push_userid;
 	private String push_channelid;
 	private String appversion;
@@ -96,6 +116,9 @@ public class MineProfile implements IRequestListener {
 		lastUpdateTime = 0;
 		lastUpdateSMSCTime = 0;
 		lastCheckRootTime = 0;
+
+        area = "";
+        signture = "";
 
 		accountList = new ArrayList<String>();
 	}
@@ -140,6 +163,10 @@ public class MineProfile implements IRequestListener {
 		isNewUser = false;
 		isRootUser = false;
 		isLogin = false;
+
+        area = "";
+        signture = "";
+
 		Save(context);
 	}
 
@@ -200,6 +227,9 @@ public class MineProfile implements IRequestListener {
 		this.sessionID = settings.getString("sessionID", "");
 		this.userType = settings.getInt("userType", 1);
 		this.phonenum = settings.getString("phonenum", "");
+
+        this.area = settings.getString("city","");
+        this.signture = settings.getString("signture","");
 
 		// settings
 		this.downloadOnlyWithWiFi = settings.getBoolean("downloadOnlyWithWiFi", true);
@@ -308,6 +338,10 @@ public class MineProfile implements IRequestListener {
 
 		editor.putString("accountlist", accountList);
 		editor.putString("user_head", strUserHead);
+
+        editor.putString("city",area);
+        editor.putString("signture",signture);
+
 		return editor.commit();
 	}
 
