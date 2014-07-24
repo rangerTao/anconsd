@@ -9,12 +9,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
@@ -27,16 +25,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.ranger.lpa.Constants;
 import com.ranger.lpa.R;
 import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
 import com.ranger.lpa.connectity.wifi.LPAWifiManager;
 import com.ranger.lpa.pojos.SocketMessage;
+import com.ranger.lpa.pojos.WifiInfo;
 import com.ranger.lpa.receiver.IOnNotificationReceiver;
 import com.ranger.lpa.test.adapter.BtDeviceListAdapter;
 import com.ranger.lpa.thread.LPAClientThread;
 import com.ranger.lpa.tools.NotifyManager;
 import com.ranger.lpa.ui.view.LPAKeyGuardView;
+import com.ranger.lpa.utils.WifiUtils;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -49,6 +50,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     public static String EXTRA_TYPE = "type";
+    public static final int MSG_CONNECTING_DIALOG_SHOW = 3;
+    public static final int MSG_CONNECTING_DIALOG_HIDE = 3 << 1;
+    public static final int MSG_WIFI_CONNECTED = 4;
+    public static final int MSG_WIFI_FAILED = 4 << 1;
 
     private int TYPE_PATTERN = 0;
 
@@ -69,7 +74,7 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
     private AtomicBoolean isLoadingCancel = new AtomicBoolean(false);
 
-    private Handler mHandler = new Handler() {
+    public Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -102,6 +107,10 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                     break;
                 case SocketMessage.MSG_GIVEUP_REFUSE:
 //                    dismissGiveupRequestDialog();
+                    break;
+                case MSG_CONNECTING_DIALOG_SHOW:
+                    break;
+                case MSG_CONNECTING_DIALOG_HIDE:
                     break;
 
             }
@@ -271,6 +280,7 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                 lpact.sendGiveupRequestRefuse();
                 break;
             case R.id.btn_join_party_server:
+                startBarcodeScanner();
                 break;
             case R.id.btn_start_party_server:
                 LPAWifiManager.getInstance(getApplicationContext()).startWifiAp();
@@ -285,47 +295,13 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
         }
     }
 
+    private void startBarcodeScanner(){
+        Intent intent = new Intent(this,BarcodeScannerActivity.class);
+        startActivityForResult(intent,BarcodeScannerActivity.RESULT_BARCODE);
+    }
+
     // 查找蓝牙设备
     private static final int REQUEST_DISCOVERABLE = 0x2;
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == REQUEST_DISCOVERABLE){
-            if(resultCode > 0){
-                new Thread() {
-
-                    public void run() {
-
-                        try {
-                            bts = btManager
-                                    .getBluetoothAdapter()
-                                    .listenUsingRfcommWithServiceRecord(blueName,
-                                            Constants.mUUID);
-
-                            BluetoothSocket bs = bts.accept();
-
-                            if(bs != null){
-                                lpact = new LPAClientThread(getApplicationContext(),bs,false);
-                                lpact.start();
-
-                                if(popup_select_btdevices != null && popup_select_btdevices.isShowing()){
-                                    popup_select_btdevices.dismiss();
-                                    popup_select_btdevices = null;
-                                }
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }.start();
-            }else{
-                Toast.makeText(getApplicationContext(),"请选择“允许”，才能使用此功能！",Toast.LENGTH_LONG).show();
-            }
-        }
-
-    }
 
     // 开始查找蓝牙设备
     private void startBlueToothAndDiscovery() {
@@ -565,5 +541,63 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
         }
 
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == REQUEST_DISCOVERABLE){
+            if(resultCode > 0){
+                new Thread() {
+
+                    public void run() {
+
+                        try {
+                            bts = btManager
+                                    .getBluetoothAdapter()
+                                    .listenUsingRfcommWithServiceRecord(blueName,
+                                            Constants.mUUID);
+
+                            BluetoothSocket bs = bts.accept();
+
+                            if(bs != null){
+                                lpact = new LPAClientThread(getApplicationContext(),bs,false);
+                                lpact.start();
+
+                                if(popup_select_btdevices != null && popup_select_btdevices.isShowing()){
+                                    popup_select_btdevices.dismiss();
+                                    popup_select_btdevices = null;
+                                }
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }else{
+                Toast.makeText(getApplicationContext(),"请选择“允许”，才能使用此功能！",Toast.LENGTH_LONG).show();
+            }
+        }
+
+        if(requestCode == BarcodeScannerActivity.RESULT_BARCODE){
+            if(data != null){
+                Bundle bundle = data.getExtras();
+                String result = bundle.getString(BarcodeScannerActivity.RESULT_CONTENT);
+                if(result != null && !result.equals("")){
+                    Gson gson = new Gson();
+                    WifiInfo wInfo = gson.fromJson(result,WifiInfo.class);
+                    if(wInfo != null){
+                        WifiUtils.initWifiSetting(getApplicationContext());
+                        if(LPAWifiManager.getInstance(getApplicationContext()).connectWifi(wInfo)){
+
+                        }else{
+
+                        }
+                    }
+                }
+            }
+        }
     }
 }
