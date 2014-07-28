@@ -1,6 +1,5 @@
 package com.ranger.bmaterials.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -10,9 +9,6 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,7 +24,6 @@ import com.ranger.bmaterials.listener.SearchKeywordsPreloadListener;
 import com.ranger.bmaterials.net.NetManager;
 import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
-import com.ranger.bmaterials.tools.MyLogger;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.view.CustomFragmentTabHost;
 import com.ranger.bmaterials.work.SplashTask;
@@ -40,15 +35,7 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
 
     public Intent intentNotification = null;
 
-    private final String TAG = "DKGameHallActivity";
-
-    private MyLogger logger = MyLogger.getLogger(TAG);
-
     public static SlidingMenu menu;
-
-    public CustomFragmentTabHost getTabHost() {
-        return mTabHost;
-    }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -111,7 +98,6 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
 
     @Override
     protected void onPause() {
-        // TODO Auto-generated method stub
         super.onPause();
     }
 
@@ -141,24 +127,14 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
     }
 
     private void recycleGarbage() {
-        // new Thread() {
-        // @Override
-        // public void run() {
-        try {
-
             ImageLoaderHelper.onDestroy();
-        } catch (Exception e) {
-        }
-        //
-        // }
-        // }.start();
     }
 
     private long touchTime = 0;
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        // TODO Auto-generated method stub
+
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             int code = event.getKeyCode();
             if (code == KeyEvent.KEYCODE_BACK) {
@@ -213,21 +189,10 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
         return ver_name;
     }
 
-    private View firstMenu;
-    private ListView lv_province_list;
     private BMProvinceAdapter bpa;
 
     @Override
     public void onRequestSuccess(BaseResult responseData) {
-
-        BMProvinceListResult blr = (BMProvinceListResult) responseData;
-
-        if (blr.getTag().equals(Constants.NET_TAG_GET_PROVINCE + "")) {
-            bpa = new BMProvinceAdapter(getApplicationContext(),blr.getProviceList());
-            lv_province_list.setAdapter(bpa);
-            lv_province_list.setOnItemClickListener(this);
-            bpa.setOnListItemClickListener(this);
-        }
 
     }
 
