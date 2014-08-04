@@ -26,15 +26,18 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.ranger.bmaterials.R;
+import com.ranger.bmaterials.adapter.SuggestAdapter;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
+import com.ranger.bmaterials.db.CommonDaoImpl;
 import com.ranger.bmaterials.listener.onTagCloudViewLayoutListener;
 import com.ranger.bmaterials.mode.KeywordsList;
 import com.ranger.bmaterials.netresponse.BMProvinceListResult;
@@ -136,8 +139,6 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
         listenInput();
         // setViewMode(ViewMode.VIEWMODE_KEYWORDS);
 
-        searchEt.setThreshold(0);
-
         // 设置自动提示文本高度 与软键盘兼容
         root.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
@@ -160,43 +161,90 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
             }
         });
 
-//        loadHistroyData();
+        loadHistroyData();
     }
 
     List<String> suggestWords = null;
 
-//    private void loadHistroyData() {
-//        new AsyncTask<Void, Void, List<String>>() {
+    private void loadHistroyData() {
+        new AsyncTask<Void, Void, List<String>>() {
+
+            @Override
+            protected List<String> doInBackground(Void... params) {
+                return CommonDaoImpl.getInstance(getActivity().getApplicationContext()).getKeywords();
+            }
+
+            protected void onPostExecute(java.util.List<String> result) {
+                if (result == null || result.size() == 0) {
+                    initSuggest(new ArrayList<String>());
+                } else {
+                    initSuggest(result);
+                }
+            }
+
+        }.execute();
+
+    }
+
+    private SuggestAdapter suggestAdapter;
+
+    PopupWindow mSearchRecomPopup;
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if(mSearchRecomPopup!= null && mSearchRecomPopup.isShowing()){
+            mSearchRecomPopup.dismiss();
+        }
+    }
+
+    ArrayAdapter searchSuggestionAdapter;
+    ListView lvRecom;
+    private void initSuggest(List<String> keywords) {
+
+        if(mSearchRecomPopup == null){
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.search_recom_layout,null);
+            lvRecom = (ListView) view.findViewById(R.id.ll_search_recom);
+            suggestWords = keywords;
+            suggestAdapter = new SuggestAdapter(getActivity().getApplicationContext(), suggestWords, 10);
+
+            lvRecom.setAdapter(suggestAdapter);
+        }
+
+        searchEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    showDropdown();
+                }else{
+                    if(mSearchRecomPopup!= null && mSearchRecomPopup.isShowing()){
+                        mSearchRecomPopup.dismiss();
+                    }
+                }
+            }
+        });
+
+        // searchEt.setDropDownBackgroundResource(R.drawable.image_background_autocomplete);
+//        searchEt.setDropDownBackgroundResource(R.drawable.transparent_drawable);
+//        searchEt.setAdapter(suggestAdapter);
+//        searchSuggestionAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, keywords);
+//        searchEt.setOnItemClickListener(new OnItemClickListener() {
 //
 //            @Override
-//            protected List<String> doInBackground(Void... params) {
-//                CommonDao handler = DbManager.getCommonDbHandler();
-//                return handler.getKeywords();
-//            }
+//            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 //
-//            protected void onPostExecute(java.util.List<String> result) {
-//                if (result == null || result.size() == 0) {
-//                    initSuggest(new ArrayList<String>());
-//                } else {
-//                    initSuggest(result);
-//                }
-//            }
-//
-//            ;
-//
-//        }.execute();
-//    }
-//
-//    private void saveHistroy(final String keyword) {
-//        // save keywords
-//        DBTaskManager.submitTask(new Runnable() {
-//            @Override
-//            public void run() {
-//                CommonDao handler = DbManager.getCommonDbHandler();
-//                handler.saveKeywords(keyword);
 //            }
 //        });
-//    }
+
+    }
+
+    private void showDropdown(){
+        if(mSearchRecomPopup != null && !mSearchRecomPopup.isShowing()){
+            mSearchRecomPopup.showAsDropDown(searchEt);
+            suggestAdapter.notifyDataSetChanged();
+        }
+    }
 
     private void listenInput() {
         String text = String.format(getString(R.string.search_hint));
@@ -303,25 +351,10 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
         startActivity(intent);
     }
 
-    private void changeKeyWord() {
-        if (keywordsWrapper != null && keywordsWrapper.getKeywords() != null) {
-            fillKeywords();
-        } else {
-            boolean networkAvailable = DeviceUtil.isNetworkAvailable(getActivity());
-            if (networkAvailable) {
-                searchKeywords();
-            } else {
-                CustomToast.showToast(getActivity(), getString(R.string.alert_network_inavailble));
-            }
-        }
-    }
-
     @Override
     public void onPause() {
         super.onPause();
     }
-
-    ;
 
     @Override
     public void onResume() {
@@ -373,6 +406,7 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
                 break;
             case R.id.search_clear:
+                searchEt.setText("");
                 break;
         }
     }

@@ -98,7 +98,7 @@ public final class JSONBuilder {
             JSONObject jsonObj = new JSONObject();
             jsonObj.put("username",name);
             jsonObj.put("password",pwd);
-            res = AES.getInstance().aesEncrypt(jsonObj.toString());
+            res = AES.getInstance().encrypt(jsonObj.toString());
         } catch (JSONException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -118,7 +118,7 @@ public final class JSONBuilder {
             json.put("telephone",telephone);
             json.put("code",verify);
 
-            res = AES.getInstance().aesEncrypt(json.toString());
+            res = AES.getInstance().encrypt(json.toString());
         }catch (Exception e){
             e.printStackTrace();
         }

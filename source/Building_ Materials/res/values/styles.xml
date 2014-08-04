@@ -1,5 +1,17 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <style name="MyCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/bm_authorized_provider_selector</item>
+        <item name="android:paddingLeft">5.0dip</item>
+        <item name="android:maxHeight">10.0dip</item>
+    </style>
+
+    <style name="cb_autologin" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/bm_autologin_selector</item>
+        <item name="android:paddingLeft">5.0dip</item>
+        <item name="android:maxHeight">10.0dip</item>
+    </style>
+
     <!-- Application theme. -->
     <style name="AppTheme" parent="android:Theme.Light">
 

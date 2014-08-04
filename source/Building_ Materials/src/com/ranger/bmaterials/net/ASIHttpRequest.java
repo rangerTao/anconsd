@@ -36,6 +36,7 @@ import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.app.GameTingApplication;
 import com.ranger.bmaterials.encrypt.AES;
+import com.ranger.bmaterials.encrypt.AES2;
 import com.ranger.bmaterials.json.JsonHelper;
 import com.ranger.bmaterials.net.NetMessage.NetMessageType;
 import com.ranger.bmaterials.netresponse.BaseResult;
@@ -465,8 +466,8 @@ public class ASIHttpRequest implements Runnable {
 
 			String resString = "";
 			try {
-				AES myaes = AES.getInstance();
-				resString = myaes.aesDecrypt(new String(responseStr, "UTF-8"));
+				AES2 myaes = AES.getInstance();
+				resString = myaes.encrypt(new String(responseStr, "UTF-8"));
 				mLogger.v("response data is" + resString);
 				if(TextUtils.isEmpty(resString)&&mRepeatCount++==0){//服务端可能会返回空数据，客户端解密会抛出BadPaddingException，导致获取数据失败，所以再请求一次，可以提高接口请求数据的成功率。
 					handleNetRequest();

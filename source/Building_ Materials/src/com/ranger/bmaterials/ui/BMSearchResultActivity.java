@@ -1,28 +1,39 @@
 package com.ranger.bmaterials.ui;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,8 +43,10 @@ import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.adapter.BMProvinceAdapter;
 import com.ranger.bmaterials.adapter.BMSearchResultAdapter;
 import com.ranger.bmaterials.adapter.AbstractListAdapter.OnListItemClickListener;
+import com.ranger.bmaterials.adapter.SuggestAdapter;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
+import com.ranger.bmaterials.db.CommonDaoImpl;
 import com.ranger.bmaterials.mode.*;
 import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BMSearchResult;
@@ -55,7 +68,7 @@ public class BMSearchResultActivity extends Activity implements
 
     protected static final boolean DEBUG = true;
 
-    private String keyword;
+    private static String keyword;
     private int pid;
     private String pname;
 
@@ -73,7 +86,9 @@ public class BMSearchResultActivity extends Activity implements
     public static SlidingMenu menu;
 
     private CheckBox cbIdentifyProvider;
-    private CheckBox cbGroupProvider;
+    private Button cbGroupProvider;
+
+    private AutoCompleteTextView edit_search;
 
     /**
      * 推荐的GridView
@@ -98,6 +113,8 @@ public class BMSearchResultActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         setContentView(R.layout.search_result_activity);
 
         Intent intent = getIntent();
@@ -120,6 +137,46 @@ public class BMSearchResultActivity extends Activity implements
         search(currentPage + 1, false);
 
         initSlidingMenu();
+
+        loadHistroyData();
+    }
+
+    List<String> suggestWords = null;
+
+    private void loadHistroyData() {
+        new AsyncTask<Void, Void, List<String>>() {
+
+            @Override
+            protected List<String> doInBackground(Void... params) {
+                return CommonDaoImpl.getInstance(getApplicationContext()).getKeywords();
+            }
+
+            protected void onPostExecute(java.util.List<String> result) {
+                if (result == null || result.size() == 0) {
+                    initSuggest(new ArrayList<String>());
+                } else {
+                    initSuggest(result);
+                }
+            }
+
+        }.execute();
+    }
+
+    private SuggestAdapter suggestAdapter;
+
+    private void initSuggest(List<String> keywords) {
+        suggestWords = keywords;
+        suggestAdapter = new SuggestAdapter(getApplicationContext(), suggestWords, 10);
+        // searchEt.setDropDownBackgroundResource(R.drawable.image_background_autocomplete);
+        edit_search.setDropDownBackgroundResource(R.drawable.transparent_drawable);
+        edit_search.setAdapter(suggestAdapter);
+        edit_search.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+            }
+        });
 
     }
 
@@ -207,8 +264,8 @@ public class BMSearchResultActivity extends Activity implements
     }
 
     private void initTitleBar() {
-        TextView backView = (TextView) findViewById(R.id.btn_back);
-        backView.setText(pname);
+        TextView backView = (TextView) findViewById(R.id.btn_province);
+        backView.setText(pname.equals("")?"全国":pname);
         backView.setOnClickListener(this);
     }
 
@@ -273,6 +330,65 @@ public class BMSearchResultActivity extends Activity implements
 
 
     private void initView() {
+
+        edit_search = (AutoCompleteTextView) findViewById(R.id.edit_search);
+        edit_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    boolean networkAvailable = DeviceUtil.isNetworkAvailable(getApplicationContext());
+                    if (networkAvailable) {
+                        // 搜索
+                        search();
+                    } else {
+                        CustomToast.showToast(BMSearchResultActivity.this, getString(R.string.alert_network_inavailble));
+                        // Toast.makeText(getActivity(), "网络不给力",
+                        // Toast.LENGTH_LONG).show();
+                    }
+                    return true;
+                } else if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    boolean networkAvailable = DeviceUtil.isNetworkAvailable(BMSearchResultActivity.this);
+                    if (networkAvailable) {
+                        // 搜索
+                        search();
+                    } else {
+                        CustomToast.showToast(BMSearchResultActivity.this, getString(R.string.alert_network_inavailble));
+                        // Toast.makeText(getActivity(), "网络不给力",
+                        // Toast.LENGTH_LONG).show();
+                    }
+                    return true;
+                } else if (event.getKeyCode() == KeyEvent.KEYCODE_SPACE) {
+                    // Toast.makeText(getActivity(),
+                    // "OnEditorActionListener spaceback", 1).show();
+                }
+
+                return false;
+            }
+        });
+
+        edit_search.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (s.length() > 0) {
+                    findViewById(R.id.search_clear).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(R.id.search_clear).setVisibility(View.GONE);
+                }
+
+            }
+        });
+
         searchResultLayout = (PullToRefreshListView) findViewById(R.id.layout_search_result_list);
         searchResultLayout.setOnRefreshListener(new MyOnRefreshListener2());
         searchResultLayout.setOnItemClickListener(this);
@@ -293,11 +409,11 @@ public class BMSearchResultActivity extends Activity implements
 
         cbIdentifyProvider = (CheckBox) findViewById(R.id.bm_cb_user_identify);
         cbIdentifyProvider.setOnCheckedChangeListener(this);
-        cbGroupProvider = (CheckBox) findViewById(R.id.bm_btn_group_provider);
-        cbGroupProvider.setOnCheckedChangeListener(this);
+        cbGroupProvider = (Button) findViewById(R.id.bm_btn_group_provider);
 
         findViewById(R.id.select_band).setOnClickListener(this);
         findViewById(R.id.btn_back_bottom).setOnClickListener(this);
+        findViewById(R.id.search_clear).setOnClickListener(this);
 
     }
 
@@ -459,6 +575,8 @@ public class BMSearchResultActivity extends Activity implements
                                 new LoadMoreContentListener(this));
             }
 
+            saveKeywords(keyword);
+
         } else {
             if (!loadMore)
                 showErrorView();
@@ -552,6 +670,7 @@ public class BMSearchResultActivity extends Activity implements
                     // Toast.LENGTH_LONG).show();
                     host.showNoMoreView();
                 } else {
+
                     host.checkAndFillSearchResult(searchData);
                     host.showLoadingMoreFooter();
                     host.setFooterVisible(false);
@@ -590,6 +709,10 @@ public class BMSearchResultActivity extends Activity implements
 
         }
 
+    }
+
+    private void saveKeywords(String key){
+        CommonDaoImpl.getInstance(getApplicationContext()).saveKeywords(key);
     }
 
     private void setLoadlingMoreState(boolean loading) {
@@ -672,7 +795,7 @@ public class BMSearchResultActivity extends Activity implements
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.btn_back:
+            case R.id.btn_province:
                 if(!menu.isShown())
                     menu.showMenu();
             case R.id.btn_back_bottom:
@@ -703,6 +826,9 @@ public class BMSearchResultActivity extends Activity implements
                     search();
                 }
 
+                break;
+            case R.id.search_clear:
+                edit_search.setText("");
                 break;
         }
     }

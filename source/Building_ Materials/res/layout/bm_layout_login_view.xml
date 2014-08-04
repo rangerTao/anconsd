@@ -82,6 +82,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
@@ -90,6 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
+            style="@style/cb_autologin"
             android:text="自动登录"/>
 
         <TextView

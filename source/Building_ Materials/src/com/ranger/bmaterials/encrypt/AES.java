@@ -1,5 +1,7 @@
 package com.ranger.bmaterials.encrypt;
 
+import com.ranger.bmaterials.app.MineProfile;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -11,14 +13,20 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class AES {
 
-	private static AES mInstance;
+    public static void main(String args[]){
+        String test = "{\"username\":\"bilige\",\"password\":\"123456\"}";
+
+        System.out.println(AES.getInstance().decrypt("WaSSzC5vZ4uE5UtSC8R+Ey7SVi2+NLTd2YVuIIUoNDsUZY8tbPx3Xr1hYgRA9tc2"));
+    }
+
+	private static AES2 mInstance;
 	private SecretKey sSecretKey = null;// key瀵硅薄
 	private Cipher sCipher = null; // 绉�拷���瀵硅薄Cipher
 	private String sKeyString = "1934567820bacDQF";// 瀵��
 
-	public synchronized static AES getInstance() {
+	public synchronized static AES2 getInstance() {
 		if (mInstance == null) {
-			mInstance = new AES();
+			mInstance = new AES2();
 		}
 
 		return mInstance;
@@ -32,7 +40,7 @@ public class AES {
 			 * �峰�涓�釜绉�拷���绫�ipher锛�ESede-��ES绠��锛�CB���瀵�ā寮��PKCS5Padding��～���寮
 			 * �
 			 */
-			sCipher = Cipher.getInstance("AES/ECB/PKCS5Padding"); // AES/CBC/NoPadding
+			sCipher = Cipher.getInstance("AES/CBC/PKCS5Padding"); // AES/CBC/NoPadding
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -45,17 +53,15 @@ public class AES {
 	 * @return
 	 */
 	public synchronized String aesEncrypt(String message) {
-		String result = ""; // DES���瀛��涓�
-		String newResult = "";// �绘��㈣�绗�����瀵��绗�覆
-		try {
-			sCipher.init(Cipher.ENCRYPT_MODE, sSecretKey); // 璁剧疆宸ヤ�妯″�涓哄�瀵�ā寮��缁��瀵��
 
-			byte[] resultBytes = sCipher.doFinal(message.getBytes("UTF-8")); // 姝ｅ��ц�������
-			result = new String(Base64.encode(resultBytes, Base64.DEFAULT));// 杩��BASE64缂��
-			newResult = filter(result); // �绘����涓蹭腑���琛��
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		String newResult = "";
+
+        try{
+            newResult = mInstance.encrypt(message);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 		return newResult;
 	}
 
@@ -69,10 +75,7 @@ public class AES {
 	public synchronized String aesDecrypt(String message) {
 		String result = "";
 		try {
-			byte[] messageBytes = Base64.decode(message, Base64.DEFAULT); // 杩��BASE64缂��
-			sCipher.init(Cipher.DECRYPT_MODE, sSecretKey); // 璁剧疆宸ヤ�妯″�涓鸿В瀵�ā寮��缁��瀵��
-			byte[] resultBytes = sCipher.doFinal(messageBytes);// 姝ｅ��ц�瑙ｅ����
-			result = new String(resultBytes, "UTF-8");
+			result = mInstance.decrypt(message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
