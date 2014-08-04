@@ -66,15 +66,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:textColor="#ffa200"
-            android:text="JJD"/>
+            android:textColor="#ffa200"/>
 
         <TextView
             android:id="@+id/bm_tv_price_from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="JJD"/>
+            android:layout_marginTop="3dp"/>
 
     </LinearLayout>
 
@@ -85,7 +83,13 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
+        android:background="@drawable/arrow_detail"
         android:layout_weight="1.0"
-        android:text=">"/>
+        />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#50000000"/>
 
 </RelativeLayout>

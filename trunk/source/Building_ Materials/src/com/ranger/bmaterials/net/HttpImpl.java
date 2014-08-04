@@ -17,6 +17,7 @@ import android.os.Message;
 
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.encrypt.AES;
+import com.ranger.bmaterials.encrypt.AES2;
 import com.ranger.bmaterials.net.INetListener.DownLoadStatus;
 import com.ranger.bmaterials.net.NetMessage.NetMessageType;
 import com.ranger.bmaterials.netresponse.BaseResult;
@@ -40,8 +41,8 @@ public class HttpImpl implements IHttpInterface{
 		request.setUrl(url);
 		
 		// encrypt
-		AES myaes = AES.getInstance();
-		String encryptData = myaes.aesEncrypt(bodydata);	
+		AES2 myaes = AES.getInstance();
+		String encryptData = myaes.encrypt(bodydata);
 		
 		mLogger.d(" sendRequest end encryptData = " + encryptData);
 		request.setRequestData(encryptData);

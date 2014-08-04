@@ -24,7 +24,7 @@
             android:paddingTop="8dp">
 
             <TextView
-                android:id="@+id/btn_back"
+                android:id="@+id/btn_province"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -118,6 +118,8 @@
             xmlns:ptr="http://schemas.android.com/apk/res-auto"
             android:overScrollMode="ifContentScrolls"
             android:visibility="visible"
+            android:showDividers="middle"
+            android:divider="#50ffffff"
             ptr:ptrAnimationStyle="flip"
             ptr:ptrHeaderTextAppearance="@style/pull_header_TextAppearance"
             ptr:ptrListViewExtrasEnabled="false"
@@ -196,7 +198,7 @@
             android:visibility="gone"/>
     </FrameLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/footer"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
@@ -210,28 +212,41 @@
             android:layout_width="40dp"
             android:layout_height="fill_parent"
             android:contentDescription="@null"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:scaleType="centerInside"
             android:src="@drawable/bm_search_result_back"/>
 
         <ImageView
+            android:layout_toRightOf="@+id/btn_back_bottom"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:src="@drawable/bm_search_result_action_divider"/>
 
         <CheckBox
+            android:layout_toRightOf="@+id/btn_back_bottom"
             android:id="@+id/bm_cb_user_identify"
             android:layout_width="wrap_content"
+            android:gravity="center_vertical"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="#000"
+            style="@style/MyCheckBox"
             android:text="使用认证供应商"/>
 
-        <CheckBox
+        <Button
             android:id="@+id/bm_btn_group_provider"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:background="@drawable/background_show_detail"
+            android:layout_gravity="right|center_vertical"
             android:layout_marginLeft="15dp"
+            android:textColor="#000"
             android:text="合并相同供应商"/>
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
