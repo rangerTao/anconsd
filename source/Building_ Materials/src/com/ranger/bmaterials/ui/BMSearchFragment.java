@@ -15,8 +15,10 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -28,12 +30,16 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.ranger.bmaterials.R;
+import com.ranger.bmaterials.adapter.AbstractListAdapter;
+import com.ranger.bmaterials.adapter.BMProvinceAdapter;
 import com.ranger.bmaterials.adapter.SuggestAdapter;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
@@ -200,30 +206,40 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
     }
 
     ArrayAdapter searchSuggestionAdapter;
-    ListView lvRecom;
+    public static ListView lvRecom;
     private void initSuggest(List<String> keywords) {
 
-        if(mSearchRecomPopup == null){
-            View view = LayoutInflater.from(getActivity()).inflate(R.layout.search_recom_layout,null);
-            lvRecom = (ListView) view.findViewById(R.id.ll_search_recom);
+        if(lvRecom == null){
+            lvRecom = (ListView) root.findViewById(R.id.ll_search_recom);
             suggestWords = keywords;
-            suggestAdapter = new SuggestAdapter(getActivity().getApplicationContext(), suggestWords, 10);
-
-            lvRecom.setAdapter(suggestAdapter);
         }
 
-        searchEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        searchEt.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    showDropdown();
-                }else{
-                    if(mSearchRecomPopup!= null && mSearchRecomPopup.isShowing()){
-                        mSearchRecomPopup.dismiss();
-                    }
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        showDropdown();
+                        break;
                 }
+
+                return false;
             }
         });
+
+//        searchEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//                    showDropdown();
+//                }else{
+//                    if(mSearchRecomPopup!= null && mSearchRecomPopup.isShowing()){
+//                        mSearchRecomPopup.dismiss();
+//                    }
+//                }
+//            }
+//        });
 
         // searchEt.setDropDownBackgroundResource(R.drawable.image_background_autocomplete);
 //        searchEt.setDropDownBackgroundResource(R.drawable.transparent_drawable);
@@ -239,11 +255,15 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
     }
 
+    View title_bar;
+
     private void showDropdown(){
-        if(mSearchRecomPopup != null && !mSearchRecomPopup.isShowing()){
-            mSearchRecomPopup.showAsDropDown(searchEt);
-            suggestAdapter.notifyDataSetChanged();
-        }
+        suggestAdapter = new SuggestAdapter(getActivity().getApplicationContext(), suggestWords, 5);
+        lvRecom.setAdapter(suggestAdapter);
+        suggestAdapter.notifyDataSetChanged();
+
+        lvRecom.setVisibility(View.VISIBLE);
+        lvRecom.setOnItemClickListener(this);
     }
 
     private void listenInput() {
@@ -374,6 +394,9 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
     private View clearView;
 
     private void search() {
+        if(lvRecom.getVisibility() == View.VISIBLE){
+            lvRecom.setVisibility(View.GONE);
+        }
         String keyword = searchEt.getText().toString().trim();
         if (TextUtils.isEmpty(keyword)) {
             CustomToast.showToast(getActivity(), getString(R.string.alert_search_cannot_be_null));
@@ -413,6 +436,10 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        String key = suggestWords.get(position);
+        searchEt.setText(key);
+        search();
 
     }
 

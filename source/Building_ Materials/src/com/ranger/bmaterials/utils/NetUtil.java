@@ -1,7 +1,5 @@
 package com.ranger.bmaterials.utils;
 
-import java.util.List;
-
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -416,15 +414,17 @@ public class NetUtil implements INetListener {
      * @param observer
      * @return
      */
-    public int getMarketTypeAndBrand(IRequestListener observer) {
+    public int getMarketTypeAndBrand(String keyword,String area,IRequestListener observer) {
 
         // 调用的方法名称
-        String methodName = "getArea";
+        String methodName = "getMarketTypeAndBrand";
 
         soapAction += methodName;
 
         // 指定WebService的命名空间和调用的方法名
         SoapObject rpc = new SoapObject(nameSpace, methodName);
+        rpc.addProperty("keyword", keyword);
+        rpc.addProperty("area", area);
 
         // 生成调用WebService方法的SOAP请求信息,并指定SOAP的版本
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER10);
@@ -448,7 +448,7 @@ public class NetUtil implements INetListener {
             // 获取返回的结果
             String result = object.getProperty(0).toString();
 
-            BaseResult baseResult = JSONParser.parseBMProvinceList(result);
+            BaseResult baseResult = JSONParser.parseBandAndModel(result);
             baseResult.setTag(Constants.NET_TAG_GET_PROVINCE + "");
 
             baseResult.setErrorCode(DcError.DC_OK);

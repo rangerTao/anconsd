@@ -3,6 +3,7 @@ package com.ranger.bmaterials.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +97,7 @@ public class SuggestAdapter extends BaseAdapter implements Filterable{
 
     @Override
     public int getCount() {
-        return mOriginalValues.size();
+        return mOriginalValues.size() > 5 ? 5:mOriginalValues.size();
     }
 
     @Override
@@ -120,8 +121,6 @@ public class SuggestAdapter extends BaseAdapter implements Filterable{
             convertView = inflater.inflate(
                     R.layout.suggest_item, null);
             holder.tv = (TextView) convertView.findViewById(R.id.suggest_item_text);
-            holder.iv = (ImageView) convertView
-                    .findViewById(R.id.suggest_item_image);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -147,7 +146,6 @@ public class SuggestAdapter extends BaseAdapter implements Filterable{
 
     class ViewHolder {
         TextView tv;
-        ImageView iv;
     }
 
     public List<String> getAllItems() {

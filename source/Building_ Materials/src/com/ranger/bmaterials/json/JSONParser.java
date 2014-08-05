@@ -22,6 +22,7 @@ import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BMSearchResult;
 import com.ranger.bmaterials.netresponse.BMUserInfoResult;
 import com.ranger.bmaterials.netresponse.BMUserLoginResult;
+import com.ranger.bmaterials.netresponse.BandAndModelResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.netresponse.CheckUpdateResult;
 import com.ranger.bmaterials.netresponse.UserNameRegisterResult;
@@ -431,5 +432,20 @@ public class JSONParser {
 
         return result;
 
+    }
+
+    public static BandAndModelResult parseBandAndModel(String res){
+
+        BandAndModelResult bm = null;
+
+        Gson gson = new Gson();
+
+        try{
+            bm = gson.fromJson(res,BandAndModelResult.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return bm;
     }
 }

@@ -9,10 +9,12 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.ranger.bmaterials.R;
@@ -34,8 +36,6 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
     private CustomFragmentTabHost mTabHost;
 
     public Intent intentNotification = null;
-
-    public static SlidingMenu menu;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -139,6 +139,11 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
             int code = event.getKeyCode();
             if (code == KeyEvent.KEYCODE_BACK) {
 
+                if(BMSearchFragment.lvRecom != null && BMSearchFragment.lvRecom.getVisibility() == View.VISIBLE){
+                    BMSearchFragment.lvRecom.setVisibility(View.GONE);
+                    return true;
+                }
+
                 long currentTime = System.currentTimeMillis();
                 if ((currentTime - touchTime) >= 2000) {
                     CustomToast.showToast(this, getString(R.string.exit_app_hint));
@@ -168,6 +173,8 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
         }, 300);
 
         preLoadSearchKeywords();
+
+        initSlidingMenu();
     }
 
     private String checkVersion() {
@@ -189,7 +196,86 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
         return ver_name;
     }
 
+    private void initSlidingMenu() {
+
+        firstMenu = getLayoutInflater().inflate(R.layout.side_menu, null);
+        lv_province_list = (ListView) firstMenu.findViewById(R.id.bm_province_list);
+
+        menu = new SlidingMenu(this);
+        menu.setMode(SlidingMenu.LEFT);
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        menu.setShadowWidthRes(R.dimen.shadow_width);
+        menu.setShadowDrawable(R.drawable.shadow);
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindow().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int offset = (dm.widthPixels / 3) * 1;
+        menu.setBehindOffset(offset);
+        menu.setFadeDegree(0.35f);
+        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        menu.setMenu(firstMenu);
+
+        getProvinces();
+
+    }
+
+    public static SlidingMenu menu;
+    private View firstMenu;
+    private ListView lv_province_list;
     private BMProvinceAdapter bpa;
+
+    TextView tvProvince;
+
+    public void setCityName(BMProvinceListResult.ProviceItem name) {
+
+        BMSearchFragment.setCityName(name);
+    }
+
+    private void getProvinces() {
+        NetUtil.getInstance().requestForProvices(new NetUtil.IRequestListener() {
+            @Override
+            public void onRequestSuccess(BaseResult responseData) {
+                BMProvinceListResult blr = (BMProvinceListResult) responseData;
+
+                if (blr.getTag().equals(Constants.NET_TAG_GET_PROVINCE + "")) {
+                    bpa = new BMProvinceAdapter(getApplicationContext(), blr.getProviceList());
+                    lv_province_list.setAdapter(bpa);
+                    lv_province_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            BMProvinceListResult.ProviceItem pi = (BMProvinceListResult.ProviceItem) parent.getAdapter().getItem(position);
+
+                            if (pi != null) {
+                                try {
+                                    setCityName(pi);
+
+                                    menu.toggle();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                    bpa.setOnListItemClickListener(new AbstractListAdapter.OnListItemClickListener() {
+                        @Override
+                        public void onItemIconClick(View view, int position) {
+
+                        }
+
+                        @Override
+                        public void onItemButtonClick(View view, int position) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
+
+            }
+        });
+    }
 
     @Override
     public void onRequestSuccess(BaseResult responseData) {
