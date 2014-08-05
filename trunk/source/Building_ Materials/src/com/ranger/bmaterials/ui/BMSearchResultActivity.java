@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -21,6 +19,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -33,36 +32,39 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.ranger.bmaterials.R;
+import com.ranger.bmaterials.adapter.AbstractListAdapter.OnListItemClickListener;
 import com.ranger.bmaterials.adapter.BMProvinceAdapter;
 import com.ranger.bmaterials.adapter.BMSearchResultAdapter;
-import com.ranger.bmaterials.adapter.AbstractListAdapter.OnListItemClickListener;
+import com.ranger.bmaterials.adapter.ProductBandAdapter;
 import com.ranger.bmaterials.adapter.SuggestAdapter;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.db.CommonDaoImpl;
-import com.ranger.bmaterials.mode.*;
+import com.ranger.bmaterials.mode.KeywordsList;
 import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BMSearchResult;
+import com.ranger.bmaterials.netresponse.BandAndModelResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.tools.DeviceUtil;
 import com.ranger.bmaterials.ui.gametopic.BMProductDetailActivity;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 import com.ranger.bmaterials.view.pull.PullToRefreshBase;
-import com.ranger.bmaterials.view.pull.PullToRefreshListView;
 import com.ranger.bmaterials.view.pull.PullToRefreshBase.OnLastItemVisibleListener;
 import com.ranger.bmaterials.view.pull.PullToRefreshBase.OnRefreshListener2;
+import com.ranger.bmaterials.view.pull.PullToRefreshListView;
 import com.ranger.bmaterials.work.LoadingTask;
 
 public class BMSearchResultActivity extends Activity implements
-/* IRequestListener, */OnClickListener, OnItemClickListener, CompoundButton.OnCheckedChangeListener, IRequestListener {
+/* IRequestListener, */OnClickListener, OnItemClickListener, CompoundButton.OnCheckedChangeListener, IRequestListener, ProductBandAdapter.onCategoryClickListener, ProductBandAdapter.onBandClickListener {
 
     private static final String TAG = "SearchResultActivity";
 
@@ -113,7 +115,7 @@ public class BMSearchResultActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         setContentView(R.layout.search_result_activity);
 
@@ -129,6 +131,9 @@ public class BMSearchResultActivity extends Activity implements
 
         initTitleBar();
         initView();
+
+        tvProvince.setText(pname.equals("") ? "全国" : pname);
+        edit_search.setText(keyword);
 
         showLoadingProgressView();
 
@@ -164,42 +169,87 @@ public class BMSearchResultActivity extends Activity implements
 
     private SuggestAdapter suggestAdapter;
 
+    public static ListView lvRecom;
+
     private void initSuggest(List<String> keywords) {
-        suggestWords = keywords;
-        suggestAdapter = new SuggestAdapter(getApplicationContext(), suggestWords, 10);
-        // searchEt.setDropDownBackgroundResource(R.drawable.image_background_autocomplete);
-        edit_search.setDropDownBackgroundResource(R.drawable.transparent_drawable);
-        edit_search.setAdapter(suggestAdapter);
-        edit_search.setOnItemClickListener(new OnItemClickListener() {
 
+        if(lvRecom == null){
+            lvRecom = (ListView) findViewById(R.id.ll_search_recom);
+            suggestWords = keywords;
+        }
+        edit_search.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            public boolean onTouch(View v, MotionEvent event) {
 
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        showDropdown();
+                        break;
+                }
+
+                return false;
             }
         });
 
     }
 
-    private void getProvinces(){
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            int code = event.getKeyCode();
+            if (code == KeyEvent.KEYCODE_BACK) {
+
+                if(lvRecom != null && lvRecom.getVisibility() == View.VISIBLE){
+                    lvRecom.setVisibility(View.GONE);
+                    return true;
+                }
+            }
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
+    private void showDropdown(){
+        suggestAdapter = new SuggestAdapter(getApplicationContext(), suggestWords, 5);
+        lvRecom.setAdapter(suggestAdapter);
+        suggestAdapter.notifyDataSetChanged();
+
+        lvRecom.setVisibility(View.VISIBLE);
+        lvRecom.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                edit_search.setText(suggestWords.get(position));
+                search();
+            }
+        });
+    }
+
+    TextView tvProvince;
+
+    public void setCityName(String name) {
+
+        tvProvince.setText(name);
+    }
+
+    private void getProvinces() {
         NetUtil.getInstance().requestForProvices(new IRequestListener() {
             @Override
             public void onRequestSuccess(BaseResult responseData) {
                 BMProvinceListResult blr = (BMProvinceListResult) responseData;
 
                 if (blr.getTag().equals(Constants.NET_TAG_GET_PROVINCE + "")) {
-                    bpa = new BMProvinceAdapter(getApplicationContext(),blr.getProviceList());
+                    bpa = new BMProvinceAdapter(getApplicationContext(), blr.getProviceList());
                     lv_province_list.setAdapter(bpa);
                     lv_province_list.setOnItemClickListener(new OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             BMProvinceListResult.ProviceItem pi = (BMProvinceListResult.ProviceItem) parent.getAdapter().getItem(position);
 
-                            if(pi != null){
-                                try{
-                                    BMSearchFragment.setCityName(pi);
+                            if (pi != null) {
+                                try {
+                                    setCityName(pi.getName());
 
                                     menu.toggle();
-                                }catch (Exception e){
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -226,11 +276,16 @@ public class BMSearchResultActivity extends Activity implements
         });
     }
 
+    ExpandableListView bandList;
+
+
     private void initSlidingMenu() {
 
         firstMenu = getLayoutInflater().inflate(R.layout.side_menu, null);
         lv_province_list = (ListView) firstMenu.findViewById(R.id.bm_province_list);
         secondMenu = getLayoutInflater().inflate(R.layout.band_menu, null);
+        secondMenu.findViewById(R.id.tv_btn_band_ok).setOnClickListener(this);
+        bandList = (ExpandableListView) secondMenu.findViewById(R.id.elv_band);
 
         menu = new SlidingMenu(this);
         menu.setMode(SlidingMenu.LEFT_RIGHT);
@@ -265,7 +320,7 @@ public class BMSearchResultActivity extends Activity implements
 
     private void initTitleBar() {
         TextView backView = (TextView) findViewById(R.id.btn_province);
-        backView.setText(pname.equals("")?"全国":pname);
+        backView.setText(pname.equals("") ? "全国" : pname);
         backView.setOnClickListener(this);
     }
 
@@ -330,6 +385,10 @@ public class BMSearchResultActivity extends Activity implements
 
 
     private void initView() {
+
+        if (tvProvince == null) {
+            tvProvince = (TextView) findViewById(R.id.btn_province);
+        }
 
         edit_search = (AutoCompleteTextView) findViewById(R.id.edit_search);
         edit_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -421,8 +480,9 @@ public class BMSearchResultActivity extends Activity implements
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
         int id = buttonView.getId();
-        switch (id){
+        switch (id) {
             case R.id.bm_cb_user_identify:
+                isMerge = isChecked ? 1 : 0;
                 break;
             case R.id.bm_btn_group_provider:
                 break;
@@ -438,6 +498,26 @@ public class BMSearchResultActivity extends Activity implements
     @Override
     public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
 
+    }
+
+    @Override
+    public void onCategoryClick(View view) {
+
+        if (view != null) {
+            String cate = (String) view.getTag();
+            smalltype = cate;
+            Toast.makeText(getApplicationContext(), "已经选择类别：" + smalltype, Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    @Override
+    public void onBandClick(View view) {
+        if (view != null) {
+            String ba = (String) view.getTag();
+            band = ba;
+            Toast.makeText(getApplicationContext(), "已经选择品牌：" + band, Toast.LENGTH_LONG).show();
+        }
     }
 
     class MyOnRefreshListener2 implements OnRefreshListener2<ListView> {
@@ -558,6 +638,12 @@ public class BMSearchResultActivity extends Activity implements
 
     private static final int PAGE_SIZE = 20;
 
+    private String band = "";
+
+    private String smalltype = "";
+
+    private int isMerge = 0;
+
     private void search(int targetPage, boolean loadMore) {
 
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -565,13 +651,13 @@ public class BMSearchResultActivity extends Activity implements
         if (DeviceUtil.isNetworkAvailable(this)) {
             if (loadMore) {
                 //String keyword, int area, String smalltype,String brand,int ismerge,int page, int pageSize,String sortField,int isAscSort ,IRequestListener observer
-                requestId = NetUtil.getInstance().requestForSearch(keyword,pid,"","",0,
-                        targetPage, PAGE_SIZE,"",1,
+                requestId = NetUtil.getInstance().requestForSearch(keyword, pid, smalltype, band, isMerge,
+                        targetPage, PAGE_SIZE, "", 1,
                         new LoadMoreContentListener(this));
             } else {
                 requestId = NetUtil.getInstance()
-                        .requestForSearch(keyword,pid,"","",0,
-                                targetPage, PAGE_SIZE,"",1,
+                        .requestForSearch(keyword, pid, smalltype, band, isMerge,
+                                targetPage, PAGE_SIZE, "", 1,
                                 new LoadMoreContentListener(this));
             }
 
@@ -583,18 +669,38 @@ public class BMSearchResultActivity extends Activity implements
         }
     }
 
-    private void loadBrandAndModel(){
+    ArrayList<String> groupList = new ArrayList<String>();
+
+    BandAndModelResult bamr;
+    ProductBandAdapter pba;
+
+    private void initBandAndModelMenu(BaseResult responseData) {
+
+        bamr = (BandAndModelResult) responseData;
+
+        if (bamr != null) {
+            pba = new ProductBandAdapter(getApplicationContext(), bamr);
+            bandList.setAdapter(pba);
+            bandList.setGroupIndicator(null);
+
+            pba.notifyDataSetChanged();
+
+            pba.setOnBandClickListener(this);
+            pba.setOnCategoryClickListener(this);
+        }
+    }
+
+    private void loadBrandAndModel() {
         LoadingTask task = new LoadingTask(BMSearchResultActivity.this, new LoadingTask.ILoading() {
 
             @Override
             public void loading(NetUtil.IRequestListener listener) {
-                NetUtil.getInstance().getMarketTypeAndBrand(new NetUtil.IRequestListener() {
+                NetUtil.getInstance().getMarketTypeAndBrand(keyword, pid + "", new NetUtil.IRequestListener() {
                     @Override
                     public void onRequestSuccess(BaseResult responseData) {
 
-                        if (responseData.getErrorCode() == 0 && responseData.getSuccess() == 1) {
-                            CustomToast.showToast(getApplicationContext(), "上传成功");
-                            initView();
+                        if (responseData.getErrorCode() == 0 && responseData.getSuccess() == 0) {
+                            initBandAndModelMenu(responseData);
                         } else {
                             CustomToast.showToast(getApplicationContext(), responseData.getMessage());
                         }
@@ -703,7 +809,7 @@ public class BMSearchResultActivity extends Activity implements
             host.setLoadlingMoreState(false);
             host.setFooterVisible(false);
             host.searchResultLayout.onRefreshComplete();
-            CustomToast.showToast(host.getApplicationContext(),msg);
+            CustomToast.showToast(host.getApplicationContext(), msg);
             // Toast.makeText(host.getApplicationContext(), "获取更多内容失败",
             // Toast.LENGTH_LONG).show();
 
@@ -711,7 +817,7 @@ public class BMSearchResultActivity extends Activity implements
 
     }
 
-    private void saveKeywords(String key){
+    private void saveKeywords(String key) {
         CommonDaoImpl.getInstance(getApplicationContext()).saveKeywords(key);
     }
 
@@ -771,7 +877,6 @@ public class BMSearchResultActivity extends Activity implements
     ;
 
 
-
     OnListItemClickListener searchResultItemClickListener = new OnListItemClickListener() {
 
         @Override
@@ -783,8 +888,8 @@ public class BMSearchResultActivity extends Activity implements
 
             final BMSearchResult.BMSearchData item = searchResultAdapter.getItem(position);
 
-            Intent detailIntent = new Intent(getApplicationContext(),BMProductDetailActivity.class);
-            detailIntent.putExtra(BMProductDetailActivity.SUPPLY_ID,item.getSupplyId());
+            Intent detailIntent = new Intent(getApplicationContext(), BMProductDetailActivity.class);
+            detailIntent.putExtra(BMProductDetailActivity.SUPPLY_ID, item.getSupplyId());
             startActivity(detailIntent);
 
         }
@@ -795,14 +900,20 @@ public class BMSearchResultActivity extends Activity implements
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.tv_btn_band_ok:
+                search();
+                if (menu.isSecondaryMenuShowing())
+                    menu.toggle();
+                break;
             case R.id.btn_province:
-                if(!menu.isShown())
+                if (!menu.isShown())
                     menu.showMenu();
+                break;
             case R.id.btn_back_bottom:
                 finish();
                 break;
             case R.id.select_band:
-                if(!menu.isShown())
+                if (!menu.isSecondaryMenuShowing())
                     menu.showSecondaryMenu();
                 break;
             case R.id.error_hint:
@@ -854,10 +965,10 @@ public class BMSearchResultActivity extends Activity implements
                 }
             }
         }
-        if (item != null){
+        if (item != null) {
 
             Intent intentDetail = new Intent(this, BMProductDetailActivity.class);
-            intentDetail.putExtra(BMProductDetailActivity.SUPPLY_ID,item.getSupplyId());
+            intentDetail.putExtra(BMProductDetailActivity.SUPPLY_ID, item.getSupplyId());
             startActivity(intentDetail);
 
         }
@@ -871,6 +982,11 @@ public class BMSearchResultActivity extends Activity implements
     }
 
     public void search() {
+
+        if(lvRecom.getVisibility() == View.VISIBLE){
+            lvRecom.setVisibility(View.GONE);
+        }
+
         if (searchResultAdapter != null) {
             searchResultAdapter.clear();
         }

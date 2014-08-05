@@ -6,7 +6,7 @@
 
     <!-- android:background="@drawable/mine_mainview_bg" -->
 
-	<include layout="@layout/layout_search_bar_with_back"/>
+	<include layout="@layout/layout_search_bar_with_back" android:id="@+id/title_bar"/>
 	
     <FrameLayout
         android:layout_width="match_parent"
@@ -34,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="visible" >
+            <requestFocus/>
         </ListView>
 
         <!-- 无搜索搜索词界面 -->
@@ -78,6 +79,14 @@
                 android:verticalSpacing="12dp"
                 android:visibility="gone" />
         </LinearLayout>
+
+
+        <ListView
+            android:id="@+id/ll_search_recom"
+            android:contentDescription="#000000"
+            android:layout_width="fill_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content"/>
     </FrameLayout>
 
 </LinearLayout>

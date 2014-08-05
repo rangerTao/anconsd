@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="30dp"
+              android:background="#d4d4d4"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_band_name"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="10dp"
+        android:text="test"
+        android:textColor="#000"
+        android:textSize="15sp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_band_group_content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+</LinearLayout>

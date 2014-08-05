@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
+    android:background="#f3f3f3"
     android:paddingLeft="8dp">
 <!-- android:background="@drawable/list_item_bg_selector"  -->
     <TextView
@@ -12,18 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:paddingLeft="5dip"
-        android:textSize="14sp"
-        android:textColor="#333"
+        android:textSize="15sp"
+        android:textColor="#000"
         android:singleLine="true"
          />
-
-    <ImageView
-        android:id="@+id/suggest_item_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dip"
-        android:scaleType="fitCenter"
-        android:src="@android:drawable/ic_delete"
-        android:visibility="gone" />
 
 </LinearLayout>

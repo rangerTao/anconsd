@@ -184,6 +184,8 @@
                     android:scrollbars="none"
                     android:stretchMode="columnWidth"
                     android:visibility="visible"/>
+
+                <requestFocus/>
             </LinearLayout>
         </LinearLayout>
 
@@ -196,6 +198,13 @@
             android:id="@+id/error_hint"
             layout="@layout/loading_error_layout"
             android:visibility="gone"/>
+
+        <ListView
+            android:id="@+id/ll_search_recom"
+            android:contentDescription="#000000"
+            android:layout_width="fill_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content"/>
     </FrameLayout>
 
     <RelativeLayout
