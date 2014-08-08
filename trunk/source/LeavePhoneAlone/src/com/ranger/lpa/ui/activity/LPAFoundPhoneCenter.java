@@ -35,6 +35,7 @@ import com.ranger.lpa.pojos.WifiInfo;
 import com.ranger.lpa.receiver.IOnNotificationReceiver;
 import com.ranger.lpa.test.adapter.BtDeviceListAdapter;
 import com.ranger.lpa.thread.LPAClientThread;
+import com.ranger.lpa.thread.LPAServerNotifyThread;
 import com.ranger.lpa.tools.NotifyManager;
 import com.ranger.lpa.ui.view.LPAKeyGuardView;
 import com.ranger.lpa.utils.WifiUtils;
@@ -288,12 +289,19 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                     ImageView ivBarcode = (ImageView) view_find_phone.findViewById(R.id.iv_barcode);
 //                    Bitmap barcode = EncodingHandler.createQRCode(LPAWifiManager.getInstance(getApplicationContext()).getmWifiInfo().getMessageString(), ivBarcode.getWidth());
 //                    ivBarcode.setImageBitmap(barcode);
+
+                    serNotifyThread = new LPAServerNotifyThread();
+
+                    serNotifyThread.start();
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
                 break;
         }
     }
+
+    private LPAServerNotifyThread serNotifyThread;
 
     private void startBarcodeScanner(){
         Intent intent = new Intent(this,BarcodeScannerActivity.class);
