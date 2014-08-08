@@ -1,8 +1,12 @@
 package com.ranger.bmaterials.ui.gametopic;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,12 +14,15 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.bitmap.ImageLoaderHelper;
 import com.ranger.bmaterials.netresponse.BMProductInfoResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
+import com.ranger.bmaterials.tools.UIUtil;
 import com.ranger.bmaterials.ui.BMCompanyInfoActivity;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
@@ -34,6 +41,7 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
     private TextView bm_tv_product_detail;
 
     private ImageView bm_iv_product_logo;
+    private ImageView bm_iv_collect;
 
     private TextView bm_tv_company_info_name;
     private TextView bm_tv_company_info_contact;
@@ -75,7 +83,11 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
 
     private String supplyid;
 
+    private int mHeight = 0;
+
     private void initViewWithData(BMProductInfoResult data) {
+
+        bm_iv_collect = (ImageView) root.findViewById(R.id.iv_product_collect_star);
 
         bm_tv_product_title = (TextView) root.findViewById(R.id.bm_tv_product_title);
         bm_tv_product_title.setText("产品信息--" + data.getMypro().getProductName());
@@ -93,9 +105,15 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
         bm_tv_product_material.setText(data.getMypro().getMaterial());
 
         bm_tv_product_price = (TextView) root.findViewById(R.id.bm_tv_product_price);
+        if(!data.getMypro().getPrice().equals(""))
+            bm_tv_product_price.setText("￥" + data.getMypro().getPrice() +"/" + data.getMypro().getUnit());
 
         bm_tv_product_detail = (TextView) root.findViewById(R.id.bm_tv_product_detail);
-        bm_tv_product_detail.setText(data.getMypro().getDetail());
+        mHeight = bm_tv_product_detail.getLineHeight() * 4 + bm_tv_product_detail.getPaddingTop() + bm_tv_product_detail.getPaddingBottom() + 1;
+        adapt();
+        UIUtil.setTextViewTextHtml(bm_tv_product_detail, data.getMypro().getDetail());
+//        bm_tv_product_detail.setText(data.getMypro().getDetail());
+
 
         bm_tv_company_info_name = (TextView) root.findViewById(R.id.bm_tv_company_info_name);
         bm_tv_company_info_name.setText("公司名称：" + data.getmCom().getCompanyName());
@@ -119,6 +137,19 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
         bm_fl_save_product.setOnClickListener(this);
 
         root.findViewById(R.id.bm_btn_view_com_detail).setOnClickListener(this);
+        root.findViewById(R.id.bm_rl_product_detail).setOnClickListener(this);
+    }
+
+    private boolean mIsOpen = false;
+
+    private void adapt()
+    {
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) bm_tv_product_detail.getLayoutParams();
+
+        lp.height = mIsOpen ? RelativeLayout.LayoutParams.WRAP_CONTENT : mHeight;
+        bm_tv_product_detail.setLayoutParams(lp);
+        bm_tv_product_detail.invalidate();
+
     }
 
     @Override
@@ -181,10 +212,11 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
                         @Override
                         public void onRequestSuccess(BaseResult responseData) {
 
-                            if (responseData.getErrorCode() == 1) {
+                            if (responseData.getSuccess() == 1) {
                                 CustomToast.showToast(getActivity(), "收藏成功");
+                                bm_iv_collect.setImageResource(R.drawable.bm_start_collected);
                             } else {
-                                CustomToast.showToast(getActivity(), "收藏失败");
+                                CustomToast.showToast(getActivity(), responseData.getMessage());
                             }
 
                         }
@@ -254,6 +286,10 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
                 intent.putExtra(BMCompanyInfoActivity.USER_NAME,data.getmCom().getCompanyName());
                 startActivity(intent);
 
+                break;
+            case R.id.bm_rl_product_detail:
+                mIsOpen = mIsOpen ? false:true;
+                adapt();
                 break;
             default:
                 break;

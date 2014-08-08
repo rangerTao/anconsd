@@ -469,6 +469,7 @@ public class BMSearchResultActivity extends Activity implements
         cbIdentifyProvider = (CheckBox) findViewById(R.id.bm_cb_user_identify);
         cbIdentifyProvider.setOnCheckedChangeListener(this);
         cbGroupProvider = (Button) findViewById(R.id.bm_btn_group_provider);
+        cbGroupProvider.setOnClickListener(this);
 
         findViewById(R.id.select_band).setOnClickListener(this);
         findViewById(R.id.btn_back_bottom).setOnClickListener(this);
@@ -506,7 +507,10 @@ public class BMSearchResultActivity extends Activity implements
         if (view != null) {
             String cate = (String) view.getTag();
             smalltype = cate;
-            Toast.makeText(getApplicationContext(), "已经选择类别：" + smalltype, Toast.LENGTH_LONG).show();
+            search();
+            if(menu.isSecondaryMenuShowing()){
+                menu.toggle();
+            }
         }
 
     }
@@ -516,7 +520,10 @@ public class BMSearchResultActivity extends Activity implements
         if (view != null) {
             String ba = (String) view.getTag();
             band = ba;
-            Toast.makeText(getApplicationContext(), "已经选择品牌：" + band, Toast.LENGTH_LONG).show();
+            search();
+            if(menu.isSecondaryMenuShowing()){
+                menu.toggle();
+            }
         }
     }
 
@@ -896,6 +903,8 @@ public class BMSearchResultActivity extends Activity implements
 
     };
 
+    private boolean isGroupProvider = false;
+
     @Override
     public void onClick(View v) {
 
@@ -937,6 +946,10 @@ public class BMSearchResultActivity extends Activity implements
                     search();
                 }
 
+                break;
+            case R.id.bm_btn_group_provider:
+                isMerge = 1;
+                search();
                 break;
             case R.id.search_clear:
                 edit_search.setText("");

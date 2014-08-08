@@ -2,6 +2,7 @@ package com.ranger.bmaterials.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +83,7 @@ public class BMCompanyInfoFragment extends Fragment implements NetUtil.IRequestL
         bm_tv_company_info_level.setText("信用等级：" + data.getIntegralGrade());
         bm_tv_company_info_addres.setText("地址："+ data.getAddress());
 
-        getBm_tv_company_info_detai.setText(data.getCompanyAbout());
+        getBm_tv_company_info_detai.setText(Html.fromHtml(data.getCompanyAbout()));
     }
 
     @Override

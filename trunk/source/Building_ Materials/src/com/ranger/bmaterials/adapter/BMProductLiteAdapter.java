@@ -65,7 +65,8 @@ public class BMProductLiteAdapter extends BaseAdapter {
 
         holder.productName.setText(bd.getProductName());
         holder.modeName.setText(bd.getModel());
-        holder.price.setText(bd.getPrice() + "/" + bd.getUnit());
+        if(!bd.getPrice().equals(""))
+            holder.price.setText(bd.getPrice() + "/" + bd.getUnit());
         holder.from.setText(bd.getArea());
 
         return view;
