@@ -292,6 +292,20 @@ public class JSONParser {
 
     }
 
+    public static BaseResult parseBaseResult(String res){
+        BaseResult result = null;
+
+        Gson gson = new Gson();
+
+        try{
+            result = gson.fromJson(res,BaseResult.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     /**
      * BmUser
      */

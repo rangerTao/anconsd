@@ -704,7 +704,9 @@ public class NetUtil implements INetListener {
 
         } catch (Exception e) {
             e.printStackTrace();
-            observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "error");
+            SoapFault sf = (SoapFault) envelope.bodyIn;
+            BaseResult base = JSONParser.parseBaseResult(sf.faultstring);
+            observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, base.getSuccess() , base.getMessage());
         }
 
         return mCurrentRequestId;

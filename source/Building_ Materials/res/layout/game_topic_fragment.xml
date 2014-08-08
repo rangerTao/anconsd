@@ -100,7 +100,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:text="name"
                             android:textSize="15sp"/>
                     </RelativeLayout>
 
@@ -120,8 +119,17 @@
                     android:layout_height="fill_parent"
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
-                    android:text="查看详情"
+                    android:text="产品信息"
                     android:textColor="#fff"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_show_detail"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    />
 
             </RelativeLayout>
 
@@ -244,6 +252,7 @@
         android:background="@color/gray_words_item_pop_home">
 
         <ImageView
+            android:id="@+id/iv_product_collect_star"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

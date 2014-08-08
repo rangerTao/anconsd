@@ -370,8 +370,13 @@ public class TagCloudView extends RelativeLayout implements
 
 	private long lastTime = -1;
 
+    private List<Tag> mList;
+
 	public void replace(List<Tag> tagList) {
 		try {
+
+            mList = tagList;
+
 			if (System.currentTimeMillis() - lastTime < 600) {
 				return;
 			}
@@ -852,38 +857,6 @@ public class TagCloudView extends RelativeLayout implements
 		void onSmoothScrollFinished();
 	}
 
-	private class FlingRunnable implements Runnable {
-		/**
-		 * Y value reported by mScroller on the previous fling
-		 */
-		private int mLastFlingY;
-
-		private final Runnable mCheckFlywheel = new Runnable() {
-			public void run() {
-
-			}
-		};
-
-		private static final int FLYWHEEL_TIMEOUT = 40; // milliseconds
-
-		FlingRunnable() {
-		}
-
-		void start(int initialVelocity) {
-			int initialY = initialVelocity < 0 ? Integer.MAX_VALUE : 0;
-		}
-
-		void startSpringback() {
-		}
-
-		void startOverfling(int initialVelocity) {
-		}
-
-		@Override
-		public void run() {
-		}
-	}
-
 	final class SmoothScrollRunnable implements Runnable {
 		private final Interpolator mInterpolator;
 
@@ -1200,6 +1173,17 @@ public class TagCloudView extends RelativeLayout implements
 		// });
 	}
 
+    public interface OnTagFilngListener{
+
+        public void onFling();
+    }
+
+    private OnTagFilngListener mFlingListener;
+
+    public void setOnTagFlingListener(OnTagFilngListener listener){
+        mFlingListener = listener;
+    }
+
 	private void initGesture() {
 		this.dector = new GestureDetector(mContext,
 
@@ -1232,14 +1216,20 @@ public class TagCloudView extends RelativeLayout implements
 					mAngleY = mAngleY * velocityY;// (-dx/radius) *tspeed *
 													// TOUCH_SCALE_FACTOR;
 
-					smoothScroll(velocityX, velocityY);
+                    if(xdiff > 20){
+                        if(mFlingListener != null){
+                            mFlingListener.onFling();
+                        }
+                    }
+
+//					smoothScroll(velocityX, velocityY);
 					if (true)
 						return true;
 
 					// ////////////////////////////////////
-					mTagCloud.setAngleX(mAngleX);
-					mTagCloud.setAngleY(mAngleY);
-					mTagCloud.update();
+//					mTagCloud.setAngleX(mAngleX);
+//					mTagCloud.setAngleY(mAngleY);
+//					mTagCloud.update();
 
 					Iterator it = mTagCloud.iterator();
 					Tag tempTag;
@@ -1286,13 +1276,6 @@ public class TagCloudView extends RelativeLayout implements
 						Log.i(TAG, "onScroll distanceX " + distanceX
 								+ " distanceY " + distanceY);
 				if ((Math.abs(distanceX) > 2 || Math.abs(distanceY) > 2)) {
-					// final float ev1x = e1.getX();
-					// final float ev1y = e1.getY();
-					// final float ev2x = e2.getX();
-					// final float ev2y = e2.getY();
-
-					// final float xdiff = Math.abs(ev1x - ev2x);
-					// final float ydiff = Math.abs(ev1y - ev2y);
 
 					float dx = -distanceX * 20;// ev2x - centerX;
 					float dy = -distanceY * 20;// ev2y - centerY;
@@ -1308,111 +1291,14 @@ public class TagCloudView extends RelativeLayout implements
 					while (null != it && it.hasNext()) {
 
 						tempTag = (Tag) it.next();
-						/*
-						 * mParams.get(tempTag.getParamNo()).setMargins( (int)
-						 * (centerX -shiftLeft + tempTag.getLoc2DX()), (int)
-						 * (centerY + tempTag.getLoc2DY()), 0, 0);
-						 * mTextViews.get
-						 * (tempTag.getParamNo()).setTextSize((int)
-						 * (tempTag.getTextSize() * tempTag.getScale())); int
-						 * mergedColor = Color.argb( (int) (tempTag.getAlpha() *
-						 * 255), (int) (tempTag.getColorR() * 255), (int)
-						 * (tempTag.getColorG() * 255), (int)
-						 * (tempTag.getColorB() * 255)); setTextColor();
-						 * mTextViews.get(tempTag.getParamNo()).bringToFront();
-						 */
-						layoutTag(tempTag);
+//						layoutTag(tempTag);
 					}
-					// String s =
-					// "(xdiff,ydiff)=(%s,%s),e1(x,y)=(%s,%s),e2(x,y)=(%s,%s),(disX,disY)=(%s,%s),"
-					// +
-					// "(angleX,angleY)=(%s,%s),(ev2x - centerX,ev2y - centerY)=(%s,%s)";
-					// if (Constants.DEBUG)if(Constants.DEBUG)Log.i(TAG,
-					// "[onScroll]"+
-					// String.format(s,
-					// xdiff,ydiff,e1.getX(),e1.getY(),e2.getX(),e2.getY(),distanceX,distanceY,mAngleX,mAngleY,dx,dy));
 					return true;
 				}
 				return super.onScroll(e1, e2, distanceX, distanceY);
 
-				// float x = e1.getX() ;
-				// float x2 = e2.getX() ;
-				// if((Math.abs(distanceX) < 20 )){
-				// return false ;
-				// }
-				// return true ;
 			}
 
-			// @Override
-			// public boolean onScroll(MotionEvent e1, MotionEvent e2,float
-			// distanceX, float distanceY) {
-			// //if
-			// (Constants.DEBUG)if(Constants.DEBUG)Log.i(TAG,"onScroll distanceX "+distanceX
-			// +" distanceY "+distanceY);
-			// if((Math.abs(distanceX)> 2 || Math.abs(distanceY) > 2 )){
-			// /*final float ev1x = e1.getX();
-			// final float ev1y = e1.getY();
-			// final float ev2x = e2.getX();
-			// final float ev2y = e2.getY();
-			//
-			// final float xdiff = Math.abs(ev1x - ev2x);
-			// final float ydiff = Math.abs(ev1y - ev2y);*/
-			//
-			// float dx = -distanceX*20;//ev2x - centerX;
-			// float dy = -distanceY*20;//ev2y - centerY;
-			// float f = tspeed * TOUCH_SCALE_FACTOR;
-			// mAngleX = ( dy/radius) *f;
-			// mAngleY = (-dx/radius) *f;
-			//
-			// mTagCloud.setAngleX(mAngleX);
-			// mTagCloud.setAngleY(mAngleY);
-			// mTagCloud.update();
-			//
-			// Iterator it=mTagCloud.iterator();
-			// Tag tempTag;
-			// while (it.hasNext()){
-			// tempTag= (Tag) it.next();
-			// LayoutParams param = mParams.get(tempTag.getParamNo());
-			// param.setMargins(
-			// (int) (centerX -shiftLeft + tempTag.getLoc2DX()),
-			// (int) (centerY + tempTag.getLoc2DY()),
-			// 0,
-			// 0);
-			// //TextView textView = mTextViews.get(tempTag.getParamNo());
-			// //textView.setTextSize((int)(tempTag.getTextSize() *
-			// tempTag.getScale()));
-			// /*int mergedColor = Color.argb( (int) (tempTag.getAlpha() * 255),
-			// (int) (tempTag.getColorR() * 255),
-			// (int) (tempTag.getColorG() * 255),
-			// (int) (tempTag.getColorB() * 255));
-			// setTextColor();*/
-			//
-			// //textView.bringToFront();
-			// //layoutTag(tempTag);
-			// }
-			// /*String s =
-			// "(xdiff,ydiff)=(%s,%s),e1(x,y)=(%s,%s),e2(x,y)=(%s,%s),(disX,disY)=(%s,%s),"
-			// +
-			// "(angleX,angleY)=(%s,%s),(ev2x - centerX,ev2y - centerY)=(%s,%s)";
-			// if (Constants.DEBUG)if(Constants.DEBUG)Log.i(TAG, "[onScroll]"+
-			// String.format(s,
-			// xdiff,ydiff,e1.getX(),e1.getY(),e2.getX(),e2.getY(),distanceX,distanceY,mAngleX,mAngleY,dx,dy));*/
-			// return true ;
-			// }
-			// return super.onScroll(e1, e2, distanceX, distanceY) ;
-			//
-			// // float x = e1.getX() ;
-			// // float x2 = e2.getX() ;
-			// // if((Math.abs(distanceX) < 20 )){
-			// // return false ;
-			// // }
-			// // return true ;
-			// }
-			// //
-			// // @Override
-			// // public boolean onDown(MotionEvent e) {
-			// return true;
-			// }
 			@Override
 			public boolean onDown(MotionEvent e) {
 				// TODO Auto-generated method stub
@@ -1457,21 +1343,26 @@ public class TagCloudView extends RelativeLayout implements
 			Tag tempTag;
 			while (it.hasNext()) {
 				tempTag = (Tag) it.next();
+
+                if(dy > 20 && mFlingListener != null){
+                    mFlingListener.onFling();
+                }
+
 				/*
 				 * mParams.get(tempTag.getParamNo()).setMargins( (int) (centerX
 				 * -shiftLeft + tempTag.getLoc2DX()), (int) (centerY +
 				 * tempTag.getLoc2DY()), 0, 0);
 				 */
-				layoutTag(tempTag);
-				textViews.get(tempTag.getParamNo()).setTextSize(
-						(int) (tempTag.getTextSize() * tempTag.getScale()));
-				/*
-				 * int mergedColor = Color.argb( (int) (tempTag.getAlpha() *
-				 * 255), (int) (tempTag.getColorR() * 255), (int)
-				 * (tempTag.getColorG() * 255), (int) (tempTag.getColorB() *
-				 * 255)); setTextColor();
-				 */
-				textViews.get(tempTag.getParamNo()).bringToFront();
+//				layoutTag(tempTag);
+//				textViews.get(tempTag.getParamNo()).setTextSize(
+//						(int) (tempTag.getTextSize() * tempTag.getScale()));
+//				/*
+//				 * int mergedColor = Color.argb( (int) (tempTag.getAlpha() *
+//				 * 255), (int) (tempTag.getColorR() * 255), (int)
+//				 * (tempTag.getColorG() * 255), (int) (tempTag.getColorB() *
+//				 * 255)); setTextColor();
+//				 */
+//				textViews.get(tempTag.getParamNo()).bringToFront();
 			}
 			// if (Constants.DEBUG)if(Constants.DEBUG)Log.i(TAG,
 			// "onTouchEvent x:"+x+" y:"+y

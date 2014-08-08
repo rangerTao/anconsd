@@ -16,6 +16,7 @@ import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -57,7 +58,7 @@ import com.ranger.bmaterials.view.Tag;
 import com.ranger.bmaterials.view.TagCloudView;
 import com.ranger.bmaterials.view.TagCloudView.TagClickListener;
 
-public class BMSearchFragment extends Fragment implements OnClickListener, OnItemClickListener, TagClickListener, onTagCloudViewLayoutListener {
+public class BMSearchFragment extends Fragment implements OnClickListener, OnItemClickListener, TagClickListener, onTagCloudViewLayoutListener, TagCloudView.OnTagFilngListener {
 
     private static final int KEYWORDS_COUNT = 50;
     private ViewGroup tagLayout;
@@ -133,6 +134,7 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
         tagView = (TagCloudView) tagLayout.findViewById(R.id.tagclouview);
         tagView.setTagClickListener(this);
         tagView.setEditText(searchEt);
+        tagView.setOnTagFlingListener(this);
 
         searchResultLayout = (ListView) root.findViewById(R.id.layout_search_result_list);
         searchResultLayout.setVisibility(View.INVISIBLE);
@@ -227,31 +229,6 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
                 return false;
             }
         });
-
-//        searchEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if(hasFocus){
-//                    showDropdown();
-//                }else{
-//                    if(mSearchRecomPopup!= null && mSearchRecomPopup.isShowing()){
-//                        mSearchRecomPopup.dismiss();
-//                    }
-//                }
-//            }
-//        });
-
-        // searchEt.setDropDownBackgroundResource(R.drawable.image_background_autocomplete);
-//        searchEt.setDropDownBackgroundResource(R.drawable.transparent_drawable);
-//        searchEt.setAdapter(suggestAdapter);
-//        searchSuggestionAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, keywords);
-//        searchEt.setOnItemClickListener(new OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-//
-//            }
-//        });
 
     }
 
@@ -441,6 +418,11 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
         searchEt.setText(key);
         search();
 
+    }
+
+    @Override
+    public void onFling() {
+        fillKeywords();
     }
 
     private class KeywordsRequestListener implements IRequestListener {

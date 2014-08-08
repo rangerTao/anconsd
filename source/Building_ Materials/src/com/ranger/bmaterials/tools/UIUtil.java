@@ -2,12 +2,15 @@ package com.ranger.bmaterials.tools;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
+import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.FloatMath;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.GridView;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 
 public final class UIUtil {
 	private UIUtil() {
@@ -224,5 +228,54 @@ public final class UIUtil {
 		act.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
 		return frame.top;
 	}
+
+
+    public static void setTextViewTextHtml(TextView tv, String title)
+    {
+        if (null != tv)
+        {
+            if (null != title)
+            {
+                String s = checkspace(title.trim());
+
+                tv.setText(Html.fromHtml(s));//"\u3000\u3000" +
+            }
+            else
+            {
+                tv.setText("");
+            }
+        }
+    }
+
+    public static String checkspace(String content)
+    {
+        Pattern p = Pattern.compile("　{1,10}");
+        Matcher m = p.matcher(content);
+        StringBuffer sb = new StringBuffer();
+        boolean result = m.find();
+
+        while (result)
+        {
+            m.appendReplacement(sb, "");
+
+            result = m.find();
+        }
+        m.appendTail(sb);
+
+        Pattern p2 = Pattern.compile("[ | |　]{0,140}\n{1,140}[ | |　]{0,140}");
+        Matcher m2 = p2.matcher(sb.toString());
+        StringBuffer sb2 = new StringBuffer();
+        boolean result2 = m2.find();
+
+        while (result2)
+        {
+            m2.appendReplacement(sb2, "\n\u3000\u3000");
+
+            result2 = m2.find();
+        }
+        m2.appendTail(sb2);
+
+        return sb2.toString();
+    }
 	 
 }

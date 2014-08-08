@@ -34,6 +34,24 @@ public class BMProductInfoResult extends BaseResult {
         private String material;
         private String productImage;
         private String detail;
+        private String price;
+        private String unit;
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        public String getUnit() {
+            return unit;
+        }
+
+        public void setUnit(String unit) {
+            this.unit = unit;
+        }
 
         public String getProductName() {
             return productName;
