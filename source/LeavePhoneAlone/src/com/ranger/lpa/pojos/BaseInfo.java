@@ -17,20 +17,25 @@ public class BaseInfo {
     //normal
     public static final int MSG_ERROR_OK = 0;
     //Stop the server
-    public static final int MSG_STOPSERVER = 2;
+    public static final int MSG_STOPSERVER = 1;
     //A request of lock received.
-    public static final int MSG_LOCK_REQUEST = 2 << 2;
-    //Accept to lock phone.
-    public static final int MSG_LOCK_ACCEPT = 2 << 3;
+    public static final int MSG_LOCK_REQUEST = 2;
     //Refuse to lock phone.
-    public static final int MSG_LOCK_REFUSE = 2 << 4;
+    public static final int MSG_LOCK_REFUSE = 4;
     //give up
-    public static final int MSG_GIVEUP_REQUEST = 2 << 5;
-    //give up accept
-    public static final int MSG_GIVEUP_ACCEPT = 2 << 6;
+    public static final int MSG_GIVEUP_REQUEST = 5;
     //
-    public static final int MSG_GIVEUP_REFUSE = 2 << 7;
-
+    public static final int MSG_GIVEUP_REFUSE = 7;
+    //
+    public static final int MSG_NOTIFY_SERVER = 8;
+    //
+    public static final int MSG_SUBMIT_NAME = 9;
+    //
+    public static final int MSG_EXIT_PARTY = 10;
+    //Accept to lock phone.
+    public static final int MSG_LOCK_ACCEPT = 11;
+    //give up accept
+    public static final int MSG_GIVEUP_ACCEPT = 12;
 
 
     private int errcode;

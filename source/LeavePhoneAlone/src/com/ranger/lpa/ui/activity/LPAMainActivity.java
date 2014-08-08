@@ -49,10 +49,10 @@ public class LPAMainActivity extends BaseActivity {
                 startFindingPhoneView(0);
                 break;
             case R.id.btn_enter_party:
-                startFindingPhoneView(1);
+                startPartyCenter();
                 break;
             case R.id.btn_enter_work:
-                startFindingPhoneView(1);
+                startPartyCenter();
                 break;
         }
 
@@ -61,6 +61,11 @@ public class LPAMainActivity extends BaseActivity {
     public void startFindingPhoneView(int type){
         Intent findingPhone = new Intent(this,LPAFoundPhoneCenter.class);
         findingPhone.putExtra(LPAFoundPhoneCenter.EXTRA_TYPE,type);
+        startActivity(findingPhone);
+    }
+
+    public void startPartyCenter(){
+        Intent findingPhone = new Intent(this,LPAPartyCenter.class);
         startActivity(findingPhone);
     }
 

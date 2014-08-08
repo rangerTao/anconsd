@@ -18,7 +18,7 @@
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature android:name="android.hardware.camera.autofocus"/>
@@ -62,6 +62,9 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.ranger.lpa.test.act.WifiApTestActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.LPAPartyCenter"
             android:screenOrientation="portrait"/>
     </application>
 

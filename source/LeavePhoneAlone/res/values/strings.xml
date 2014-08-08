@@ -25,6 +25,7 @@
     <string name="send_phone_lock_request_hint">发送锁定邀请</string>
 
     <string name="btn_cancel">取消</string>
+    <string name="btn_start_party">开始</string>
 
     <string name="lock_request_confirm_tip">要开始锁定吗？</string>
     <string name="btn_start_lock">开始</string>
@@ -35,6 +36,7 @@
     <string name="barcode_hint">锁屏码</string>
     <string name="hint_click_to_startserver">下滑建立</string>
     <string name="hint_click_to_joinserver">点击加入</string>
+    <string name="hint_scan_barcode_join">给朋友们扫一扫，让他们快快加入吧</string>
 
     <string name="scan_text"></string>
 
