@@ -6,6 +6,7 @@ import com.ranger.bmaterials.tools.PinyinUtil;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class BMProvinceListResult extends BaseResult {
 
@@ -28,6 +29,7 @@ public class BMProvinceListResult extends BaseResult {
         if(pi != null)
             proviceList.add(pi);
     }
+
 
     public class ProviceItem{
         private int id;

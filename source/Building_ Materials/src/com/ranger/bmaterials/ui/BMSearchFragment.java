@@ -90,10 +90,6 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
         initView();
         initTagCloudViewData();
 
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if(imm.isActive())
-            imm.hideSoftInputFromWindow(searchEt.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
-
         return root;
     }
 

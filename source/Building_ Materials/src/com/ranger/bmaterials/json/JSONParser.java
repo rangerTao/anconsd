@@ -1,6 +1,7 @@
 package com.ranger.bmaterials.json;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.google.gson.Gson;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.app.MineProfile;
+import com.ranger.bmaterials.compare.ProvinceComparator;
 import com.ranger.bmaterials.mode.KeywordsList;
 import com.ranger.bmaterials.netresponse.BMCollectionResult;
 import com.ranger.bmaterials.netresponse.BMCompanyInfoResult;
@@ -364,6 +366,8 @@ public class JSONParser {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        Collections.sort(result.getProviceList(),new ProvinceComparator());
 
         return result;
 
