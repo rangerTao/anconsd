@@ -36,10 +36,22 @@ public class BaseInfo {
     public static final int MSG_LOCK_ACCEPT = 11;
     //give up accept
     public static final int MSG_GIVEUP_ACCEPT = 12;
+    //all user accepted the request of lock
+    public static final int MSG_LOCK_START = 13;
 
 
     private int errcode;
     private String errmsg;
+
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public int getErrcode() {
         return errcode;
@@ -72,6 +84,13 @@ public class BaseInfo {
         return strMsg + "\n";
     }
 
+    public String getMessageStringLimt(){
+        Gson gson = new Gson();
+        String strMsg = gson.toJson(this);
+
+        return strMsg;
+    }
+
     public void sendMessage(Socket serverSocket) {
 
         try {
@@ -95,5 +114,9 @@ public class BaseInfo {
     @Override
     public String toString() {
         return getMessageString();
+    }
+
+    public String toShortString(){
+        return getMessageStringLimt();
     }
 }

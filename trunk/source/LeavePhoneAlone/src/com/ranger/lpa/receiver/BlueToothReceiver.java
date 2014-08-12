@@ -10,7 +10,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 public class BlueToothReceiver extends BroadcastReceiver{
 
@@ -34,7 +33,7 @@ public class BlueToothReceiver extends BroadcastReceiver{
 			}
 		} else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED
 				.equals(action)) {
-			LocalBroadcastManager.getInstance(LPApplication.getLPApplication().getApplicationContext()).sendBroadcast(new Intent(Constants.action_bt_scan_finish));
+			LocalBroadcastManager.getInstance(LPApplication.getInstance().getApplicationContext()).sendBroadcast(new Intent(Constants.action_bt_scan_finish));
 		}
 	}
 

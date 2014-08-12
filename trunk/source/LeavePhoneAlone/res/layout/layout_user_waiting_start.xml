@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#f3f3f3"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="100dp">
+
+            <TextView
+                android:id="@+id/btn_cancel_waiting_popup"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:minWidth="50dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:text="@string/btn_cancel"
+                android:textColor="#000"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@+id/tv_btn_start_party"
+                android:layout_toRightOf="@+id/btn_cancel_waiting_popup"
+                android:gravity="center"
+                android:text="LOCKLOCK"
+                android:textColor="#4c4c4c"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:id="@+id/tv_btn_start_party"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@null"
+                android:gravity="center_vertical"
+                android:minWidth="50dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:text="@string/btn_start_party"
+                android:textColor="#169bef"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="已加入请等待开始"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="23dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/lock_period_setting_hint"
+            android:textColor="#000"
+            android:textSize="40sp"/>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="30dp"
+            android:background="#fff"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_locking_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:text="@string/hint_user_already_in"
+                android:textColor="#9d9d9d"
+                android:textSize="16sp"/>
+
+            <GridView
+                android:id="@+id/gv_joined_users"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/tv_locking_hint"
+                android:layout_marginTop="22dp"
+                android:cacheColorHint="@android:color/transparent"
+                android:fadingEdge="none"
+                android:gravity="center"
+                android:horizontalSpacing="10dp"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="3"
+                android:verticalSpacing="10dp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

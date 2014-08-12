@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ranger.lpa.R;
+import com.ranger.lpa.pojos.NotifyServerInfo;
 import com.ranger.lpa.pojos.WifiUser;
 import com.ranger.lpa.utils.WifiUtils;
 
@@ -27,30 +28,22 @@ public class LPAWifiUsersAdapter extends BaseAdapter {
             R.drawable.user_head_4,
             R.drawable.user_head_5};
 
-    LinkedList<WifiUser> users;
     private Context mContext;
     private LayoutInflater mInflater;
 
     public LPAWifiUsersAdapter(Context context) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        users = new LinkedList<WifiUser>();
-    }
-
-    public void addUser(WifiUser user) {
-
-        users.add(user);
-        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return users.size();
+        return NotifyServerInfo.getInstance().getUsers().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return users.get(position);
+        return NotifyServerInfo.getInstance().getUsers().get(position);
     }
 
     @Override
@@ -69,12 +62,13 @@ public class LPAWifiUsersAdapter extends BaseAdapter {
 
             uh = new UserHolder();
 
-            userView = mInflater.inflate(R.layout.layout_wifi_barcode_users, null);
+            userView = mInflater.inflate(R.layout.layout_item_joined_user, null);
 
             uh.userhead = (ImageView) userView.findViewById(R.id.iv_joined_user_head);
             uh.tvUserName = (TextView) userView.findViewById(R.id.tv_joined_user_name);
+            uh.ivUserAccept = (ImageView) userView.findViewById(R.id.iv_joined_user_tag);
 
-            userView.setTag(wu);
+            userView.setTag(uh);
             convertView = userView;
         } else {
             uh = (UserHolder) convertView.getTag();
@@ -84,6 +78,13 @@ public class LPAWifiUsersAdapter extends BaseAdapter {
 
         uh.userhead.setImageResource(user_heads[index]);
         uh.tvUserName.setText(wu.getName());
+        if(wu.getAccept() == 1){
+            uh.ivUserAccept.setImageResource(R.drawable.user_accepted);
+        }else{
+            uh.ivUserAccept.setImageResource(R.drawable.user_unaccept);
+        }
+
+
 
         return convertView;
     }
@@ -93,5 +94,6 @@ public class LPAWifiUsersAdapter extends BaseAdapter {
         String udid;
         ImageView userhead;
         TextView tvUserName;
+        ImageView ivUserAccept;
     }
 }

@@ -15,11 +15,38 @@ import android.net.wifi.WifiManager;
 import android.os.Message;
 
 import com.ranger.lpa.Constants;
+import com.ranger.lpa.pojos.WifiUser;
 import com.ranger.lpa.ui.activity.LPAFoundPhoneCenter;
 
 public class WifiUtils {
 
-	static WifiInfo wifiInfo;
+    private WifiUtils(){
+
+    }
+
+    private static WifiUtils _instance;
+
+    public static WifiUtils getInstance(){
+        if(_instance == null){
+            _instance = new WifiUtils();
+        }
+
+        return _instance;
+    }
+
+    private static String mSSID;
+
+    public interface OnWifiConnected{
+        public void onConnected();
+    }
+
+    private static OnWifiConnected mWifiConnected;
+
+    public void setmWifiConnected(OnWifiConnected mWifiConnected) {
+        this.mWifiConnected = mWifiConnected;
+    }
+
+    static WifiInfo wifiInfo;
 	static WifiManager wifiManager;
 	static LPAFoundPhoneCenter mContext;
 	static BroadcastReceiver wifiReceiver;
@@ -28,7 +55,9 @@ public class WifiUtils {
 		mContext.unregisterReceiver(wifiReceiver);
 	}
 
-	public static void initWifiSetting(Context context) {
+	public static void initWifiSetting(Context context,String ssid) {
+
+        mSSID = ssid;
 
 		wifiReceiver = new BroadcastReceiver() {
 
@@ -42,7 +71,6 @@ public class WifiUtils {
 				} else if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(intent.getAction())) {
 					handleStateChanged(((NetworkInfo) intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO)).getDetailedState());
 				}
-
 			}
 
 		};
@@ -75,9 +103,6 @@ public class WifiUtils {
 
 	public static void detectWifiStatus(WifiManager wifiManager) {
 
-		Message detail = new Message();
-		detail.what = Constants.WIFI_CONNECTIONINFO;
-
 		switch (wifiManager.getWifiState()) {
 
 		case WifiManager.WIFI_STATE_DISABLED:
@@ -88,19 +113,18 @@ public class WifiUtils {
 		case WifiManager.WIFI_STATE_ENABLED:
 
 			wifiInfo = wifiManager.getConnectionInfo();
-			if (wifiInfo.getNetworkId() != -1) {
-                detail.what = LPAFoundPhoneCenter.MSG_WIFI_CONNECTED;
-			} else {
-                detail.what = LPAFoundPhoneCenter.MSG_WIFI_FAILED;
-			}
+
+            if(wifiInfo.getSSID().equals(mSSID)){
+                if(mWifiConnected != null){
+                    mWifiConnected.onConnected();
+                }
+            }
 			break;
 		case WifiManager.WIFI_STATE_ENABLING:
 			break;
 		case WifiManager.WIFI_STATE_UNKNOWN:
 			break;
 		}
-
-		mContext.mHandler.sendMessage(detail);
 	}
 
 	public static int getCalculatedWifiLevel(WifiInfo info) {

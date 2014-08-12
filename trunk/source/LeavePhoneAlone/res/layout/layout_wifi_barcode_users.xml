@@ -44,7 +44,6 @@
             android:gravity="center_vertical"
             android:minWidth="50dp"
             android:paddingLeft="24dp"
-
             android:paddingRight="24dp"
             android:text="@string/btn_start_party"
             android:textColor="#169bef"
