@@ -144,6 +144,8 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
             @Override
             public void onEditUserInfoDialogDismissed(String res) {
 
+                initView();
+
                 LoadingTask task = new LoadingTask(BMUserinfoActivity.this, new LoadingTask.ILoading() {
 
                     @Override
@@ -302,7 +304,7 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
 
         init();
 
-        ImageLoaderHelper.displayImage(result.getPhoto(),ivUserhead);
+        ImageLoaderHelper.displayImage(result.getPhoto(),ivUserhead,ImageLoaderHelper.getCustomOption(R.drawable.bm_user_header_unlogin));
 
         tvUserNick.setText(result.getNickname());
         tvUserName.setText(result.getRealname());

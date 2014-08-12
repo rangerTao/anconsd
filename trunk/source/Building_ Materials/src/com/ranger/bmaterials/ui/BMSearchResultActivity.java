@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Handler;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -111,6 +112,8 @@ public class BMSearchResultActivity extends Activity implements
     private ListView lv_province_list;
     private BMProvinceAdapter bpa;
 
+    private android.os.Handler mHandler = new android.os.Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,11 +142,16 @@ public class BMSearchResultActivity extends Activity implements
 
         registerListener();
 
-        search(currentPage + 1, false);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                search(currentPage + 1, false);
 
-        initSlidingMenu();
+                initSlidingMenu();
 
-        loadHistroyData();
+                loadHistroyData();
+            }
+        },500);
     }
 
     List<String> suggestWords = null;

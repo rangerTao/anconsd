@@ -25,7 +25,10 @@
             android:src="@drawable/back_selector"
             android:text="全国"
             android:textColor="#fff"
-            android:textSize="28sp"/>
+            android:textSize="28sp">
+
+            <requestFocus/>
+        </TextView>
 
         <LinearLayout
             android:layout_width="fill_parent"
