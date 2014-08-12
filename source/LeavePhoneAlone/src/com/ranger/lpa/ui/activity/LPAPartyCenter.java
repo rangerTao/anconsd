@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,17 +33,24 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.ranger.lpa.Constants;
+import com.ranger.lpa.LPApplication;
+import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.R;
 import com.ranger.lpa.adapter.LPAWifiUsersAdapter;
 import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
 import com.ranger.lpa.connectity.wifi.LPAWifiManager;
 import com.ranger.lpa.encoding.EncodingHandler;
+import com.ranger.lpa.pojos.BaseInfo;
+import com.ranger.lpa.pojos.NotifyServerInfo;
 import com.ranger.lpa.pojos.SocketMessage;
+import com.ranger.lpa.pojos.SubmitNameMessage;
 import com.ranger.lpa.pojos.WifiInfo;
+import com.ranger.lpa.pojos.WifiUser;
 import com.ranger.lpa.receiver.IOnNotificationReceiver;
 import com.ranger.lpa.test.adapter.BtDeviceListAdapter;
 import com.ranger.lpa.thread.LPAClientThread;
 import com.ranger.lpa.thread.LPAServerNotifyThread;
+import com.ranger.lpa.thread.LPAUdpClientThread;
 import com.ranger.lpa.tools.NotifyManager;
 import com.ranger.lpa.ui.view.LPAKeyGuardView;
 import com.ranger.lpa.utils.WifiUtils;
@@ -50,12 +58,13 @@ import com.ranger.lpa.utils.WifiUtils;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by taoliang on 14-8-5.
  */
-public class LPAPartyCenter extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class LPAPartyCenter extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener, WifiUtils.OnWifiConnected {
 
     public static final int MSG_CONNECTING_DIALOG_SHOW = 3;
     public static final int MSG_CONNECTING_DIALOG_HIDE = 3 << 1;
@@ -75,12 +84,29 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 
             int type = msg.what;
 
+            //update the users' view
+            BaseInfo wUser = (BaseInfo) msg.obj;
+            WifiUser wfUser = null;
+            if(wUser != null){
+                wfUser = new Gson().fromJson(wUser.getMessage(),WifiUser.class);
+            }
+
             switch (type) {
                 case SocketMessage.MSG_LOCK_REQUEST:
+                    if(LPApplication.getInstance().isSelfServer()){
+                        showLockedView();
+                    }else{
+                        showLockRequestDialog();
+                    }
+                    break;
                 case SocketMessage.MSG_STOPSERVER:
                     showLockRequestDialog();
                     break;
                 case SocketMessage.MSG_LOCK_ACCEPT:
+                    refreshUserStatus(wfUser);
+                    break;
+                case SocketMessage.MSG_LOCK_START:
+                    dismissWaitingPopup();
                     showLockedView();
                     break;
                 case SocketMessage.MSG_LOCK_REFUSE:
@@ -95,15 +121,23 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 //                    dismissGiveupRequestDialog();
                     break;
                 case SocketMessage.MSG_SUBMIT_NAME:
+                    if(wfUser != null && !NotifyServerInfo.getInstance().getUsers().contains(wfUser.getUdid())){
+                        NotifyServerInfo.getInstance().addUser(wfUser);
+                        adapterUsers.notifyDataSetChanged();
+                    }
 
                     break;
                 case MSG_CONNECTING_DIALOG_SHOW:
                     break;
                 case MSG_CONNECTING_DIALOG_HIDE:
                     break;
+                case BaseInfo.MSG_NOTIFY_SERVER:
+                    if(!LPApplication.getInstance().isSelfServer()){
+
+                    }
+                    break;
 
             }
-
         }
     };
 
@@ -156,6 +190,8 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
     private LPAKeyGuardView lpa;
     private View view_lock_control;
 
+    private LPAUdpClientThread clientThread;
+
     @Override
     public void onClick(View v) {
 
@@ -174,28 +210,45 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.btn_join_party_server:
                 startBarcodeScanner();
+                WifiUtils.getInstance().setmWifiConnected(this);
                 break;
             case R.id.btn_start_party_server:
-                LPAWifiManager.getInstance(getApplicationContext()).startWifiAp();
+//                LPAWifiManager.getInstance(getApplicationContext()).startWifiAp();
                 try {
+                    LPApplication.getInstance().setSelfServer(true);
 
-                    serNotifyThread = new LPAServerNotifyThread();
+                    serNotifyThread = new LPAServerNotifyThread(getApplicationContext());
+                    clientThread = new LPAUdpClientThread(getApplicationContext());
 
                     serNotifyThread.start();
+                    clientThread.start();
 
                     showJoinedUserPopup();
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
+            case R.id.tv_btn_start_party:
+                if(serNotifyThread != null && NotifyServerInfo.getInstance().getUsers().size() > 0){
+                    MineProfile.getInstance().setLocked(true);
+                }
+                break;
+            case R.id.btn_request_accept:
+                //show lock waiting view
+                showWaitingPopup();
+                break;
+            case R.id.btn_request_refuse:
+                dismissLockRequestDialog();
+                break;
+            case R.id.btn_cancel_waiting_popup:
+                dismissWaitingPopup();
                 break;
         }
     }
 
     private PopupWindow mJoinedUserPopup;
     View joined_view;
-
 
     private void showJoinedUserPopup(){
 
@@ -205,10 +258,44 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
             joined_view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_wifi_barcode_users,null);
             mJoinedUserPopup.setContentView(joined_view);
 
+            initJoinedPopupView(joined_view);
+
         }
 
         if(!mJoinedUserPopup.isShowing()){
-            mJoinedUserPopup.showAtLocation(getWindow().getDecorView(), Gravity.TOP | Gravity.LEFT,0,0);
+            mJoinedUserPopup.showAtLocation(findViewById(R.id.ll_found_center_root), Gravity.TOP | Gravity.LEFT,0,0);
+        }
+
+    }
+
+    private PopupWindow mWaitingToStartPopup;
+    View waitStarting;
+
+    private void dismissWaitingPopup(){
+        if(mWaitingToStartPopup != null && mWaitingToStartPopup.isShowing()){
+            mWaitingToStartPopup.dismiss();
+            mWaitingToStartPopup = null;
+        }
+    }
+
+    private void showWaitingPopup(){
+
+        if(mWaitingToStartPopup == null){
+            mWaitingToStartPopup = new PopupWindow(getApplicationContext());
+            mWaitingToStartPopup.setWindowLayoutMode(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            waitStarting = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_user_waiting_start,null);
+            mWaitingToStartPopup.setContentView(waitStarting);
+
+            waitStarting.findViewById(R.id.btn_cancel_waiting_popup).setOnClickListener(this);
+            gvJoinedUsers = (GridView) waitStarting.findViewById(R.id.gv_joined_users);
+
+            adapterUsers = new LPAWifiUsersAdapter(getApplicationContext());
+            gvJoinedUsers.setAdapter(adapterUsers);
+
+        }
+
+        if(!mWaitingToStartPopup.isShowing()){
+            mWaitingToStartPopup.showAtLocation(findViewById(R.id.ll_found_center_root), Gravity.TOP | Gravity.LEFT,0,0);
         }
 
     }
@@ -265,9 +352,29 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
             msg.what = type;
             mHandler.sendMessage(msg);
         }
+
+        @Override
+        public void onNotificated(int type, BaseInfo info) {
+            Message msg = new Message();
+            msg.what = type;
+            msg.obj = info;
+            mHandler.sendMessage(msg);
+        }
     };
 
     private View view_giveup_request;
+
+    private void refreshUserStatus(WifiUser wu){
+
+        String udid = wu.getUdid();
+        for(WifiUser user : NotifyServerInfo.getInstance().getUsers()){
+            if(user.getUdid().equals(udid)){
+                user.setAccept(1);
+            }
+        }
+
+        adapterUsers.notifyDataSetChanged();
+    }
 
     private void showLockedView() {
         View lock_view = View.inflate(this, R.layout.layout_locked_view, null);
@@ -314,6 +421,13 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 
         if (popup_lock_request_dialog != null && !popup_lock_request_dialog.isShowing()) {
             popup_lock_request_dialog.show();
+        }
+    }
+
+    private void dismissLockRequestDialog(){
+        if (popup_lock_request_dialog != null && popup_lock_request_dialog.isShowing()) {
+            popup_lock_request_dialog.dismiss();
+            popup_lock_request_dialog = null;
         }
     }
 
@@ -385,15 +499,20 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                     Gson gson = new Gson();
                     WifiInfo wInfo = gson.fromJson(result, WifiInfo.class);
                     if (wInfo != null) {
-                        WifiUtils.initWifiSetting(getApplicationContext());
                         if (LPAWifiManager.getInstance(getApplicationContext()).connectWifi(wInfo)) {
-
+                            WifiUtils.initWifiSetting(getApplicationContext(),wInfo.getmSSID());
                         } else {
-
+                            Toast.makeText(getApplicationContext(),"error",Toast.LENGTH_LONG).show();
                         }
                     }
                 }
             }
         }
+    }
+
+    @Override
+    public void onConnected() {
+        clientThread = new LPAUdpClientThread(getApplicationContext());
+        clientThread.start();
     }
 }

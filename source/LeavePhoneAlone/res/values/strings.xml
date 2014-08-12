@@ -37,6 +37,7 @@
     <string name="hint_click_to_startserver">下滑建立</string>
     <string name="hint_click_to_joinserver">点击加入</string>
     <string name="hint_scan_barcode_join">给朋友们扫一扫，让他们快快加入吧</string>
+    <string name="hint_user_already_in">已加入小伙伴</string>
 
     <string name="scan_text"></string>
 

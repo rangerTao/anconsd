@@ -30,6 +30,7 @@ import com.ranger.lpa.Constants;
 import com.ranger.lpa.R;
 import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
 import com.ranger.lpa.connectity.wifi.LPAWifiManager;
+import com.ranger.lpa.pojos.BaseInfo;
 import com.ranger.lpa.pojos.SocketMessage;
 import com.ranger.lpa.pojos.WifiInfo;
 import com.ranger.lpa.receiver.IOnNotificationReceiver;
@@ -289,10 +290,10 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                     ImageView ivBarcode = (ImageView) view_find_phone.findViewById(R.id.iv_barcode);
 //                    Bitmap barcode = EncodingHandler.createQRCode(LPAWifiManager.getInstance(getApplicationContext()).getmWifiInfo().getMessageString(), ivBarcode.getWidth());
 //                    ivBarcode.setImageBitmap(barcode);
-
-                    serNotifyThread = new LPAServerNotifyThread();
-
-                    serNotifyThread.start();
+//
+//                    serNotifyThread = new LPAServerNotifyThread(getApplicationContext());
+//
+//                    serNotifyThread.start();
 
                 }catch (Exception e){
                     e.printStackTrace();
@@ -377,6 +378,11 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
             Message msg = new Message();
             msg.what = type;
             mHandler.sendMessage(msg);
+        }
+
+        @Override
+        public void onNotificated(int type, BaseInfo info) {
+
         }
     };
 

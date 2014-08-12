@@ -3,6 +3,7 @@ package com.ranger.lpa.tools;
 import android.app.Notification;
 import android.content.Context;
 
+import com.ranger.lpa.pojos.BaseInfo;
 import com.ranger.lpa.receiver.IOnNotificationReceiver;
 
 import java.util.ArrayList;
@@ -55,6 +56,22 @@ public class NotifyManager {
 
                 if(rec != null){
                     rec.onNotificated(type);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void notifyStateChanged(int type,BaseInfo binfo){
+
+        for(IOnNotificationReceiver rec : receivers){
+            try {
+
+                if(rec != null){
+                    rec.onNotificated(type,binfo);
                 }
 
             } catch (Exception e) {
