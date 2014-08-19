@@ -2,6 +2,7 @@ package com.ranger.lpa.utils;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -48,7 +49,7 @@ public class WifiUtils {
 
     static WifiInfo wifiInfo;
 	static WifiManager wifiManager;
-	static LPAFoundPhoneCenter mContext;
+	static Activity mContext;
 	static BroadcastReceiver wifiReceiver;
 
 	public static void unRegisterWifiReceiver() {
@@ -75,7 +76,7 @@ public class WifiUtils {
 
 		};
 
-		mContext = (LPAFoundPhoneCenter) context;
+		mContext = (Activity) context;
 		wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 
 		detectWifiStatus(wifiManager);
@@ -139,9 +140,6 @@ public class WifiUtils {
 		if (state != null) {
 			WifiInfo info = wifiManager.getConnectionInfo();
 			if (info != null) {
-				Message detail = new Message();
-				detail.what = Constants.WIFI_CONNECTIONINFO;
-				mContext.mHandler.sendMessage(detail);
 			}
 		}
 	}

@@ -118,7 +118,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                     showGiveupRequestDialog();
                     break;
                 case SocketMessage.MSG_GIVEUP_REFUSE:
-//                    dismissGiveupRequestDialog();
+                    dismissGiveupRequestDialog();
                     break;
                 case SocketMessage.MSG_SUBMIT_NAME:
                     if(wfUser != null && !NotifyServerInfo.getInstance().getUsers().contains(wfUser.getUdid())){
@@ -211,6 +211,11 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
             case R.id.btn_join_party_server:
                 startBarcodeScanner();
                 WifiUtils.getInstance().setmWifiConnected(this);
+
+                clientThread = new LPAUdpClientThread(getApplicationContext());
+                clientThread.start();
+
+                showWaitingPopup();
                 break;
             case R.id.btn_start_party_server:
 //                LPAWifiManager.getInstance(getApplicationContext()).startWifiAp();
@@ -390,7 +395,11 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
     private void dismissLockedView() {
 
         if (lpa != null && lpa.isShowing()) {
-            lpa.unlock();
+            try{
+                lpa.unlock();
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
         }
 
         resetFindingView();
@@ -500,7 +509,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                     WifiInfo wInfo = gson.fromJson(result, WifiInfo.class);
                     if (wInfo != null) {
                         if (LPAWifiManager.getInstance(getApplicationContext()).connectWifi(wInfo)) {
-                            WifiUtils.initWifiSetting(getApplicationContext(),wInfo.getmSSID());
+                            WifiUtils.initWifiSetting(LPAPartyCenter.this,wInfo.getmSSID());
                         } else {
                             Toast.makeText(getApplicationContext(),"error",Toast.LENGTH_LONG).show();
                         }
