@@ -54,6 +54,7 @@ import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 import com.ranger.bmaterials.work.LoadingTask;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -290,7 +291,7 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
 
         init();
 
-        ImageLoaderHelper.displayImage(MineProfile.getInstance().getStrUserHead(),ivUserhead);
+        ImageLoaderHelper.displayImage(MineProfile.getInstance().getStrUserHead(),ivUserhead,ImageLoaderHelper.optionUserHead);
 
         tvUserNick.setText(MineProfile.getInstance().getNickName());
         tvUserName.setText(MineProfile.getInstance().getUserName());
@@ -308,10 +309,11 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
 
         tvUserNick.setText(result.getNickname());
         tvUserName.setText(result.getRealname());
-        tvUserSex.setText(result.getSex());
+        tvUserSex.setText(result.getSex().equals("1") ? "男":"女");
         tvUserArea.setText(result.getCity());
         tvUserSign.setText(result.getSignature());
 
+        MineProfile.getInstance().setStrUserHead(result.getPhoto());
         MineProfile.getInstance().setNickName(result.getNickname());
         MineProfile.getInstance().setUserName(result.getRealname());
         MineProfile.getInstance().setUserType(result.getSex().equals("1") ? 1 : 0);
@@ -326,7 +328,7 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
 	public void onRequestSuccess(BaseResult responseData) {
 
         if(responseData.getTag().equals(Constants.NET_TAG_USERINFO +"")){
-            if(responseData.getSuccess() == 1 && responseData.getErrorCode() == DcError.DC_OK)
+            if(responseData.getSuccess() == 0 && responseData.getErrorCode() == DcError.DC_OK)
                 initView((BMUserInfoResult) responseData);
             else{
                 BMUserInfoResult bir = (BMUserInfoResult) responseData;
@@ -436,7 +438,7 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
                     progressDialog = CustomProgressDialog.createDialog(BMUserinfoActivity.this);
                     progressDialog.setMessage("截取头像");
                     progressDialog.show();
-                    File f = new File(Constants.IMAGE_PATH, Constants.TEMPFILE_NAME);
+                    File f = new File(Constants.IMGCACHE_FOLDER, Constants.TEMPFILE_NAME);
                     Intent intent = new Intent(this, CropImageActivity.class);
                     intent.putExtra("path", f.getAbsolutePath());
                     startActivityForResult(intent, RESULT_REQUEST_CODE);
@@ -455,7 +457,8 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
 
                                         if (responseData.getErrorCode() == 0 && responseData.getSuccess() == 1) {
                                             CustomToast.showToast(getApplicationContext(), "上传成功");
-                                            initView();
+                                            NetUtil.getInstance().requestForUserinfo(BMUserinfoActivity.this);
+//                                            initView();
                                         } else {
                                             CustomToast.showToast(getApplicationContext(), responseData.getMessage());
                                         }

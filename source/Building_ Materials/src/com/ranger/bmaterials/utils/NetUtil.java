@@ -125,12 +125,12 @@ public class NetUtil implements INetListener {
     /*****************************************************************************************************/
 
     // 命名空间
-    String nameSpace = "http://admin.jc.net.cn:8092";
+    String nameSpace = "http://mapi.jc.net.cn";
 
     // EndPoint
-    String endPoint = "http://admin.jc.net.cn:8092/JcMobileService";
+    String endPoint = "http://mapi.jc.net.cn/JcMobileService";
     // SOAP Action
-    String soapAction = "http://admin.jc.net.cn:8092/";
+    String soapAction = "http://mapi.jc.net.cn/";
 
     /**
      * 用户登录

@@ -84,7 +84,7 @@ public class ImageLoaderHelper {
 
 	private static DisplayImageOptions options = getCustomOption(R.drawable.loading);
 
-    private static DisplayImageOptions optionUserHead = getCustomOption(R.drawable.bm_user_header_unlogin);
+    public static DisplayImageOptions optionUserHead = getCustomOption(R.drawable.bm_user_header_unlogin);
 
 	private static boolean isNoPicture() {
 		MineProfile profile = MineProfile.getInstance();
