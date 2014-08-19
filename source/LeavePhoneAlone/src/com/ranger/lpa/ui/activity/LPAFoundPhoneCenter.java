@@ -594,24 +594,5 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                 Toast.makeText(getApplicationContext(),"请选择“允许”，才能使用此功能！",Toast.LENGTH_LONG).show();
             }
         }
-
-        if(requestCode == BarcodeScannerActivity.RESULT_BARCODE){
-            if(data != null){
-                Bundle bundle = data.getExtras();
-                String result = bundle.getString(BarcodeScannerActivity.RESULT_CONTENT);
-                if(result != null && !result.equals("")){
-                    Gson gson = new Gson();
-                    WifiInfo wInfo = gson.fromJson(result,WifiInfo.class);
-                    if(wInfo != null){
-                        WifiUtils.initWifiSetting(getApplicationContext());
-                        if(LPAWifiManager.getInstance(getApplicationContext()).connectWifi(wInfo)){
-
-                        }else{
-
-                        }
-                    }
-                }
-            }
-        }
     }
 }

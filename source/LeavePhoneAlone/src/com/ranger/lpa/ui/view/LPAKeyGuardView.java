@@ -66,7 +66,7 @@ public class LPAKeyGuardView {
     //隐藏锁屏
     public synchronized void unlock() {
         if (mWindowManager != null && isLocked) {
-            mWindowManager.removeView(mLockView);
+            mWindowManager.removeViewImmediate(mLockView);
         }
         isLocked = false;
     }

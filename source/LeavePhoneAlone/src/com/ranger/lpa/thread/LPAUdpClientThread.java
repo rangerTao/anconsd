@@ -53,6 +53,8 @@ public class LPAUdpClientThread extends Thread {
     public void run() {
         super.run();
 
+        Log.e("TAG","lpa client thread start");
+
         DatagramPacket dpIn = new DatagramPacket(msgIN, msgIN.length);
 
         if (dSocket != null) {
