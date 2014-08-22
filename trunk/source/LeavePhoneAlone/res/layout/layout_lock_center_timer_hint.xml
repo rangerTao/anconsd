@@ -19,6 +19,7 @@
 
 
     <TextView
+        android:id="@+id/tv_lock_time_period"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
@@ -26,7 +27,6 @@
         android:layout_marginTop="23dp"
         android:gravity="center"
         android:singleLine="true"
-        android:text="@string/lock_period_setting_hint"
         android:textColor="#000"
         android:textSize="40sp"/>
 </LinearLayout>
