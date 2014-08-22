@@ -158,6 +158,8 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
         fl_btn_start_lock = (RelativeLayout) view_find_phone.findViewById(R.id.fl_search_btn);
         fl_btn_start_lock.setOnClickListener(this);
+        view_find_phone.findViewById(R.id.btn_screen_select).setOnClickListener(this);
+        view_find_phone.findViewById(R.id.btn_settings).setOnClickListener(this);
     }
 
     private void initPartyPattern(){
@@ -167,6 +169,7 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 //        fl_btn_start_lock.setOnClickListener(this);
         view_find_phone.findViewById(R.id.btn_join_party_server).setOnClickListener(this);
         view_find_phone.findViewById(R.id.btn_start_party_server).setOnClickListener(this);
+
     }
 
     private void initFindingView() {
@@ -199,6 +202,13 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.btn_settings:
+                Intent intent = new Intent(this,SettingsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_screen_select:
+                finish();
+                break;
             case R.id.fl_search_btn:
 
                 view_find_phone.setVisibility(View.GONE);

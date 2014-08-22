@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 public class MineProfile{
 
 	public static int USERTYPE_UNBINDINGPHONE = 2;
+    private static final long LOCK_PERIOD = 60 * 60 * 1000;
 
 	private String userID;
 	private String userName;
@@ -20,6 +21,8 @@ public class MineProfile{
 	private boolean isLocked;
 	private String sessionID;
     private String udid;
+
+    private long lockPeriod;
 
 	// settings
 	private String push_userid;
@@ -35,6 +38,7 @@ public class MineProfile{
 		isLocked = false;
 		sessionID = "";
 		appversion = "";
+        lockPeriod = LOCK_PERIOD;
 
 		accountList = new ArrayList<String>();
 	}
@@ -68,7 +72,8 @@ public class MineProfile{
 		sessionID = "";
 		appversion = "";
 		isLocked = false;
-		Save(context);
+        lockPeriod = LOCK_PERIOD;
+        Save(context);
 	}
 
 	// for debug
@@ -98,7 +103,8 @@ public class MineProfile{
 		this.push_userid = settings.getString("push_userid", "");
 		this.strUserHead = settings.getString("user_head", "");
         this.udid = settings.getString("udid","");
-		String accountList = settings.getString("accountlist", "");
+        this.lockPeriod = settings.getLong("lock_period", LOCK_PERIOD);
+        String accountList = settings.getString("accountlist", "");
 		// accountList = "aaaaa;bbbbb;dcccc;ddddd;eeeee";
 
 		if (accountList.length() > 0) {
@@ -134,6 +140,7 @@ public class MineProfile{
 
 		editor.putString("push_channelid", this.push_channelid);
 		editor.putString("push_userid", this.push_userid);
+        editor.putLong("lock_period", this.lockPeriod);
 
 		String accountList = "";
 		for (String string : this.accountList) {
@@ -145,6 +152,14 @@ public class MineProfile{
 		editor.putString("user_head", strUserHead);
 		return editor.commit();
 	}
+
+    public long getLockPeriod() {
+        return lockPeriod;
+    }
+
+    public void setLockPeriod(long lockPeriod) {
+        this.lockPeriod = lockPeriod;
+    }
 
     public String getUdid() {
         return udid;

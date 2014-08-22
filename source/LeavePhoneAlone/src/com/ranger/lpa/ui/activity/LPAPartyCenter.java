@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.zxing.common.StringUtils;
 import com.ranger.lpa.Constants;
 import com.ranger.lpa.LPApplication;
 import com.ranger.lpa.MineProfile;
@@ -53,6 +55,7 @@ import com.ranger.lpa.thread.LPAServerNotifyThread;
 import com.ranger.lpa.thread.LPAUdpClientThread;
 import com.ranger.lpa.tools.NotifyManager;
 import com.ranger.lpa.ui.view.LPAKeyGuardView;
+import com.ranger.lpa.utils.StringUtil;
 import com.ranger.lpa.utils.WifiUtils;
 
 import java.io.IOException;
@@ -159,11 +162,25 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 
     }
 
+    private TextView tvLockPeriodHint;
+
     private void initPartyPattern() {
         view_find_phone = ((ViewStub) findViewById(R.id.stub_lock_center_party)).inflate();
 
         view_find_phone.findViewById(R.id.btn_join_party_server).setOnClickListener(this);
         view_find_phone.findViewById(R.id.btn_start_party_server).setOnClickListener(this);
+        tvLockPeriodHint = (TextView)view_find_phone.findViewById(R.id.tv_lock_time_period);
+
+        view_find_phone.findViewById(R.id.btn_screen_select).setOnClickListener(this);
+        view_find_phone.findViewById(R.id.btn_settings).setOnClickListener(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        tvLockPeriodHint.setText(StringUtil.getFormattedTimeByMillseconds(MineProfile.getInstance().getLockPeriod()));
     }
 
     private void initFindingView() {
@@ -196,6 +213,13 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.btn_settings:
+                Intent intent = new Intent(this,SettingsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_screen_select:
+                finish();
+                break;
             case R.id.fl_search_btn:
 
                 view_find_phone.setVisibility(View.GONE);
