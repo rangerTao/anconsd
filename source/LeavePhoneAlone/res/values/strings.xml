@@ -26,6 +26,8 @@
 
     <string name="btn_cancel">取消</string>
     <string name="btn_start_party">开始</string>
+    <string name="btn_delete">删除</string>
+    <string name="btn_default">设为默认</string>
 
     <string name="lock_request_confirm_tip">要开始锁定吗？</string>
     <string name="btn_start_lock">开始</string>
@@ -40,5 +42,7 @@
     <string name="hint_user_already_in">已加入小伙伴</string>
 
     <string name="scan_text"></string>
+
+    <string name="title_setting">设置</string>
 
 </resources>

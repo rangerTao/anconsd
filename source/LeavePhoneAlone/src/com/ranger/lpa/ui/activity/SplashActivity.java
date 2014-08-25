@@ -45,5 +45,9 @@ public class SplashActivity extends BaseActivity{
         Intent intentMain = new Intent(getApplicationContext(),LPAMainActivity.class);
         startActivity(intentMain);
     }
-	
+
+    @Override
+    public void initView() {
+
+    }
 }

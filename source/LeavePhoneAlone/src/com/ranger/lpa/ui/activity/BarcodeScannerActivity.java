@@ -167,4 +167,9 @@ public class BarcodeScannerActivity extends BaseActivity implements View.OnClick
     public void surfaceDestroyed(SurfaceHolder holder) {
         hasSurface = false;
     }
+
+    @Override
+    public void initView() {
+
+    }
 }
