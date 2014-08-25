@@ -124,7 +124,7 @@
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:src="@drawable/arrow_show_detail"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
@@ -156,12 +156,11 @@
 
                 <Button
                     android:id="@+id/bm_btn_view_com_detail"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="fill_parent"
                     android:layout_alignParentRight="true"
                     android:layout_margin="3dp"
                     android:background="@drawable/background_show_detail"
-                    android:text="查看详情"
                     android:textColor="@color/black"/>
 
             </RelativeLayout>
@@ -254,7 +253,7 @@
         <ImageView
             android:id="@+id/iv_product_collect_star"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/bm_icon_unsaved"/>
     </FrameLayout>

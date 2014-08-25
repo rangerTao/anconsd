@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:background="@drawable/header_title_bg"
         android:orientation="horizontal">
 
@@ -47,18 +47,16 @@
                     android:id="@+id/btn_search"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:layout_marginLeft="5dp"
                     android:contentDescription="@null"
-                    android:gravity="center"
-                    android:src="@drawable/header_search_searchbutton"
-                    android:textColor="#333"
-                    android:textSize="15sp"/>
+                    android:gravity="left"
+                    android:layout_marginLeft="-10dp"
+                    android:src="@drawable/header_search_searchbutton"/>
 
                 <FrameLayout
                     android:layout_width="0.0dip"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="-18dp"
                     android:layout_marginRight="16dp"
                     android:layout_weight="1.0">
 
@@ -249,13 +247,13 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="5dp"
             android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_show_detail"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:background="@drawable/merge_provider"
             android:layout_gravity="right|center_vertical"
             android:layout_marginLeft="15dp"
-            android:textColor="#000"
-            android:text="合并相同供应商"/>
+
+            android:textColor="#000"/>
     </RelativeLayout>
 
 </RelativeLayout>

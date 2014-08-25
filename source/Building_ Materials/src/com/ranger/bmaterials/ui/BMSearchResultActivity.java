@@ -604,7 +604,7 @@ public class BMSearchResultActivity extends Activity implements
             }
         }
 
-        searchResultLayout.getRefreshableView().addFooterView(createNoMoreDataFooter(KeywordsList.getInstance().getRandomRecomKeyword()));
+//        searchResultLayout.getRefreshableView().addFooterView(createNoMoreDataFooter(KeywordsList.getInstance().getRandomRecomKeyword()));
 
     }
 

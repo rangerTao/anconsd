@@ -34,8 +34,9 @@
 
         <RelativeLayout
             android:id="@+id/bm_rl_userinfo"
+            android:background="@drawable/user_avatar_bg"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="70dp">
 
             <ImageView
                 android:id="@+id/img_logo"
@@ -81,13 +82,9 @@
                 android:textSize="30sp"/>
 
         </RelativeLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:background="@color/black"/>
     </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -95,11 +92,16 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="25dp"
-        android:background="#fff"
         android:minHeight="20dp"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/user_center_top_bg"/>
+
         <RelativeLayout
+            android:background="@drawable/user_center_item_bg"
             android:id="@+id/bm_rl_my_collect"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -127,13 +129,8 @@
 
         </RelativeLayout>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:background="#50000000"/>
-
         <RelativeLayout
+            android:background="@drawable/user_center_item_bg"
             android:id="@+id/bm_rl_change_pass"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -160,13 +157,6 @@
                 android:textSize="25sp"/>
 
         </RelativeLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:background="#50000000"
-            android:visibility="gone"/>
 
         <RelativeLayout
             android:id="@+id/bm_rl_about"
@@ -197,13 +187,6 @@
 
         </RelativeLayout>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:background="#50000000"
-            android:visibility="gone"/>
-
         <RelativeLayout
             android:id="@+id/bm_rl_feedback"
             android:layout_width="fill_parent"
@@ -233,13 +216,8 @@
 
         </RelativeLayout>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:background="#50000000"/>
-
         <RelativeLayout
+            android:background="@drawable/user_center_item_bg"
             android:id="@+id/bm_rl_update"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -281,12 +259,6 @@
                 android:textSize="25sp"/>
 
         </RelativeLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:background="#50000000"/>
     </LinearLayout>
 
 </LinearLayout>

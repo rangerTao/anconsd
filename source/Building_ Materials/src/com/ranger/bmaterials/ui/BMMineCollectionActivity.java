@@ -82,7 +82,7 @@ public class BMMineCollectionActivity extends FragmentActivity implements PageCa
 	public void onClick(View v) {
 		int id = v.getId();
 
-		if (id == R.id.img_back) {
+		if (id == R.id.btn_back) {
 			this.finish();
 		}
 	}

@@ -66,7 +66,8 @@
                     <RelativeLayout
                         android:id="@+id/bm_rl_userhead"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="90dp"
+                        android:background="@drawable/user_avatar_bg"
                         android:onClick="showedit">
 
                         <TextView
@@ -100,15 +101,11 @@
                     </RelativeLayout>
                 </LinearLayout>
 
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/black"/>
-
                 <RelativeLayout
                     android:id="@+id/bm_rl_user_nick"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/user_center_item_bg"
                     android:minHeight="50dp"
                     android:onClick="showedit"
                     android:orientation="vertical">
@@ -143,14 +140,6 @@
                         android:layout_marginRight="20dp"
                         android:text=">"
                         android:textSize="30sp"/>
-
-
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="1px"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/black"/>
-
                 </RelativeLayout>
             </LinearLayout>
 
@@ -164,10 +153,16 @@
                 android:minHeight="20dp"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/user_center_top_bg"/>
+
                 <RelativeLayout
                     android:id="@+id/bm_rl_user_name"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/user_center_item_bg"
                     android:minHeight="40dp"
                     android:onClick="showedit">
 
@@ -204,16 +199,11 @@
 
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="#50000000"/>
-
                 <RelativeLayout
                     android:id="@+id/bm_rl_user_sex"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/user_center_item_bg"
                     android:minHeight="40dp"
                     android:onClick="showedit">
 
@@ -250,16 +240,11 @@
 
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="#50000000"/>
-
                 <RelativeLayout
                     android:id="@+id/bm_rl_user_area"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/user_center_item_bg"
                     android:minHeight="40dp"
                     android:onClick="showedit">
 
@@ -296,16 +281,11 @@
 
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="#50000000"/>
-
                 <RelativeLayout
                     android:id="@+id/bm_rl_user_sign"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/user_center_item_bg"
                     android:minHeight="40dp"
                     android:onClick="showedit">
 
@@ -325,8 +305,8 @@
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:gravity="right"
                         android:layout_toLeftOf="@+id/sign_arrow_right"
+                        android:gravity="right"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="18sp"/>
@@ -342,12 +322,6 @@
                         android:textSize="25sp"/>
 
                 </RelativeLayout>
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="#50000000"/>
 
             </LinearLayout>
 
