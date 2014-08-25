@@ -261,10 +261,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="18dp"
-                    android:background="#2088f3"
+                    android:background="@drawable/btn_finish_register"
                     android:enabled="false"
                     android:gravity="center"
-                    android:text="完成"
                     android:textColor="@color/white"
                     android:textSize="16sp"/>
             </LinearLayout>

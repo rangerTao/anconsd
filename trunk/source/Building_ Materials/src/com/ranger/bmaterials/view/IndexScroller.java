@@ -80,17 +80,13 @@ public class IndexScroller {
 		// mAlphaRate determines the rate of opacity
 		Paint indexbarPaint = new Paint();
 		indexbarPaint.setColor(Color.BLACK);
-		indexbarPaint.setAlpha((int) (34 * 2));
-		indexbarPaint.setAntiAlias(true);
-		
-		if (this.isPressed) {
-			indexbarPaint.setColor(Color.parseColor("#838a98"));
-			indexbarPaint.setAlpha(150);
-        } else {
-        	indexbarPaint.setAlpha(0);
-        }
-        
-		canvas.drawRoundRect(mIndexbarRect, 10 * mDensity, 10 * mDensity, indexbarPaint);
+//		indexbarPaint.setAlpha((int) (100));
+        indexbarPaint.setAntiAlias(true);
+
+        indexbarPaint.setColor(Color.parseColor("#333333"));
+//        indexbarPaint.setAlpha(100);
+
+		canvas.drawRoundRect(mIndexbarRect, 0, 0, indexbarPaint);
 		if (Constants.DEBUG)Log.i(this.getClass().getSimpleName(), "IndexScroller really draw "+mSections.length+" mCurrentSection:"+mCurrentSection);
 		if (mSections != null && mSections.length > 0) {
 			// Preview is shown when mCurrentSection is set
@@ -120,8 +116,7 @@ public class IndexScroller {
 			}
 			
 			Paint indexPaint = new Paint();
-			//indexPaint.setColor(Color.WHITE);
-			indexPaint.setAlpha(100);
+			indexPaint.setColor(Color.WHITE);
 			indexPaint.setAntiAlias(true);
 			indexPaint.setTextSize(11 * mScaledDensity);
 			

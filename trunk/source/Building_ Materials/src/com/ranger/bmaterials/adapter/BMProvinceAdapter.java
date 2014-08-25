@@ -120,7 +120,7 @@ public class BMProvinceAdapter extends AbstractListAdapter<BMProvinceListResult.
             ph = (ProvinceHoder) convertView.getTag();
         }
 
-        ph.tvName.setText(pi.getName());
+        ph.tvName.setText("    " + pi.getName());
         ph.id = pi.getId();
 
         return convertView;
