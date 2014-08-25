@@ -9,6 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.ranger.lpa.pojos.PurnishList;
+
 public class MineProfile{
 
 	public static int USERTYPE_UNBINDINGPHONE = 2;
@@ -23,6 +26,8 @@ public class MineProfile{
     private String udid;
 
     private long lockPeriod;
+
+    private PurnishList purnish;
 
 	// settings
 	private String push_userid;
@@ -86,6 +91,8 @@ public class MineProfile{
 		Load(context);
 	}
 
+    Gson gson = new Gson();
+
 	private void Load(Context context) {
 		SharedPreferences settings = context.getSharedPreferences(
 				Constants.SETTINGS_PREFERENCE, Activity.MODE_MULTI_PROCESS);
@@ -104,6 +111,7 @@ public class MineProfile{
 		this.strUserHead = settings.getString("user_head", "");
         this.udid = settings.getString("udid","");
         this.lockPeriod = settings.getLong("lock_period", LOCK_PERIOD);
+        this.purnish = gson.fromJson(settings.getString("purnish",""),PurnishList.class);
         String accountList = settings.getString("accountlist", "");
 		// accountList = "aaaaa;bbbbb;dcccc;ddddd;eeeee";
 
@@ -150,8 +158,18 @@ public class MineProfile{
 
 		editor.putString("accountlist", accountList);
 		editor.putString("user_head", strUserHead);
+        String purnish = gson.toJson(getPurnish());
+        editor.putString("purnish",purnish);
 		return editor.commit();
 	}
+
+    public PurnishList getPurnish() {
+        return purnish;
+    }
+
+    public void setPurnish(PurnishList purnish) {
+        this.purnish = purnish;
+    }
 
     public long getLockPeriod() {
         return lockPeriod;

@@ -10,7 +10,7 @@ import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-public class BaseActivity extends Activity{
+public abstract class BaseActivity extends Activity{
 
     private Handler mHandler = new Handler();
     
@@ -26,5 +26,7 @@ public class BaseActivity extends Activity{
             }
         });
     }
+
+    public abstract void initView();
 
 }

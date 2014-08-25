@@ -69,4 +69,8 @@ public class LPAMainActivity extends BaseActivity {
         startActivity(findingPhone);
     }
 
+    @Override
+    public void initView() {
+
+    }
 }

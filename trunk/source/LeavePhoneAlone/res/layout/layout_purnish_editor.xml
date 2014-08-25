@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <include
+        android:id="@+id/setting_header"
+        layout="@layout/layout_setting_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:id="@+id/tv_purnish_content"
+        style="@style/textview_gray_mid"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/ll_btn_control"
+        android:layout_below="@+id/setting_header"
+        android:layout_margin="24dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_btn_control"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_purnish_delete"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="6dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/btn_giveup_confirm"
+            android:text="@string/btn_delete"
+            android:textColor="#fff"
+            android:textSize="24sp"/>
+
+        <Button
+            android:id="@+id/btn_purnish_default"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="6dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/btn_green_normal"
+            android:text="@string/btn_default"
+            android:textColor="#fff"
+            android:textSize="24sp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

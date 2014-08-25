@@ -156,7 +156,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
         NotifyManager.getInstance(this).registerOnNotificationReceiver(notifyReceiver);
     }
 
-    private void initView() {
+    public void initView() {
 
         initPartyPattern();
 

@@ -136,7 +136,7 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
         NotifyManager.getInstance(this).registerOnNotificationReceiver(notifyReceiver);
     }
 
-    private void initView() {
+    public void initView() {
 
         switch (TYPE_PATTERN){
             case 0:
