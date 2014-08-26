@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:minHeight="50dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:minHeight="50dp"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/iv_btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="22dp"
-            android:src="@drawable/btn_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:src="@drawable/btn_more"/>
 
-        <TextView
+        <EditText
+            android:id="@+id/et_title"
             android:layout_width="wrap_content"
-            android:id="@+id/tv_title"
-            android:textColor="#4c4c4c"
+            android:layout_height="wrap_content"
+            android:minWidth="70dp"
             android:layout_centerVertical="true"
-            android:textSize="24sp"
-            android:layout_toRightOf="@+id/iv_btn_back"
             android:layout_marginLeft="10dp"
-            android:layout_height="wrap_content"/>
+            android:layout_toRightOf="@+id/iv_btn_back"
+            android:layout_toLeftOf="@+id/iv_btn_title_right"
+            android:singleLine="true"
+            android:background="#00000000"
+            android:editable="false"
+            android:textColor="#4c4c4c"
+            android:textSize="24sp"/>
 
         <ImageView
             android:id="@+id/iv_btn_title_right"

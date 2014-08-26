@@ -1,5 +1,6 @@
 package com.ranger.lpa.ui.activity;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
@@ -31,7 +32,7 @@ public class SettingPurnishListActivity extends BaseActivity implements View.OnC
     @Override
     public void initView() {
 
-        ((TextView) findViewById(R.id.tv_title)).setText(R.string.title_setting);
+        ((TextView) findViewById(R.id.tv_title)).setText(R.string.title_purnish);
         ((ImageView) findViewById(R.id.iv_btn_title_right)).setImageResource(R.drawable.punish_add);
         findViewById(R.id.iv_btn_title_right).setOnClickListener(this);
         findViewById(R.id.iv_btn_back).setOnClickListener(this);
@@ -51,6 +52,8 @@ public class SettingPurnishListActivity extends BaseActivity implements View.OnC
                 finish();
                 break;
             case R.id.iv_btn_title_right:
+                Intent editIntent = new Intent(this,PurnishAddActivity.class);
+                startActivity(editIntent);
                 break;
         }
     }
@@ -58,5 +61,16 @@ public class SettingPurnishListActivity extends BaseActivity implements View.OnC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+        Intent editIntent = new Intent(this,PurnishEditorActivity.class);
+        editIntent.putExtra(PurnishEditorActivity.INDEX_PURNISH,position);
+        startActivity(editIntent);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mAdapter.notifyDataSetChanged();
     }
 }

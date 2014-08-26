@@ -28,6 +28,7 @@
     <string name="btn_start_party">开始</string>
     <string name="btn_delete">删除</string>
     <string name="btn_default">设为默认</string>
+    <string name="btn_save">保存</string>
 
     <string name="lock_request_confirm_tip">要开始锁定吗？</string>
     <string name="btn_start_lock">开始</string>
@@ -41,8 +42,14 @@
     <string name="hint_scan_barcode_join">给朋友们扫一扫，让他们快快加入吧</string>
     <string name="hint_user_already_in">已加入小伙伴</string>
 
+    <string name="toast_default_saved">保存成功</string>
+    <string name="toast_save_fail">保存失败</string>
+    <string name="toast_delete_succ">删除成功</string>
+    <string name="toast_delete_fail">删除失败</string>
+
     <string name="scan_text"></string>
 
     <string name="title_setting">设置</string>
+    <string name="title_purnish">惩罚措施</string>
 
 </resources>
