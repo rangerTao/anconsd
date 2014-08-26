@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.ranger.lpa.pojos.PurnishInfo;
 import com.ranger.lpa.pojos.PurnishList;
 
 public class MineProfile{
@@ -26,6 +27,10 @@ public class MineProfile{
     private String udid;
 
     private long lockPeriod;
+
+    private long lockPeriodCouple;
+    private long lockPeriodParty;
+    private long lockPeriodWork;
 
     private PurnishList purnish;
 
@@ -111,6 +116,9 @@ public class MineProfile{
 		this.strUserHead = settings.getString("user_head", "");
         this.udid = settings.getString("udid","");
         this.lockPeriod = settings.getLong("lock_period", LOCK_PERIOD);
+        this.lockPeriodCouple = settings.getLong("lock_couple",LOCK_PERIOD);
+        this.lockPeriodParty = settings.getLong("lock_party",LOCK_PERIOD);
+        this.lockPeriodWork = settings.getLong("lock_work",LOCK_PERIOD);
         this.purnish = gson.fromJson(settings.getString("purnish",""),PurnishList.class);
         String accountList = settings.getString("accountlist", "");
 		// accountList = "aaaaa;bbbbb;dcccc;ddddd;eeeee";
@@ -149,6 +157,9 @@ public class MineProfile{
 		editor.putString("push_channelid", this.push_channelid);
 		editor.putString("push_userid", this.push_userid);
         editor.putLong("lock_period", this.lockPeriod);
+        editor.putLong("lock_couple",this.lockPeriodCouple);
+        editor.putLong("lock_party",this.lockPeriodParty);
+        editor.putLong("lock_work",this.lockPeriodWork);
 
 		String accountList = "";
 		for (String string : this.accountList) {
@@ -163,7 +174,34 @@ public class MineProfile{
 		return editor.commit();
 	}
 
+    public long getLockPeriodCouple() {
+        return lockPeriodCouple;
+    }
+
+    public void setLockPeriodCouple(long lockPeriodCouple) {
+        this.lockPeriodCouple = lockPeriodCouple;
+    }
+
+    public long getLockPeriodParty() {
+        return lockPeriodParty;
+    }
+
+    public void setLockPeriodParty(long lockPeriodParty) {
+        this.lockPeriodParty = lockPeriodParty;
+    }
+
+    public long getLockPeriodWork() {
+        return lockPeriodWork;
+    }
+
+    public void setLockPeriodWork(long lockPeriodWork) {
+        this.lockPeriodWork = lockPeriodWork;
+    }
+
     public PurnishList getPurnish() {
+        if(purnish == null)
+            purnish = new PurnishList();
+
         return purnish;
     }
 
@@ -316,6 +354,49 @@ public class MineProfile{
 			this.sessionID = sessionID;
 		}
 	}
+
+    public boolean setDefaultPurnish(int index){
+
+        for(int i = 0;i< purnish.getPurnishes().size();i++){
+            PurnishInfo pi = purnish.getPurnishes().get(i);
+
+            if(i != index){
+                pi.setDefault(false);
+                Save();
+                Load();
+            }else{
+                pi.setDefault(true);
+                Save();
+                Load();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean removePurnish(int index){
+
+        if(index >=0 && index < purnish.getPurnishes().size()){
+            purnish.getPurnishes().remove(index);
+            Save();
+            return true;
+        }
+
+        return false;
+    }
+
+    public String getDefaultPurnishContent(){
+        for(int i = 0;i< purnish.getPurnishes().size();i++){
+            PurnishInfo pi = purnish.getPurnishes().get(i);
+
+            if(pi.isDefault()){
+                return pi.getPurnish_content();
+            }
+        }
+
+        return "";
+    }
 
     public String getAppversion() {
 		return appversion;

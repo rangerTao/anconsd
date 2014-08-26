@@ -171,6 +171,8 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
         view_find_phone.findViewById(R.id.btn_start_party_server).setOnClickListener(this);
         tvLockPeriodHint = (TextView)view_find_phone.findViewById(R.id.tv_lock_time_period);
 
+        tvLockPeriodHint.setText(StringUtil.getFormattedTimeByMillseconds(MineProfile.getInstance().getLockPeriodParty()));
+
         view_find_phone.findViewById(R.id.btn_screen_select).setOnClickListener(this);
         view_find_phone.findViewById(R.id.btn_settings).setOnClickListener(this);
 
@@ -242,7 +244,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                 showWaitingPopup();
                 break;
             case R.id.btn_start_party_server:
-//                LPAWifiManager.getInstance(getApplicationContext()).startWifiAp();
+                LPAWifiManager.getInstance(getApplicationContext()).startWifiAp();
                 try {
                     LPApplication.getInstance().setSelfServer(true);
 
@@ -529,14 +531,20 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                 Bundle bundle = data.getExtras();
                 String result = bundle.getString(BarcodeScannerActivity.RESULT_CONTENT);
                 if (result != null && !result.equals("")) {
-                    Gson gson = new Gson();
-                    WifiInfo wInfo = gson.fromJson(result, WifiInfo.class);
-                    if (wInfo != null) {
-                        if (LPAWifiManager.getInstance(getApplicationContext()).connectWifi(wInfo)) {
-                            WifiUtils.initWifiSetting(LPAPartyCenter.this,wInfo.getmSSID());
-                        } else {
-                            Toast.makeText(getApplicationContext(),"error",Toast.LENGTH_LONG).show();
+
+                    try{
+                        Gson gson = new Gson();
+                        WifiInfo wInfo = gson.fromJson(result, WifiInfo.class);
+                        if (wInfo != null) {
+                            if (LPAWifiManager.getInstance(getApplicationContext()).connectWifi(wInfo)) {
+                                WifiUtils.initWifiSetting(LPAPartyCenter.this,wInfo.getmSSID());
+                            } else {
+                                Toast.makeText(getApplicationContext(),"error",Toast.LENGTH_LONG).show();
+                            }
                         }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(),"error",Toast.LENGTH_LONG).show();
                     }
                 }
             }

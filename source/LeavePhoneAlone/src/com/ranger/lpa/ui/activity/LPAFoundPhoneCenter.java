@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.ranger.lpa.Constants;
+import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.R;
 import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
 import com.ranger.lpa.connectity.wifi.LPAWifiManager;
@@ -39,6 +40,7 @@ import com.ranger.lpa.thread.LPAClientThread;
 import com.ranger.lpa.thread.LPAServerNotifyThread;
 import com.ranger.lpa.tools.NotifyManager;
 import com.ranger.lpa.ui.view.LPAKeyGuardView;
+import com.ranger.lpa.utils.StringUtil;
 import com.ranger.lpa.utils.WifiUtils;
 
 import java.io.IOException;
@@ -153,8 +155,13 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
     }
 
+    TextView tvLockPeriod;
+
     private void initCouplePattern(){
         view_find_phone = ((ViewStub) findViewById(R.id.stub_lock_center)).inflate();
+
+        tvLockPeriod = (TextView) view_find_phone.findViewById(R.id.tv_lock_time_period);
+        tvLockPeriod.setText(StringUtil.getFormattedTimeByMillseconds(MineProfile.getInstance().getLockPeriodCouple()));
 
         fl_btn_start_lock = (RelativeLayout) view_find_phone.findViewById(R.id.fl_search_btn);
         fl_btn_start_lock.setOnClickListener(this);

@@ -71,7 +71,21 @@
         <activity
             android:name=".ui.activity.LPAPartyCenter"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.activity.SettingPurnishListActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.SettingPurnishListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.PurnishEditorActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.PurnishAddActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.SettingPatternActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.PatternPeriodEditActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

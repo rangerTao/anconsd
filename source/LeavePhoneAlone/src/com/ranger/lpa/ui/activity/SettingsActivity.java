@@ -31,10 +31,11 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
         ((TextView) findViewById(R.id.tv_title)).setText(R.string.title_setting);
         findViewById(R.id.iv_btn_back).setOnClickListener(this);
         findViewById(R.id.rl_purnish_setting).setOnClickListener(this);
+        findViewById(R.id.rl_pattern_setting).setOnClickListener(this);
 
         tv_purnish = (TextView) findViewById(R.id.tv_purnish_content);
 
-        tv_purnish.setText(R.string.title_setting);
+        tv_purnish.setText(MineProfile.getInstance().getDefaultPurnishContent());
     }
 
     @Override
@@ -47,6 +48,10 @@ public class SettingsActivity extends BaseActivity implements View.OnClickListen
             case R.id.rl_purnish_setting:
                 Intent intent = new Intent(this,SettingPurnishListActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.rl_pattern_setting:
+                Intent pIntent = new Intent(this,SettingPatternActivity.class);
+                startActivity(pIntent);
                 break;
         }
 

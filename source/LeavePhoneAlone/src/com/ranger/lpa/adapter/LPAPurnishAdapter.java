@@ -30,6 +30,9 @@ public class LPAPurnishAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if(mPurnish == null || mPurnish.getPurnishes() == null){
+            return 0;
+        }
         return mPurnish.getPurnishes().size();
     }
 
@@ -69,6 +72,8 @@ public class LPAPurnishAdapter extends BaseAdapter {
 
         if(pi.isDefault()){
             ph.ivIndex.setImageResource(R.drawable.punish_selected);
+        }else{
+            ph.ivIndex.setImageResource(R.drawable.purnish_first);
         }
 
         ph.tvTitle.setText(pi.getPurnish_title());

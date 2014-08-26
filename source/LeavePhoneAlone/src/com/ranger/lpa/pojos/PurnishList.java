@@ -10,6 +10,11 @@ public class PurnishList {
     ArrayList<PurnishInfo> purnishes;
 
     public ArrayList<PurnishInfo> getPurnishes() {
+
+        if(purnishes == null){
+            purnishes = new ArrayList<PurnishInfo>();
+        }
+
         return purnishes;
     }
 
