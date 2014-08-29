@@ -101,6 +101,16 @@ public class BaseInfo {
         }
     }
 
+    public void sendMessage(BluetoothSocket serverSocket) {
+
+        try {
+            serverSocket.getOutputStream().write(getMessageString().getBytes());
+            serverSocket.getOutputStream().flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void sendMessage(BluetoothSocket serverSocket, int msg) {
 
         try {

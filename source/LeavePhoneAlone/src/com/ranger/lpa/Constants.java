@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Constants {
 
-	public static final String D_UUID = "A9B54FA6-6749-FF1D-D104-C7CC15305A6C";
+	public static final String D_UUID = "8ce255c0-200a-11e0-ac64-0800200c9a66";
 	public static final UUID mUUID = UUID.fromString(D_UUID);
 
     public static boolean isBoradcastNeeded = true;
