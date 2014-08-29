@@ -235,7 +235,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 
                 break;
             case R.id.btn_join_party_server:
-                startBarcodeScanner();
+//                startBarcodeScanner();
                 WifiUtils.getInstance().setmWifiConnected(this);
 
                 clientThread = new LPAUdpClientThread(getApplicationContext());
@@ -271,6 +271,11 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.btn_request_refuse:
                 dismissLockRequestDialog();
+                
+                if(clientThread != null){
+                    clientThread.stop();
+                }
+                
                 break;
             case R.id.btn_cancel_waiting_popup:
                 dismissWaitingPopup();
@@ -464,6 +469,8 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
             popup_lock_request_dialog.dismiss();
             popup_lock_request_dialog = null;
         }
+        
+        
     }
 
     //显示锁定请求弹窗

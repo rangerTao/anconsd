@@ -8,6 +8,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.ranger.lpa.Constants;
+import com.ranger.lpa.LPApplication;
 import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.pojos.BaseInfo;
 import com.ranger.lpa.pojos.NotifyServerInfo;
@@ -34,21 +35,11 @@ public class LPAServerNotifyThread extends Thread{
 
     private Context mContext;
 
-    private String ip;
-
     private WifiUser wuSelf;
 
     public LPAServerNotifyThread(Context con) {
 
         mContext = con;
-
-        WifiManager wifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
-
-        DhcpInfo dhcpInfo = wifiManager.getDhcpInfo();
-
-        ip = String.valueOf(long2ip(dhcpInfo.ipAddress));
-
-        ip = ip.substring(0,ip.lastIndexOf(".")) + ".255";
 
         wuSelf = new WifiUser(BaseInfo.MSG_NOTIFY_SERVER);
         wuSelf.setUdid(MineProfile.getInstance().getUdid());
@@ -114,7 +105,7 @@ public class LPAServerNotifyThread extends Thread{
         ds_localserver.setBroadcast(true);
 
         dp_notify = new DatagramPacket(msg,0,msg.length);
-        dp_notify.setAddress(InetAddress.getByName(ip));
+        dp_notify.setAddress(InetAddress.getByName(LPApplication.getInstance().getLocalIP()));
         dp_notify.setPort(Constants.UDP_SOCKET);
     }
 
@@ -128,7 +119,7 @@ public class LPAServerNotifyThread extends Thread{
             String lockMsg = lockStart.getMessageStringLimt();
             byte[] msg = lockMsg.getBytes();
             dp_notify = new DatagramPacket(msg,0,msg.length);
-            dp_notify.setAddress(InetAddress.getByName(ip));
+            dp_notify.setAddress(InetAddress.getByName(LPApplication.getInstance().getLocalIP()));
             dp_notify.setPort(Constants.UDP_SOCKET);
 
             ds_localserver.send(dp_notify);
@@ -137,15 +128,4 @@ public class LPAServerNotifyThread extends Thread{
         }
     }
 
-    String long2ip(long ip){
-        StringBuffer sb=new StringBuffer();
-        sb.append(String.valueOf((int)(ip&0xff)));
-        sb.append('.');
-        sb.append(String.valueOf((int)((ip>>8)&0xff)));
-        sb.append('.');
-        sb.append(String.valueOf((int)((ip>>16)&0xff)));
-        sb.append('.');
-        sb.append(String.valueOf((int)((ip>>24)&0xff)));
-        return sb.toString();
-    }
 }
