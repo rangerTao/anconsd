@@ -74,6 +74,10 @@ public class LPAUdpClientThread extends Thread {
                             case BaseInfo.MSG_NOTIFY_SERVER:
                                 if (!LPApplication.getInstance().isSelfServer()){
 
+                                    if(Constants.DEBUG){
+                                        Log.e("TAG", "msg notify server received: " + msg);
+                                    }
+
                                     SubmitNameResult snr = gson.fromJson(msg,SubmitNameResult.class);
 
                                     if(!snr.getUsers().contains(MineProfile.getInstance().getUdid())){
@@ -127,6 +131,7 @@ public class LPAUdpClientThread extends Thread {
         DatagramPacket dpName = new DatagramPacket(msg.getBytes(), msg.length());
 
         try {
+            dpName.setAddress(InetAddress.getByName(LPApplication.getInstance().getLocalIP()));
             dSocket.send(dpName);
         } catch (Exception e) {
             e.printStackTrace();
