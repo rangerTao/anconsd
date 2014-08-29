@@ -44,6 +44,7 @@ import com.ranger.lpa.utils.StringUtil;
 import com.ranger.lpa.utils.WifiUtils;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -235,11 +236,9 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                         super.run();
 
                         try {
-                            Socket socket = new Socket("192.168.191.1",8999);
-
-//                            BluetoothSocket socket = dev.createRfcommSocketToServiceRecord(Constants.mUUID);
+                            BluetoothSocket socket = dev.createRfcommSocketToServiceRecord(Constants.mUUID);
                             if(socket != null){
-//                                socket.connect();
+                                socket.connect();
 
                                 if(bts != null){
                                     bts.close();
@@ -297,24 +296,6 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
             case R.id.btn_giveup_cancel:
                 dismissGiveupRequestDialog();
                 lpact.sendGiveupRequestRefuse();
-                break;
-            case R.id.btn_join_party_server:
-                startBarcodeScanner();
-                break;
-            case R.id.btn_start_party_server:
-                LPAWifiManager.getInstance(getApplicationContext()).startWifiAp();
-                try{
-                    ImageView ivBarcode = (ImageView) view_find_phone.findViewById(R.id.iv_barcode);
-//                    Bitmap barcode = EncodingHandler.createQRCode(LPAWifiManager.getInstance(getApplicationContext()).getmWifiInfo().getMessageString(), ivBarcode.getWidth());
-//                    ivBarcode.setImageBitmap(barcode);
-//
-//                    serNotifyThread = new LPAServerNotifyThread(getApplicationContext());
-//
-//                    serNotifyThread.start();
-
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
                 break;
         }
     }
@@ -477,7 +458,7 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
         }
 
         if (popup_select_btdevices == null) {
-            popup_select_btdevices = new Dialog(this);
+            popup_select_btdevices = new Dialog(LPAFoundPhoneCenter.this);
             popup_select_btdevices.setContentView(view_select_btdevices, new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
             lv_devices = (ListView) view_select_btdevices.findViewById(R.id.lv_bt_devices);
@@ -513,6 +494,8 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
         tv_phone_name_small.setText(btDeviceFounded.getName());
         tv_phone_name_founded.setText(getString(R.string.text_phone_found, btDeviceFounded.getName()));
+
+        dev = btDeviceFounded;
     }
 
     private BluetoothDevice dev;
@@ -585,13 +568,15 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
                     public void run() {
 
+                        BluetoothSocket bs;
+
                         try {
                             bts = btManager
                                     .getBluetoothAdapter()
                                     .listenUsingRfcommWithServiceRecord(blueName,
                                             Constants.mUUID);
 
-                            BluetoothSocket bs = bts.accept();
+                            bs = bts.accept();
 
                             if(bs != null){
                                 lpact = new LPAClientThread(getApplicationContext(),bs,false);
@@ -604,6 +589,7 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
+
                         }
                     }
                 }.start();
