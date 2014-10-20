@@ -178,7 +178,7 @@ public class BMRegisterActivity extends Activity implements OnClickListener,
 	@Override
 	public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
 		if (requestTag != Constants.NET_TAG_GET_PHONE_VERIFYCODE) {
-			if (progressDialog != null) {
+			if (progressDialog != null && progressDialog.isShowing()) {
 				progressDialog.dismiss();
 				progressDialog = null;
 			}
@@ -186,28 +186,7 @@ public class BMRegisterActivity extends Activity implements OnClickListener,
 			endTimer();
 		}
 
-		switch (errorCode) {
-		case DcError.DC_EXIST_USER:
-			if (requestTag == Constants.NET_TAG_USERNAME_REGISTER) {
-				CustomToast.showLoginRegistErrorToast(this, errorCode);
-			} else {
-				CustomToast.showLoginRegistErrorToast(this, CustomToast.DC_ERR_EXIST_PHONENUM);
-			}
-			break;
-		case DcError.DC_EXIST_NICKNAME:
-			CustomToast.showLoginRegistErrorToast(this, CustomToast.DC_ERR_NICKNAME_IS_INUSE);
-			break;
-		case DcError.DC_NICKNAME_INVALID:
-			CustomToast.showLoginRegistErrorToast(this, CustomToast.DC_ERR_NICKNAME_BAD_FORMAT);
-			break;
-		case DcError.DC_HAVE_BIND:
-			CustomToast.showLoginRegistErrorToast(this, CustomToast.DC_ERR_EXIST_PHONENUM);
-//			disableRigisterBtn();
-			break;
-		default:
-			CustomToast.showLoginRegistErrorToast(this, errorCode);
-			break;
-		}
+        CustomToast.showToast(this,msg);
 	}
 
 	@Override

@@ -50,8 +50,8 @@ public class JSONParser {
 					JSONObject jsonObj = new JSONObject(resData);
 
 					String tag = jsonObj.getString(Constants.JSON_TAG);
-					int errorcode = jsonObj.getInt(Constants.JSON_ERROR_CODE);
-					String errorStr = jsonObj.getString(Constants.JSON_ERROR_MSG);
+					int errorcode = jsonObj.getInt("success");
+					String errorStr = jsonObj.getString("message");
 
 					result.setTag(tag);
 					result.setErrorCode(errorcode);
@@ -91,9 +91,9 @@ public class JSONParser {
 		do {
 			try {
 				JSONObject jsonObj = new JSONObject(resData);
-				int errorcode = jsonObj.getInt(Constants.JSON_ERROR_CODE);
-				String errorStr = jsonObj.getString(Constants.JSON_ERROR_MSG);
-				String tag = jsonObj.getString(Constants.JSON_TAG);
+				int errorcode = jsonObj.getInt("success");
+				String errorStr = jsonObj.getString("message");
+				String tag = Constants.NET_TAG_GET_PHONE_VERIFYCODE +"";
 
 				result.setTag(tag);
 				result.setErrorCode(errorcode);
@@ -119,9 +119,9 @@ public class JSONParser {
 		do {
 			try {
 				JSONObject jsonObj = new JSONObject(resData);
-				int errorcode = jsonObj.getInt(Constants.JSON_ERROR_CODE);
-				String errorStr = jsonObj.getString(Constants.JSON_ERROR_MSG);
-				String tag = jsonObj.getString(Constants.JSON_TAG);
+				int errorcode = jsonObj.getInt("success");
+				String errorStr = jsonObj.getString("message");
+				String tag = Constants.NET_TAG_CHANGE_PWD +"";
 
 				result.setTag(tag);
 				result.setErrorCode(errorcode);

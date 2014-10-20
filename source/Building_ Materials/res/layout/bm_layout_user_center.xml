@@ -261,4 +261,12 @@
         </RelativeLayout>
     </LinearLayout>
 
+    <ImageView
+        android:visibility="gone"
+        android:layout_marginTop="30dp"
+        android:id="@+id/iv_logoff"
+        android:layout_width="fill_parent"
+        android:src="@drawable/log_off"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>
