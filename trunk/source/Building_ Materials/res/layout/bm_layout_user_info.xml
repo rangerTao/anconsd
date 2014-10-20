@@ -205,7 +205,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/user_center_item_bg"
                     android:minHeight="40dp"
-                    android:onClick="showedit">
+                    android:onClick="showSelectSex">
 
                     <TextView
                         android:layout_width="wrap_content"

@@ -310,8 +310,8 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
     private List<String> getKeywords() {
         final List<String> keys = this.keywordsWrapper.getKeywords();
         Collections.shuffle(keys);
-        ArrayList<String> ret = new ArrayList<String>(10);
-        for (int i = 0; i < 10; i++) {
+        ArrayList<String> ret = new ArrayList<String>(8);
+        for (int i = 0; i < 8; i++) {
             ret.add(keys.get(i));
         }
         return ret;

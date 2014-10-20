@@ -54,7 +54,7 @@ public class BMCompanyInfoFragment extends Fragment implements NetUtil.IRequestL
         bm_tv_company_info_name = (TextView) root.findViewById(R.id.bm_tv_company_info_name);
         bm_tv_company_info_contact = (TextView) root.findViewById(R.id.bm_tv_company_info_contact);
         bm_tv_company_info_phone = (TextView) root.findViewById(R.id.bm_tv_company_info_phone);
-        bm_tv_company_info_mphone = (TextView) root.findViewById(R.id.bm_tv_company_info_phone);
+        bm_tv_company_info_mphone = (TextView) root.findViewById(R.id.bm_tv_company_info_mphone);
         bm_tv_company_info_addres = (TextView) root.findViewById(R.id.bm_tv_company_info_addres);
         bm_tv_company_info_level = (TextView) root.findViewById(R.id.bm_tv_company_info_level);
         getBm_tv_company_info_detai = (TextView) root.findViewById(R.id.bm_tv_company_info_detail);

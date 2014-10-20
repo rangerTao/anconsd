@@ -24,6 +24,7 @@ import android.text.TextWatcher;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.AlignmentSpan;
 import android.util.MonthDisplayHelper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -33,6 +34,8 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -105,6 +108,106 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
     public static final int USERINFO_EDIT_TYPE_SIGN = 1 << 4;
 
     private Dialog mDialog;
+    private View sexView;
+    private RadioGroup rgSex;
+
+    public void showSelectSex(View v) {
+
+        sexView = getLayoutInflater().inflate(R.layout.layout_sex_select, null);
+        rgSex = (RadioGroup) sexView.findViewById(R.id.rg_sex);
+
+        mDialog = new Dialog(this);
+
+        mDialog.setContentView(sexView);
+        mDialog.setTitle("设置性别");
+
+        mDialog.setCancelable(true);
+
+        mDialog.show();
+
+        if (MineProfile.getInstance().getUserType() == 1) {
+            RadioButton rbMale = (RadioButton) rgSex.findViewById(R.id.rb_male);
+            rbMale.setChecked(true);
+        } else if (MineProfile.getInstance().getUserType() == 0) {
+            RadioButton rbMale = (RadioButton) rgSex.findViewById(R.id.rb_female);
+            rbMale.setChecked(true);
+        } else {
+            RadioButton rbMale = (RadioButton) rgSex.findViewById(R.id.rb_none);
+            rbMale.setChecked(true);
+        }
+
+
+        rgSex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_male:
+                        MineProfile.getInstance().setUserType(1);
+                        break;
+                    case R.id.rb_female:
+                        MineProfile.getInstance().setUserType(0);
+                        break;
+                    case R.id.rb_none:
+                        MineProfile.getInstance().setUserType(2);
+                        break;
+                }
+
+                initView();
+
+                LoadingTask task = new LoadingTask(BMUserinfoActivity.this, new LoadingTask.ILoading() {
+
+                    @Override
+                    public void loading(NetUtil.IRequestListener listener) {
+                        NetUtil.getInstance().updateUserinfo(new NetUtil.IRequestListener() {
+                            @Override
+                            public void onRequestSuccess(BaseResult responseData) {
+
+                                if (responseData.getErrorCode() == 0) {
+                                    CustomToast.showToast(getApplicationContext(), "修改成功");
+                                    initView();
+                                    if (mDialog != null && mDialog.isShowing()) {
+                                        mDialog.dismiss();
+                                        mDialog = null;
+                                    }
+                                } else {
+                                    CustomToast.showToast(getApplicationContext(), "修改失败");
+                                }
+                            }
+
+                            @Override
+                            public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
+                                CustomToast.showToast(getApplicationContext(), msg);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void preLoading(View network_loading_layout, View network_loading_pb, View network_error_loading_tv) {
+                    }
+
+                    @Override
+                    public boolean isShowNoNetWorkView() {
+                        return true;
+                    }
+
+                    @Override
+                    public NetUtil.IRequestListener getRequestListener() {
+                        return BMUserinfoActivity.this;
+                    }
+
+                    @Override
+                    public boolean isAsync() {
+                        return false;
+                    }
+                });
+
+                task.setRootView(getWindow().getDecorView());
+                task.loading();
+            }
+        });
+
+
+    }
 
     public void showedit(View v){
 
@@ -127,14 +230,14 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
                 type = USERINFO_EDIT_TYPE_NAME;
                 title = "请输入名字";
                 break;
-            case R.id.bm_rl_user_sex:
-                type = USERINFO_EDIT_TYPE_SEX;
-                title = "请输入性别";
-                break;
-            case R.id.bm_rl_user_area:
-                title = "请输入城市";
-                type = USERINFO_EDIT_TYPE_AREA;
-                break;
+//            case R.id.bm_rl_user_sex:
+//                type = USERINFO_EDIT_TYPE_SEX;
+//                title = "请输入性别";
+//                break;
+//            case R.id.bm_rl_user_area:
+//                title = "请输入城市";
+//                type = USERINFO_EDIT_TYPE_AREA;
+//                break;
             case R.id.bm_rl_user_sign:
                 type = USERINFO_EDIT_TYPE_SIGN;
                 title = "请输入签名";
@@ -295,7 +398,14 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
 
         tvUserNick.setText(MineProfile.getInstance().getNickName());
         tvUserName.setText(MineProfile.getInstance().getUserName());
-        tvUserSex.setText(MineProfile.getInstance().getUserType() == 1?"男":"女");
+        if(MineProfile.getInstance().getUserType() == 1){
+            tvUserSex.setText("男");
+        }else if(MineProfile.getInstance().getUserType() == 0){
+            tvUserSex.setText("女");
+        }else{
+            tvUserSex.setText("保密");
+        }
+
         tvUserArea.setText(MineProfile.getInstance().getArea());
         tvUserSign.setText(MineProfile.getInstance().getSignture());
 
