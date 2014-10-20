@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <include layout="@layout/layout_lock_center_header"/>
@@ -80,6 +81,9 @@
                 android:textSize="14sp"/>
         </RelativeLayout>
     </LinearLayout>
+    <com.ranger.lpa.view.SearchScanView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
 
 
 </LinearLayout>

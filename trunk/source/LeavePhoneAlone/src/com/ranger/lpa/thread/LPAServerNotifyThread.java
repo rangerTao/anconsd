@@ -1,25 +1,16 @@
 package com.ranger.lpa.thread;
 
 import android.content.Context;
-import android.net.DhcpInfo;
-import android.net.wifi.WifiManager;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.ranger.lpa.Constants;
 import com.ranger.lpa.LPApplication;
 import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.pojos.BaseInfo;
 import com.ranger.lpa.pojos.NotifyServerInfo;
 import com.ranger.lpa.pojos.WifiUser;
-import com.ranger.lpa.utils.DeviceId;
-import com.ranger.lpa.utils.LocalNetWorkInfo;
-
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.math.MathContext;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -99,6 +90,10 @@ public class LPAServerNotifyThread extends Thread{
     private void sendNotifyServer() throws SocketException, UnknownHostException {
 
         String json = NotifyServerInfo.getInstance().getJson();
+
+        if(Constants.DEBUG){
+            Log.e("TAG","notify server info : " + json);
+        }
 
         byte[] msg = json.getBytes();
 
