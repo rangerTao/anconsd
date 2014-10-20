@@ -170,7 +170,7 @@ public class BMCompanyInfoFragment extends Fragment implements NetUtil.IRequestL
                         public void onRequestSuccess(BaseResult responseData) {
 
                             if(responseData.getErrorCode() == 1){
-                                CustomToast.showToast(getActivity(),"收藏失败");
+                                CustomToast.showToast(getActivity(),"收藏成功");
                             }else{
                                 CustomToast.showToast(getActivity(),"收藏失败");
                             }

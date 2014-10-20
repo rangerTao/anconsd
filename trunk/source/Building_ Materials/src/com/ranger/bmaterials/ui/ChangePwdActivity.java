@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -89,16 +90,16 @@ public class ChangePwdActivity extends Activity implements OnClickListener, IReq
 
 			MineProfile.getInstance().Print();
 
-			requestId = NetUtil.getInstance().requestChangePwd(oldpwd, newpwd, this);
+            try {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+            } catch (Exception e) {
+            }
+            progressDialog = CustomProgressDialog.createDialog(this);
+            progressDialog.setMessage(getResources().getString(R.string.committing_tip));
+            progressDialog.show();
+            requestId = NetUtil.getInstance().requestChangePwd(oldpwd, newpwd, this);
 
-			try {
-				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
-			} catch (Exception e) {
-			}
-			progressDialog = CustomProgressDialog.createDialog(this);
-			progressDialog.setMessage(getResources().getString(R.string.committing_tip));
-			progressDialog.show();
 		}
 	}
 
@@ -112,27 +113,29 @@ public class ChangePwdActivity extends Activity implements OnClickListener, IReq
 	}
 
 	@Override
-	public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
+    public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
 
-        if(progressDialog != null && progressDialog.isShowing())
-		    progressDialog.dismiss();
+        if (progressDialog != null && progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
 
-		switch (errorCode) {
-		case DcError.DC_BADPWD:
-			((EditText) findViewById(R.id.edit_change_oldpwd)).requestFocus();
-			break;
-		case DcError.DC_NEEDLOGIN:
-			MineProfile.getInstance().setIsLogin(false);
-			MineProfile.getInstance().setSessionID("");
-			Intent intent = new Intent(this, BMLoginActivity.class);
-			startActivity(intent);
-			CustomToast.showToast(this, getResources().getString(R.string.need_login_tip));
-			break;
-		default:
-			break;
-		}
-		CustomToast.showLoginRegistErrorToast(this, errorCode);
-	}
+        switch (errorCode) {
+            case DcError.DC_BADPWD:
+                ((EditText) findViewById(R.id.edit_change_oldpwd)).requestFocus();
+                break;
+            case DcError.DC_NEEDLOGIN:
+                MineProfile.getInstance().setIsLogin(false);
+                MineProfile.getInstance().setSessionID("");
+                Intent intent = new Intent(this, BMLoginActivity.class);
+                MineProfile.getInstance().Reset();
+                startActivity(intent);
+                CustomToast.showToast(this, getResources().getString(R.string.need_login_tip));
+                break;
+            default:
+                break;
+        }
+        CustomToast.showToast(this, "密码修改失败");
+    }
 
 	@Override
 	public void onCancel(DialogInterface dialog) {

@@ -189,6 +189,13 @@ public class BMMineFragment extends Fragment implements
         root.findViewById(R.id.bm_rl_my_collect).setOnClickListener(this);
         root.findViewById(R.id.bm_rl_userinfo).setOnClickListener(this);
         root.findViewById(R.id.bm_rl_update).setOnClickListener(this);
+        root.findViewById(R.id.iv_logoff).setOnClickListener(this);
+
+        if(MineProfile.getInstance().getIsLogin()){
+            root.findViewById(R.id.iv_logoff).setVisibility(View.VISIBLE);
+        }else{
+            root.findViewById(R.id.iv_logoff).setVisibility(View.GONE);
+        }
 
         flag = getActivity().getIntent().getBooleanExtra("flag", false);
 
@@ -256,6 +263,8 @@ public class BMMineFragment extends Fragment implements
             if (ucView != null)
                 ucView.setVisibility(View.VISIBLE);
 
+            root.findViewById(R.id.iv_logoff).setVisibility(View.VISIBLE);
+
             String nickName = MineProfile.getInstance().getNickName();
             if (TextUtils.isEmpty(nickName)) {
                 ((TextView) root.findViewById(R.id.label_user_nickname))
@@ -269,10 +278,7 @@ public class BMMineFragment extends Fragment implements
 
             // refreshUserHead();
         } else {
-//			if (btn_login != null)
-//				btn_login.setVisibility(View.VISIBLE);
-//			if (ucView != null)
-//				ucView.setVisibility(View.GONE);
+            root.findViewById(R.id.iv_logoff).setVisibility(View.GONE);
         }
     }
 
@@ -444,6 +450,10 @@ public class BMMineFragment extends Fragment implements
                 }
 
             }
+            break;
+            case R.id.iv_logoff:
+                MineProfile.getInstance().Reset();
+                refreshView();
             break;
 //            case R.id.tv_item_feedback_pop_menu_home_activity: {
 //                mPop.dismiss();

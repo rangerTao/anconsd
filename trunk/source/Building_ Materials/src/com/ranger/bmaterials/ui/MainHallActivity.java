@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.LocalSocket;
+import android.net.LocalSocketAddress;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -22,6 +24,7 @@ import com.ranger.bmaterials.adapter.AbstractListAdapter;
 import com.ranger.bmaterials.adapter.BMProvinceAdapter;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.bitmap.ImageLoaderHelper;
+import com.ranger.bmaterials.json.JSONParser;
 import com.ranger.bmaterials.listener.SearchKeywordsPreloadListener;
 import com.ranger.bmaterials.net.NetManager;
 import com.ranger.bmaterials.netresponse.BMProvinceListResult;
@@ -30,6 +33,13 @@ import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.view.CustomFragmentTabHost;
 import com.ranger.bmaterials.work.SplashTask;
 import com.ranger.bmaterials.work.SplashTask.IEnterHallCallBack;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.Socket;
+import java.net.URL;
 
 public class MainHallActivity extends FragmentActivity implements NetUtil.IRequestListener, AdapterView.OnItemClickListener, AbstractListAdapter.OnListItemClickListener {
 

@@ -227,11 +227,15 @@ public class NetUtil implements INetListener {
 
             BaseResult baseResult = JSONParser.parseBMPhoneVerifyCode(result);
             baseResult.setTag(Constants.NET_TAG_GET_PHONE_VERIFYCODE + "");
-            baseResult.setErrorCode(DcError.DC_OK);
 
             Log.e("TAG","webservice result " + result);
 
-            observer.onRequestSuccess(baseResult);
+            if(baseResult.getErrorCode() == 1){
+                observer.onRequestSuccess(baseResult);
+            }else{
+                observer.onRequestError(Constants.NET_TAG_GET_PHONE_VERIFYCODE, mCurrentRequestId, 1001, baseResult.getErrorString());
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -281,11 +285,13 @@ public class NetUtil implements INetListener {
 
             BaseResult baseResult = JSONParser.parseBMUserNameRegister(result);
             baseResult.setTag(Constants.NET_TAG_USERNAME_REGISTER + "");
-            baseResult.setErrorCode(DcError.DC_OK);
 
             Log.e("TAG","webservice result " + result);
 
-            observer.onRequestSuccess(baseResult);
+            if(baseResult.getErrorCode() == 1)
+                observer.onRequestSuccess(baseResult);
+            else
+                observer.onRequestError(Constants.NET_TAG_USERNAME_REGISTER, mCurrentRequestId, 1001, baseResult.getErrorString());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -480,7 +486,7 @@ public class NetUtil implements INetListener {
         SoapObject rpc = new SoapObject(nameSpace, methodName);
 
         rpc.addProperty("token", MineProfile.getInstance().getSessionID());
-        rpc.addProperty("info", AES.getInstance().encrypt("{\"oldpsw\":\"" + oldpwd + ",\"newpsw:\"" + newpwd + "\"}"));
+        rpc.addProperty("info", AES.getInstance().encrypt("{\"oldpsw\":\"" + oldpwd + "\",newpsw:\"" + newpwd + "\"}"));
 
         // 生成调用WebService方法的SOAP请求信息,并指定SOAP的版本
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER10);
@@ -505,14 +511,15 @@ public class NetUtil implements INetListener {
             // 获取返回的结果
             String result = object.getProperty(0).toString();
 
-            BaseResult baseResult = JSONParser.parseBMProvinceList(result);
+            BaseResult baseResult = JSONParser.parseChangePwd(result);
             baseResult.setTag(Constants.NET_TAG_CHANGE_PWD + "");
 
-            baseResult.setErrorCode(DcError.DC_OK);
-
             Log.e("TAG","webservice result " + result);
-
-            observer.onRequestSuccess(baseResult);
+            if(baseResult.getErrorCode() == 1){
+                observer.onRequestSuccess(baseResult);
+            }else{
+                observer.onRequestError(Constants.NET_TAG_CHANGE_PWD, mCurrentRequestId, 1001, "error");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
