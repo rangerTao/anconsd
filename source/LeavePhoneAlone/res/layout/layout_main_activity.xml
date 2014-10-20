@@ -15,6 +15,7 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
             android:text="@string/mode_promotion_hint_1"
             android:textColor="#70ffffff"
             android:textSize="35sp"/>
@@ -25,9 +26,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:background="#00000000"
+            android:drawablePadding="8dp"
             android:drawableRight="@drawable/mode_icon_couple"
             android:onClick="enter_pattern"
-            android:text="@string/mode_button_text_couple"/>
+            android:text="@string/mode_button_text_couple"
+            android:textColor="#fff"/>
 
     </LinearLayout>
 
@@ -41,6 +44,7 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
             android:text="@string/mode_promotion_hint_2"
             android:textColor="#70ffffff"
             android:textSize="35sp"/>
@@ -51,9 +55,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:background="#00000000"
+            android:drawablePadding="8dp"
             android:drawableRight="@drawable/mode_icon_party"
             android:onClick="enter_pattern"
-            android:text="@string/mode_button_text_party"/>
+            android:text="@string/mode_button_text_party"
+            android:textColor="#fff"/>
 
     </LinearLayout>
 
@@ -67,6 +73,7 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
             android:text="@string/mode_promotion_hint_3"
             android:textColor="#70ffffff"
             android:textSize="35sp"/>
@@ -77,9 +84,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|bottom"
             android:background="#00000000"
+            android:drawablePadding="8dp"
             android:drawableRight="@drawable/mode_icon_word"
             android:onClick="enter_pattern"
-            android:text="@string/mode_button_text_work"/>
+            android:text="@string/mode_button_text_work"
+            android:textColor="#fff"/>
 
     </LinearLayout>
 </LinearLayout>

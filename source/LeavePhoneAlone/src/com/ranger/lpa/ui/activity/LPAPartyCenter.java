@@ -1,68 +1,44 @@
 package com.ranger.lpa.ui.activity;
 
-import android.app.ActionBar;
 import android.app.Dialog;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
-import android.bluetooth.BluetoothSocket;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.zxing.common.StringUtils;
-import com.ranger.lpa.Constants;
 import com.ranger.lpa.LPApplication;
 import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.R;
 import com.ranger.lpa.adapter.LPAWifiUsersAdapter;
-import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
 import com.ranger.lpa.connectity.wifi.LPAWifiManager;
 import com.ranger.lpa.encoding.EncodingHandler;
 import com.ranger.lpa.pojos.BaseInfo;
 import com.ranger.lpa.pojos.NotifyServerInfo;
 import com.ranger.lpa.pojos.SocketMessage;
-import com.ranger.lpa.pojos.SubmitNameMessage;
 import com.ranger.lpa.pojos.WifiInfo;
 import com.ranger.lpa.pojos.WifiUser;
 import com.ranger.lpa.receiver.IOnNotificationReceiver;
 import com.ranger.lpa.test.adapter.BtDeviceListAdapter;
-import com.ranger.lpa.thread.LPAClientThread;
 import com.ranger.lpa.thread.LPAServerNotifyThread;
 import com.ranger.lpa.thread.LPAUdpClientThread;
 import com.ranger.lpa.tools.NotifyManager;
 import com.ranger.lpa.ui.view.LPAKeyGuardView;
 import com.ranger.lpa.utils.StringUtil;
 import com.ranger.lpa.utils.WifiUtils;
-
-import java.io.IOException;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by taoliang on 14-8-5.
@@ -244,7 +220,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                 showWaitingPopup();
                 break;
             case R.id.btn_start_party_server:
-                LPAWifiManager.getInstance(getApplicationContext()).startWifiAp();
+//                LPAWifiManager.getInstance(getApplicationContext()).startWifiAp();
                 try {
                     LPApplication.getInstance().setSelfServer(true);
 
@@ -469,8 +445,6 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
             popup_lock_request_dialog.dismiss();
             popup_lock_request_dialog = null;
         }
-        
-        
     }
 
     //显示锁定请求弹窗
