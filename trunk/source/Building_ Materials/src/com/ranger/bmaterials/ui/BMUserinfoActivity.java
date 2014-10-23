@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -29,6 +30,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -36,6 +40,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +51,9 @@ import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.bitmap.ImageLoaderHelper;
 import com.ranger.bmaterials.cropimg.CropImageActivity;
 import com.ranger.bmaterials.cropimg.ModifyAvatarDialog;
+import com.ranger.bmaterials.json.JSONParser;
 import com.ranger.bmaterials.listener.onEditUserInfoDialogDismissListener;
+import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BMUserInfoResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.netresponse.UserNameRegisterResult;
@@ -108,6 +115,133 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
     public static final int USERINFO_EDIT_TYPE_SIGN = 1 << 4;
 
     private Dialog mDialog;
+
+    private View viewProvince;
+    private Spinner spProvince;
+    private Button btnClose;
+
+    public void showSelectProvince(View v){
+
+        viewProvince = getLayoutInflater().inflate(R.layout.layout_location_select,null);
+        spProvince = (Spinner) viewProvince.findViewById(R.id.sp_location);
+        btnClose = (Button) viewProvince.findViewById(R.id.btn_close_dialog);
+
+        mDialog = new Dialog(this);
+
+        mDialog.setContentView(viewProvince);
+        mDialog.setTitle("选择所在地");
+
+        mDialog.setCancelable(true);
+
+        mDialog.show();
+
+        btnClose.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mDialog != null && mDialog.isShowing()){
+                    mDialog.dismiss();
+                }
+            }
+        });
+
+        SharedPreferences sp = getSharedPreferences("cache", Context.MODE_PRIVATE);
+
+        String cache_province = sp.getString("provinces","");
+
+        if(!cache_province.equals("")){
+            BaseResult baseResult = JSONParser.parseBMProvinceList(cache_province);
+            BMProvinceListResult blr = (BMProvinceListResult) baseResult;
+
+            String[] provinns = new String[blr.getProviceList().size() + 1];
+
+            provinns[0] = "";
+
+            int index = 1;
+
+            for(BMProvinceListResult.ProviceItem pi : blr.getProviceList()){
+                provinns[index] = pi.getName();
+                index++;
+            }
+
+            // 建立Adapter并且绑定数据源
+            ArrayAdapter<String> _Adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, provinns);
+            //绑定 Adapter到控件
+            spProvince.setAdapter(_Adapter);
+
+            spProvince.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    String str=parent.getItemAtPosition(position).toString();
+
+                    if(str.equals("")){
+                        return;
+                    }
+
+                    MineProfile.getInstance().setArea(str);
+
+                    LoadingTask task = new LoadingTask(BMUserinfoActivity.this, new LoadingTask.ILoading() {
+
+                        @Override
+                        public void loading(NetUtil.IRequestListener listener) {
+                            NetUtil.getInstance().updateUserinfo(new NetUtil.IRequestListener() {
+                                @Override
+                                public void onRequestSuccess(BaseResult responseData) {
+
+                                    if (responseData.getErrorCode() == 0) {
+                                        CustomToast.showToast(getApplicationContext(), "修改成功");
+                                        initView();
+                                        if (mDialog != null && mDialog.isShowing()) {
+                                            mDialog.dismiss();
+                                            mDialog = null;
+                                        }
+                                    } else {
+                                        CustomToast.showToast(getApplicationContext(), "修改失败");
+                                    }
+                                }
+
+                                @Override
+                                public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
+                                    CustomToast.showToast(getApplicationContext(), msg);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void preLoading(View network_loading_layout, View network_loading_pb, View network_error_loading_tv) {
+                        }
+
+                        @Override
+                        public boolean isShowNoNetWorkView() {
+                            return true;
+                        }
+
+                        @Override
+                        public NetUtil.IRequestListener getRequestListener() {
+                            return BMUserinfoActivity.this;
+                        }
+
+                        @Override
+                        public boolean isAsync() {
+                            return false;
+                        }
+                    });
+
+                    task.setRootView(getWindow().getDecorView());
+                    task.loading();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        }
+
+
+
+    }
+
     private View sexView;
     private RadioGroup rgSex;
 

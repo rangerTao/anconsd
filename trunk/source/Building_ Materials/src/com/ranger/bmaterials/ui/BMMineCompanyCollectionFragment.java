@@ -44,7 +44,7 @@ public class BMMineCompanyCollectionFragment extends Fragment implements OnClick
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.mine_activity_collection_subpage_guide, null);
+		View view = inflater.inflate(R.layout.mine_activity_collection_subpage_company, null);
 		return view;
 	}
 
@@ -56,7 +56,7 @@ public class BMMineCompanyCollectionFragment extends Fragment implements OnClick
 		noMoreGuide = false;
 		guideListInfo = new ArrayList<BMCollectionResult.Collection>();
 		guideInfoListAdapter = new BMComCollectionAdapter(getActivity(), guideListInfo);
-		plvGuide = (PullToRefreshListView) getActivity().findViewById(R.id.listview_mine_collection_guides);
+		plvGuide = (PullToRefreshListView) getActivity().findViewById(R.id.listview_mine_collection_company);
 		plvGuide.setOnRefreshListener(this);
 		plvGuide.setAdapter(guideInfoListAdapter);
 		plvGuide.setOnItemClickListener(this);

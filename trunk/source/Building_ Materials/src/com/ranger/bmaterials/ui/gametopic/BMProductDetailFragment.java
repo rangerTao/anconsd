@@ -142,8 +142,19 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
 
     private boolean mIsOpen = false;
 
+    private ImageView ivAdapt;
+
     private void adapt()
     {
+
+        ivAdapt = (ImageView) root.findViewById(R.id.iv_detail_dictor);
+
+        if(mIsOpen){
+            ivAdapt.setImageResource(R.drawable.arrow_hide_detail);
+        }else{
+            ivAdapt.setImageResource(R.drawable.arrow_show_detail);
+        }
+
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) bm_tv_product_detail.getLayoutParams();
 
         lp.height = mIsOpen ? RelativeLayout.LayoutParams.WRAP_CONTENT : mHeight;

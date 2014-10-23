@@ -140,7 +140,7 @@ public class MineProfile implements IRequestListener {
 	}
 
 	public void Reset() {
-		Context context = GameTingApplication.getAppInstance()
+		Context context = BMApplication.getAppInstance()
 				.getApplicationContext();
 		Reset(context);
 	}
@@ -207,7 +207,7 @@ public class MineProfile implements IRequestListener {
 	}
 
 	private void Load() {
-		Context context = GameTingApplication.getAppInstance()
+		Context context = BMApplication.getAppInstance()
 				.getApplicationContext();
 		Load(context);
 	}
@@ -279,7 +279,7 @@ public class MineProfile implements IRequestListener {
 	}
 
 	public boolean Save() {
-		Context context = GameTingApplication.getAppInstance()
+		Context context = BMApplication.getAppInstance()
 				.getApplicationContext();
 		return Save(context);
 	}
@@ -631,7 +631,7 @@ public class MineProfile implements IRequestListener {
 		if (this.installAutomaticllyAfterDownloading != installAutomaticllyAfterDownloading) {
 			this.installAutomaticllyAfterDownloading = installAutomaticllyAfterDownloading;
 		}
-		Save(GameTingApplication.getAppInstance());
+		Save(BMApplication.getAppInstance());
 	}
 
 	public String getGamenum() {
@@ -765,12 +765,12 @@ public class MineProfile implements IRequestListener {
 		intent.putExtra("collectnum", this.collectnum);
 		intent.putExtra("coinnum", this.coinnum);
 
-		GameTingApplication.getAppInstance().sendBroadcast(intent);
+		BMApplication.getAppInstance().sendBroadcast(intent);
 	}
 
 	public void broadcastRefreshMsgEvent() {
 		Intent intent = new Intent(MineProfile.MINE_DYNAMIC_DATA_REFRESH);
-		GameTingApplication.getAppInstance().sendBroadcast(intent);
+		BMApplication.getAppInstance().sendBroadcast(intent);
 	}
 
 	public static final String ADD_COIN_NUM_EXTRA = "addCoinnum";
@@ -781,7 +781,7 @@ public class MineProfile implements IRequestListener {
 //		intent.putExtra(ADD_COIN_NUM_EXTRA, addCoinnum);
 //		intent.putExtra(TOTAL_COIN_NUM_EXTRA, this.coinnum);
 //
-//		GameTingApplication.getAppInstance().sendBroadcast(intent);
+//		BMApplication.getAppInstance().sendBroadcast(intent);
 	}
 
 	public String getStrUserHead() {

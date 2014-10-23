@@ -2,15 +2,13 @@ package com.ranger.bmaterials.ui;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ranger.bmaterials.R;
-import com.ranger.bmaterials.app.GameTingApplication;
+import com.ranger.bmaterials.app.BMApplication;
 
 public class CustomProgressDialog extends Dialog {
 	private Context context = null;
@@ -52,7 +50,7 @@ public class CustomProgressDialog extends Dialog {
 		customProgressDialog.setContentView(R.layout.mine_progress_dialog);
 		WindowManager.LayoutParams params = customProgressDialog.getWindow().getAttributes();
 		params.x = 0;
-		DisplayMetrics displayMetrics = GameTingApplication.getAppInstance().getResources().getDisplayMetrics();
+		DisplayMetrics displayMetrics = BMApplication.getAppInstance().getResources().getDisplayMetrics();
 		int height = displayMetrics.heightPixels;
 //		Log.e("CustomProgress", "params.y="+params.y+",height="+height);
 		params.y = height/4;

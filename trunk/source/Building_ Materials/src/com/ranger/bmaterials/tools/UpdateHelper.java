@@ -18,9 +18,9 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 
 import com.ranger.bmaterials.R;
+import com.ranger.bmaterials.app.BMApplication;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
-import com.ranger.bmaterials.app.GameTingApplication;
 import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.netresponse.CheckUpdateResult;
@@ -167,7 +167,7 @@ public class UpdateHelper implements IRequestListener, OnClickListener, OnCancel
 			}
 		}
 		
-		GameTingApplication.getAppInstance().sendBroadcast(new Intent(Constants.UPDATE_AVIABLE));
+		BMApplication.getAppInstance().sendBroadcast(new Intent(Constants.UPDATE_AVIABLE));
 		
 	}
 

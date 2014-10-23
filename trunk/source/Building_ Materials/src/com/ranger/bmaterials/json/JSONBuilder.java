@@ -1,19 +1,15 @@
 package com.ranger.bmaterials.json;
 
-import java.util.List;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
 import com.ranger.bmaterials.R;
+import com.ranger.bmaterials.app.BMApplication;
 import com.ranger.bmaterials.app.Constants;
-import com.ranger.bmaterials.app.GameTingApplication;
 import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.encrypt.AES;
 import com.ranger.bmaterials.tools.ConnectManager;
@@ -28,7 +24,7 @@ public final class JSONBuilder {
 	private static JSONObject createJsonObject() throws JSONException {
 
 		JSONObject jsonObject = new JSONObject();
-		Context context = GameTingApplication.getAppInstance().getApplicationContext();
+		Context context = BMApplication.getAppInstance().getApplicationContext();
 
 		try {
 			jsonObject.put(Constants.JSON_VERSION, PhoneHelper.getAppVersionName());
@@ -39,7 +35,7 @@ public final class JSONBuilder {
 
 			jsonObject.put(Constants.JSON_CHANNEL, PhoneHelper.getChannelData(context.getString(R.string.channel_name)));
 
-			DisplayMetrics dm = GameTingApplication.getAppInstance().getResources().getDisplayMetrics();
+			DisplayMetrics dm = BMApplication.getAppInstance().getResources().getDisplayMetrics();
 			jsonObject.put(Constants.JSON_SCREENH, String.valueOf(dm.heightPixels));
 			jsonObject.put(Constants.JSON_SCREENW, String.valueOf(dm.widthPixels));
 
@@ -134,7 +130,7 @@ public final class JSONBuilder {
             jsonObj.put("nickname",MineProfile.getInstance().getNickName());
             jsonObj.put("realname",MineProfile.getInstance().getUserName());
             jsonObj.put("sex",MineProfile.getInstance().getUserType()+"");
-            jsonObj.put("provinces","");
+            jsonObj.put("provinces",MineProfile.getInstance().getArea());
             jsonObj.put("city",MineProfile.getInstance().getArea());
             jsonObj.put("signature",MineProfile.getInstance().getSignture());
             jsonObj.put("qq","");

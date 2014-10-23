@@ -1,19 +1,15 @@
 package com.ranger.bmaterials.ui;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -21,9 +17,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
-import android.text.Selection;
-import android.text.Spannable;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -32,25 +25,14 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ranger.bmaterials.R;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.nostra13.universalimageloader.utils.DiscCacheUtils;
-import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 import com.ranger.bmaterials.app.Constants;
-import com.ranger.bmaterials.app.DcError;
-import com.ranger.bmaterials.app.GameTingApplication;
 import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.bitmap.ImageLoaderHelper;
 import com.ranger.bmaterials.netresponse.BMUserLoginResult;
@@ -58,9 +40,7 @@ import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.tools.ConnectManager;
 import com.ranger.bmaterials.tools.Logger;
 import com.ranger.bmaterials.utils.NetUtil;
-import com.ranger.bmaterials.tools.PhoneHelper;
 import com.ranger.bmaterials.tools.StringUtil;
-import com.ranger.bmaterials.tools.UpdateHelper;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 
 public class BMMineFragment extends Fragment implements
@@ -236,7 +216,14 @@ public class BMMineFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
+
         refreshView();
+
+        if(!MineProfile.getInstance().getIsLogin()){
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), BMLoginActivity.class);
+            startActivity(intent);
+        }
 
         // for test
         // BaiduPushTest.pushGame();

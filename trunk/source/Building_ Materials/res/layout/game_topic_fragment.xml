@@ -123,6 +123,7 @@
                     android:textColor="#fff"/>
 
                 <ImageView
+                    android:id="@+id/iv_detail_dictor"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:src="@drawable/arrow_show_detail"

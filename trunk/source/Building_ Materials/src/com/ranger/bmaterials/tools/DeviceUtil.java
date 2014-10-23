@@ -5,10 +5,9 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import com.ranger.bmaterials.app.GameTingApplication;
+import com.ranger.bmaterials.app.BMApplication;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -19,12 +18,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.os.Environment;
 import android.os.StatFs;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.format.Formatter;
-import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -34,7 +31,7 @@ public class DeviceUtil {
 	}
 
 	public static long getMaxMemory() {
-		Context context = GameTingApplication.getAppInstance();
+		Context context = BMApplication.getAppInstance();
 		int memoryClass = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass(); 
 		long maxMemory = Runtime.getRuntime().maxMemory();
 		String size1 = Formatter.formatFileSize(context, 1024 * 1024 * memoryClass);

@@ -1,33 +1,9 @@
 package com.ranger.bmaterials.bitmap;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Environment;
-import android.os.Message;
 import android.widget.ImageView;
 
 import com.ranger.bmaterials.R;
@@ -41,11 +17,8 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.ranger.bmaterials.app.Constants;
-import com.ranger.bmaterials.app.GameTingApplication;
+import com.ranger.bmaterials.app.BMApplication;
 import com.ranger.bmaterials.app.MineProfile;
-import com.ranger.bmaterials.tools.DeviceUtil;
-import com.ranger.bmaterials.tools.PhoneHelper;
-import com.ranger.bmaterials.tools.UIUtil;
 
 public class ImageLoaderHelper {
 	private ImageLoaderHelper() {
@@ -128,7 +101,7 @@ public class ImageLoaderHelper {
 		boolean inited = loader.isInited();
 		if (!inited) {
 			Builder builder = new ImageLoaderConfiguration.Builder(
-					GameTingApplication.getAppInstance())
+					BMApplication.getAppInstance())
 					.threadPriority(Thread.NORM_PRIORITY - 2).threadPoolSize(2)
 					.denyCacheImageMultipleSizesInMemory()
 					.memoryCache(new LargestLimitedMemoryCache(256 * 1024))// 删除最大的bitmap

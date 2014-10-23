@@ -23,12 +23,26 @@ import java.util.zip.Inflater;
  */
 public class ProductBandAdapter extends BaseExpandableListAdapter {
 
+    private String band = "";
+
+    private String modal = "";
+
     public interface onBandClickListener{
         public void onBandClick(View view);
     }
 
     public interface onCategoryClickListener{
         public void onCategoryClick(View view);
+    }
+
+    public void notifyBandSelect(String band){
+        this.band = band;
+        notifyDataSetChanged();
+    }
+
+    public void notifyModalSelect(String modal){
+        this.modal = modal;
+        notifyDataSetChanged();
     }
 
     private onBandClickListener bandClick;
@@ -110,9 +124,18 @@ public class ProductBandAdapter extends BaseExpandableListAdapter {
         if(groupPosition == 0){
             convertView = LayoutInflater.from(mContext).inflate(R.layout.band_item_layout,null);
             TextView tvBand = (TextView) convertView.findViewById(R.id.tv_band_name);
-            tvBand.setText(bamr.getBrand().get(childPosition));
+
+            String bandText = bamr.getBrand().get(childPosition);
+            tvBand.setText(bandText);
+
+            if(bandText.equals(band)){
+                tvBand.setBackgroundColor(Color.BLUE);
+            }else{
+                tvBand.setBackgroundColor(Color.parseColor("#d4d4d4"));
+            }
 
             tvBand.setTag(bamr.getBrand().get(childPosition));
+
             tvBand.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -149,6 +172,13 @@ public class ProductBandAdapter extends BaseExpandableListAdapter {
                 tvBand.setText(type.getName());
                 tvBand.setTextColor(Color.parseColor("#0f0f0f"));
                 tvBand.setTag(type.getName());
+
+                if(type.getName().equals(modal)){
+                    tvBand.setBackgroundColor(Color.BLUE);
+                }else{
+                    tvBand.setBackgroundColor(Color.parseColor("#d4d4d4"));
+                }
+
                 tvBand.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

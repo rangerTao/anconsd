@@ -6,6 +6,13 @@
 
     <Spinner
         android:id="@+id/sp_location"
+        android:minWidth="180dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:id="@+id/btn_close_dialog"
+        android:text="关闭"
+        android:layout_height="wrap_content" />
 </LinearLayout>
