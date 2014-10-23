@@ -65,7 +65,7 @@ public class BMProductCollectionAdapter extends BaseAdapter {
 
         holder.productName.setText(bd.getProductName());
         holder.modeName.setText(bd.getStandard());
-        holder.price.setText(bd.getPrice() + "/" + bd.getUnit());
+        holder.price.setText(bd.getPrice() + "/" + bd.getUnit().trim());
         holder.from.setText(bd.getArea());
 
         return view;

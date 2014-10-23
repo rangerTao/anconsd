@@ -97,7 +97,11 @@ public class SuggestAdapter extends BaseAdapter implements Filterable{
 
     @Override
     public int getCount() {
-        return mOriginalValues.size() > 5 ? 5:mOriginalValues.size();
+        if(mOriginalValues != null)
+            return mOriginalValues.size() > 5 ? 5:mOriginalValues.size();
+        else{
+            return 0;
+        }
     }
 
     @Override
