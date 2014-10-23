@@ -242,7 +242,7 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
     }
 
     private void getProvinces() {
-        NetUtil.getInstance().requestForProvices(new NetUtil.IRequestListener() {
+        NetUtil.getInstance().requestForProvices(this,new NetUtil.IRequestListener() {
             @Override
             public void onRequestSuccess(BaseResult responseData) {
                 BMProvinceListResult blr = (BMProvinceListResult) responseData;

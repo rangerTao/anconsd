@@ -39,6 +39,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hp.hpl.sparta.xpath.ThisNodeTest;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.adapter.AbstractListAdapter.OnListItemClickListener;
@@ -239,7 +240,7 @@ public class BMSearchResultActivity extends Activity implements
     }
 
     private void getProvinces() {
-        NetUtil.getInstance().requestForProvices(new IRequestListener() {
+        NetUtil.getInstance().requestForProvices(this,new IRequestListener() {
             @Override
             public void onRequestSuccess(BaseResult responseData) {
                 BMProvinceListResult blr = (BMProvinceListResult) responseData;
@@ -515,10 +516,11 @@ public class BMSearchResultActivity extends Activity implements
         if (view != null) {
             String cate = (String) view.getTag();
             smalltype = cate;
-            search();
-            if(menu.isSecondaryMenuShowing()){
-                menu.toggle();
-            }
+//            search();
+//            if(menu.isSecondaryMenuShowing()){
+//                menu.toggle();
+//            }
+            pba.notifyModalSelect(cate);
         }
 
     }
@@ -528,11 +530,21 @@ public class BMSearchResultActivity extends Activity implements
         if (view != null) {
             String ba = (String) view.getTag();
             band = ba;
-            search();
-            if(menu.isSecondaryMenuShowing()){
-                menu.toggle();
-            }
+//            search();
+//            if(menu.isSecondaryMenuShowing()){
+//                menu.toggle();
+//            }
+
+            pba.notifyBandSelect(ba);
         }
+    }
+
+    public void bandSearch(View v){
+        search();
+        if (menu.isSecondaryMenuShowing()) {
+            menu.toggle();
+        }
+
     }
 
     class MyOnRefreshListener2 implements OnRefreshListener2<ListView> {
@@ -956,8 +968,15 @@ public class BMSearchResultActivity extends Activity implements
 
                 break;
             case R.id.bm_btn_group_provider:
-                isMerge = 1;
-                search();
+
+                if(isMerge == 1){
+                    isMerge = 0;
+                    cbGroupProvider.setText("合并相同供应商");
+                }else{
+                    isMerge = 1;
+                    search();
+                    cbGroupProvider.setText("取消合并相同供应商");
+                }
                 break;
             case R.id.search_clear:
                 edit_search.setText("");

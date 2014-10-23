@@ -1,5 +1,7 @@
 package com.ranger.bmaterials.netresponse;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.ranger.bmaterials.tools.PinyinUtil;
 
@@ -41,6 +43,10 @@ public class BMProvinceListResult extends BaseResult {
         }
 
         public void setPinyinName(String pinyinName) {
+            if(pinyinName.equals("全国")){
+                this.pinyinName = "#"+PinyinUtil.getPinyin(pinyinName);
+                return;
+            }
             this.pinyinName = PinyinUtil.getPinyin(pinyinName);
         }
 

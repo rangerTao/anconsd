@@ -28,6 +28,7 @@
             android:background="@drawable/img_btn_complete"
             android:gravity="center"
             android:text="完成"
+            android:onClick="bandSearch"
             android:textColor="#fff"/>
     </RelativeLayout>
 
@@ -39,6 +40,8 @@
         <ExpandableListView
             android:id="@+id/elv_band"
             android:cacheColorHint="#000000"
+            android:listSelector="#00000000"
+            android:choiceMode="multipleChoice"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
         </ExpandableListView>

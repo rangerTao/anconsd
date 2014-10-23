@@ -2,6 +2,7 @@ package com.ranger.bmaterials.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,7 +31,7 @@ import com.ranger.bmaterials.view.pull.PullToRefreshListView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BMMineProductCollectionFragment extends Fragment implements OnClickListener, IRequestListener, OnRefreshListener2<ListView>,
+public class BMMineProductCollectionFragment extends ListFragment implements OnClickListener, IRequestListener, OnRefreshListener2<ListView>,
 		OnItemClickListener {
 
 	private boolean guideRequestSend = false;
@@ -47,7 +49,7 @@ public class BMMineProductCollectionFragment extends Fragment implements OnClick
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.mine_activity_collection_subpage_guide, null);
+        View view = inflater.inflate(R.layout.mine_activity_collection_subpage_guide, null);
 		return view;
 	}
 
@@ -58,10 +60,11 @@ public class BMMineProductCollectionFragment extends Fragment implements OnClick
 		pageGuideIndex = 1;
 		noMoreGuide = false;
 		guideListInfo = new ArrayList<BMCollectionResult.Collection>();
-		guideInfoListAdapter = new BMProductCollectionAdapter(getActivity(), guideListInfo);
+
+        guideInfoListAdapter = new BMProductCollectionAdapter(getActivity(),guideListInfo);
 		plvGuide = (PullToRefreshListView) getActivity().findViewById(R.id.listview_mine_collection_guides);
 		plvGuide.setOnRefreshListener(this);
-		plvGuide.setAdapter(guideInfoListAdapter);
+        plvGuide.setAdapter(guideInfoListAdapter);
 		plvGuide.setOnItemClickListener(this);
 
 		plvGuide.setOnLastItemVisibleListener(OnLastItemVisibleListener);
@@ -161,6 +164,7 @@ public class BMMineProductCollectionFragment extends Fragment implements OnClick
 
 	@Override
 	public void onRequestSuccess(BaseResult responseData) {
+
 		BMCollectionResult result = (BMCollectionResult) responseData;
 
 		if (pageGuideIndex == 1) {
@@ -168,7 +172,8 @@ public class BMMineProductCollectionFragment extends Fragment implements OnClick
 		}
 
 		if (result.getData().size() > 0) {
-			guideListInfo.addAll(result.getData());
+
+            guideListInfo.addAll(result.getData());
             guideInfoListAdapter.notifyDataSetChanged();
 			pageGuideIndex++;
 		}
@@ -232,4 +237,9 @@ public class BMMineProductCollectionFragment extends Fragment implements OnClick
 	private void updateTitle(int total) {
 
 	}
+
+    @Override
+    public void setListAdapter(ListAdapter adapter) {
+        super.setListAdapter(adapter);
+    }
 }

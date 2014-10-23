@@ -1,8 +1,12 @@
 package com.ranger.bmaterials.utils;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.ranger.bmaterials.app.BMApplication;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.app.MineProfile;
@@ -364,7 +368,7 @@ public class NetUtil implements INetListener {
      * @param observer
      * @return
      */
-    public int requestForProvices(IRequestListener observer) {
+    public int requestForProvices(Activity context,IRequestListener observer) {
 
         // 调用的方法名称
         String methodName = "getArea";
@@ -388,6 +392,22 @@ public class NetUtil implements INetListener {
         mCurrentRequestId = transport.hashCode();
 
         try {
+            SharedPreferences sp = context.getSharedPreferences("cache", Context.MODE_PRIVATE);
+
+            String cache_province = sp.getString("provinces","");
+
+            if(!cache_province.equals("")){
+
+                BaseResult baseResult = JSONParser.parseBMProvinceList(cache_province);
+                baseResult.setTag(Constants.NET_TAG_GET_PROVINCE + "");
+
+                baseResult.setErrorCode(DcError.DC_OK);
+
+                observer.onRequestSuccess(baseResult);
+
+                return mCurrentRequestId;
+            }
+
             // 调用WebService
             transport.call(soapAction, envelope);
 
@@ -404,6 +424,10 @@ public class NetUtil implements INetListener {
             Log.e("TAG","webservice result " + result);
 
             observer.onRequestSuccess(baseResult);
+
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("provinces",result);
+            editor.commit();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -726,6 +750,61 @@ public class NetUtil implements INetListener {
      * @author liushuohui
      */
     public int requestGetCollection(int type,int page,IRequestListener observer) {
+
+
+        // 调用的方法名称
+        String methodName = "findFavorites";
+
+        soapAction += methodName;
+
+        // 指定WebService的命名空间和调用的方法名
+        SoapObject rpc = new SoapObject(nameSpace, methodName);
+
+        rpc.addProperty("token",MineProfile.getInstance().getSessionID());
+        rpc.addProperty("type",type);
+        rpc.addProperty("pageNo",page);
+        rpc.addProperty("row",20);
+
+        // 生成调用WebService方法的SOAP请求信息,并指定SOAP的版本
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER10);
+
+        envelope.bodyOut = rpc;
+        // 设置是否调用的是dotNet开发的WebService
+        envelope.dotNet = true;
+        // 等价于envelope.bodyOut = rpc;
+        envelope.setOutputSoapObject(rpc);
+
+        HttpTransportSE transport = new HttpTransportSE(endPoint);
+
+        mCurrentRequestId = transport.hashCode();
+
+        try {
+            // 调用WebService
+            transport.call(soapAction, envelope);
+
+            // 获取返回的数据
+            SoapObject object = (SoapObject) envelope.bodyIn;
+            // 获取返回的结果
+            String result = object.getProperty(0).toString();
+
+            BaseResult baseResult = JSONParser.parseBMCollectionResult(result);
+            baseResult.setTag(Constants.NET_TAG_SEARCH + "");
+
+            baseResult.setErrorCode(DcError.DC_OK);
+
+            Log.e("TAG","webservice result " + result);
+
+            observer.onRequestSuccess(baseResult);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "error");
+        }
+
+        return mCurrentRequestId;
+    }
+
+    public int requestGetCollectionCom(int type,int page,IRequestListener observer) {
 
 
         // 调用的方法名称

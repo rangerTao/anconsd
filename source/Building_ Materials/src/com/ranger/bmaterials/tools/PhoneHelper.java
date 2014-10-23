@@ -4,27 +4,20 @@
 package com.ranger.bmaterials.tools;
 
 
-import com.ranger.bmaterials.app.Constants;
-import com.ranger.bmaterials.app.GameTingApplication;
+import com.ranger.bmaterials.app.BMApplication;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 
 public final class PhoneHelper {
 	
 	private static TelephonyManager mTelephonyManager = null;
 	
 	public static String getPhoneNumber(){
-		Context appcontext = (Context)GameTingApplication.getAppInstance();
+		Context appcontext = (Context) BMApplication.getAppInstance();
 		
 		if (mTelephonyManager == null){
 			mTelephonyManager = (TelephonyManager)appcontext.getSystemService(Context.TELEPHONY_SERVICE);
@@ -39,7 +32,7 @@ public final class PhoneHelper {
 	}
 	
 	public static String getIMEI(){
-		Context appcontext = (Context)GameTingApplication.getAppInstance();
+		Context appcontext = (Context) BMApplication.getAppInstance();
 		if (mTelephonyManager == null){
 			mTelephonyManager = (TelephonyManager)appcontext.getSystemService(Context.TELEPHONY_SERVICE);
 		}
@@ -65,7 +58,7 @@ public final class PhoneHelper {
     
 	public static String getChannelData(String key) {
 		try {
-			Context appcontext = (Context) GameTingApplication.getAppInstance();
+			Context appcontext = (Context) BMApplication.getAppInstance();
 			ApplicationInfo ai = appcontext.getPackageManager()
 					.getApplicationInfo(appcontext.getPackageName(),
 							PackageManager.GET_META_DATA);
@@ -81,7 +74,7 @@ public final class PhoneHelper {
 
 	public static String getAppVersionName() {
 		try {
-			Context appcontext = (Context) GameTingApplication.getAppInstance();
+			Context appcontext = (Context) BMApplication.getAppInstance();
 			PackageManager packageManager = appcontext.getPackageManager();
 			PackageInfo packInfo = packageManager.getPackageInfo(
 					appcontext.getPackageName(), 0);
@@ -94,7 +87,7 @@ public final class PhoneHelper {
 	
 	public static String getAppPkgName() {
 		try {
-			Context appcontext = (Context) GameTingApplication.getAppInstance();
+			Context appcontext = (Context) BMApplication.getAppInstance();
 			PackageManager packageManager = appcontext.getPackageManager();
 			PackageInfo packInfo = packageManager.getPackageInfo(
 					appcontext.getPackageName(), 0);
@@ -107,7 +100,7 @@ public final class PhoneHelper {
 	
 	public static String getUdid() {
 
-		return DeviceId.getDeviceID(GameTingApplication.getAppInstance());
+		return DeviceId.getDeviceID(BMApplication.getAppInstance());
 		
 	}
 	

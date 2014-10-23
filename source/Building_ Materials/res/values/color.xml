@@ -62,4 +62,6 @@
     <color name="no_more_data_text">#478ddc</color>
     <color name="grid_click_item_background">#f6f6f6</color>
 
+    <color name="band_item_bg_normal">#d4d4d4</color>
+
 </resources>

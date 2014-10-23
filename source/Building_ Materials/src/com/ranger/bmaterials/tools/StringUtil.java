@@ -8,9 +8,8 @@ import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import com.ranger.bmaterials.app.GameTingApplication;
+import com.ranger.bmaterials.app.BMApplication;
 
-import android.R.integer;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.text.format.Formatter;
@@ -283,7 +282,7 @@ public class StringUtil {
 		return result;
 	}
     public static String getDisplaySize2(long size){
-    	String sizeText = Formatter.formatShortFileSize(GameTingApplication.getAppInstance(), size);
+    	String sizeText = Formatter.formatShortFileSize(BMApplication.getAppInstance(), size);
     	return sizeText ;
     }
     

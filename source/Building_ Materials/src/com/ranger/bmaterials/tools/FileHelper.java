@@ -15,19 +15,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.security.DigestInputStream;
-import java.security.MessageDigest;
-import java.util.HashSet;
 import java.util.Set;
 
-import android.graphics.AvoidXfermode.Mode;
 import android.os.Environment;
 
-import com.ranger.bmaterials.*;
 import com.ranger.bmaterials.app.Constants;
-import com.ranger.bmaterials.app.GameTingApplication;
-import com.ranger.bmaterials.tools.MyLogger;
+import com.ranger.bmaterials.app.BMApplication;
 
 
 public final class FileHelper {
@@ -219,7 +212,7 @@ public final class FileHelper {
 		if (r){
 			file = Environment.getExternalStorageDirectory();
 		}else{
-			file = GameTingApplication.getAppInstance().getFilesDir();
+			file = BMApplication.getAppInstance().getFilesDir();
 		}
 		
 		return file.getPath();

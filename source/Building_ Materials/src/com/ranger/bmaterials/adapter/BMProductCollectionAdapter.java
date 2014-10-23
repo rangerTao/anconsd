@@ -23,7 +23,7 @@ public class BMProductCollectionAdapter extends BaseAdapter {
 		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.listGuideInfo = guideList;
 	}
-	
+
 	@Override
 	public int getCount() {
 		return listGuideInfo.size();

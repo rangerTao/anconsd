@@ -18,8 +18,6 @@ import java.io.OutputStream;
 import java.util.concurrent.FutureTask;
 import java.util.zip.GZIPInputStream;
 
-import android.util.Log;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -33,8 +31,8 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.ranger.bmaterials.R;
+import com.ranger.bmaterials.app.BMApplication;
 import com.ranger.bmaterials.app.DcError;
-import com.ranger.bmaterials.app.GameTingApplication;
 import com.ranger.bmaterials.encrypt.AES;
 import com.ranger.bmaterials.encrypt.AES2;
 import com.ranger.bmaterials.json.JsonHelper;
@@ -227,7 +225,7 @@ public class ASIHttpRequest implements Runnable {
 							response = client.execute(getRequest);
 						} catch (Exception ex1) {
 							handleErrorEvent(
-									GameTingApplication
+									BMApplication
 											.getAppInstance()
 											.getString(
 													R.string.alert_network_inavailble),
@@ -261,7 +259,7 @@ public class ASIHttpRequest implements Runnable {
 							response = client.execute(postRequest);
 						} catch (Exception ex1) {
 							handleErrorEvent(
-									GameTingApplication
+									BMApplication
 											.getAppInstance()
 											.getString(
 													R.string.alert_network_inavailble),
@@ -338,7 +336,7 @@ public class ASIHttpRequest implements Runnable {
 					// if (havedownDataSize != responseDataLen) {
 					// error happen
 					// handleErrorEvent(
-					// GameTingApplication
+					// BMApplication
 					// .getAppInstance()
 					// .getString(
 					// R.string.alert_network_inavailble),

@@ -5,25 +5,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.os.Handler;
-import android.os.Message;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ranger.bmaterials.R;
-import com.ranger.bmaterials.app.GameTingApplication;
+import com.ranger.bmaterials.app.BMApplication;
 import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.listener.onEditUserInfoDialogDismissListener;
 import com.ranger.bmaterials.ui.BMUserinfoActivity;
 import com.ranger.bmaterials.ui.CustomProgressDialog;
-
-import java.nio.channels.NotYetConnectedException;
 
 public class DialogFactory {
 
@@ -96,7 +91,7 @@ public class DialogFactory {
         dialogView.findViewById(R.id.btn_cancel).setOnClickListener(clickListener);
         dialogView.findViewById(R.id.btn_commit).setOnClickListener(clickListener);
 
-        DisplayMetrics dm = GameTingApplication.getAppInstance().getResources().getDisplayMetrics();
+        DisplayMetrics dm = BMApplication.getAppInstance().getResources().getDisplayMetrics();
         int width = dm.widthPixels - PhoneHelper.dip2px(mContext, 13) * 2;
 
         dialog.addContentView(dialogView, new LayoutParams(width, LayoutParams.WRAP_CONTENT));

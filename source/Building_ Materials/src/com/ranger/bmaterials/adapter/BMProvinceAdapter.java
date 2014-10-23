@@ -65,7 +65,7 @@ public class BMProvinceAdapter extends AbstractListAdapter<BMProvinceListResult.
 
         List<Integer> sectionIndices = new ArrayList<Integer>();
         String pinyin = data.get(0).getPinyinName();
-        if (pinyin == null) {
+        if (pinyin == null || pinyin.equals("")) {
             pinyin = "#";
         }
         char lastFirstChar = pinyin.charAt(0);// lastFirstChar设置为第一个条目的首字母(null

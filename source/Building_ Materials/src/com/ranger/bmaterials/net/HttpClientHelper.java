@@ -28,7 +28,7 @@ import org.apache.http.protocol.HTTP;
 
 import android.content.Context;
 
-import com.ranger.bmaterials.app.GameTingApplication;
+import com.ranger.bmaterials.app.BMApplication;
 import com.ranger.bmaterials.tools.ConnectManager;
 
 public class HttpClientHelper {
@@ -61,7 +61,7 @@ public class HttpClientHelper {
 			httpClient = new DefaultHttpClient(connManager, params);
 
 		}
-		Context _con = (Context) GameTingApplication.getAppInstance();
+		Context _con = (Context) BMApplication.getAppInstance();
 		ConnectManager conn = new ConnectManager(_con);
 
 		if (conn.isWapNetwork()) {

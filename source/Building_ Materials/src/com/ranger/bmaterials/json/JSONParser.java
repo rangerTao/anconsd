@@ -311,7 +311,7 @@ public class JSONParser {
     /**
      * BmUser
      */
-    public static BMCollectionResult parseBMCollectionResult(String res){
+    public static BMCollectionResult parseBMCollectionResult(String res) throws JSONException {
 
         BMCollectionResult result = new BMCollectionResult();
         Gson gson = new Gson();
@@ -325,7 +325,7 @@ public class JSONParser {
                     result.addItem(col);
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw e;
         }
 
 
