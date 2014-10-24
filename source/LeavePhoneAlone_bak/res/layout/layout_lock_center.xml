@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#f3f3f3"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_lock_center_header"/>
+
+        <include layout="@layout/layout_lock_center_timer_hint"/>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_locking_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/lock_hint_click_to_lock"
+                android:textColor="#909090"
+                android:textSize="24sp"/>
+
+            <RelativeLayout
+                android:id="@+id/fl_search_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="50dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/btn_red_bg_selector"/>
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_launcher"/>
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/iv_left_phone_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/fl_search_btn"
+                android:src="@drawable/icon_phone"/>
+
+            <ImageView
+                android:id="@+id/iv_right_phone_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/fl_search_btn"
+                android:src="@drawable/icon_phone"/>
+
+            <TextView
+                android:id="@+id/tv_locking_hint_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fl_search_btn"
+                android:layout_centerHorizontal="true"
+                android:singleLine="true"
+                android:text="@string/usage_net_hint"
+                android:textColor="#909090"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <com.ranger.lpa.view.SearchScanView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+
+
+</LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btn_start_ap"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="wifi_action"
+        android:text="Start AP"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btn_stop_ap"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="wifi_action"
+        android:text="Stop AP"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btn_enable_wifi"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="wifi_action"
+        android:text="Enable wifi"
+        android:textSize="18sp" />
+
+        <Button
+        android:id="@+id/btn_connect_ap"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="wifi_action"
+        android:text="Connect AP"
+        android:textSize="18sp" />
+</LinearLayout>
