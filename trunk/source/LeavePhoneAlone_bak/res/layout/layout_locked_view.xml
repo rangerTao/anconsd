@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f3f3f3">
+
+<TextView
+    android:layout_width="fill_parent"
+    android:layout_height="100dp"
+    android:layout_alignParentTop="true"
+    android:gravity="center"
+    android:text="LOCKLOCK"
+    android:textColor="#4c4c4c"
+    android:textSize="24sp"/>
+
+<FrameLayout
+    android:id="@+id/fl_lock_area"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:orientation="vertical"
+    android:paddingBottom="40dp"
+    android:paddingTop="30dp">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/btn_red_big"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="70dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:gravity="center_horizontal"
+            android:text="锁定时间"
+            android:textColor="#f6f6f6"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tv_eclipsed_time"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="00:00:00"
+            android:textSize="35sp"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:text="向下滑动放弃锁定"
+            android:textColor="#fff"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+</FrameLayout>
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="30dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/icon_phone_selected"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:text="Heaven"
+        android:textColor="#676767"
+        android:textSize="16sp"/>
+
+</LinearLayout>
+
+<include
+    android:id="@+id/include_dialog_giveup_confirm"
+    android:visibility="gone"
+    layout="@layout/dialog_lock_dropup_confirm"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"/>
+
+</RelativeLayout>

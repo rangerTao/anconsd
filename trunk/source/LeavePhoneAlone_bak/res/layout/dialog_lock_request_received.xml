@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:background="@drawable/bg_dialog_yellow"
+              android:paddingLeft="30dp"
+              android:paddingRight="30dp"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="33dp"
+        android:text="@string/lock_request_confirm_tip"
+        android:textColor="#fff"
+        android:textSize="28sp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@null"
+        android:src="@drawable/pic_lock_request_tip"/>
+
+    <Button
+        android:id="@+id/btn_request_accept"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32sp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/btn_green_selector"
+        android:text="@string/btn_start_lock"
+        android:textColor="#fff"
+        android:textSize="24sp"/>
+
+    <Button
+        android:id="@+id/btn_request_refuse"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12sp"
+        android:background="@drawable/btn_refuse_selector"
+        android:text="@string/btn_refuse_lock"
+        android:textColor="#fff"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="32dp"
+        android:textSize="24sp"/>
+</LinearLayout>

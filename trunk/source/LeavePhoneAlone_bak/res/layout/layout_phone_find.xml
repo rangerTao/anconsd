@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#f3f3f3"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="100dp">
+
+        <TextView
+            android:id="@+id/btn_cancel_finding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24sp"
+            android:text="@string/btn_cancel"
+            android:textColor="#000"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/btn_settings"
+            android:layout_toRightOf="@+id/btn_cancel_finding"
+            android:gravity="center"
+            android:text="LOCKLOCK"
+            android:textColor="#4c4c4c"
+            android:textSize="24sp"/>
+
+        <ImageView
+            android:id="@+id/btn_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="26dp"
+            android:contentDescription="@null"
+            android:gravity="right"
+            android:src="@drawable/btn_setting"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#000"/>
+
+    <TextView
+        android:id="@+id/tv_phone_name_found"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:background="#fff"
+        android:gravity="center"
+        android:textColor="#909090"
+        android:textSize="36sp"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_phone_name_found_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/icon_phone_selected"
+            android:textColor="#676767"
+            android:textSize="18sp"
+            android:visibility="invisible"/>
+
+        <FrameLayout
+            android:id="@+id/fl_btn_lock_selected_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/btn_red_bg_selector"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/send_phone_lock_request_hint"
+                android:textColor="#f6f6f6"
+                android:textSize="24sp"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_bind_finding_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/btn_red_bg_selector"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/btn_search"/>
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
