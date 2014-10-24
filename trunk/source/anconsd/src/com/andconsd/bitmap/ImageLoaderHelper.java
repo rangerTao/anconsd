@@ -16,12 +16,14 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.Message;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.andconsd.AndApplication;
@@ -35,6 +37,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration.Builder;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.squareup.picasso.Picasso;
 
 public class ImageLoaderHelper {
 
@@ -267,6 +270,14 @@ public class ImageLoaderHelper {
 	public static void displayLargeImage(String imageUrl, ImageView imageView) {
 		displayImage(imageUrl, imageView, optionsForLargImage);
 	}
+	
+	public static void displayImage(String imageUrl,ImageView imageView,Context context){
+		Picasso.with(context)
+	    .load(imageUrl)
+	    .placeholder(R.drawable.picture_loading)
+	    .error(R.drawable.picture_loading)
+	    .into(imageView);
+	}
 
 	public static void displayImage(String imageUrl, ImageView imageView, DisplayImageOptions options, ImageLoadingListener listener) {
 		if (imageUrl == null || imageView == null)
@@ -283,6 +294,7 @@ public class ImageLoaderHelper {
 		}
 		try {
 			imageLoader.displayImage(imageUrl, imageView, options, listener);
+			
 		} catch (OutOfMemoryError e) {
 			e.printStackTrace();
 		} catch (Exception e) {

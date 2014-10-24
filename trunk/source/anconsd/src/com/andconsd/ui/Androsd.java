@@ -198,6 +198,7 @@ public class Androsd extends BaseActivity implements AdViewListener, OnClickList
 		findViewById(R.id.menu_famous).setOnClickListener(this);
 		findViewById(R.id.menu_promotion).setOnClickListener(this);
 		findViewById(R.id.menu_topics).setOnClickListener(this);
+		findViewById(R.id.menu_topics).setOnClickListener(this);
 	}
 
 	@Override
@@ -328,7 +329,7 @@ public class Androsd extends BaseActivity implements AdViewListener, OnClickList
 						try {
 							String contentString = "http://" + ip + ":"
 									+ Constants.DEFAULT_PORT
-									+ "/share/com.duoku.gamesearch"
+									+ "/share/sh.lilith.dgame.DK"
 									+ Constants.PREFIX_PACKAGE_DEFAULT;
 							if (!contentString.equals("")) {
 								Bitmap qrCodeBitmap = EncodingHandler
@@ -683,6 +684,9 @@ public class Androsd extends BaseActivity implements AdViewListener, OnClickList
 			ClickStatictis.addMenuItemClick(getApplicationContext(), getString(R.string.menu_promotion));
 			startActivity(new Intent(this, PromotionActivity.class));
 			return;
+		case R.id.menu_topics:
+			targetIntent.putExtra(Constants.INTENT_PICTYPE, Constants.TAG_BEAUTY_BAIDU);
+			break;
 		default:
 			break;
 		}

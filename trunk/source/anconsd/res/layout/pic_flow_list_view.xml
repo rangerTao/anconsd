@@ -5,17 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <com.huewu.pla.lib.MultiColumnPullToRefreshListView
-        xmlns:pla="http://schemas.android.com/apk/res-auto"
+    <com.andconsd.view.pull.PullToRefreshListView
         android:id="@+id/waterfallview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/baiduad"
-        android:cacheColorHint="#00000000"
-        android:divider="@android:color/transparent"
-        android:listSelector="@drawable/headphoto_item_bg_selector"
-        pla:plaColumnNumber="2"
-        pla:plaLandscapeColumnNumber="3" />
+        style="@style/content_list_seach"
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:overScrollMode="ifContentScrolls"
+        android:visibility="visible"
+        android:showDividers="middle"
+        android:divider="#50ffffff"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrHeaderTextAppearance="@style/pull_header_TextAppearance"
+        ptr:ptrListViewExtrasEnabled="false"
+        ptr:ptrMode="disabled"
+        ptr:ptrOverScroll="false"
+        ptr:ptrScrollingWhileRefreshingEnabled="true"
+        ptr:ptrShowIndicator="false"/>
 
     <RelativeLayout
         android:id="@+id/fl_view"

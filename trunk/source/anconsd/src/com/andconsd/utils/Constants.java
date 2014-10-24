@@ -28,6 +28,7 @@ public class Constants {
 	public static final int TAG_CAR = 4;
 	public static final int TAG_FAMOUS = 5;
 	public static final int TAG_FEEDBACK = 6;
+	public static final int TAG_BEAUTY_BAIDU = 7;
 	
 	public static boolean DEBUG = false;
 	

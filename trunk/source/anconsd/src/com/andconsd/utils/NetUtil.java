@@ -3,6 +3,7 @@ package com.andconsd.utils;
 import java.net.URL;
 import java.util.ArrayList;
 
+import android.R.integer;
 import android.util.SparseArray;
 
 import com.andconsd.json.JSONManager;
@@ -149,6 +150,20 @@ public class NetUtil implements INetListener {
 	public int requestForFamousList(String url, IRequestListener observer) {
 		try {
 			mCurrentRequestId = mHttpIml.sendRequest(Constants.TAG_FAMOUS, url, JSONManager.getJsonBuilder().createJsonObject().toString(), this);
+			addObserver(mCurrentRequestId, observer);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mCurrentRequestId;
+	}
+	
+	public int requestForBaiduBeauty(String url,int page, IRequestListener observer){
+		
+		String baidu_beauty = "http://pic.baidu.com/data/imgs?col=美女&tag=全部&sort=0&tag3=&pn=";
+		String append_url = "&rn=60&p=channel&from=1";
+		try {
+			mCurrentRequestId = mHttpIml.sendRequest(Constants.TAG_FAMOUS, baidu_beauty + (60 * page) + append_url, JSONManager.getJsonBuilder().createJsonObject().toString(), this);
 			addObserver(mCurrentRequestId, observer);
 
 		} catch (Exception e) {

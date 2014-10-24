@@ -2,29 +2,18 @@ package com.andconsd.ui;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
-import com.andconsd.AndApplication;
 import com.andconsd.R;
-import com.andconsd.R.layout;
 import com.andconsd.utils.Constants;
 import com.andconsd.utils.FileHelper;
 import com.andconsd.utils.SharePreferenceUtil;
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
-import com.baidu.mobads.SplashAd;
-import com.baidu.mobads.SplashAdListener;
 
 import android.app.Activity;
-import android.app.AlertDialog.Builder;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
-import android.widget.RelativeLayout;
 
 public class WelcomeActivity extends Activity {
 

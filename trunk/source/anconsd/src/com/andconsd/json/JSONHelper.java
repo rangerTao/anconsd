@@ -29,6 +29,7 @@ public final class JSONHelper {
 			res = JSONParser.parseJson(resData, BaseResult.class);
 			break;
 		default:
+			res = JSONParser.parseJson(resData, BaseResult.class);
 			break;
 		}
 
