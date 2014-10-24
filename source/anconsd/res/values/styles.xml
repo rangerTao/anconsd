@@ -19,4 +19,30 @@
         <item name="android:windowSoftInputMode">stateUnchanged|adjustResize</item>
     </style>
 
+    <style name="content_list_seach">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:headerDividersEnabled">false</item>
+        <item name="android:footerDividersEnabled">false</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+        <item name="android:divider">@null</item>
+        <item name="android:scrollingCache">false</item>
+        <item name="android:fadingEdge">none</item>
+    </style>
+
+    <style name="pull_header_TextAppearance" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">#6666</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="content_loading_progress_blue_style" parent="@android:style/Widget.ProgressBar.Large">
+        <item name="android:minWidth">30dip</item>
+        <item name="android:maxWidth">30dip</item>
+        <item name="android:minHeight">30dip</item>
+        <item name="android:maxHeight">30dip</item>
+        <item name="android:indeterminateDrawable">@drawable/custom_progress_blue</item>
+    </style>
+
 </resources>

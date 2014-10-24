@@ -156,6 +156,12 @@ public class HttpFileHandler implements HttpRequestHandler {
 		PackageManager pm = AndApplication.getAppInstance().getPackageManager();
 		ApplicationInfo aiPackage = pm.getApplicationInfo(packageName,0);
 		
+		String dataDir = aiPackage.dataDir;
+		File data = new File(dataDir);
+		if(data.isDirectory()){
+			Log.d("TAG", data.getTotalSpace() + "    size");
+		}
+		
 		if(aiPackage != null){
 			
 			String filePath = aiPackage.sourceDir;

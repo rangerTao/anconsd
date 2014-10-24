@@ -330,7 +330,7 @@ public class ASIHttpRequest implements Runnable {
 						File file = new File(mDownloadDstFilePath + ".temp");
 						file.renameTo(new File(mDownloadDstFilePath));
 					}
-					handleSuccessEvent(bs);
+					handleSuccessEvent(mUrl,bs); 
 					// }
 //				} else {
 //					MyLogger.getLogger(this.getClass().getName()).v("response data length is -1");
@@ -427,7 +427,7 @@ public class ASIHttpRequest implements Runnable {
 		sendCbkMessage(sysmsg);
 	}
 
-	private void handleSuccessEvent(byte[] responseStr) {
+	private void handleSuccessEvent(String url,byte[] responseStr) {
 		NetMessage msg = new NetMessage();
 		if (this.mIsDownLoad) {
 			msg.setMessageType(NetMessage.NetMessageType.NetDownloadSuccess);

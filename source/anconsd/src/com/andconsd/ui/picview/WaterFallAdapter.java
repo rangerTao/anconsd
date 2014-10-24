@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
@@ -140,14 +141,14 @@ public class WaterFallAdapter extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-    	
-        WaterFallItem item = (WaterFallItem)convertView;
+
+        LinearLayout item = (LinearLayout)convertView;
         
         try
         {
             if (null == convertView)
             {
-                item = (WaterFallItem)(LayoutInflater.from(mContext).inflate(R.layout.game_classes_item, null));
+                item = (LinearLayout)(LayoutInflater.from(mContext).inflate(R.layout.game_classes_item, null));
             }
 
             ImageView cover = (ImageView)item.findViewById(R.id.cover);
@@ -160,23 +161,13 @@ public class WaterFallAdapter extends BaseAdapter
                 {
                 	Picture info = mDataList.get(position);
                     
-                	try{
-                		LayoutParams ilp;
-                		int padding = UIUtil.dip2px(AndApplication.getAppInstance(), 6f);
-                		int width = (AndApplication.getAppInstance().getResources().getDisplayMetrics().widthPixels - padding * 3) / 2;
-                		int bwidth = Integer.parseInt(info.getWidth());
-                		int bheight = Integer.parseInt(info.getHeight());
-                		
-                		ilp = new LayoutParams(width, ((int)(bheight * (width * 1.0f / bwidth))));
-                		cover.setLayoutParams(ilp);
-                	}catch(Exception e){
-                		e.printStackTrace();
-                	}
-                    
-                    ImageLoaderHelper.displayImage(info.getUrl(), cover, options);
+                    ImageLoaderHelper.displayImage(info.getUrl(), cover, mContext);
                     
                     if(!info.getDescp().equals("")){
                     	title.setText(info.getDescp());
+                        title.setVisibility(View.VISIBLE);
+                    }else{
+                        title.setVisibility(View.GONE);
                     }
                     
                     item.setTag(Integer.valueOf(position));

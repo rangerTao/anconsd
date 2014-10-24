@@ -67,10 +67,9 @@
         android:background="@drawable/side_menu_bg_selector"
         android:gravity="center_horizontal"
         android:onClick="side_menu_on_click"
-        android:text="@string/menu_topic"
+        android:text="@string/menu_beauty_baidu"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:visibility="gone" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/menu_promotion"
