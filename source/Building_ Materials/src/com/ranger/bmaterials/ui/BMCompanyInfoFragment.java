@@ -1,11 +1,13 @@
 package com.ranger.bmaterials.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ranger.bmaterials.R;
@@ -32,9 +34,13 @@ public class BMCompanyInfoFragment extends Fragment implements NetUtil.IRequestL
     private TextView bm_tv_company_info_addres;
     private TextView bm_tv_company_info_level;
 
+    private ImageView bm_iv_collect;
+
     private TextView getBm_tv_company_info_detai;
 
     private View root;
+
+    private Handler mHandler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,9 +53,15 @@ public class BMCompanyInfoFragment extends Fragment implements NetUtil.IRequestL
         return root;
     }
 
+    private View loading;
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        loading = root.findViewById(R.id.progress_bar);
+
+        bm_iv_collect = (ImageView) root.findViewById(R.id.iv_product_collect_star);
 
         bm_tv_company_info_name = (TextView) root.findViewById(R.id.bm_tv_company_info_name);
         bm_tv_company_info_contact = (TextView) root.findViewById(R.id.bm_tv_company_info_contact);
@@ -70,7 +82,13 @@ public class BMCompanyInfoFragment extends Fragment implements NetUtil.IRequestL
             if(BMCompanyInfoActivity.comInfo != null){
                 initView(BMCompanyInfoActivity.comInfo);
             }else{
-                refreshGame();
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshGame();
+                    }
+                });
+
             }
         }
     }
@@ -136,11 +154,15 @@ public class BMCompanyInfoFragment extends Fragment implements NetUtil.IRequestL
 
     private void requestGame() {
 
+        loading.setVisibility(View.VISIBLE);
+
         requestId = NetUtil.getInstance().requestComDetail(userid, this);
     }
 
     private void requestFinished(boolean succeed) {
         requestId = 0;
+
+        loading.setVisibility(View.GONE);
     }
 
     private void updateTitle(int total) {
@@ -169,8 +191,9 @@ public class BMCompanyInfoFragment extends Fragment implements NetUtil.IRequestL
                         @Override
                         public void onRequestSuccess(BaseResult responseData) {
 
-                            if(responseData.getErrorCode() == 1){
+                            if(responseData.getErrorCode() == 0){
                                 CustomToast.showToast(getActivity(),"收藏成功");
+                                bm_iv_collect.setImageResource(R.drawable.bm_start_collected);
                             }else{
                                 CustomToast.showToast(getActivity(),"收藏失败");
                             }

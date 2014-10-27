@@ -3,7 +3,9 @@ package com.ranger.bmaterials.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,8 @@ import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.adapter.BMProductLiteAdapter;
 import com.ranger.bmaterials.netresponse.BMSearchResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
+import com.ranger.bmaterials.tools.RootUtil;
+import com.ranger.bmaterials.ui.gametopic.BMProductDetailActivity;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 import com.ranger.bmaterials.view.PagerSlidingTabStrip;
@@ -44,6 +48,10 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 	public PagerSlidingTabStrip tabStrip;
 	private boolean update = false;
 
+    private Handler mHandler = new Handler();
+
+    private View loading;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.mine_activity_collection_subpage_guide, null);
@@ -53,6 +61,8 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+
+        loading = view.findViewById(R.id.progress_bar);
 
 		pageGuideIndex = 1;
 		noMoreGuide = false;
@@ -120,7 +130,7 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 		if (!guideRequestSend) {
 			guideRequestSend = true;
 			showLoadingView();
-			refreshGuide();
+            refreshGuide();
 		}
 	}
 
@@ -145,6 +155,13 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        BMSearchResult.BMSearchData data = (BMSearchResult.BMSearchData) parent.getAdapter().getItem(position);
+
+        if(data != null){
+            Intent intentDetail = new Intent(getActivity(), BMProductDetailActivity.class);
+            intentDetail.putExtra(BMProductDetailActivity.SUPPLY_ID, data.getSupplyId());
+            startActivity(intentDetail);
+        }
 	}
 
 	@Override
@@ -200,6 +217,7 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 
 	private void refreshGuide() {
 
+        loading.setVisibility(View.VISIBLE);
 		showNoMoreTip = true;
 		pageGuideIndex = 1;
 		noMoreGuide = false;
@@ -230,6 +248,8 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 		}
 
 		updateTitle(totalNum);
+
+        loading.setVisibility(View.GONE);
 	}
 
 	private void updateTitle(int total) {

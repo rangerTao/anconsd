@@ -441,6 +441,7 @@ public class BMMineFragment extends Fragment implements
             case R.id.iv_logoff:
                 MineProfile.getInstance().Reset();
                 refreshView();
+                MainHallActivity.jumpToTabByChildActivity(getActivity(),0);
             break;
 //            case R.id.tv_item_feedback_pop_menu_home_activity: {
 //                mPop.dismiss();

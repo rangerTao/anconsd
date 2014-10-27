@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/collection_item_bg"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_weight="1.0"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_game_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/product_name"
+                android:text="teset"
+                style="@style/content_list_item_title_style"
+                />
+
+            <TextView
+                android:id="@+id/mode_name" android:text="teset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:singleLine="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_item_action_layout"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_weight="1.0"
+            android:gravity="center_vertical|right"
+            android:minWidth="75dp"
+            android:orientation="vertical"
+            android:paddingRight="18dp">
+
+            <TextView
+                android:id="@+id/bm_tv_price"
+                android:text="teset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:textColor="#ffa200"/>
+
+            <TextView
+                android:id="@+id/bm_tv_price_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

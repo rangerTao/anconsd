@@ -5,17 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Handler;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -25,7 +22,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -37,9 +33,6 @@ import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.hp.hpl.sparta.xpath.ThisNodeTest;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.adapter.AbstractListAdapter.OnListItemClickListener;
@@ -50,7 +43,6 @@ import com.ranger.bmaterials.adapter.SuggestAdapter;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.db.CommonDaoImpl;
-import com.ranger.bmaterials.mode.KeywordsList;
 import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BMSearchResult;
 import com.ranger.bmaterials.netresponse.BandAndModelResult;
@@ -151,6 +143,8 @@ public class BMSearchResultActivity extends Activity implements
                 initSlidingMenu();
 
                 loadHistroyData();
+
+                searchResultLayout.onRefreshComplete();
             }
         },500);
     }
@@ -186,19 +180,19 @@ public class BMSearchResultActivity extends Activity implements
             lvRecom = (ListView) findViewById(R.id.ll_search_recom);
             suggestWords = keywords;
         }
-        edit_search.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        showDropdown();
-                        break;
-                }
-
-                return false;
-            }
-        });
+//        edit_search.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+////                        showDropdown();
+//                        break;
+//                }
+//
+//                return false;
+//            }
+//        });
 
     }
 
@@ -255,6 +249,8 @@ public class BMSearchResultActivity extends Activity implements
 
                             if (pi != null) {
                                 try {
+                                    pid = pi.getId();
+                                    pname = pi.getName();
                                     setCityName(pi.getName());
 
                                     menu.toggle();
@@ -313,7 +309,7 @@ public class BMSearchResultActivity extends Activity implements
 
         getProvinces();
 
-        loadBrandAndModel();
+                loadBrandAndModel();
     }
 
     private void restore(Bundle savedInstanceState) {
@@ -400,62 +396,9 @@ public class BMSearchResultActivity extends Activity implements
         }
 
         edit_search = (AutoCompleteTextView) findViewById(R.id.edit_search);
-        edit_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        edit_search.setOnClickListener(this);
 
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    boolean networkAvailable = DeviceUtil.isNetworkAvailable(getApplicationContext());
-                    if (networkAvailable) {
-                        // 搜索
-                        search();
-                    } else {
-                        CustomToast.showToast(BMSearchResultActivity.this, getString(R.string.alert_network_inavailble));
-                        // Toast.makeText(getActivity(), "网络不给力",
-                        // Toast.LENGTH_LONG).show();
-                    }
-                    return true;
-                } else if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    boolean networkAvailable = DeviceUtil.isNetworkAvailable(BMSearchResultActivity.this);
-                    if (networkAvailable) {
-                        // 搜索
-                        search();
-                    } else {
-                        CustomToast.showToast(BMSearchResultActivity.this, getString(R.string.alert_network_inavailble));
-                        // Toast.makeText(getActivity(), "网络不给力",
-                        // Toast.LENGTH_LONG).show();
-                    }
-                    return true;
-                } else if (event.getKeyCode() == KeyEvent.KEYCODE_SPACE) {
-                    // Toast.makeText(getActivity(),
-                    // "OnEditorActionListener spaceback", 1).show();
-                }
-
-                return false;
-            }
-        });
-
-        edit_search.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                if (s.length() > 0) {
-                    findViewById(R.id.search_clear).setVisibility(View.VISIBLE);
-                } else {
-                    findViewById(R.id.search_clear).setVisibility(View.GONE);
-                }
-
-            }
-        });
+        findViewById(R.id.btn_search).setOnClickListener(this);
 
         searchResultLayout = (PullToRefreshListView) findViewById(R.id.layout_search_result_list);
         searchResultLayout.setOnRefreshListener(new MyOnRefreshListener2());
@@ -791,7 +734,7 @@ public class BMSearchResultActivity extends Activity implements
             BMSearchResultActivity host = hostRef.get();
             host.setLoadlingMoreState(false);
             host.setFooterVisible(false);
-            host.searchResultLayout.onRefreshComplete();
+
             if (responseData.getErrorCode() == DcError.DC_OK) {
                 // 搜索结果
                 BMSearchResult searchResult = (BMSearchResult) responseData;
@@ -823,6 +766,8 @@ public class BMSearchResultActivity extends Activity implements
                 CustomToast.showToast(host.getApplicationContext(),
                         host.getString(R.string.get_more_data_failed));
             }
+
+//            host.searchResultLayout.onRefreshComplete();
         }
 
         @Override
@@ -835,7 +780,7 @@ public class BMSearchResultActivity extends Activity implements
             BMSearchResultActivity host = hostRef.get();
             host.setLoadlingMoreState(false);
             host.setFooterVisible(false);
-            host.searchResultLayout.onRefreshComplete();
+//            host.searchResultLayout.onRefreshComplete();
             CustomToast.showToast(host.getApplicationContext(), msg);
             // Toast.makeText(host.getApplicationContext(), "获取更多内容失败",
             // Toast.LENGTH_LONG).show();
@@ -929,6 +874,13 @@ public class BMSearchResultActivity extends Activity implements
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.btn_search:
+            case R.id.edit_search:
+                Intent intent = new Intent(this,BMSearchActivity.class);
+                intent.putExtra("pid",pid);
+                intent.putExtra("pname",pname);
+                startActivity(intent);
+                break;
             case R.id.tv_btn_band_ok:
                 search();
                 if (menu.isSecondaryMenuShowing())

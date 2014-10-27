@@ -136,9 +136,18 @@
         android:background="@color/gray_words_item_pop_home">
 
         <ImageView
+            android:id="@+id/iv_product_collect_star"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/bm_icon_unsaved"/>
     </FrameLayout>
+
+    <include
+        android:id="@+id/progress_bar"
+        layout="@layout/network_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 </RelativeLayout>

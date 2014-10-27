@@ -1,6 +1,7 @@
 package com.ranger.bmaterials.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,8 @@ public class BMCompanyLevelFragment extends Fragment implements NetUtil.IRequest
 
     private View root;
 
+    private Handler mHandler = new Handler();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,7 +74,13 @@ public class BMCompanyLevelFragment extends Fragment implements NetUtil.IRequest
             if(BMCompanyInfoActivity.comInfo != null){
                 initView(BMCompanyInfoActivity.comInfo);
             }else{
-                refreshGame();
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshGame();
+                    }
+                });
+
             }
         }
     }

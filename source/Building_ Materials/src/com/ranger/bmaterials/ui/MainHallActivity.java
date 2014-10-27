@@ -1,5 +1,6 @@
 package com.ranger.bmaterials.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -77,6 +78,17 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
 
         intentNotification = getIntent();
 
+    }
+
+    public CustomFragmentTabHost getTabHost() {
+        return mTabHost;
+    }
+
+    // 在主界面中跳到某个tab
+    public static void jumpToTabByChildActivity(Activity cx, int tab_num) {
+        CustomFragmentTabHost tabhost = ((MainHallActivity) cx).getTabHost();
+        if (tabhost != null)
+            tabhost.setCurrentTab(tab_num);
     }
 
     private void preLoadSearchKeywords() {
