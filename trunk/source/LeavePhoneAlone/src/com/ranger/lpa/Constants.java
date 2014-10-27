@@ -6,7 +6,10 @@ import java.util.UUID;
 public class Constants {
 
     public static final boolean DEBUG = true;
-    
+
+    public static final String WEIXIN_ID = "";
+    public static final String WEIBO_KEY = "";
+
 	public static final String D_UUID = "8ce255c0-200a-11e0-ac64-0800200c9a66";
 	public static final UUID mUUID = UUID.fromString(D_UUID);
 
@@ -22,4 +25,5 @@ public class Constants {
     public static DatagramSocket ds_server;
 
     public static final String SETTINGS_PREFERENCE = "settings";
+
 }

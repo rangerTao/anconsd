@@ -46,15 +46,13 @@ public class SearchScanView extends View {
 
         r = 50;
 
-        double x = getWidth() / 2 + r * Math.cos(degree * 3.14 / 180) - (bmp_search.getWidth() /2 );
-        double y = getHeight() / 2 + r * Math.sin(degree * 3.14 / 180) - (bmp_search.getHeight() /2 );
+        double x = getWidth() / 2 + r * Math.cos(degree * 3.14 / 180) - (bmp_search.getWidth() / 2);
+        double y = getHeight() / 2 + r * Math.sin(degree * 3.14 / 180) - (bmp_search.getHeight() / 2);
 
         Paint newpaint = new Paint();
         newpaint.setColor(Color.BLACK);
 
         canvas.drawBitmap(bmp_search, (float) x, (float) y, newpaint);
-
-//        canvas.drawCircle((float) x, (float) y, 5, newpaint);
 
         degree += 1;
 
