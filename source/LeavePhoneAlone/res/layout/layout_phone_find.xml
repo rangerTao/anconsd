@@ -113,10 +113,15 @@
                 android:contentDescription="@null"
                 android:src="@drawable/btn_red_bg_selector"/>
 
+            <com.ranger.lpa.view.SearchScanView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 android:contentDescription="@null"
                 android:src="@drawable/btn_search"/>
         </FrameLayout>
