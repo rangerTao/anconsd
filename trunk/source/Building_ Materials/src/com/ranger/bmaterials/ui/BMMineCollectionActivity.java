@@ -1,6 +1,9 @@
 package com.ranger.bmaterials.ui;
 
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.Intent;
+import android.inputmethodservice.InputMethodService;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -29,6 +32,7 @@ public class BMMineCollectionActivity extends FragmentActivity implements PageCa
 		findViewById(R.id.btn_back).setOnClickListener(this);
 		
 		setupViews();
+
 	}
 
 	@TargetApi(9)
@@ -42,6 +46,11 @@ public class BMMineCollectionActivity extends FragmentActivity implements PageCa
 		    pager.setOverScrollMode(View.OVER_SCROLL_NEVER);
 		}
 		tabStrip.setViewPager(pager);
+
+        findViewById(R.id.tv_hide_keypad).requestFocus();
+
+        findViewById(R.id.btn_search).setOnClickListener(this);
+        findViewById(R.id.edit_search).setOnClickListener(this);
 	}
 
 	@Override
@@ -85,5 +94,17 @@ public class BMMineCollectionActivity extends FragmentActivity implements PageCa
 		if (id == R.id.btn_back) {
 			this.finish();
 		}
+
+        switch (v.getId()){
+            case R.id.btn_search:
+            case R.id.edit_search:
+                Intent intent = new Intent(getApplicationContext(), BMSearchActivity.class);
+                intent.putExtra(BMSearchResultActivity.ARG_KEYWORD, "");
+                intent.putExtra(BMSearchResultActivity.ARG_PID, "");
+                intent.putExtra(BMSearchResultActivity.ARG_PNAME, "");
+
+                startActivity(intent);
+                break;
+        }
 	}
 }

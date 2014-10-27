@@ -1,9 +1,8 @@
 package com.ranger.bmaterials.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,10 +15,10 @@ import android.widget.TextView;
 
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.adapter.BMProductCollectionAdapter;
-import com.ranger.bmaterials.adapter.BMProductLiteAdapter;
 import com.ranger.bmaterials.netresponse.BMCollectionResult;
 import com.ranger.bmaterials.netresponse.BMSearchResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
+import com.ranger.bmaterials.ui.gametopic.BMProductDetailActivity;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 import com.ranger.bmaterials.view.PagerSlidingTabStrip;
@@ -29,7 +28,6 @@ import com.ranger.bmaterials.view.pull.PullToRefreshBase.OnRefreshListener2;
 import com.ranger.bmaterials.view.pull.PullToRefreshListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BMMineProductCollectionFragment extends ListFragment implements OnClickListener, IRequestListener, OnRefreshListener2<ListView>,
 		OnItemClickListener {
@@ -148,6 +146,13 @@ public class BMMineProductCollectionFragment extends ListFragment implements OnC
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        BMCollectionResult.Collection data = (BMCollectionResult.Collection) parent.getAdapter().getItem(position);
+
+        if(data != null){
+            Intent intentDetail = new Intent(getActivity(), BMProductDetailActivity.class);
+            intentDetail.putExtra(BMProductDetailActivity.SUPPLY_ID, data.getSupplyId());
+            startActivity(intentDetail);
+        }
 	}
 
 	@Override

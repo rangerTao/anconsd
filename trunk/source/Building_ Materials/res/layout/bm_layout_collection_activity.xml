@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#196bc8"
-        >
+        android:background="#196bc8">
 
         <ImageView
             android:id="@+id/btn_back"
@@ -17,7 +16,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/back_selector"/>
+            android:src="@drawable/back_selector" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -39,7 +38,7 @@
                 android:gravity="center"
                 android:src="@drawable/header_search_searchbutton"
                 android:textColor="#333"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
 
             <FrameLayout
                 android:layout_width="0.0dip"
@@ -50,7 +49,8 @@
                 android:layout_weight="1.0">
 
 
-                <AutoCompleteTextView
+                <TextView
+                    android:gravity="center_vertical"
                     android:id="@+id/edit_search"
                     android:layout_width="fill_parent"
                     android:layout_height="32dp"
@@ -58,14 +58,13 @@
                     android:drawablePadding="2dp"
                     android:dropDownSelector="@color/transparent"
                     android:dropDownVerticalOffset="3dp"
+                    android:enabled="false"
                     android:hint="@string/search_hint"
-                    android:imeOptions="actionSearch"
-                    android:inputType="textFilter"
                     android:paddingRight="25dp"
                     android:singleLine="true"
                     android:textColor="#000"
                     android:textColorHint="#CCC"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/search_clear"
@@ -75,7 +74,7 @@
                     android:contentDescription="@null"
                     android:scaleType="fitCenter"
                     android:src="@drawable/search_clear_selector"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </FrameLayout>
         </LinearLayout>
@@ -84,11 +83,20 @@
 
     <com.ranger.bmaterials.view.PagerSlidingTabStrip
         android:id="@+id/tabs_indicator"
-        style="@style/scroll_tab_style"/>
+        style="@style/scroll_tab_style" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/mine_activity_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tv_hide_keypad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <requestFocus />
+    </TextView>
 
 </LinearLayout>

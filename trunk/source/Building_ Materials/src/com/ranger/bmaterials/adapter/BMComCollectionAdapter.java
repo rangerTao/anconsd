@@ -45,7 +45,7 @@ public class BMComCollectionAdapter extends BaseAdapter {
         BMCollectionResult.Collection bd = (BMCollectionResult.Collection) getItem(position);
 
         if (convertView == null) {
-            view = inflater.inflate(R.layout.product_collect_list_item, parent,
+            view = inflater.inflate(R.layout.company_collect_list_item, parent,
                     false);
             holder = new ViewHolder();
 
@@ -54,17 +54,15 @@ public class BMComCollectionAdapter extends BaseAdapter {
             holder.price = (TextView) view.findViewById(R.id.bm_tv_price);
             holder.from = (TextView) view.findViewById(R.id.bm_tv_price_from);
 
-
             view.setTag(holder);
         } else {
             view = convertView;
             holder = (ViewHolder) view.getTag();
         }
 
-        holder.productName.setText(bd.getProductName());
-        holder.modeName.setText(bd.getStandard());
-        holder.price.setText(bd.getPrice() + "/" + bd.getUnit());
-        holder.from.setText(bd.getArea());
+        holder.productName.setText(bd.getCompanyName());
+        holder.modeName.setText(bd.getLinkName());
+        holder.price.setText(bd.getArea());
 
         return view;
 	}

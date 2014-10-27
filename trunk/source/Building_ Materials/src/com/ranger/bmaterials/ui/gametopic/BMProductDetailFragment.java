@@ -1,12 +1,9 @@
 package com.ranger.bmaterials.ui.gametopic;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,6 +49,8 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
 
     private FrameLayout bm_fl_save_product;
 
+    private Handler mHandler = new Handler();
+
     public String getString(Intent intent, String key) {
         if (null != intent && null != key && intent.hasExtra(key)) {
             return intent.getStringExtra(key);
@@ -77,7 +76,14 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
 
         supplyid = getActivity().getIntent().getStringExtra(BMProductDetailActivity.SUPPLY_ID);
 
-        requestData();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                requestData();
+            }
+        });
+
+
         return root;
     }
 

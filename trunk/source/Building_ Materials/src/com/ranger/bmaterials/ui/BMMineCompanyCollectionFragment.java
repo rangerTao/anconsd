@@ -1,5 +1,6 @@
 package com.ranger.bmaterials.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.ranger.bmaterials.adapter.BMComCollectionAdapter;
 import com.ranger.bmaterials.adapter.BMProductCollectionAdapter;
 import com.ranger.bmaterials.netresponse.BMCollectionResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
+import com.ranger.bmaterials.ui.gametopic.BMProductDetailActivity;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 import com.ranger.bmaterials.view.PagerSlidingTabStrip;
@@ -142,6 +144,18 @@ public class BMMineCompanyCollectionFragment extends Fragment implements OnClick
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        BMCollectionResult.Collection data = (BMCollectionResult.Collection) parent.getAdapter().getItem(position);
+
+        if(data != null){
+            Intent intent = new Intent(getActivity(), BMCompanyInfoActivity.class);
+            try{
+                intent.putExtra(BMCompanyInfoActivity.USER_ID, Integer.parseInt(data.getUserid()));
+            }catch (Exception e){
+                intent.putExtra(BMCompanyInfoActivity.USER_ID, 0);
+            }
+            intent.putExtra(BMCompanyInfoActivity.USER_NAME,data.getCompanyName());
+            startActivity(intent);
+        }
 	}
 
 	@Override

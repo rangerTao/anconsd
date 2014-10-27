@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.renderscript.FileA3D;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.Html;
@@ -126,6 +127,8 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
         searchEt = (AutoCompleteTextView) root.findViewById(R.id.edit_search);
 
+        searchEt.setOnClickListener(this);
+
         tagLayout = (ViewGroup) root.findViewById(R.id.layout_search_view);
         tagView = (TagCloudView) tagLayout.findViewById(R.id.tagclouview);
         tagView.setTagClickListener(this);
@@ -218,7 +221,7 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
                 switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:
-                        showDropdown();
+//                        showDropdown();
                         break;
                 }
 
@@ -367,18 +370,24 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
     private View clearView;
 
     private void search() {
-        if(lvRecom.getVisibility() == View.VISIBLE){
-            lvRecom.setVisibility(View.GONE);
-        }
-        String keyword = searchEt.getText().toString().trim();
-        if (TextUtils.isEmpty(keyword)) {
-            CustomToast.showToast(getActivity(), getString(R.string.alert_search_cannot_be_null));
-        } else if (TextUtils.isEmpty(keyword.trim())) {
-            CustomToast.showToast(getActivity(), getString(R.string.alert_search_cannot_be_null));
-        } else {
-            jumpSearch(keyword);
-            // fakeResult();
-        }
+//        if(lvRecom.getVisibility() == View.VISIBLE){
+//            lvRecom.setVisibility(View.GONE);
+//        }
+//        String keyword = searchEt.getText().toString().trim();
+//        if (TextUtils.isEmpty(keyword)) {
+//            CustomToast.showToast(getActivity(), getString(R.string.alert_search_cannot_be_null));
+//        } else if (TextUtils.isEmpty(keyword.trim())) {
+//            CustomToast.showToast(getActivity(), getString(R.string.alert_search_cannot_be_null));
+//        } else {
+//            jumpSearch(keyword);
+//            // fakeResult();
+//        }
+
+        Intent intent = new Intent(getActivity(),BMSearchActivity.class);
+        intent.putExtra("pid",mPi == null ? "":mPi.getId());
+        intent.putExtra("pname",mPi == null ? "":mPi.getName());
+        startActivity(intent);
+
     }
 
     @Override
@@ -390,6 +399,7 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
                 }
                 break;
             case R.id.btn_search:
+            case R.id.edit_search:
                 boolean networkAvailable = DeviceUtil.isNetworkAvailable(getActivity());
                 if (networkAvailable) {
                     // 搜索

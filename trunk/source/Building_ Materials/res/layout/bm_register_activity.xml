@@ -95,6 +95,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/bm_ll_user_register_username"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -185,8 +186,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="fill_parent"
@@ -250,6 +250,7 @@
                         android:hint="请输入短信验证码"
                         android:inputType="number"
                         android:paddingLeft="5dp"
+                        android:maxLength="6"
                         android:singleLine="true"
                         android:textColor="#999999"
                         android:textSize="14sp"/>
@@ -259,11 +260,12 @@
                 <TextView
                     android:id="@+id/btn_p_commit_register"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="18dp"
-                    android:background="@drawable/btn_finish_register"
+                    android:background="@drawable/mine_btn_login_register_ect_bg_selector"
                     android:enabled="false"
                     android:gravity="center"
+                    android:text="完成"
                     android:textColor="@color/white"
                     android:textSize="16sp"/>
             </LinearLayout>
