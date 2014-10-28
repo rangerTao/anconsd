@@ -196,7 +196,7 @@ public class CommonDaoImpl {
 	      
 	    }
 
-    private static final String query_keywords = "select " + COLUMN_KEYWORD + " from " + TABLE_KEYWORDS + " order by " + COLUMN_LASTMODIFY + " desc limit 0,8";
+    private static final String query_keywords = "select " + COLUMN_KEYWORD + " from " + TABLE_KEYWORDS + " order by " + COLUMN_LASTMODIFY + " desc";
 	
 	public List<String> getKeywords() {
 		SearchSqlHelper helper = SearchSqlHelper.getInstance(context);

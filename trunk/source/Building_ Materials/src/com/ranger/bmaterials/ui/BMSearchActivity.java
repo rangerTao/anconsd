@@ -185,9 +185,7 @@ public class BMSearchActivity extends Activity implements View.OnClickListener, 
     private InputFilter[] ll = new InputFilter[]{new InputFilter.LengthFilter(30)};
 
     private void search() {
-        if(lvRecom.getVisibility() == View.VISIBLE){
-            lvRecom.setVisibility(View.GONE);
-        }
+
         String keyword = searchEt.getText().toString().trim();
         if (TextUtils.isEmpty(keyword)) {
             CustomToast.showToast(getApplicationContext(), getString(R.string.alert_search_cannot_be_null));
@@ -206,6 +204,8 @@ public class BMSearchActivity extends Activity implements View.OnClickListener, 
         intent.putExtra(BMSearchResultActivity.ARG_PNAME, pName);
 
         startActivity(intent);
+
+        finish();
     }
 
     @Override

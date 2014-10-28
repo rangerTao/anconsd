@@ -51,7 +51,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.MainHallActivity"
+            android:name=".ui.WelcomeActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -62,6 +62,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.MainHallActivity" android:launchMode="singleTask" android:screenOrientation="portrait" />
 
         <activity
             android:name=".cropimg.CropImageActivity"
@@ -83,6 +85,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.BMLoginActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.BMRegisterActivity"

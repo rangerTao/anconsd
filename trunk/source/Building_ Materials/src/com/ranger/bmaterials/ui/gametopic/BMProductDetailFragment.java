@@ -76,12 +76,12 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
 
         supplyid = getActivity().getIntent().getStringExtra(BMProductDetailActivity.SUPPLY_ID);
 
-        mHandler.post(new Runnable() {
+        mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 requestData();
             }
-        });
+        },1000);
 
 
         return root;

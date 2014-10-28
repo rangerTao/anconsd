@@ -171,6 +171,12 @@ public class BMRegisterActivity extends Activity implements OnClickListener,
 			
 			registerFinished();
 		} else {
+
+            verifyCodeButton.setEnabled(false);
+            verifyCodeButton.setBackgroundColor(Color.parseColor("#50909090"));
+            hasReqVerifyCode = true;
+            enableRigisterBtn();
+
 			startTimer();
 		}
 	}
@@ -254,9 +260,6 @@ public class BMRegisterActivity extends Activity implements OnClickListener,
                 }
 
                 NetUtil.getInstance().requestPhoneVerifyCode(phonenum, 1, this);
-                verifyCodeButton.setEnabled(false);
-                hasReqVerifyCode = true;
-                enableRigisterBtn();
                 break;
             case R.id.btn_p_commit_register:
 

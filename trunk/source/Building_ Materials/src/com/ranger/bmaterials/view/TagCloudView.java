@@ -339,7 +339,18 @@ public class TagCloudView extends RelativeLayout implements
 		return 1;
 	}
 
-	private int[] getTagPadding(Tag tempTag) {
+    private int lastPositionX = 0;
+    private int lastPositionY = 0;
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+    }
+
+    private int[] getTagPadding(Tag tempTag) {
 		float scale = tempTag.getScale();
 		// int textSize = tempTag.getTextSize();
 		int pH = (int) (paddingH * scale);
@@ -374,6 +385,9 @@ public class TagCloudView extends RelativeLayout implements
 
 	public void replace(List<Tag> tagList) {
 		try {
+
+            lastPositionX = 0;
+            lastPositionY = 0;
 
             mList = tagList;
 
@@ -481,7 +495,6 @@ public class TagCloudView extends RelativeLayout implements
 		} else {
 			shiftLeft = w / 2;
 			shiftTop = h / 2;
-
 		}
 		// shiftLeft = 0;
 		// shiftTop = 0 ;
@@ -490,10 +503,33 @@ public class TagCloudView extends RelativeLayout implements
 
 		// if
 		// (Constants.DEBUG)if(Constants.DEBUG)Log.i(TAG,String.format("MeasuredWidth:%s,MeasuredHeight:%s,width:%s,height:%s,strWidth:%s,shiftLeft:%s,shiftTop:%s for %s",mw,mh,w,h,strWidth,shiftLeft,shiftTop,textView.getText().toString()));
-		params.get(tempTag.getParamNo()).setMargins(
-				(int) (centerX - shiftLeft + tempTag.getLoc2DX()),
+
+        int marginTop = (int) (centerY - shiftTop + tempTag.getLoc2DY());
+        int marginLeft = (int) (centerX - shiftLeft + tempTag.getLoc2DX());
+
+        if(lastPositionX == 0){
+            marginTop = 200;
+            lastPositionX = marginTop;
+            lastPositionY = marginLeft;
+        }else{
+//            if(marginTop - lastPositionX < 30){
+//                marginTop += 30 ;
+//            }
+            marginTop = lastPositionX + 80;
+
+            if((marginLeft + textSize * textView.getText().length()) > getWidth()){
+                marginLeft = 50;
+            }
+        }
+
+        params.get(tempTag.getParamNo()).setMargins(
+				marginLeft,
 				/* (int) (centerX -shiftLeft+ tempTag.getLoc2DX()), */
-				(int) (centerY - shiftTop + tempTag.getLoc2DY()), 0, 0);
+				marginTop, 0, 0);
+
+        lastPositionX = marginTop;
+        lastPositionY = marginLeft;
+
 		// textView.setTextColor(tempTag.getColor());
 		/*
 		 * if((centerX - shiftLeft + tempTag.getLoc2DX()) + textView.getWidth()
@@ -501,6 +537,7 @@ public class TagCloudView extends RelativeLayout implements
 		 * textView.setPadding(tagPadding[0], tagPadding[1], 0, tagPadding[1]);
 		 * //textView.setBackgroundResource(tempTag.getBackgroudRes()); }else{
 		 */
+
 		textView.setPadding(tagPadding[0], tagPadding[1], tagPadding[0],
 				tagPadding[1]);
 		// }
@@ -1302,7 +1339,7 @@ public class TagCloudView extends RelativeLayout implements
 			@Override
 			public boolean onDown(MotionEvent e) {
 				// TODO Auto-generated method stub
-				imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+//				imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 				return super.onDown(e);
 			}
 		});

@@ -80,7 +80,7 @@ public class SplashTask implements OnPageChangeListener {
 		ImageLoaderHelper.config();
 		File imgFile = ImageLoader.getInstance().getDiscCache().get(adurl);
 
-		SPLASH_DELAY_TIME = 2500;
+		SPLASH_DELAY_TIME = 1500;
 		splash = new FixTouchView(cx);
 		try {
 			splash.setBackgroundResource(R.drawable.splash_bg);

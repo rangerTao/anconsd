@@ -33,6 +33,7 @@ import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.adapter.AbstractListAdapter.OnListItemClickListener;
@@ -142,11 +143,16 @@ public class BMSearchResultActivity extends Activity implements
 
                 initSlidingMenu();
 
-                loadHistroyData();
-
-                searchResultLayout.onRefreshComplete();
             }
-        },500);
+        }, 1000);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
     }
 
     List<String> suggestWords = null;
@@ -176,7 +182,7 @@ public class BMSearchResultActivity extends Activity implements
 
     private void initSuggest(List<String> keywords) {
 
-        if(lvRecom == null){
+        if (lvRecom == null) {
             lvRecom = (ListView) findViewById(R.id.ll_search_recom);
             suggestWords = keywords;
         }
@@ -202,7 +208,7 @@ public class BMSearchResultActivity extends Activity implements
             int code = event.getKeyCode();
             if (code == KeyEvent.KEYCODE_BACK) {
 
-                if(lvRecom != null && lvRecom.getVisibility() == View.VISIBLE){
+                if (lvRecom != null && lvRecom.getVisibility() == View.VISIBLE) {
                     lvRecom.setVisibility(View.GONE);
                     return true;
                 }
@@ -211,7 +217,7 @@ public class BMSearchResultActivity extends Activity implements
         return super.dispatchKeyEvent(event);
     }
 
-    private void showDropdown(){
+    private void showDropdown() {
         suggestAdapter = new SuggestAdapter(getApplicationContext(), suggestWords, 5);
         lvRecom.setAdapter(suggestAdapter);
         suggestAdapter.notifyDataSetChanged();
@@ -234,13 +240,14 @@ public class BMSearchResultActivity extends Activity implements
     }
 
     private void getProvinces() {
-        NetUtil.getInstance().requestForProvices(this,new IRequestListener() {
+        NetUtil.getInstance().requestForProvices(this, new IRequestListener() {
             @Override
             public void onRequestSuccess(BaseResult responseData) {
                 BMProvinceListResult blr = (BMProvinceListResult) responseData;
 
                 if (blr.getTag().equals(Constants.NET_TAG_GET_PROVINCE + "")) {
                     bpa = new BMProvinceAdapter(getApplicationContext(), blr.getProviceList());
+                    bpa.setProvince(pname);
                     lv_province_list.setAdapter(bpa);
                     lv_province_list.setOnItemClickListener(new OnItemClickListener() {
                         @Override
@@ -252,6 +259,9 @@ public class BMSearchResultActivity extends Activity implements
                                     pid = pi.getId();
                                     pname = pi.getName();
                                     setCityName(pi.getName());
+
+                                    bpa.setProvince(pname);
+                                    bpa.notifyDataSetChanged();
 
                                     menu.toggle();
                                 } catch (Exception e) {
@@ -309,7 +319,7 @@ public class BMSearchResultActivity extends Activity implements
 
         getProvinces();
 
-                loadBrandAndModel();
+        loadBrandAndModel();
     }
 
     private void restore(Bundle savedInstanceState) {
@@ -435,7 +445,8 @@ public class BMSearchResultActivity extends Activity implements
         int id = buttonView.getId();
         switch (id) {
             case R.id.bm_cb_user_identify:
-                isMerge = isChecked ? 1 : 0;
+                isCredit = isChecked ? 1 : 0;
+                search();
                 break;
             case R.id.bm_btn_group_provider:
                 break;
@@ -482,7 +493,7 @@ public class BMSearchResultActivity extends Activity implements
         }
     }
 
-    public void bandSearch(View v){
+    public void bandSearch(View v) {
         search();
         if (menu.isSecondaryMenuShowing()) {
             menu.toggle();
@@ -614,6 +625,8 @@ public class BMSearchResultActivity extends Activity implements
 
     private int isMerge = 0;
 
+    private int isCredit = 0;
+
     private void search(int targetPage, boolean loadMore) {
 
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -621,12 +634,12 @@ public class BMSearchResultActivity extends Activity implements
         if (DeviceUtil.isNetworkAvailable(this)) {
             if (loadMore) {
                 //String keyword, int area, String smalltype,String brand,int ismerge,int page, int pageSize,String sortField,int isAscSort ,IRequestListener observer
-                requestId = NetUtil.getInstance().requestForSearch(keyword, pid, smalltype, band, isMerge,
+                requestId = NetUtil.getInstance().requestForSearch(keyword, pid, smalltype, band, isMerge,isCredit,
                         targetPage, PAGE_SIZE, "", 1,
                         new LoadMoreContentListener(this));
             } else {
                 requestId = NetUtil.getInstance()
-                        .requestForSearch(keyword, pid, smalltype, band, isMerge,
+                        .requestForSearch(keyword, pid, smalltype, band, isMerge,isCredit,
                                 targetPage, PAGE_SIZE, "", 1,
                                 new LoadMoreContentListener(this));
             }
@@ -744,6 +757,7 @@ public class BMSearchResultActivity extends Activity implements
                     host.setFooterVisible(false);
                     // Toast.makeText(host.getApplicationContext(), "没有更多内容",
                     // Toast.LENGTH_LONG).show();
+                    host.showSearchResultView();
                     host.showNoMoreView();
                 } else {
 
@@ -767,7 +781,7 @@ public class BMSearchResultActivity extends Activity implements
                         host.getString(R.string.get_more_data_failed));
             }
 
-//            host.searchResultLayout.onRefreshComplete();
+            host.searchResultLayout.onRefreshComplete();
         }
 
         @Override
@@ -780,7 +794,7 @@ public class BMSearchResultActivity extends Activity implements
             BMSearchResultActivity host = hostRef.get();
             host.setLoadlingMoreState(false);
             host.setFooterVisible(false);
-//            host.searchResultLayout.onRefreshComplete();
+            host.searchResultLayout.onRefreshComplete();
             CustomToast.showToast(host.getApplicationContext(), msg);
             // Toast.makeText(host.getApplicationContext(), "获取更多内容失败",
             // Toast.LENGTH_LONG).show();
@@ -876,9 +890,9 @@ public class BMSearchResultActivity extends Activity implements
         switch (v.getId()) {
             case R.id.btn_search:
             case R.id.edit_search:
-                Intent intent = new Intent(this,BMSearchActivity.class);
-                intent.putExtra("pid",pid);
-                intent.putExtra("pname",pname);
+                Intent intent = new Intent(this, BMSearchActivity.class);
+                intent.putExtra("pid", pid);
+                intent.putExtra("pname", pname);
                 startActivity(intent);
                 break;
             case R.id.tv_btn_band_ok:
@@ -921,10 +935,10 @@ public class BMSearchResultActivity extends Activity implements
                 break;
             case R.id.bm_btn_group_provider:
 
-                if(isMerge == 1){
+                if (isMerge == 1) {
                     isMerge = 0;
                     cbGroupProvider.setText("合并相同供应商");
-                }else{
+                } else {
                     isMerge = 1;
                     search();
                     cbGroupProvider.setText("取消合并相同供应商");
@@ -975,13 +989,10 @@ public class BMSearchResultActivity extends Activity implements
 
     public void search() {
 
-        if(lvRecom.getVisibility() == View.VISIBLE){
-            lvRecom.setVisibility(View.GONE);
-        }
-
         if (searchResultAdapter != null) {
             searchResultAdapter.clear();
         }
+
         if (footer_view != null) {
             try {
                 searchResultLayout.getRefreshableView().removeFooterView(footer_view);

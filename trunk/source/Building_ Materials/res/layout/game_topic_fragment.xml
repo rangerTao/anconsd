@@ -5,8 +5,6 @@
               android:background="#e8f3fe"
               android:orientation="vertical">
 
-    <include layout="@layout/network_loading" />
-
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -65,21 +63,18 @@
                         android:id="@+id/bm_tv_product_name"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="name"
                         android:textSize="20sp"/>
 
                     <TextView
                         android:id="@+id/bm_tv_product_brand"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="name"
                         android:textSize="15sp"/>
 
                     <TextView
                         android:id="@+id/bm_tv_product_model"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="name"
                         android:textSize="15sp"/>
 
                     <RelativeLayout
@@ -92,7 +87,6 @@
                             android:id="@+id/bm_tv_product_material"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="name"
                             android:textSize="15sp"/>
 
                         <TextView
@@ -258,5 +252,5 @@
             android:layout_gravity="center_horizontal"
             android:src="@drawable/bm_icon_unsaved"/>
     </FrameLayout>
-
+    <include layout="@layout/network_loading" />
 </RelativeLayout>

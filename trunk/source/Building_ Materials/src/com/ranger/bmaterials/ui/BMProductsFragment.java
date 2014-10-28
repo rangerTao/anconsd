@@ -130,7 +130,13 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
 		if (!guideRequestSend) {
 			guideRequestSend = true;
 			showLoadingView();
-            refreshGuide();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    refreshGuide();
+                }
+            },100);
+
 		}
 	}
 

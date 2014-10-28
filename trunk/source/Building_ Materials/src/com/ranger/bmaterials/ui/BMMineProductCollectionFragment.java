@@ -45,6 +45,8 @@ public class BMMineProductCollectionFragment extends ListFragment implements OnC
 
 	public PagerSlidingTabStrip tabStrip;
 
+    private View progress_bar;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mine_activity_collection_subpage_guide, null);
@@ -58,6 +60,8 @@ public class BMMineProductCollectionFragment extends ListFragment implements OnC
 		pageGuideIndex = 1;
 		noMoreGuide = false;
 		guideListInfo = new ArrayList<BMCollectionResult.Collection>();
+
+        progress_bar = view.findViewById(R.id.progress_bar);
 
         guideInfoListAdapter = new BMProductCollectionAdapter(getActivity(),guideListInfo);
 		plvGuide = (PullToRefreshListView) getActivity().findViewById(R.id.listview_mine_collection_guides);
@@ -111,6 +115,12 @@ public class BMMineProductCollectionFragment extends ListFragment implements OnC
 	public void onResume() {
 		super.onResume();
 
+        if (!guideRequestSend) {
+            guideRequestSend = true;
+            showLoadingView();
+            refreshGuide();
+        }
+
 	}
 
 	@Override
@@ -118,11 +128,7 @@ public class BMMineProductCollectionFragment extends ListFragment implements OnC
 
 		super.onStart();
 
-		if (!guideRequestSend) {
-			guideRequestSend = true;
-			showLoadingView();
-			refreshGuide();
-		}
+
 	}
 
 	@Override
@@ -138,6 +144,7 @@ public class BMMineProductCollectionFragment extends ListFragment implements OnC
 	}
 
 	private void showErrorView() {
+
 	}
 
 	private void showContentView() {
@@ -235,6 +242,8 @@ public class BMMineProductCollectionFragment extends ListFragment implements OnC
 		} else {
 			showErrorView();
 		}
+
+        progress_bar.setVisibility(View.GONE);
 
 		updateTitle(totalNum);
 	}
