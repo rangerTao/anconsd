@@ -61,7 +61,7 @@
                     android:layout_weight="1.0">
 
 
-                    <AutoCompleteTextView
+                    <TextView
                         android:id="@+id/edit_search"
                         android:layout_width="fill_parent"
                         android:layout_height="32dp"
@@ -70,8 +70,7 @@
                         android:dropDownSelector="@color/transparent"
                         android:dropDownVerticalOffset="3dp"
                         android:hint="@string/search_hint"
-                        android:imeOptions="actionSearch"
-                        android:inputType="textFilter"
+                        android:gravity="center_vertical"
                         android:paddingRight="25dp"
                         android:singleLine="true"
                         android:textColor="#000"
@@ -246,10 +245,12 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="5dp"
             android:layout_centerVertical="true"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:background="@drawable/merge_provider_bg"
             android:layout_gravity="right|center_vertical"
+            android:singleLine="true"
+            android:ellipsize="none"
             android:text="合并相同供应商"
             android:layout_marginLeft="15dp"
             android:textColor="#000"/>

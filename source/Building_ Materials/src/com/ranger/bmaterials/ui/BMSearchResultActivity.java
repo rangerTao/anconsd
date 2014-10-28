@@ -85,7 +85,7 @@ public class BMSearchResultActivity extends Activity implements
     private CheckBox cbIdentifyProvider;
     private Button cbGroupProvider;
 
-    private AutoCompleteTextView edit_search;
+    private TextView edit_search;
 
     /**
      * 推荐的GridView
@@ -132,7 +132,7 @@ public class BMSearchResultActivity extends Activity implements
         tvProvince.setText(pname.equals("") ? "全国" : pname);
         edit_search.setText(keyword);
 
-        showLoadingProgressView();
+//        showLoadingProgressView();
 
         registerListener();
 
@@ -145,6 +145,29 @@ public class BMSearchResultActivity extends Activity implements
 
             }
         }, 1000);
+
+    }
+
+    private String newkeyword;
+    private int newpid;
+    private String newpname;
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        newkeyword = intent.getStringExtra(ARG_KEYWORD);
+        newpid = intent.getIntExtra(ARG_PID, 0);
+        newpname = intent.getStringExtra(ARG_PNAME);
+
+        if(!keyword.equals(newkeyword)){
+            keyword = newkeyword;
+            pid = newpid;
+            pname = newpname;
+            edit_search.setText(keyword);
+//            showLoadingProgressView();
+            search();
+        }
 
     }
 
@@ -405,7 +428,7 @@ public class BMSearchResultActivity extends Activity implements
             tvProvince = (TextView) findViewById(R.id.btn_province);
         }
 
-        edit_search = (AutoCompleteTextView) findViewById(R.id.edit_search);
+        edit_search = (TextView) findViewById(R.id.edit_search);
         edit_search.setOnClickListener(this);
 
         findViewById(R.id.btn_search).setOnClickListener(this);
@@ -632,6 +655,9 @@ public class BMSearchResultActivity extends Activity implements
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
         if (DeviceUtil.isNetworkAvailable(this)) {
+
+            showLoadingProgressView();
+
             if (loadMore) {
                 //String keyword, int area, String smalltype,String brand,int ismerge,int page, int pageSize,String sortField,int isAscSort ,IRequestListener observer
                 requestId = NetUtil.getInstance().requestForSearch(keyword, pid, smalltype, band, isMerge,isCredit,
@@ -917,7 +943,7 @@ public class BMSearchResultActivity extends Activity implements
                             getString(R.string.alert_network_inavailble));
                     return;
                 } else {
-                    showLoadingProgressView();
+//                    showLoadingProgressView();
                     search(1, false);
                 }
                 break;
@@ -927,7 +953,7 @@ public class BMSearchResultActivity extends Activity implements
                             getString(R.string.alert_network_inavailble));
                     return;
                 } else {
-                    showLoadingProgressView();
+//                    showLoadingProgressView();
 
                     search();
                 }
@@ -938,10 +964,11 @@ public class BMSearchResultActivity extends Activity implements
                 if (isMerge == 1) {
                     isMerge = 0;
                     cbGroupProvider.setText("合并相同供应商");
+                    search();
                 } else {
                     isMerge = 1;
                     search();
-                    cbGroupProvider.setText("取消合并相同供应商");
+                    cbGroupProvider.setText("取消合并供应商");
                 }
                 break;
             case R.id.search_clear:

@@ -42,33 +42,8 @@ public class CustomFragmentTabHost extends FragmentTabHost {
 
 	}
 
+
 	private boolean isMsgNumTvShown;
-
-	public void showMsgNumTv(boolean isShow, String unreadMsg) {
-		if (isShow) {
-			if (unreadMsg == null || "0".equals(unreadMsg)) {
-				msgNumTv.setVisibility(View.INVISIBLE);
-				isMsgNumTvShown = false;
-			} else {
-				isMsgNumTvShown = true;
-//				msgNumTv.setText(unreadMsg);
-				msgNumTv.setVisibility(View.VISIBLE);
-				// dismissCoinTip();
-			}
-		} else {
-		}
-	}
-
-	public boolean isMsgNumTvShown() {
-//		return !msgNumTv.getText().toString().equals("") && msgNumTv.isShown();
-		return msgNumTv.isShown();
-	}
-
-	// public void dismissCoinTip() {
-	// if (coinTipView != null) {
-	// coinTipView.setVisibility(View.INVISIBLE);
-	// }
-	// }
 
 	@Override
 	protected void dispatchDraw(Canvas canvas) {
@@ -78,13 +53,6 @@ public class CustomFragmentTabHost extends FragmentTabHost {
 
 		}
 	}
-
-	// public void showCoinTip() {
-	// if (!isMsgNumTvShown && HeaderCoinAnimationTask.coinNum.get() !=
-	// HeaderCoinAnimationTask.NONE_TIP) {
-	// coinTipView.setVisibility(View.VISIBLE);
-	// }
-	// }
 
 	public View getIndicatorView(int resid) {
 		// TODO Auto-generated method stub
