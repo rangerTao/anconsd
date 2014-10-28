@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,6 +43,7 @@ import com.ranger.bmaterials.adapter.SuggestAdapter;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.db.CommonDaoImpl;
+import com.ranger.bmaterials.json.JSONParser;
 import com.ranger.bmaterials.listener.onTagCloudViewLayoutListener;
 import com.ranger.bmaterials.mode.KeywordsList;
 import com.ranger.bmaterials.netresponse.BMProvinceListResult;
@@ -68,6 +71,8 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
     private View root;
 
+    private View loadingView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -82,6 +87,9 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
         root = inflater.inflate(R.layout.search_activity_new3d, null);
         root.findViewById(R.id.btn_back).setOnClickListener(this);
+
+        loadingView = root.findViewById(R.id.loadingView);
+
         tv_back = (TextView) root.findViewById(R.id.btn_back);
         initView();
         initTagCloudViewData();
@@ -199,6 +207,8 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
         // tagView.addTags(tags);
         tagView.addTagsWithPreload(tags);
+
+        loadingView.setVisibility(View.GONE);
     }
 
     @SuppressWarnings("deprecation")
@@ -259,13 +269,37 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
             }
             tagView.replace(tags);
         }
+
     }
 
     /**
      * 获取关键字
      */
     private void loadKeywords() {
-        NetUtil.getInstance().requestForKeywords(KEYWORDS_COUNT, new KeywordsRequestListener(this),getActivity());
+
+        SharedPreferences sp = getActivity().getSharedPreferences("cache", Context.MODE_PRIVATE);
+
+        String cache_province = sp.getString("keywords", "");
+
+        if(!cache_province.trim().equals("")){
+            BaseResult baseResult = JSONParser.parseBMKeywords(cache_province);
+            baseResult.setTag(Constants.NET_TAG_KEYWORDS + "");
+            baseResult.setErrorCode(DcError.DC_OK);
+
+            keywordsWrapper = (KeywordsList) baseResult;
+            dealWithPreloadedCloudViewData();
+            loadingView.setVisibility(View.GONE);
+        }else{
+            loadingView.setVisibility(View.VISIBLE);
+        }
+
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                NetUtil.getInstance().requestForKeywords(KEYWORDS_COUNT, new KeywordsRequestListener(BMSearchFragment.this),getActivity().getApplicationContext());
+            }
+        });
+
     }
 
     private void jumpSearch(String keyword) {
@@ -366,11 +400,13 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
                 }
 
             }
+
+            host.loadingView.setVisibility(View.GONE);
         }
 
         @Override
         public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
-
+            host.loadingView.setVisibility(View.GONE);
         }
     }
 

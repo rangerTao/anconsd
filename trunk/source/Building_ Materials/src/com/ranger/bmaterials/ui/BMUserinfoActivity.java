@@ -583,6 +583,10 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
 
                     Intent loginIntent = new Intent(BMUserinfoActivity.this,BMLoginActivity.class);
                     startActivity(loginIntent);
+
+                    finish();
+
+                    MainHallActivity.jumpToTabByChildActivity(this,0);
                 }
             }
         }

@@ -141,7 +141,11 @@ public class BMSearchResultActivity extends Activity implements
             public void run() {
                 search(currentPage + 1, false);
 
+                loadingView.setVisibility(View.VISIBLE);
                 initSlidingMenu();
+
+                loadingView.setVisibility(View.GONE);
+
 
             }
         }, 1000);

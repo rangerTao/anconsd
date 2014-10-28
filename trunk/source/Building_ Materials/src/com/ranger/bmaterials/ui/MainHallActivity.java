@@ -1,6 +1,7 @@
 package com.ranger.bmaterials.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -22,11 +23,15 @@ import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.adapter.AbstractListAdapter;
 import com.ranger.bmaterials.adapter.BMProvinceAdapter;
 import com.ranger.bmaterials.app.Constants;
+import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.bitmap.ImageLoaderHelper;
+import com.ranger.bmaterials.json.JSONParser;
 import com.ranger.bmaterials.listener.SearchKeywordsPreloadListener;
+import com.ranger.bmaterials.mode.KeywordsList;
 import com.ranger.bmaterials.net.NetManager;
 import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
+import com.ranger.bmaterials.tools.StringUtil;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.view.CustomFragmentTabHost;
 
@@ -39,7 +44,6 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkVersion();
         setContentView(R.layout.dk_game_hall_activity);
 
         //java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
@@ -70,10 +74,6 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
         CustomFragmentTabHost tabhost = ((MainHallActivity) cx).getTabHost();
         if (tabhost != null)
             tabhost.setCurrentTab(tab_num);
-    }
-
-    private void preLoadSearchKeywords() {
-        NetUtil.getInstance().requestForKeywords(Constants.keywordCount, new SearchKeywordsPreloadListener(),getApplicationContext());
     }
 
     @Override
@@ -162,35 +162,8 @@ public class MainHallActivity extends FragmentActivity implements NetUtil.IReque
     }
 
     public void delayInit() {
-        new Handler().postDelayed(new Runnable() {
+//        preLoadSearchKeywords();
 
-            @Override
-            public void run() {
-//                initSlidingMenu();
-            }
-        }, 300);
-
-        preLoadSearchKeywords();
-
-    }
-
-    private String checkVersion() {
-        String ver_name = "";
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        try {
-            ver_name = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_CONFIGURATIONS).versionName;
-        } catch (NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        String version = sp.getString(Constants.VERSION_NAME_SP, "");
-        if (version.equals(""))
-            Constants.isFirstInstalled = true;
-
-        if (!version.equals(ver_name))
-            Constants.isFirstStartWhenVersionChanged = true;
-
-        sp.edit().putString(Constants.VERSION_NAME_SP, ver_name).commit();
-        return ver_name;
     }
 
     TextView tvProvince;

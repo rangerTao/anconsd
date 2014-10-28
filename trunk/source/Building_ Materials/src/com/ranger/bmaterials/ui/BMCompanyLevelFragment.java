@@ -77,7 +77,7 @@ public class BMCompanyLevelFragment extends Fragment implements NetUtil.IRequest
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        refreshGame();
+//                        refreshGame();
                     }
                 },100);
 

@@ -58,7 +58,6 @@
                     android:drawablePadding="2dp"
                     android:dropDownSelector="@color/transparent"
                     android:dropDownVerticalOffset="3dp"
-                    android:enabled="false"
                     android:hint="@string/search_hint"
                     android:paddingRight="25dp"
                     android:singleLine="true"
