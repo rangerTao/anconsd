@@ -223,6 +223,8 @@ public class BMMineFragment extends Fragment implements
             Intent intent = new Intent();
             intent.setClass(getActivity(), BMLoginActivity.class);
             startActivity(intent);
+
+            MainHallActivity.jumpToTabByChildActivity(getActivity(),0);
         }
 
         // for test

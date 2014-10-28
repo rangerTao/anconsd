@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ranger.bmaterials.R;
+import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.bitmap.ImageLoaderHelper;
 import com.ranger.bmaterials.netresponse.BMProductInfoResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
@@ -284,7 +285,15 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
 
     @Override
     public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
-        CustomToast.showToast(getActivity(), msg);
+        if(!msg.trim().equals("")){
+            CustomToast.showToast(getActivity(), msg);
+        }
+
+        if(errorCode == 3){
+            MineProfile.getInstance().setIsLogin(false);
+            MineProfile.getInstance().Reset();
+        }
+
     }
 
     @Override

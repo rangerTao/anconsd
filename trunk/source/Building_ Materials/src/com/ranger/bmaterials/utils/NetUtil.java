@@ -637,11 +637,11 @@ public class NetUtil implements INetListener {
         rpc.addProperty("smalltype", smalltype);
         rpc.addProperty("brand", brand);
         rpc.addProperty("isMerge", ismerge);
-//        rpc.addProperty("isCredit", isCredit);
         rpc.addProperty("pageNo", page);
         rpc.addProperty("rows", pageSize);
         rpc.addProperty("sortField", sortField);
         rpc.addProperty("isAscSort", isAscSort);
+        rpc.addProperty("isCredit", isCredit);
 
         // 生成调用WebService方法的SOAP请求信息,并指定SOAP的版本
         final SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER10);
@@ -737,9 +737,10 @@ public class NetUtil implements INetListener {
 
                     baseResult.setErrorCode(DcError.DC_OK);
 
+                        observer.onRequestSuccess(baseResult);
+
                     Log.e("TAG", "webservice result " + result);
 
-                    observer.onRequestSuccess(baseResult);
 
                 } catch (Exception e) {
                     e.printStackTrace();
