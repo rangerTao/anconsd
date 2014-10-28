@@ -165,9 +165,6 @@ public class BMCompanyInfoFragment extends Fragment implements NetUtil.IRequestL
         loading.setVisibility(View.GONE);
     }
 
-    private void updateTitle(int total) {
-    }
-
     @Override
     public void onClick(View v) {
 

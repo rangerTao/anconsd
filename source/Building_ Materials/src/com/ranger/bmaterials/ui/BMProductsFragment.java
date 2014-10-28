@@ -167,6 +167,8 @@ public class BMProductsFragment extends Fragment implements OnClickListener, IRe
             Intent intentDetail = new Intent(getActivity(), BMProductDetailActivity.class);
             intentDetail.putExtra(BMProductDetailActivity.SUPPLY_ID, data.getSupplyId());
             startActivity(intentDetail);
+
+
         }
 	}
 
