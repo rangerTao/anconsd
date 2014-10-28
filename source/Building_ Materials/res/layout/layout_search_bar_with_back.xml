@@ -58,7 +58,7 @@
                 android:layout_weight="1.0">
 
 
-                <AutoCompleteTextView
+                <TextView
                     android:id="@+id/edit_search"
                     android:layout_width="fill_parent"
                     android:layout_height="32dp"

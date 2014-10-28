@@ -44,6 +44,8 @@ public class BMMineCompanyCollectionFragment extends Fragment implements OnClick
 
 	public PagerSlidingTabStrip tabStrip;
 
+    private View progress_bar;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.mine_activity_collection_subpage_company, null);
@@ -56,6 +58,7 @@ public class BMMineCompanyCollectionFragment extends Fragment implements OnClick
 
 		pageGuideIndex = 1;
 		noMoreGuide = false;
+        progress_bar = view.findViewById(R.id.progress_bar);
 		guideListInfo = new ArrayList<BMCollectionResult.Collection>();
 		guideInfoListAdapter = new BMComCollectionAdapter(getActivity(), guideListInfo);
 		plvGuide = (PullToRefreshListView) getActivity().findViewById(R.id.listview_mine_collection_company);
@@ -197,6 +200,10 @@ public class BMMineCompanyCollectionFragment extends Fragment implements OnClick
 		requestFinished(false);
 
 		switch (errorCode) {
+            case 4:
+                Intent intent = new Intent(getActivity(),BMLoginActivity.class);
+                startActivity(intent);
+                break;
 		default:
 			break;
 		}
@@ -238,6 +245,8 @@ public class BMMineCompanyCollectionFragment extends Fragment implements OnClick
 		}
 
 		updateTitle(totalNum);
+
+        progress_bar.setVisibility(View.GONE);
 	}
 
 	private void updateTitle(int total) {

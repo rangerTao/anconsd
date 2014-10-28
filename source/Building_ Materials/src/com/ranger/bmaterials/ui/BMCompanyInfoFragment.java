@@ -82,12 +82,12 @@ public class BMCompanyInfoFragment extends Fragment implements NetUtil.IRequestL
             if(BMCompanyInfoActivity.comInfo != null){
                 initView(BMCompanyInfoActivity.comInfo);
             }else{
-                mHandler.post(new Runnable() {
+                mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         refreshGame();
                     }
-                });
+                },100);
 
             }
         }

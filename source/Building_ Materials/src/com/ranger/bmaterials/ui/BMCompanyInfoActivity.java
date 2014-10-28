@@ -46,6 +46,13 @@ public class BMCompanyInfoActivity extends FragmentActivity implements PageCallb
         comName = (TextView) findViewById(R.id.bm_tv_company_name);
         comName.setText(name);
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         setupViews();
     }
 

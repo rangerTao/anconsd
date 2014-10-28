@@ -4,20 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.renderscript.FileA3D;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -27,12 +24,10 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -91,7 +86,93 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
         initView();
         initTagCloudViewData();
 
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initSlidingMenu();
+            }
+        },1000);
+
         return root;
+    }
+
+    private Handler mHandler = new Handler();
+
+    public static SlidingMenu menu;
+    private View firstMenu;
+    private ListView lv_province_list;
+    private BMProvinceAdapter bpa;
+
+    private void initSlidingMenu() {
+
+        firstMenu = getActivity().getLayoutInflater().inflate(R.layout.side_menu, null);
+        lv_province_list = (ListView) firstMenu.findViewById(R.id.bm_province_list);
+
+        menu = new SlidingMenu(getActivity());
+        menu.setMode(SlidingMenu.LEFT);
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        menu.setShadowWidthRes(R.dimen.shadow_width);
+        menu.setShadowDrawable(R.drawable.shadow);
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getActivity().getWindow().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int offset = (dm.widthPixels / 3) * 1;
+        menu.setBehindOffset(offset);
+        menu.setFadeDegree(0.35f);
+        menu.attachToActivity(getActivity(), SlidingMenu.SLIDING_CONTENT);
+        menu.setMenu(firstMenu);
+
+        getProvinces();
+
+    }
+
+    private void getProvinces() {
+        NetUtil.getInstance().requestForProvices(getActivity(),new NetUtil.IRequestListener() {
+            @Override
+            public void onRequestSuccess(BaseResult responseData) {
+                BMProvinceListResult blr = (BMProvinceListResult) responseData;
+
+                if (blr.getTag().equals(Constants.NET_TAG_GET_PROVINCE + "")) {
+                    bpa = new BMProvinceAdapter(getActivity().getApplicationContext(), blr.getProviceList());
+                    lv_province_list.setAdapter(bpa);
+                    lv_province_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            BMProvinceListResult.ProviceItem pi = (BMProvinceListResult.ProviceItem) parent.getAdapter().getItem(position);
+
+                            if (pi != null) {
+                                try {
+                                    setCityName(pi);
+
+                                    bpa.setProvince(pi.getName());
+                                    bpa.notifyDataSetChanged();
+
+                                    menu.toggle();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                    bpa.setOnListItemClickListener(new AbstractListAdapter.OnListItemClickListener() {
+                        @Override
+                        public void onItemIconClick(View view, int position) {
+
+                        }
+
+                        @Override
+                        public void onItemButtonClick(View view, int position) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
+
+            }
+        });
     }
 
     /**
@@ -125,14 +206,13 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
         View searchBtn = root.findViewById(R.id.btn_search);
         searchBtn.setOnClickListener(this);
 
-        searchEt = (AutoCompleteTextView) root.findViewById(R.id.edit_search);
+        searchEt = (TextView) root.findViewById(R.id.edit_search);
 
         searchEt.setOnClickListener(this);
 
         tagLayout = (ViewGroup) root.findViewById(R.id.layout_search_view);
         tagView = (TagCloudView) tagLayout.findViewById(R.id.tagclouview);
         tagView.setTagClickListener(this);
-        tagView.setEditText(searchEt);
         tagView.setOnTagFlingListener(this);
 
         searchResultLayout = (ListView) root.findViewById(R.id.layout_search_result_list);
@@ -143,55 +223,9 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
         clearView = root.findViewById(R.id.search_clear);
         clearView.setOnClickListener(this);
-        listenInput();
-        // setViewMode(ViewMode.VIEWMODE_KEYWORDS);
-
-        // 设置自动提示文本高度 与软键盘兼容
-        root.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-            @Override
-            public void onGlobalLayout() {
-                // TODO Auto-generated method stub
-                Rect r = new Rect();
-                root.getWindowVisibleDisplayFrame(r);
-
-                int screenHeight = root.getHeight();
-                int heightDifference = screenHeight - (r.bottom - r.top);// keyboard
-                // size
-
-                int[] location = new int[2];
-                searchEt.getLocationOnScreen(location);
-
-                int[] screenwh = UIUtil.getScreenPx(getActivity());
-
-                searchEt.setDropDownHeight(screenwh[1] - location[1] - searchEt.getHeight() - heightDifference - UIUtil.getStatusBarHeight(getActivity()) * 2);
-            }
-        });
-
-        loadHistroyData();
     }
 
     List<String> suggestWords = null;
-
-    private void loadHistroyData() {
-        new AsyncTask<Void, Void, List<String>>() {
-
-            @Override
-            protected List<String> doInBackground(Void... params) {
-                return CommonDaoImpl.getInstance(getActivity().getApplicationContext()).getKeywords();
-            }
-
-            protected void onPostExecute(java.util.List<String> result) {
-                if (result == null || result.size() == 0) {
-                    initSuggest(new ArrayList<String>());
-                } else {
-                    initSuggest(result);
-                }
-            }
-
-        }.execute();
-
-    }
 
     private SuggestAdapter suggestAdapter;
 
@@ -205,110 +239,6 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
             mSearchRecomPopup.dismiss();
         }
     }
-
-    ArrayAdapter searchSuggestionAdapter;
-    public static ListView lvRecom;
-    private void initSuggest(List<String> keywords) {
-
-        if(lvRecom == null){
-            lvRecom = (ListView) root.findViewById(R.id.ll_search_recom);
-            suggestWords = keywords;
-        }
-
-        searchEt.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-//                        showDropdown();
-                        break;
-                }
-
-                return false;
-            }
-        });
-
-    }
-
-    View title_bar;
-
-    private void showDropdown(){
-        suggestAdapter = new SuggestAdapter(getActivity().getApplicationContext(), suggestWords, 5);
-        lvRecom.setAdapter(suggestAdapter);
-        suggestAdapter.notifyDataSetChanged();
-
-        lvRecom.setVisibility(View.VISIBLE);
-        lvRecom.setOnItemClickListener(this);
-    }
-
-    private void listenInput() {
-        String text = String.format(getString(R.string.search_hint));
-        CharSequence styledText = Html.fromHtml(text);
-
-        searchEt.setHint(styledText);
-
-        searchEt.setOnEditorActionListener(new OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    boolean networkAvailable = DeviceUtil.isNetworkAvailable(getActivity());
-                    if (networkAvailable) {
-                        // 搜索
-                        search();
-                    } else {
-                        CustomToast.showToast(getActivity(), getString(R.string.alert_network_inavailble));
-                        // Toast.makeText(getActivity(), "网络不给力",
-                        // Toast.LENGTH_LONG).show();
-                    }
-                    return true;
-                } else if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    boolean networkAvailable = DeviceUtil.isNetworkAvailable(getActivity());
-                    if (networkAvailable) {
-                        // 搜索
-                        search();
-                    } else {
-                        CustomToast.showToast(getActivity(), getString(R.string.alert_network_inavailble));
-                        // Toast.makeText(getActivity(), "网络不给力",
-                        // Toast.LENGTH_LONG).show();
-                    }
-                    return true;
-                } else if (event.getKeyCode() == KeyEvent.KEYCODE_SPACE) {
-                    // Toast.makeText(getActivity(),
-                    // "OnEditorActionListener spaceback", 1).show();
-                }
-
-                return false;
-            }
-        });
-
-        searchEt.setFilters(ll);
-
-        searchEt.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                if (s.length() > 0) {
-                    clearView.setVisibility(View.VISIBLE);
-                } else {
-                    clearView.setVisibility(View.GONE);
-                }
-
-            }
-        });
-    }
-
-    private InputFilter[] ll = new InputFilter[]{new InputFilter.LengthFilter(30)};
 
     private List<String> getKeywords() {
         final List<String> keys = this.keywordsWrapper.getKeywords();
@@ -335,7 +265,7 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
      * 获取关键字
      */
     private void loadKeywords() {
-        NetUtil.getInstance().requestForKeywords(KEYWORDS_COUNT, new KeywordsRequestListener(this));
+        NetUtil.getInstance().requestForKeywords(KEYWORDS_COUNT, new KeywordsRequestListener(this),getActivity());
     }
 
     private void jumpSearch(String keyword) {
@@ -366,38 +296,25 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
     }
 
     private int popularity = 5;
-    private AutoCompleteTextView searchEt;
+    private TextView searchEt;
     private View clearView;
 
     private void search() {
-//        if(lvRecom.getVisibility() == View.VISIBLE){
-//            lvRecom.setVisibility(View.GONE);
-//        }
-//        String keyword = searchEt.getText().toString().trim();
-//        if (TextUtils.isEmpty(keyword)) {
-//            CustomToast.showToast(getActivity(), getString(R.string.alert_search_cannot_be_null));
-//        } else if (TextUtils.isEmpty(keyword.trim())) {
-//            CustomToast.showToast(getActivity(), getString(R.string.alert_search_cannot_be_null));
-//        } else {
-//            jumpSearch(keyword);
-//            // fakeResult();
-//        }
 
         Intent intent = new Intent(getActivity(),BMSearchActivity.class);
         intent.putExtra("pid",mPi == null ? "":mPi.getId());
         intent.putExtra("pname",mPi == null ? "":mPi.getName());
         startActivity(intent);
-
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_back:
-                if(MainHallActivity.menu !=null){
-                    MainHallActivity.menu.toggle();
+                if(menu !=null){
+                    menu.toggle();
                 }
-                break;
+            break;
             case R.id.btn_search:
             case R.id.edit_search:
                 boolean networkAvailable = DeviceUtil.isNetworkAvailable(getActivity());
@@ -466,7 +383,6 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
     private void fillSearchText(String text) {
         try {
             searchEt.setText(text);
-            searchEt.setSelection(text.length());
         } catch (Exception e) {
         }
 
@@ -485,6 +401,8 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
         mPi = pi;
         tv_back.setText(pi.getName());
+
+
     }
 
 }

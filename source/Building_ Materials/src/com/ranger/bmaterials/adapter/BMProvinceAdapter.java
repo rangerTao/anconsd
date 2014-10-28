@@ -2,6 +2,7 @@ package com.ranger.bmaterials.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +42,6 @@ public class BMProvinceAdapter extends AbstractListAdapter<BMProvinceListResult.
         mContext = context;
         data = pros;
     }
-
 
     /**
      * 获取每个section的标记(首字母)
@@ -98,6 +98,12 @@ public class BMProvinceAdapter extends AbstractListAdapter<BMProvinceListResult.
         TextView sectionHeader;
     }
 
+    private String selectedPro = "全国";
+
+    public void setProvince(String pro){
+        selectedPro = pro;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -121,6 +127,13 @@ public class BMProvinceAdapter extends AbstractListAdapter<BMProvinceListResult.
         }
 
         ph.tvName.setText("    " + pi.getName());
+
+        if(pi.getName().equals(selectedPro)){
+            ph.tvName.setBackgroundColor(Color.BLUE);
+        }else{
+            ph.tvName.setBackgroundColor(Color.parseColor("#d4d4d4"));
+        }
+
         ph.id = pi.getId();
 
         return convertView;

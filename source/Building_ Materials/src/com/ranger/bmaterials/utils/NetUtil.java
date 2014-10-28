@@ -331,7 +331,7 @@ public class NetUtil implements INetListener {
      * @param observer
      * @return
      */
-    public int requestForKeywords(int count, final IRequestListener observer) {
+    public int requestForKeywords(int count, final IRequestListener observer,Context context) {
 
         // 调用的方法名称
         String methodName = "getHotWord";
@@ -352,8 +352,19 @@ public class NetUtil implements INetListener {
 
         final HttpTransportSE transport = new HttpTransportSE(endPoint);
 
-
         mCurrentRequestId = transport.hashCode();
+
+        final SharedPreferences sp = context.getSharedPreferences("cache", Context.MODE_PRIVATE);
+
+        final String cache_province = sp.getString("keywords", "");
+
+        if(!cache_province.equals("")){
+            BaseResult baseResult = JSONParser.parseBMKeywords(cache_province);
+            baseResult.setTag(Constants.NET_TAG_KEYWORDS + "");
+            baseResult.setErrorCode(DcError.DC_OK);
+
+            observer.onRequestSuccess(baseResult);
+        }
 
         new Runnable() {
             @Override
@@ -373,7 +384,11 @@ public class NetUtil implements INetListener {
 
                     Log.e("TAG", "webservice result " + result);
 
-                    observer.onRequestSuccess(baseResult);
+                    if(cache_province.equals("")){
+                        observer.onRequestSuccess(baseResult);
+                    }
+
+                    sp.edit().putString("keywords",result);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -416,52 +431,56 @@ public class NetUtil implements INetListener {
 
         mCurrentRequestId = transport.hashCode();
 
-        new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    SharedPreferences sp = context.getSharedPreferences("cache", Context.MODE_PRIVATE);
+        final SharedPreferences sp = context.getSharedPreferences("cache", Context.MODE_PRIVATE);
 
-                    String cache_province = sp.getString("provinces", "");
+        String cache_province = sp.getString("provinces", "");
 
-                    if (!cache_province.equals("")) {
+        if (!cache_province.equals("")) {
 
-                        BaseResult baseResult = JSONParser.parseBMProvinceList(cache_province);
+            BaseResult baseResult = JSONParser.parseBMProvinceList(cache_province);
+            baseResult.setTag(Constants.NET_TAG_GET_PROVINCE + "");
+
+            baseResult.setErrorCode(DcError.DC_OK);
+
+            observer.onRequestSuccess(baseResult);
+
+        }else{
+
+            new Runnable() {
+                @Override
+                public void run() {
+                    try {
+
+
+                        // 调用WebService
+                        transport.call(soapAction, envelope);
+
+                        // 获取返回的数据
+                        SoapObject object = (SoapObject) envelope.bodyIn;
+                        // 获取返回的结果
+                        String result = object.getProperty(0).toString();
+
+                        BaseResult baseResult = JSONParser.parseBMProvinceList(result);
                         baseResult.setTag(Constants.NET_TAG_GET_PROVINCE + "");
 
                         baseResult.setErrorCode(DcError.DC_OK);
 
+                        Log.e("TAG", "webservice result " + result);
+
                         observer.onRequestSuccess(baseResult);
 
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("provinces", result);
+                        editor.commit();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        observer.onRequestError(Constants.NET_TAG_KEYWORDS, mCurrentRequestId, 1001, "error");
                     }
-
-                    // 调用WebService
-                    transport.call(soapAction, envelope);
-
-                    // 获取返回的数据
-                    SoapObject object = (SoapObject) envelope.bodyIn;
-                    // 获取返回的结果
-                    String result = object.getProperty(0).toString();
-
-                    BaseResult baseResult = JSONParser.parseBMProvinceList(result);
-                    baseResult.setTag(Constants.NET_TAG_GET_PROVINCE + "");
-
-                    baseResult.setErrorCode(DcError.DC_OK);
-
-                    Log.e("TAG", "webservice result " + result);
-
-                    observer.onRequestSuccess(baseResult);
-
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("provinces", result);
-                    editor.commit();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    observer.onRequestError(Constants.NET_TAG_KEYWORDS, mCurrentRequestId, 1001, "error");
                 }
-            }
-        }.run();
+            }.run();
+        }
+
 
         return mCurrentRequestId;
 
@@ -601,7 +620,7 @@ public class NetUtil implements INetListener {
      * @param observer
      * @return
      */
-    public int requestForSearch(String keyword, int area, String smalltype, String brand, int ismerge, int page, int pageSize, String sortField, int isAscSort, final IRequestListener observer) {
+    public int requestForSearch(String keyword, int area, String smalltype, String brand, int ismerge,int isCredit, int page, int pageSize, String sortField, int isAscSort, final IRequestListener observer) {
 
         // 调用的方法名称
         String methodName = "getMarket";
@@ -618,6 +637,7 @@ public class NetUtil implements INetListener {
         rpc.addProperty("smalltype", smalltype);
         rpc.addProperty("brand", brand);
         rpc.addProperty("isMerge", ismerge);
+//        rpc.addProperty("isCredit", isCredit);
         rpc.addProperty("pageNo", page);
         rpc.addProperty("rows", pageSize);
         rpc.addProperty("sortField", sortField);
@@ -783,7 +803,11 @@ public class NetUtil implements INetListener {
 
                     Log.e("TAG", "webservice result " + result);
 
-                    observer.onRequestSuccess(baseResult);
+                    if (baseResult.getErrorCode() == 1) {
+                        observer.onRequestSuccess(baseResult);
+                    } else {
+                        observer.onRequestError(Constants.NET_TAG_CHANGE_PWD, mCurrentRequestId, baseResult.getSuccess(), baseResult.getErrorString());
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
