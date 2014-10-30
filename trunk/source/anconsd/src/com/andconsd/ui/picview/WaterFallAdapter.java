@@ -160,7 +160,7 @@ public class WaterFallAdapter extends BaseAdapter
                 if (position < mDataList.size())
                 {
                 	Picture info = mDataList.get(position);
-                    
+
                     ImageLoaderHelper.displayImage(info.getUrl(), cover, mContext);
                     
                     if(!info.getDescp().equals("")){

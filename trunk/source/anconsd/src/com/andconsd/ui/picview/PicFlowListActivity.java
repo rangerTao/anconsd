@@ -942,7 +942,7 @@ public class PicFlowListActivity extends BaseActivity implements
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         if (scrollState == SCROLL_STATE_IDLE) {
 
-            if (view.getLastVisiblePosition() + 1 == wfa.getCount()) {
+            if (view.getLastVisiblePosition() + 5 > wfa.getCount()) {
                 requestMoreData();
             }
         }
