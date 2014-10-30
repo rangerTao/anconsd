@@ -4,6 +4,12 @@ import android.app.Activity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
+import android.widget.TextView;
+
+import com.ranger.lpa.MineProfile;
+import com.ranger.lpa.R;
+import com.ranger.lpa.utils.ACountTimer;
+import com.ranger.lpa.utils.StringUtil;
 
 /**
  * Created by taoliang on 14-6-13.
@@ -18,6 +24,8 @@ public class LPAKeyGuardView {
     private LayoutParams mLockViewLayoutParams;
 
     private boolean isLocked;
+
+    private TextView tvEllipsedTime;
 
     public static synchronized LPAKeyGuardView getInstance(Activity context) {
 
@@ -50,10 +58,18 @@ public class LPAKeyGuardView {
         mLockViewLayoutParams.flags = 1280;
     }
 
+    private long lock_period = 1 * 60 * 60 * 1000;
+
     //
     public synchronized void setLockView(View v) {
         mLockView = v;
     }
+
+    public void setLockPeriod(long period){
+        lock_period = period;
+    }
+
+    private ACountTimer timer;
 
     //显示锁屏
     public synchronized void lock() {
@@ -61,6 +77,25 @@ public class LPAKeyGuardView {
             mWindowManager.addView(mLockView, mLockViewLayoutParams);
         }
         isLocked = true;
+
+        assert mLockView != null;
+        tvEllipsedTime = (TextView) mLockView.findViewById(R.id.tv_eclipsed_time);
+
+        tvEllipsedTime.setText(StringUtil.getFormattedTimeByMillseconds(MineProfile.getInstance().getLockPeriod()));
+
+        timer = new ACountTimer(lock_period) {
+            @Override
+            public void onTick(long millisUntilFinished, int percent) {
+                tvEllipsedTime.setText(StringUtil.getFormattedTimeByMillseconds(millisUntilFinished));
+            }
+
+            @Override
+            public void onFinish() {
+                unlock();
+            }
+        };
+
+        timer.start();
     }
 
     //隐藏锁屏
@@ -69,6 +104,11 @@ public class LPAKeyGuardView {
             mWindowManager.removeViewImmediate(mLockView);
         }
         isLocked = false;
+
+        if(timer != null){
+            timer.stop();
+        }
+        timer = null;
     }
 
     public boolean isShowing(){

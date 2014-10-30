@@ -30,6 +30,7 @@
         android:src="@drawable/btn_red_big"/>
 
     <LinearLayout
+        android:id="@+id/ll_cancel_lock"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginBottom="70dp"
@@ -56,9 +57,9 @@
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_marginTop="50dp"
-            android:gravity="center"
+            android:gravity="top|center_horizontal"
             android:text="向下滑动放弃锁定"
             android:textColor="#fff"
             android:textSize="16sp"/>
