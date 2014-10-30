@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.ranger.lpa.R;
 import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
+import com.ranger.lpa.share.ShareUtil;
+import com.ranger.lpa.wxapi.WXEntryActivity;
 
 /**
  * @author taoliang(taoliang@baidu-mgame.com)
@@ -48,6 +50,7 @@ public class LPAMainActivity extends BaseActivity {
             case R.id.btn_enter_couple:
                 startFindingPhoneView(0);
                 break;
+
             case R.id.btn_enter_party:
                 startPartyCenter();
                 break;

@@ -19,33 +19,28 @@ import android.view.ViewStub;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.ranger.lpa.Constants;
 import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.R;
 import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
-import com.ranger.lpa.connectity.wifi.LPAWifiManager;
 import com.ranger.lpa.pojos.BaseInfo;
 import com.ranger.lpa.pojos.SocketMessage;
-import com.ranger.lpa.pojos.WifiInfo;
 import com.ranger.lpa.receiver.IOnNotificationReceiver;
+import com.ranger.lpa.share.ShareUtil;
 import com.ranger.lpa.test.adapter.BtDeviceListAdapter;
 import com.ranger.lpa.thread.LPAClientThread;
 import com.ranger.lpa.thread.LPAServerNotifyThread;
 import com.ranger.lpa.tools.NotifyManager;
 import com.ranger.lpa.ui.view.LPAKeyGuardView;
 import com.ranger.lpa.utils.StringUtil;
-import com.ranger.lpa.utils.WifiUtils;
+import com.ranger.lpa.wxapi.WXEntryActivity;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -227,6 +222,8 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
                 setFindingPhoneView();
 
+//                showLockedView();
+
                 break;
             case R.id.fl_btn_lock_selected_phone:
                 new Thread(){
@@ -297,6 +294,24 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                 dismissGiveupRequestDialog();
                 lpact.sendGiveupRequestRefuse();
                 break;
+            case R.id.ll_cancel_lock:
+
+                Bundle bundle = new Bundle();
+                bundle.putString(ShareUtil.SHARE_CONTENT,"test");
+                bundle.putInt(ShareUtil.SHARE_TYPE,1);
+
+                Intent intentShare = new Intent(this,WXEntryActivity.class);
+                startActivity(intentShare);
+
+                break;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mDiscoveryFinishReceiver != null) {
+            LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(mDiscoveryFinishReceiver);
         }
     }
 
@@ -385,16 +400,20 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
     };
 
     private View view_giveup_request;
+    private View view_cancel_lock;
 
     private void showLockedView() {
         View lock_view = View.inflate(this, R.layout.layout_locked_view, null);
         view_giveup_request = lock_view.findViewById(R.id.include_dialog_giveup_confirm);
+        view_cancel_lock = lock_view.findViewById(R.id.ll_cancel_lock);
         lpa = LPAKeyGuardView.getInstance(this);
         lpa.setLockView(lock_view);
+        lpa.setLockPeriod(MineProfile.getInstance().getLockPeriod());
         lpa.lock();
 
         view_lock_control = lock_view.findViewById(R.id.fl_lock_area);
         view_lock_control.setOnClickListener(this);
+        view_cancel_lock.setOnClickListener(this);
     }
 
     private void dismissLockedView(){

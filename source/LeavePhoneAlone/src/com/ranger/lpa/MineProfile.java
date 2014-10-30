@@ -387,6 +387,11 @@ public class MineProfile{
     }
 
     public String getDefaultPurnishContent(){
+
+        if(purnish == null){
+            return "";
+        }
+
         for(int i = 0;i< purnish.getPurnishes().size();i++){
             PurnishInfo pi = purnish.getPurnishes().get(i);
 

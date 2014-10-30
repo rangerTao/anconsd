@@ -7,8 +7,12 @@ public class Constants {
 
     public static final boolean DEBUG = true;
 
-    public static final String WEIXIN_ID = "";
-    public static final String WEIBO_KEY = "";
+    public static final String WEIXIN_ID = "wx48a723e78444dfbf";
+    public static final String WEIBO_KEY = "455094126";
+    public static final String SINA_APP_KEY = "455094126";
+    public static final String REDIRECT_URL = "http://www.baidu.com";
+    public static final String SCOPE = "email,direct_messages_read,direct_messages_write," + "friendships_groups_read,friendships_groups_write,statuses_to_me_read," + "follow_app_official_microblog,"
+            + "invitation_write";
 
 	public static final String D_UUID = "8ce255c0-200a-11e0-ac64-0800200c9a66";
 	public static final UUID mUUID = UUID.fromString(D_UUID);
