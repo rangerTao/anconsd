@@ -57,6 +57,7 @@ import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BMUserInfoResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.netresponse.UserNameRegisterResult;
+import com.ranger.bmaterials.tools.DeviceUtil;
 import com.ranger.bmaterials.tools.DialogFactory;
 import com.ranger.bmaterials.tools.StringUtil;
 import com.ranger.bmaterials.utils.NetUtil;
@@ -94,9 +95,14 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
 
 		findViewById(R.id.btn_back).setOnClickListener(this);
 
-        requestId = NetUtil.getInstance().requestForUserinfo(this);
+        if(DeviceUtil.isNetworkAvailable(this)){
+            requestId = NetUtil.getInstance().requestForUserinfo(this);
+            initView();
+        }else{
+            Toast.makeText(this,R.string.network_error_hint,Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
-        initView();
 	}
 
 	@Override
@@ -150,35 +156,41 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
 
         if(!cache_province.equals("")){
             BaseResult baseResult = JSONParser.parseBMProvinceList(cache_province);
-            BMProvinceListResult blr = (BMProvinceListResult) baseResult;
+            final BMProvinceListResult blr = (BMProvinceListResult) baseResult;
 
-            String[] provinns = new String[blr.getProviceList().size() + 1];
+            String[] provinns = new String[blr.getProviceList().size()];
 
-            provinns[0] = "";
-
-            int index = 1;
+            int index = 0;
+            int defPos = 0;
 
             for(BMProvinceListResult.ProviceItem pi : blr.getProviceList()){
                 provinns[index] = pi.getName();
+
+                if(pi.getName().equals(MineProfile.getInstance().getArea())){
+                    defPos = index;
+                }
                 index++;
             }
+
 
             // 建立Adapter并且绑定数据源
             ArrayAdapter<String> _Adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, provinns);
             //绑定 Adapter到控件
             spProvince.setAdapter(_Adapter);
+            spProvince.setSelection(defPos,true);
 
             spProvince.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                    String str=parent.getItemAtPosition(position).toString();
+                    final String str=parent.getItemAtPosition(position).toString();
 
                     if(str.equals("")){
                         return;
                     }
 
-                    MineProfile.getInstance().setArea(str);
+
+                    MineProfile.getInstance().setArea(blr.getProviceList().get(position).getId() + "");
 
                     LoadingTask task = new LoadingTask(BMUserinfoActivity.this, new LoadingTask.ILoading() {
 
@@ -189,6 +201,9 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
                                 public void onRequestSuccess(BaseResult responseData) {
 
                                     if (responseData.getErrorCode() == 0) {
+                                        MineProfile.getInstance().setArea(str);
+                                        MineProfile.getInstance().Save();
+
                                         CustomToast.showToast(getApplicationContext(), "修改成功");
                                         initView();
                                         if (mDialog != null && mDialog.isShowing()) {
@@ -304,12 +319,24 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
                                         mDialog = null;
                                     }
                                 } else {
+
+                                    if(responseData.getErrorCode() == 3){
+                                        Intent intent = new Intent(getApplicationContext(),BMLoginActivity.class);
+                                        startActivity(intent);
+                                    }
+
                                     CustomToast.showToast(getApplicationContext(), "修改失败");
                                 }
                             }
 
                             @Override
                             public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
+
+                                if(errorCode == 3){
+                                    Intent intent = new Intent(getApplicationContext(),BMLoginActivity.class);
+                                    startActivity(intent);
+                                }
+
                                 CustomToast.showToast(getApplicationContext(), msg);
                             }
                         });
@@ -402,6 +429,11 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
 
                             @Override
                             public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
+
+                                if(errorCode == 3){
+                                    Intent loginIntent = new Intent(BMUserinfoActivity.this,BMLoginActivity.class);
+                                    startActivity(loginIntent);
+                                }
                                 CustomToast.showToast(getApplicationContext(), msg);
                             }
                         });

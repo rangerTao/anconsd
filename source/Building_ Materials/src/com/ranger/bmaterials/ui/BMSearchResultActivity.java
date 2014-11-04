@@ -170,6 +170,7 @@ public class BMSearchResultActivity extends Activity implements
             pname = newpname;
             edit_search.setText(keyword);
 //            showLoadingProgressView();
+            initParams();
             search();
         }
 
@@ -653,6 +654,15 @@ public class BMSearchResultActivity extends Activity implements
     private int isMerge = 0;
 
     private int isCredit = 0;
+
+    private void initParams(){
+        band = "";
+        smalltype = "";
+        isMerge = 0;
+        isCredit = 0;
+
+        loadBrandAndModel();
+    }
 
     private void search(int targetPage, boolean loadMore) {
 

@@ -354,7 +354,7 @@ public class NetUtil implements INetListener {
 
         mCurrentRequestId = transport.hashCode();
 
-        final SharedPreferences sp = context.getSharedPreferences("cache", Context.MODE_PRIVATE);
+        final SharedPreferences sp = context.getSharedPreferences("cache", Context.MODE_WORLD_WRITEABLE);
 
         final String cache_province = sp.getString("keywords", "");
 
@@ -756,7 +756,6 @@ public class NetUtil implements INetListener {
     /**
      * @param observer
      * @return
-     * @author liushuohui
      */
     public int requestCollectProduct(int supplyid, int type, final IRequestListener observer) {
 
@@ -1131,7 +1130,11 @@ public class NetUtil implements INetListener {
 
                     Log.e("TAG", "webservice result " + result);
 
-                    observer.onRequestSuccess(baseResult);
+                    if(baseResult.getSuccess() == 1){
+                        observer.onRequestSuccess(baseResult);
+                    }else{
+                        observer.onRequestError(Constants.NET_TAG_USERINFO,mCurrentRequestId,baseResult.getSuccess(),baseResult.getMessage());
+                    }
 
                 } catch (Exception e) {
 
@@ -1197,7 +1200,11 @@ public class NetUtil implements INetListener {
 
                     Log.e("TAG", "webservice result " + result);
 
-                    observer.onRequestSuccess(baseResult);
+                    if(baseResult.getSuccess() == 1){
+                        observer.onRequestSuccess(baseResult);
+                    }else{
+                        observer.onRequestError(Constants.NET_TAG_MODIFYUSER,mCurrentRequestId,baseResult.getSuccess(),baseResult.getMessage());
+                    }
 
                 } catch (Exception e) {
 

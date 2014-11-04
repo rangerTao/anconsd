@@ -17,6 +17,7 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -277,9 +278,11 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
      */
     private void loadKeywords() {
 
-        SharedPreferences sp = getActivity().getSharedPreferences("cache", Context.MODE_PRIVATE);
+        SharedPreferences sp = getActivity().getSharedPreferences("cache", Context.MODE_WORLD_WRITEABLE);
 
         String cache_province = sp.getString("keywords", "");
+
+        Log.e("TAG","keywords : " + cache_province);
 
         if(!cache_province.trim().equals("")){
             BaseResult baseResult = JSONParser.parseBMKeywords(cache_province);

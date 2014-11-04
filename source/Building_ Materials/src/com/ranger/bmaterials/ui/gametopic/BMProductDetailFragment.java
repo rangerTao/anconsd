@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.app.MineProfile;
@@ -22,6 +23,7 @@ import com.ranger.bmaterials.netresponse.BMProductInfoResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.tools.UIUtil;
 import com.ranger.bmaterials.ui.BMCompanyInfoActivity;
+import com.ranger.bmaterials.ui.BMLoginActivity;
 import com.ranger.bmaterials.utils.NetUtil;
 import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 import com.ranger.bmaterials.ui.CustomToast;
@@ -241,7 +243,11 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
 
                         @Override
                         public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
-                            CustomToast.showToast(getActivity(), msg);
+                            if(errorCode == 3){
+                                Intent loginIntent = new Intent(getActivity().getApplicationContext(),BMLoginActivity.class);
+                                startActivity(loginIntent);
+                            }
+                            Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
