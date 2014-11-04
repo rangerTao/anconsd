@@ -126,6 +126,8 @@ public class BMLoginActivity extends Activity implements OnClickListener,
 		opening = false;
 	}
 
+    private int lastClickTime = 0;
+
 	@Override
 	public void onClick(View v) {
 		int id = v.getId();
@@ -134,6 +136,11 @@ public class BMLoginActivity extends Activity implements OnClickListener,
 //			this.finish();
 			InjectKeys(KeyEvent.KEYCODE_BACK);
 		} else if (id == R.id.btn_commit_login) {
+
+            if(System.currentTimeMillis() - lastClickTime < 1000){
+                return;
+            }
+
 			if (!ConnectManager.isNetworkConnected(this)) {
 				CustomToast.showLoginRegistErrorToast(this, DcError.DC_NET_GENER_ERROR);
 				return;
@@ -340,11 +347,7 @@ public class BMLoginActivity extends Activity implements OnClickListener,
 			}
 		};
 	};
-/**
- * BUG #10209 【游戏大厅_Android】2.3.2.4_抢号：未登录时点击“抢号”进入登录页面，按登录页面左上角返回到抢号页面出现异常【返回到抢号页面，抢号页面上下闪着跳动2下，之后恢复正常】
- * 实际测试发现：从抢号页SquareFragment进入登录页后，以及从MineFragment进入登录页面后，在点击登录页左上角的返回按钮返回到上一个页面时，都会导致上一个页面上下跳动几次
- * 目前判断是跟登录页弹出的输入法有关，所以这里的解决办法是：第一次按返回按钮，关掉输入法，再次点击返回按钮，再返回到上一个页面，最后测试发现此方法可避免该问题。
- */
+
 	private void InjectKeys(final int keyEventCode) {
 		Thread T=new Thread(new Runnable() {
 			@Override

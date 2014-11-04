@@ -1,5 +1,6 @@
 package com.ranger.bmaterials.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.app.DcError;
@@ -185,7 +187,11 @@ public class BMCompanyLevelFragment extends Fragment implements NetUtil.IRequest
 
                         @Override
                         public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
-                            CustomToast.showToast(getActivity(),msg);
+                            if(errorCode == 3){
+                                Intent loginIntent = new Intent(getActivity().getApplicationContext(),BMLoginActivity.class);
+                                startActivity(loginIntent);
+                            }
+                            Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
