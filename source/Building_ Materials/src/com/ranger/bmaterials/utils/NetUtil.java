@@ -594,10 +594,10 @@ public class NetUtil implements INetListener {
                     baseResult.setTag(Constants.NET_TAG_CHANGE_PWD + "");
 
                     Log.e("TAG", "webservice result " + result);
-                    if (baseResult.getErrorCode() == 1) {
+                    if (baseResult.getSuccess() == 1) {
                         observer.onRequestSuccess(baseResult);
                     } else {
-                        observer.onRequestError(Constants.NET_TAG_CHANGE_PWD, mCurrentRequestId, 1001, "error");
+                        observer.onRequestError(Constants.NET_TAG_CHANGE_PWD, mCurrentRequestId, baseResult.getSuccess(), baseResult.getMessage());
                     }
 
                 } catch (Exception e) {
@@ -803,10 +803,10 @@ public class NetUtil implements INetListener {
 
                     Log.e("TAG", "webservice result " + result);
 
-                    if (baseResult.getErrorCode() == 1) {
+                    if (baseResult.getSuccess() == 1) {
                         observer.onRequestSuccess(baseResult);
                     } else {
-                        observer.onRequestError(Constants.NET_TAG_CHANGE_PWD, mCurrentRequestId, baseResult.getSuccess(), baseResult.getErrorString());
+                        observer.onRequestError(Constants.NET_TAG_CHANGE_PWD, mCurrentRequestId, baseResult.getSuccess(), baseResult.getMessage());
                     }
 
                 } catch (Exception e) {

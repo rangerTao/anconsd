@@ -58,6 +58,16 @@ public class BandAndModelResult extends BaseResult {
         public void setName(String name) {
             this.name = name;
         }
+
+        public ArrayList<String> brand;
+
+        public ArrayList<String> getBrand() {
+            return brand;
+        }
+
+        public void setBrand(ArrayList<String> brand) {
+            this.brand = brand;
+        }
     }
 
 }

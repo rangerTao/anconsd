@@ -233,10 +233,12 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
                         public void onRequestSuccess(BaseResult responseData) {
 
                             if (responseData.getSuccess() == 1) {
-                                CustomToast.showToast(getActivity(), "收藏成功");
+//                                CustomToast.showToast(getActivity(), "收藏成功");
+                                Toast.makeText(getActivity().getApplicationContext(), "收藏成功", Toast.LENGTH_SHORT).show();
                                 bm_iv_collect.setImageResource(R.drawable.bm_start_collected);
                             } else {
-                                CustomToast.showToast(getActivity(), responseData.getMessage());
+                                Toast.makeText(getActivity().getApplicationContext(), responseData.getMessage(), Toast.LENGTH_SHORT).show();
+//                                CustomToast.showToast(getActivity(), responseData.getMessage());
                             }
 
                         }

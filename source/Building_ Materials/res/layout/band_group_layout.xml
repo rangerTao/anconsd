@@ -15,15 +15,4 @@
         android:textColor="#fff"
         android:textSize="18sp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:drawablePadding="5dp"
-        android:text="全部"
-        android:drawableRight="@drawable/arrow_down_all"
-        android:textColor="#fff"
-        android:textSize="18sp"/>
-
 </RelativeLayout>
