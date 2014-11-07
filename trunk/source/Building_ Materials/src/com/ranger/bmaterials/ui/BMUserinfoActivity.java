@@ -391,14 +391,6 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
                 type = USERINFO_EDIT_TYPE_NAME;
                 title = "请输入名字";
                 break;
-//            case R.id.bm_rl_user_sex:
-//                type = USERINFO_EDIT_TYPE_SEX;
-//                title = "请输入性别";
-//                break;
-//            case R.id.bm_rl_user_area:
-//                title = "请输入城市";
-//                type = USERINFO_EDIT_TYPE_AREA;
-//                break;
             case R.id.bm_rl_user_sign:
                 type = USERINFO_EDIT_TYPE_SIGN;
                 title = "请输入签名";

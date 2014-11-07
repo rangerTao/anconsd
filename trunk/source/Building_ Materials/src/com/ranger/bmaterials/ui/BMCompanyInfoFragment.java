@@ -191,10 +191,10 @@ public class BMCompanyInfoFragment extends Fragment implements NetUtil.IRequestL
                         public void onRequestSuccess(BaseResult responseData) {
 
                             if(responseData.getErrorCode() == 0){
-                                CustomToast.showToast(getActivity(),"收藏成功");
+                                Toast.makeText(getActivity().getApplicationContext(), "收藏成功", Toast.LENGTH_SHORT).show();
                                 bm_iv_collect.setImageResource(R.drawable.bm_start_collected);
                             }else{
-                                CustomToast.showToast(getActivity(),"收藏失败");
+                                Toast.makeText(getActivity().getApplicationContext(), "收藏失败", Toast.LENGTH_SHORT).show();
                             }
                         }
 

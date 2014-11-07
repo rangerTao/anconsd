@@ -2,7 +2,6 @@ package com.ranger.bmaterials.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,72 +12,35 @@ import android.widget.TextView;
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.netresponse.BandAndModelResult;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 /**
- * Created by taoliang on 14-8-4.
+ * Created by taoliang on 14/11/7.
  */
-public class ProductBandAdapter extends BaseExpandableListAdapter {
-
-    private String band = "";
-
-    private String modal = "";
-    private int gpo = -1;
-    private int cpo = -1;
-
-    public interface onBandClickListener {
-        public void onBandClick(View view);
-    }
+public class ProductPinpaiAdapter extends BaseExpandableListAdapter {
 
     public interface onCategoryClickListener {
         public void onCategoryClick(View view, int gpos, int cpos);
     }
 
-    public void notifyBandSelect(String band) {
-        this.band = band;
-        notifyDataSetChanged();
-    }
-
-    public void notifyModalSelect(String modal, int gpos, int cpos) {
-        gpo = gpos;
-        cpo = cpos;
-        this.modal = modal;
-        notifyDataSetChanged();
-    }
-
-    private onBandClickListener bandClick;
-    private onCategoryClickListener cateClick;
-
-    public void setOnBandClickListener(onBandClickListener listener) {
-        bandClick = listener;
-    }
-
-    public void setOnCategoryClickListener(onCategoryClickListener listener) {
-        cateClick = listener;
-    }
-
-    String[] groups = {"品牌", "类别"};
-
-    private BandAndModelResult bamr;
     private Context mContext;
+    private ArrayList<String> bands;
 
-    public ProductBandAdapter(Context context, BandAndModelResult bmr) {
+    public ProductPinpaiAdapter(Context context,ArrayList<String> band){
         mContext = context;
-        bamr = bmr;
+        bands = band;
     }
+
+    String[] groups = {"品牌"};
 
     @Override
     public int getGroupCount() {
-        return bamr.getCategory().size();
-//        return groups.length;
+        return 1;
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return bamr.getCategory().get(groupPosition).getTypes().size();
+        return bands.size();
     }
 
     @Override
@@ -88,7 +50,7 @@ public class ProductBandAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return bamr.getCategory().get(groupPosition).getTypes().get(childPosition).getName();
+        return bands.get(childPosition);
     }
 
     @Override
@@ -106,31 +68,55 @@ public class ProductBandAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
+    private String modal = "";
+    private int gpo = -1;
+    private int cpo = -1;
+
+    public void notifyChange(){
+        gpo = -1;
+        cpo = -1;
+
+        notifyDataSetChanged();
+    }
+
+    public void notifyModalSelect(String modal, int gpos, int cpos) {
+        gpo = gpos;
+        cpo = cpos;
+        this.modal = modal;
+        notifyDataSetChanged();
+    }
+
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-
-        convertView = LayoutInflater.from(mContext).inflate(R.layout.band_group_layout, null);
+        convertView = LayoutInflater.from(mContext).inflate(R.layout.band_group_layout,null);
         TextView tvName = (TextView) convertView.findViewById(R.id.tv_group_name);
 //        tvName.setText(groups[groupPosition]);
-        tvName.setText(bamr.getCategory().get(groupPosition).getName());
+        tvName.setText(groups[groupPosition]);
+        tvName.setVisibility(View.GONE);
         return convertView;
+    }
+
+    private onCategoryClickListener categoryClickListener;
+
+    public void setOnCategoryClickListener(onCategoryClickListener listener) {
+        categoryClickListener = listener;
     }
 
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
-        convertView = LayoutInflater.from(mContext).inflate(R.layout.band_item_group_layout, null);
-        TextView tvGroupName = (TextView) convertView.findViewById(R.id.tv_band_name);
+        convertView = LayoutInflater.from(mContext).inflate(R.layout.band_item_group_layout,null);
+        final TextView tvGroupName = (TextView) convertView.findViewById(R.id.tv_band_name);
 //        LinearLayout llGroup = (LinearLayout) convertView.findViewById(R.id.ll_band_group_content);
 
-        String name = (String) getChild(groupPosition,childPosition);
+        String name = bands.get(childPosition);
         tvGroupName.setText(name);
         tvGroupName.setTag(name);
         tvGroupName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cateClick != null)
-                    cateClick.onCategoryClick(v, groupPosition, childPosition);
+                if(categoryClickListener != null){
+                    categoryClickListener.onCategoryClick(tvGroupName,groupPosition,childPosition);
+                }
             }
         });
 
@@ -141,7 +127,6 @@ public class ProductBandAdapter extends BaseExpandableListAdapter {
         }
 
         return convertView;
-
     }
 
     @Override

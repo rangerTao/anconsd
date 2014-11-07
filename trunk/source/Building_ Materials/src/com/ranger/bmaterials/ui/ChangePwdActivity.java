@@ -123,7 +123,7 @@ public class ChangePwdActivity extends Activity implements OnClickListener, IReq
             case DcError.DC_BADPWD:
                 ((EditText) findViewById(R.id.edit_change_oldpwd)).requestFocus();
                 break;
-            case DcError.DC_NEEDLOGIN:
+            case 3:
                 MineProfile.getInstance().setIsLogin(false);
                 MineProfile.getInstance().setSessionID("");
                 Intent intent = new Intent(this, BMLoginActivity.class);
@@ -131,10 +131,13 @@ public class ChangePwdActivity extends Activity implements OnClickListener, IReq
                 startActivity(intent);
                 CustomToast.showToast(this, getResources().getString(R.string.need_login_tip));
                 break;
+            case 1001:
+                CustomToast.showToast(this, "请重试！");
+                break;
             default:
                 break;
         }
-        CustomToast.showToast(this, "密码修改失败");
+
     }
 
 	@Override
