@@ -202,6 +202,7 @@ public class BMCompanyInfoFragment extends Fragment implements NetUtil.IRequestL
                         public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
                             if(errorCode == 3){
                                 Intent loginIntent = new Intent(getActivity().getApplicationContext(),BMLoginActivity.class);
+                                loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(loginIntent);
                             }
                             Toast.makeText(getActivity().getApplicationContext(),msg,Toast.LENGTH_SHORT).show();

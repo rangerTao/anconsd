@@ -320,7 +320,8 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
                                     }
                                 } else {
 
-                                    if(responseData.getErrorCode() == 3){
+                                    if(responseData.getSuccess() == 3){
+                                        MineProfile.getInstance().Reset();
                                         Intent intent = new Intent(getApplicationContext(),BMLoginActivity.class);
                                         startActivity(intent);
                                     }
@@ -333,6 +334,7 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
                             public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
 
                                 if(errorCode == 3){
+                                    MineProfile.getInstance().Reset();
                                     Intent intent = new Intent(getApplicationContext(),BMLoginActivity.class);
                                     startActivity(intent);
                                 }
@@ -423,6 +425,8 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
                             public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
 
                                 if(errorCode == 3){
+                                    MineProfile.getInstance().Reset();
+
                                     Intent loginIntent = new Intent(BMUserinfoActivity.this,BMLoginActivity.class);
                                     startActivity(loginIntent);
                                 }

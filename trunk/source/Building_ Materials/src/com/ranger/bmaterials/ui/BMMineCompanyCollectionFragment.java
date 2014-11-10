@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.adapter.BMComCollectionAdapter;
 import com.ranger.bmaterials.adapter.BMProductCollectionAdapter;
+import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.netresponse.BMCollectionResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.ui.gametopic.BMProductDetailActivity;
@@ -201,6 +202,7 @@ public class BMMineCompanyCollectionFragment extends Fragment implements OnClick
 
 		switch (errorCode) {
             case 4:
+                MineProfile.getInstance().Reset();
                 Intent intent = new Intent(getActivity(),BMLoginActivity.class);
                 startActivity(intent);
                 break;

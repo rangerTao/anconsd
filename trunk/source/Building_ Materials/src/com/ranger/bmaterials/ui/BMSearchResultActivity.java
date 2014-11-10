@@ -9,6 +9,7 @@ import java.util.Map;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.GpsSatellite;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -31,6 +32,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -331,10 +333,15 @@ public class BMSearchResultActivity extends Activity implements
             switch (v.getId()){
                 case R.id.rl_cate:
                 case R.id.rl_band:
+                case R.id.rl_band_main:
                     if(bandList != null && bandList.getVisibility() == View.VISIBLE){
                         bandList.setVisibility(View.GONE);
+                        rl_band.setVisibility(View.GONE);
+                        ll_band_main.setVisibility(View.VISIBLE);
                         typeList.expandGroup(0);
                     }else{
+                        rl_band.setVisibility(View.VISIBLE);
+                        ll_band_main.setVisibility(View.GONE);
                         bandList.setVisibility(View.VISIBLE);
                         if(typeList != null){
                             typeList.collapseGroup(0);
@@ -346,9 +353,12 @@ public class BMSearchResultActivity extends Activity implements
     };
 
     RelativeLayout rl_band;
+    LinearLayout ll_band_main;
+    RelativeLayout rl_band_main;
 
     TextView tv_selected_cate;
     TextView tv_selected_band;
+    TextView tv_selected_band_main;
 
     private void initSlidingMenu() {
 
@@ -361,23 +371,14 @@ public class BMSearchResultActivity extends Activity implements
         rl_cate = (RelativeLayout) secondMenu.findViewById(R.id.rl_cate);
         rl_cate.setOnClickListener(cateAndBandClick);
         rl_band = (RelativeLayout) secondMenu.findViewById(R.id.rl_band);
+        ll_band_main = (LinearLayout) secondMenu.findViewById(R.id.ll_band_main);
+        rl_band_main = (RelativeLayout) secondMenu.findViewById(R.id.rl_band_main);
+        rl_band_main.setOnClickListener(cateAndBandClick);
         rl_band.setOnClickListener(cateAndBandClick);
 
         tv_selected_band = (TextView) secondMenu.findViewById(R.id.tv_band_selected_name);
         tv_selected_cate = (TextView) secondMenu.findViewById(R.id.tv_type_selected_name);
-
-//        bandList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-//            @Override
-//            public void onGroupExpand(int groupPosition) {
-//                for(int i=0;i<pba.getGroupCount();i++){
-//                    if(groupPosition != i){
-//                        bandList.collapseGroup(i);
-//                    }
-//                }
-//            }
-//        });
-
-
+        tv_selected_band_main = (TextView) secondMenu.findViewById(R.id.tv_band_selected_name_main);
 
         menu = new SlidingMenu(this);
         menu.setMode(SlidingMenu.LEFT_RIGHT);
@@ -556,7 +557,18 @@ public class BMSearchResultActivity extends Activity implements
             tv_selected_cate.setText(cate);
             pba.notifyModalSelect(cate,gpos,cpos);
 
-            productPinpaiAdapter = new ProductPinpaiAdapter(getApplicationContext(),bamr.getCategory().get(gpos).getTypes().get(cpos).getBrand());
+            if(gpos == -1 || cpos == -1){
+                productPinpaiAdapter = new ProductPinpaiAdapter(getApplicationContext(),bamr.getBrand());
+
+                tv_selected_band_main.setText("全部");
+                tv_selected_band.setText("全部");
+                band = "";
+
+            }else{
+                productPinpaiAdapter = new ProductPinpaiAdapter(getApplicationContext(),bamr.getCategory().get(gpos).getTypes().get(cpos).getBrand());
+            }
+
+            productPinpaiAdapter.setOnCategoryClickListener(onCategoryClickListener);
 
             typeList.setAdapter(productPinpaiAdapter);
             productPinpaiAdapter.notifyChange();
@@ -569,6 +581,14 @@ public class BMSearchResultActivity extends Activity implements
         if (view != null) {
             String ba = (String) view.getTag();
             band = ba;
+
+            if(ba.equals(tv_selected_band.getText().toString())){
+                ba = "全部";
+                band = "";
+            }
+
+            tv_selected_band.setText(band);
+            tv_selected_band_main.setText(band);
 
             pba.notifyBandSelect(ba);
         }
@@ -747,32 +767,35 @@ public class BMSearchResultActivity extends Activity implements
             pba.setOnCategoryClickListener(this);
 
             productPinpaiAdapter = new ProductPinpaiAdapter(getApplicationContext(),bamr.getBrand());
-            productPinpaiAdapter.setOnCategoryClickListener(new ProductPinpaiAdapter.onCategoryClickListener() {
-                @Override
-                public void onCategoryClick(View view, int gpos, int cpos) {
-                    String cate = (String) view.getTag();
-
-                    int gp = -1;
-                    int cp = -1;
-
-                    if(band.equals(cate)){
-                        band = "";
-                        tv_selected_band.setText("全部");
-                    }else{
-                        band = cate;
-                        gp = gpos;
-                        cp = cpos;
-                        tv_selected_band.setText(cate);
-                    }
-
-
-                    productPinpaiAdapter.notifyModalSelect(cate,gp,cp);
-                }
-            });
+            productPinpaiAdapter.setOnCategoryClickListener(onCategoryClickListener);
 
             typeList.setAdapter(productPinpaiAdapter);
         }
     }
+
+    private ProductPinpaiAdapter.onCategoryClickListener onCategoryClickListener = new ProductPinpaiAdapter.onCategoryClickListener() {
+        @Override
+        public void onCategoryClick(View view, int gpos, int cpos) {
+            String cate = (String) view.getTag();
+
+            int gp = -1;
+            int cp = -1;
+
+            if(band.equals(cate)){
+                band = "";
+                tv_selected_band.setText("全部");
+                tv_selected_band_main.setText("全部");
+            }else{
+                band = cate;
+                gp = gpos;
+                cp = cpos;
+                tv_selected_band_main.setText(cate);
+                tv_selected_band.setText(cate);
+            }
+
+            productPinpaiAdapter.notifyModalSelect(cate,gp,cp);
+        }
+    };
 
     private void loadBrandAndModel() {
         LoadingTask task = new LoadingTask(BMSearchResultActivity.this, new LoadingTask.ILoading() {

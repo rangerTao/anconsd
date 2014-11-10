@@ -246,8 +246,9 @@ public class BMProductDetailFragment extends Fragment implements IRequestListene
                         @Override
                         public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
                             if(errorCode == 3){
-                                Intent loginIntent = new Intent(getActivity().getApplicationContext(),BMLoginActivity.class);
-                                startActivity(loginIntent);
+                                MineProfile.getInstance().Reset();
+                                Intent loginIntent = new Intent(getActivity(),BMLoginActivity.class);
+                                getActivity().startActivity(loginIntent);
                             }
                             Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                         }
