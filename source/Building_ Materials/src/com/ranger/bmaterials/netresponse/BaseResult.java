@@ -29,6 +29,10 @@ public class BaseResult {
 
     public void setSuccess(int success) {
         this.success = success;
+        if(success == 3){
+            MineProfile.getInstance().setIsLogin(false);
+            MineProfile.getInstance().Reset();
+        }
     }
 
     protected static MyLogger mLogger = MyLogger.getLogger(JSONParser.class.getName());

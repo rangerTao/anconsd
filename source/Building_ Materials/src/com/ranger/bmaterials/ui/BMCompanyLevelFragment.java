@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.app.DcError;
+import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.netresponse.BMCompanyInfoResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.utils.NetUtil;
@@ -188,6 +189,7 @@ public class BMCompanyLevelFragment extends Fragment implements NetUtil.IRequest
                         @Override
                         public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
                             if(errorCode == 3){
+                                MineProfile.getInstance().Reset();
                                 Intent loginIntent = new Intent(getActivity().getApplicationContext(),BMLoginActivity.class);
                                 startActivity(loginIntent);
                             }
