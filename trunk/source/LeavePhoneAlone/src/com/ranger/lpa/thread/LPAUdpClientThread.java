@@ -18,6 +18,7 @@ import com.ranger.lpa.utils.DeviceId;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.security.spec.DSAParameterSpec;
 
 /**
  * Created by taoliang on 14-8-5.
@@ -45,6 +46,15 @@ public class LPAUdpClientThread extends Thread {
         try {
             dSocket = new DatagramSocket(Constants.UDP_SOCKET);
         } catch (Exception e) {
+            Log.e("TAG",e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void stopSocket(){
+        try{
+            dSocket.close();
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
