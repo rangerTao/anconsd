@@ -14,6 +14,7 @@ import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Message;
+import android.util.Log;
 
 import com.ranger.lpa.Constants;
 import com.ranger.lpa.pojos.WifiUser;
@@ -113,13 +114,6 @@ public class WifiUtils {
 			break;
 		case WifiManager.WIFI_STATE_ENABLED:
 
-			wifiInfo = wifiManager.getConnectionInfo();
-
-            if(wifiInfo.getSSID().equals(mSSID)){
-                if(mWifiConnected != null){
-                    mWifiConnected.onConnected();
-                }
-            }
 			break;
 		case WifiManager.WIFI_STATE_ENABLING:
 			break;
@@ -128,17 +122,23 @@ public class WifiUtils {
 		}
 	}
 
-	public static int getCalculatedWifiLevel(WifiInfo info) {
-
-		return WifiManager.calculateSignalLevel(info.getRssi(), 5);
-
-	}
-
-	private static void handleStateChanged(DetailedState state) {
+	public static void handleStateChanged(DetailedState state) {
 		// WifiInfo is valid if and only if Wi-Fi is enabled.
 		// Here we use the state of the check box as an optimization.
-		if (state != null) {
+
+        Log.e("TAG",state.toString() + state.compareTo(DetailedState.CONNECTED));
+
+		if (state != null && (state.compareTo(DetailedState.CONNECTED) == 0)) {
 			WifiInfo info = wifiManager.getConnectionInfo();
+
+            wifiInfo = wifiManager.getConnectionInfo();
+
+            if(wifiInfo.getSSID().equals("\"" + mSSID +"\"")){
+                if(mWifiConnected != null){
+                    mWifiConnected.onConnected();
+                }
+            }
+
 			if (info != null) {
 			}
 		}

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -211,30 +212,37 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 
                 break;
             case R.id.btn_join_party_server:
-//                startBarcodeScanner();
+                startBarcodeScanner();
                 WifiUtils.getInstance().setmWifiConnected(this);
-
-                clientThread = new LPAUdpClientThread(getApplicationContext());
-                clientThread.start();
 
                 showWaitingPopup();
                 break;
             case R.id.btn_start_party_server:
-//                LPAWifiManager.getInstance(getApplicationContext()).startWifiAp();
-                try {
-                    LPApplication.getInstance().setSelfServer(true);
 
-                    serNotifyThread = new LPAServerNotifyThread(getApplicationContext());
-                    clientThread = new LPAUdpClientThread(getApplicationContext());
+                LPAWifiManager.getInstance(getApplicationContext()).startWifiAp(new WifiUtils.OnWifiConnected(){
+                    @Override
+                    public void onConnected() {
 
-                    serNotifyThread.start();
-                    clientThread.start();
+                        Log.e("TAG","on wifi pot inited");
 
-                    showJoinedUserPopup();
+                        try {
+                            LPApplication.getInstance().setSelfServer(true);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                            serNotifyThread = new LPAServerNotifyThread(getApplicationContext());
+                            clientThread = new LPAUdpClientThread(getApplicationContext());
+
+                            serNotifyThread.start();
+                            clientThread.start();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
+                showJoinedUserPopup();
+
                 break;
             case R.id.tv_btn_start_party:
                 if(serNotifyThread != null && NotifyServerInfo.getInstance().getUsers().size() > 0){
@@ -254,6 +262,9 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                 
                 break;
             case R.id.btn_cancel_waiting_popup:
+                if(clientThread != null){
+                    clientThread.stopSocket();
+                }
                 dismissWaitingPopup();
                 break;
         }
@@ -500,6 +511,10 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
     protected void onDestroy() {
         super.onDestroy();
 
+        if(clientThread != null){
+            clientThread.stopSocket();
+        }
+
         NotifyManager.getInstance(this).unRegisterNotificationReceiver(notifyReceiver);
     }
 
@@ -534,7 +549,12 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onConnected() {
+
+        Toast.makeText(this,"Wifi connected",Toast.LENGTH_SHORT).show();
+
         clientThread = new LPAUdpClientThread(getApplicationContext());
         clientThread.start();
     }
+
+
 }

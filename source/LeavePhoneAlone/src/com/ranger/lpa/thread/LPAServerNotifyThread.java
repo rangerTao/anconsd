@@ -1,6 +1,7 @@
 package com.ranger.lpa.thread;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
 import com.ranger.lpa.Constants;
@@ -9,6 +10,8 @@ import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.pojos.BaseInfo;
 import com.ranger.lpa.pojos.NotifyServerInfo;
 import com.ranger.lpa.pojos.WifiUser;
+import com.ranger.lpa.tools.DeviceUtil;
+import com.tencent.mm.sdk.platformtools.PhoneUtil;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -34,7 +37,7 @@ public class LPAServerNotifyThread extends Thread{
 
         wuSelf = new WifiUser(BaseInfo.MSG_NOTIFY_SERVER);
         wuSelf.setUdid(MineProfile.getInstance().getUdid());
-        wuSelf.setName("test");
+        wuSelf.setName(Build.MODEL);
 
         NotifyServerInfo.getInstance().getUsers().add(wuSelf);
 //        try {
