@@ -223,26 +223,17 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                     @Override
                     public void onConnected() {
 
-                        Log.e("TAG","on wifi pot inited");
-
-                        try {
-                            LPApplication.getInstance().setSelfServer(true);
-
-                            serNotifyThread = new LPAServerNotifyThread(getApplicationContext());
-                            clientThread = new LPAUdpClientThread(getApplicationContext());
-
-                            serNotifyThread.start();
-                            clientThread.start();
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        onWifiApConnected();
 
                     }
                 });
 
                 showJoinedUserPopup();
 
+                break;
+            case R.id.btn_cancel_joined_popup:
+
+                dismissJoinedUserPopup();
                 break;
             case R.id.tv_btn_start_party:
                 if(serNotifyThread != null && NotifyServerInfo.getInstance().getUsers().size() > 0){
@@ -270,6 +261,21 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
         }
     }
 
+    private void onWifiApConnected() {
+        try {
+            LPApplication.getInstance().setSelfServer(true);
+
+            serNotifyThread = new LPAServerNotifyThread(getApplicationContext());
+            clientThread = new LPAUdpClientThread(getApplicationContext());
+
+            serNotifyThread.start();
+            clientThread.start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private PopupWindow mJoinedUserPopup;
     View joined_view;
 
@@ -289,6 +295,24 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
             mJoinedUserPopup.showAtLocation(findViewById(R.id.ll_found_center_root), Gravity.TOP | Gravity.LEFT,0,0);
         }
 
+    }
+
+    private void dismissJoinedUserPopup(){
+        if(mJoinedUserPopup != null && mJoinedUserPopup.isShowing()){
+            mJoinedUserPopup.dismiss();
+
+            if(serNotifyThread != null){
+                serNotifyThread.stop();
+
+                serNotifyThread = null;
+            }
+
+            if(clientThread != null){
+                clientThread.stopSocket();
+
+                clientThread = null;
+            }
+        }
     }
 
     private PopupWindow mWaitingToStartPopup;
@@ -515,6 +539,8 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
             clientThread.stopSocket();
         }
 
+        dismissJoinedUserPopup();
+
         NotifyManager.getInstance(this).unRegisterNotificationReceiver(notifyReceiver);
     }
 
@@ -552,8 +578,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 
         Toast.makeText(this,"Wifi connected",Toast.LENGTH_SHORT).show();
 
-        clientThread = new LPAUdpClientThread(getApplicationContext());
-        clientThread.start();
+        onWifiApConnected();
     }
 
 
