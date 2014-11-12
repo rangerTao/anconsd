@@ -1,5 +1,6 @@
 package com.ranger.lpa.connectity.wifi;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
@@ -89,12 +90,37 @@ public class LPAWifiManager {
         startWifiAp();
 
     }
+
+    public boolean checkWifiApState(){
+
+        boolean apState = false;
+
+        Method methodCheck = null;
+
+        try{
+            methodCheck = wifiManager.getClass().getMethod("getWifiApState");
+
+            Field wifi_ap_state = wifiManager.getClass().getField("WIFI_AP_STATE_ENABLED");
+
+            int WIFI_AP_ENABLED = wifi_ap_state.getInt(wifiManager);
+
+            if((Integer) methodCheck.invoke(wifiManager) == WIFI_AP_ENABLED){
+                apState = true;
+            }
+        } catch (Exception e) {
+            Log.e("TAG",e.getMessage());
+            e.printStackTrace();
+        }
+
+        return apState;
+
+    }
 	
 	public void startWifiAp() {
 
         mSSID += Md5Tools.toMd5(DeviceUtil.getImei(mContext).getBytes(),true);
 
-        if(wifiManager.getConnectionInfo().getSSID().equals(mSSID)){
+        if(checkWifiApState()){
             doWifiPotInited();
             return;
         }
@@ -105,7 +131,6 @@ public class LPAWifiManager {
             method1 = wifiManager.getClass().getMethod("setWifiApEnabled",
                     WifiConfiguration.class, boolean.class);
             WifiConfiguration netConfig = new WifiConfiguration();
-
 
             netConfig.SSID = mSSID;
             netConfig.preSharedKey = mPasswd;  
@@ -125,29 +150,24 @@ public class LPAWifiManager {
             netConfig.allowedGroupCiphers  
                     .set(WifiConfiguration.GroupCipher.TKIP);  
   
-            method1.invoke(wifiManager, netConfig, true);  
+            method1.invoke(wifiManager, netConfig, true);
 
             String mip = getLocalIpAddress();
 
-            wifiReceiver = new BroadcastReceiver() {
-
-                @Override
-                public void onReceive(Context context, Intent intent) {
-
-                    if (WifiManager.SUPPLICANT_STATE_CHANGED_ACTION.equals(intent.getAction())) {
-                        handleStateChanged(android.net.wifi.WifiInfo.getDetailedStateOf((SupplicantState) intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE)));
-                    } else if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(intent.getAction())) {
-                        detectWifiStatus(wifiManager);
-                    } else if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(intent.getAction())) {
-                        handleStateChanged(((NetworkInfo) intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO)).getDetailedState());
-                    }
-                }
-
-            };
-
-            connectSavedWifi(wifiReceiver);
+//            wifiReceiver = new BroadcastReceiver() {
+//
+//                @Override
+//                public void onReceive(Context context, Intent intent) {
+//                    detectWifiStatus(wifiManager);
+//                }
+//
+//            };
+//
+//            connectSavedWifi(wifiReceiver);
 
             mWifiInfo = new WifiInfo(mSSID,mPasswd,mip);
+
+            doWifiPotInited();
 
         } catch (IllegalArgumentException e) {
             e.printStackTrace();  
@@ -173,36 +193,48 @@ public class LPAWifiManager {
 
     }
 
-    public static void detectWifiStatus(WifiManager wifiManager) {
+    public void disableWifiReceiver(){
+        mContext.unregisterReceiver(wifiReceiver);
+    }
 
-        switch (wifiManager.getWifiState()) {
 
-            case WifiManager.WIFI_STATE_DISABLED:
-                break;
-            case WifiManager.WIFI_STATE_DISABLING:
+    public void detectWifiStatus(WifiManager wifiManager) {
 
-                break;
-            case WifiManager.WIFI_STATE_ENABLED:
+//        switch (wifiManager.getWifiState()) {
+//
+//            case WifiManager.WIFI_STATE_DISABLED:
+//                break;
+//            case WifiManager.WIFI_STATE_DISABLING:
+//
+//                break;
+//            case WifiManager.WIFI_STATE_ENABLED:
+//
+//                android.net.wifi.WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+//
+//                if(wifiInfo.getSSID().equals("\"" + mSSID + "\"")){
+//                    doWifiPotInited();
+//                }
+//                break;
+//            case WifiManager.WIFI_STATE_ENABLING:
+//                break;
+//            case WifiManager.WIFI_STATE_UNKNOWN:
+//                break;
+//        }
 
-                android.net.wifi.WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+        Log.e("TAG","wifi state " + wifiManager.getWifiState());
 
-                if(wifiInfo.getSSID().equals("\"" + mSSID + "\"")){
-                    doWifiPotInited();
-                }
-                break;
-            case WifiManager.WIFI_STATE_ENABLING:
-                break;
-            case WifiManager.WIFI_STATE_UNKNOWN:
-                break;
+        if(wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED && checkWifiApState()){
+            doWifiPotInited();
         }
     }
 
-    private static void doWifiPotInited() {
+    private void doWifiPotInited() {
         if(mWifiConnected != null){
 
             LPApplication.getInstance().setLocalIP(getLocalIpAddress());
 
             mWifiConnected.onConnected();
+
         }
     }
 

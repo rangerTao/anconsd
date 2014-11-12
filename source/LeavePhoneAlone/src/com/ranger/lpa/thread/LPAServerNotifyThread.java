@@ -7,6 +7,7 @@ import android.util.Log;
 import com.ranger.lpa.Constants;
 import com.ranger.lpa.LPApplication;
 import com.ranger.lpa.MineProfile;
+import com.ranger.lpa.connectity.wifi.LPAWifiManager;
 import com.ranger.lpa.pojos.BaseInfo;
 import com.ranger.lpa.pojos.NotifyServerInfo;
 import com.ranger.lpa.pojos.WifiUser;
@@ -103,7 +104,7 @@ public class LPAServerNotifyThread extends Thread{
         ds_localserver.setBroadcast(true);
 
         dp_notify = new DatagramPacket(msg,0,msg.length);
-        dp_notify.setAddress(InetAddress.getByName(LPApplication.getInstance().getLocalIP()));
+        dp_notify.setAddress(InetAddress.getByName(LPAWifiManager.getLocalIpAddress()));
         dp_notify.setPort(Constants.UDP_SOCKET);
     }
 
