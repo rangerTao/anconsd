@@ -296,6 +296,8 @@ public class BMSearchResultActivity extends Activity implements
                                     bpa.notifyDataSetChanged();
 
                                     menu.toggle();
+
+                                    search();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

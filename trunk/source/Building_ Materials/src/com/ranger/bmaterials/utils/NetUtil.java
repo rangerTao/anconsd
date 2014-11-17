@@ -189,7 +189,7 @@ public class NetUtil implements INetListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    observer.onRequestError(0, mCurrentRequestId, 1001, "error");
+                    observer.onRequestError(0, mCurrentRequestId, 1001, "登录出错，请重试");
                 }
             }
         }.run();
@@ -253,7 +253,7 @@ public class NetUtil implements INetListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    observer.onRequestError(Constants.NET_TAG_GET_PHONE_VERIFYCODE, mCurrentRequestId, 1001, "error");
+                    observer.onRequestError(Constants.NET_TAG_GET_PHONE_VERIFYCODE, mCurrentRequestId, 1001, "请重试");
                 }
             }
         }.run();
@@ -315,7 +315,7 @@ public class NetUtil implements INetListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    observer.onRequestError(Constants.NET_TAG_USERNAME_REGISTER, mCurrentRequestId, 1001, "error");
+                    observer.onRequestError(Constants.NET_TAG_USERNAME_REGISTER, mCurrentRequestId, 1001, "请重试");
                 }
             }
         }.run();
@@ -392,7 +392,7 @@ public class NetUtil implements INetListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    observer.onRequestError(Constants.NET_TAG_KEYWORDS, mCurrentRequestId, 1001, "error");
+                    observer.onRequestError(Constants.NET_TAG_KEYWORDS, mCurrentRequestId, 1001, "网络不给力，请重试");
                 }
             }
         }.run();
@@ -475,7 +475,7 @@ public class NetUtil implements INetListener {
 
                     } catch (Exception e) {
                         e.printStackTrace();
-                        observer.onRequestError(Constants.NET_TAG_KEYWORDS, mCurrentRequestId, 1001, "error");
+                        observer.onRequestError(Constants.NET_TAG_KEYWORDS, mCurrentRequestId, 1001, "网络不给力，请重试");
                     }
                 }
             }.run();
@@ -539,7 +539,7 @@ public class NetUtil implements INetListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    observer.onRequestError(Constants.NET_TAG_KEYWORDS, mCurrentRequestId, 1001, "error");
+                    observer.onRequestError(Constants.NET_TAG_KEYWORDS, mCurrentRequestId, 1001, "网络不给力，请重试");
                 }
             }
         }.run();
@@ -602,7 +602,7 @@ public class NetUtil implements INetListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    observer.onRequestError(Constants.NET_TAG_CHANGE_PWD, mCurrentRequestId, 1001, "error");
+                    observer.onRequestError(Constants.NET_TAG_CHANGE_PWD, mCurrentRequestId, 1001, "网络不给力，请重试");
                 }
             }
         }.run();
@@ -679,7 +679,7 @@ public class NetUtil implements INetListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "error");
+                    observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "网络不给力，请重试");
                 }
             }
         }.run();
@@ -744,7 +744,7 @@ public class NetUtil implements INetListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "error");
+                    observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "网络不给力，请重试");
                 }
             }
         }.run();
@@ -879,7 +879,7 @@ public class NetUtil implements INetListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "error");
+                    observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "网络不给力，请重试");
                 }
             }
         }.run();
@@ -940,7 +940,7 @@ public class NetUtil implements INetListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "error");
+                    observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "网络不给力，请重试");
                 }
             }
         }.run();
@@ -1004,7 +1004,7 @@ public class NetUtil implements INetListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "error");
+                    observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "网络不给力，请重试");
                 }
             }
         }.run();
@@ -1071,7 +1071,7 @@ public class NetUtil implements INetListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "error");
+                    observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "网络不给力，请重试");
                 }
             }
         }.run();
@@ -1130,11 +1130,7 @@ public class NetUtil implements INetListener {
 
                     Log.e("TAG", "webservice result " + result);
 
-                    if(baseResult.getSuccess() == 1){
-                        observer.onRequestSuccess(baseResult);
-                    }else{
-                        observer.onRequestError(Constants.NET_TAG_USERINFO,mCurrentRequestId,baseResult.getSuccess(),baseResult.getMessage());
-                    }
+                    observer.onRequestSuccess(baseResult);
 
                 } catch (Exception e) {
 
@@ -1287,6 +1283,90 @@ public class NetUtil implements INetListener {
             }
         }.run();
 
+
+        return mCurrentRequestId;
+    }
+
+    /**
+     * 获得城市列表
+     *
+     * @param observer
+     * @return
+     */
+    public int requestCityList(Context context,final IRequestListener observer) {
+
+        // 调用的方法名称
+        String methodName = "getProvinceCity";
+
+        soapAction += methodName;
+
+        // 指定WebService的命名空间和调用的方法名
+        SoapObject rpc = new SoapObject(nameSpace, methodName);
+
+        rpc.addProperty("token", MineProfile.getInstance().getSessionID());
+
+        // 生成调用WebService方法的SOAP请求信息,并指定SOAP的版本
+        final SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER10);
+
+        envelope.bodyOut = rpc;
+        // 设置是否调用的是dotNet开发的WebService
+        envelope.dotNet = true;
+        // 等价于envelope.bodyOut = rpc;
+        envelope.setOutputSoapObject(rpc);
+
+        final HttpTransportSE transport = new HttpTransportSE(endPoint);
+
+        mCurrentRequestId = transport.hashCode();
+
+        final SharedPreferences sp = context.getSharedPreferences("cache", Context.MODE_PRIVATE);
+
+        String cache_province = sp.getString("citys", "");
+
+        if (!cache_province.equals("")) {
+
+            BaseResult baseResult = JSONParser.parseCityList(cache_province);
+            baseResult.setTag(Constants.NET_TAG_GET_PROVINCE + "");
+
+            baseResult.setErrorCode(DcError.DC_OK);
+
+            observer.onRequestSuccess(baseResult);
+
+        }else{
+
+            new Runnable() {
+                @Override
+                public void run() {
+                    try {
+
+
+                        // 调用WebService
+                        transport.call(soapAction, envelope);
+
+                        // 获取返回的数据
+                        SoapObject object = (SoapObject) envelope.bodyIn;
+                        // 获取返回的结果
+                        String result = object.getProperty(0).toString();
+
+                        BaseResult baseResult = JSONParser.parseCityList(result);
+                        baseResult.setTag(Constants.NET_TAG_GET_PROVINCE + "");
+
+                        baseResult.setErrorCode(DcError.DC_OK);
+
+                        Log.e("TAG", "webservice result " + result);
+
+                        observer.onRequestSuccess(baseResult);
+
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("citys", result);
+                        editor.commit();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        observer.onRequestError(Constants.NET_TAG_KEYWORDS, mCurrentRequestId, 1001, "网络不给力，请重试");
+                    }
+                }
+            }.run();
+        }
 
         return mCurrentRequestId;
     }

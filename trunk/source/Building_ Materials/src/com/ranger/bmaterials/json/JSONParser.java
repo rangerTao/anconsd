@@ -17,6 +17,7 @@ import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.app.MineProfile;
 import com.ranger.bmaterials.compare.ProvinceComparator;
 import com.ranger.bmaterials.mode.KeywordsList;
+import com.ranger.bmaterials.netresponse.BMCityResult;
 import com.ranger.bmaterials.netresponse.BMCollectionResult;
 import com.ranger.bmaterials.netresponse.BMCompanyInfoResult;
 import com.ranger.bmaterials.netresponse.BMProductInfoResult;
@@ -27,6 +28,7 @@ import com.ranger.bmaterials.netresponse.BMUserLoginResult;
 import com.ranger.bmaterials.netresponse.BandAndModelResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.netresponse.CheckUpdateResult;
+import com.ranger.bmaterials.netresponse.CityListResult;
 import com.ranger.bmaterials.netresponse.UserNameRegisterResult;
 import com.ranger.bmaterials.tools.DateUtil;
 import com.ranger.bmaterials.tools.StringUtil;
@@ -353,6 +355,22 @@ public class JSONParser {
             e.printStackTrace();
         }
         return keywordsList;
+    }
+
+    public static BMCityResult parseCityList(String res){
+        BMCityResult result = new BMCityResult();
+        try{
+            JSONArray jsonArray = new JSONArray(res);
+            for(int i=0;i<jsonArray.length();i++){
+                String json = jsonArray.getString(i);
+                result.addItem(json);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     public static BaseResult parseBMProvinceList(String res){
