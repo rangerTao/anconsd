@@ -32,7 +32,16 @@ public class MineProfile implements IRequestListener {
 	private boolean isRootUser;
 
     private String area;
+    private String city;
     private String signture;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public String getArea() {
         return area;
@@ -118,6 +127,7 @@ public class MineProfile implements IRequestListener {
 		lastCheckRootTime = 0;
 
         area = "";
+        city = "";
         signture = "";
 
 		accountList = new ArrayList<String>();
@@ -165,6 +175,7 @@ public class MineProfile implements IRequestListener {
 		isLogin = false;
 
         area = "";
+        city = "";
         signture = "";
 
 		Save(context);
@@ -228,7 +239,8 @@ public class MineProfile implements IRequestListener {
 		this.userType = settings.getInt("userType", 1);
 		this.phonenum = settings.getString("phonenum", "");
 
-        this.area = settings.getString("city","");
+        this.area = settings.getString("province","");
+        this.city = settings.getString("city","");
         this.signture = settings.getString("signture","");
 
 		// settings
@@ -339,7 +351,8 @@ public class MineProfile implements IRequestListener {
 		editor.putString("accountlist", accountList);
 		editor.putString("user_head", strUserHead);
 
-        editor.putString("city",area);
+        editor.putString("province",area);
+        editor.putString("city",city);
         editor.putString("signture",signture);
 
 		return editor.commit();

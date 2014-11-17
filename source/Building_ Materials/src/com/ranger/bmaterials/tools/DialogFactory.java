@@ -77,7 +77,7 @@ public class DialogFactory {
 
                         MineProfile.getInstance().Save();
 
-                        dialog.dismiss();
+//                        dialog.dismiss();
 
                         listener.onEditUserInfoDialogDismissed(etContent.getText().toString());
 
