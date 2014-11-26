@@ -12,7 +12,6 @@ public class NetworkUtil {
      */
     public static void setWifiConfigurationSettings(WifiConfiguration wc, String pass) {
 
-
         wc.preSharedKey = "\""
                 + pass
                 + "\"";
@@ -26,7 +25,6 @@ public class NetworkUtil {
         wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
         wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
         wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_EAP);
-
 
     }
 }

@@ -29,7 +29,7 @@ import android.util.Log;
 
 public class LPAWifiManager {
 
-	private static String mSSID = "LeavePhoneAlone_";
+	private static String mSSID = "LPA_";
 	private String mPasswd;
 
     private Context mContext;
@@ -71,7 +71,7 @@ public class LPAWifiManager {
 		wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 		
 		Long time = System.currentTimeMillis();
-		mPasswd = Md5Tools.toMd5((time + "").getBytes(), true);
+		mPasswd = "lpa@2014mm";
 	}
 	
 	public void enableWifiSpot(){
@@ -118,7 +118,7 @@ public class LPAWifiManager {
 	
 	public void startWifiAp() {
 
-        mSSID += Md5Tools.toMd5(DeviceUtil.getImei(mContext).getBytes(),true);
+        mSSID += Md5Tools.toMd5(DeviceUtil.getImei(mContext).getBytes(),true).substring(0,5);
 
         if(checkWifiApState()){
             doWifiPotInited();
@@ -136,11 +136,11 @@ public class LPAWifiManager {
             netConfig.preSharedKey = mPasswd;  
   
             netConfig.allowedAuthAlgorithms  
-                    .set(WifiConfiguration.AuthAlgorithm.OPEN);  
+                    .set(WifiConfiguration.AuthAlgorithm.OPEN);
             netConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);  
             netConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);  
             netConfig.allowedKeyManagement
-                    .set(WifiConfiguration.KeyMgmt.WPA_PSK);  
+                    .set(WifiConfiguration.KeyMgmt.WPA_PSK);
             netConfig.allowedPairwiseCiphers  
                     .set(WifiConfiguration.PairwiseCipher.CCMP);  
             netConfig.allowedPairwiseCiphers  
@@ -265,7 +265,7 @@ public class LPAWifiManager {
   
                 Method method2 = wifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);  
                 method2.invoke(wifiManager, config, false);  
-            } catch (NoSuchMethodException e) {  
+            } catch (NoSuchMethodException e) {
                 // TODO Auto-generated catch block  
                 e.printStackTrace();  
             } catch (IllegalArgumentException e) {  

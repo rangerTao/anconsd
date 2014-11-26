@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.ranger.lpa.Constants;
 import com.ranger.lpa.LPApplication;
 import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.R;
@@ -28,6 +29,7 @@ import com.ranger.lpa.adapter.LPAWifiUsersAdapter;
 import com.ranger.lpa.connectity.wifi.LPAWifiManager;
 import com.ranger.lpa.encoding.EncodingHandler;
 import com.ranger.lpa.pojos.BaseInfo;
+import com.ranger.lpa.pojos.IncomeResult;
 import com.ranger.lpa.pojos.NotifyServerInfo;
 import com.ranger.lpa.pojos.SocketMessage;
 import com.ranger.lpa.pojos.WifiInfo;
@@ -66,9 +68,9 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 
             //update the users' view
             BaseInfo wUser = (BaseInfo) msg.obj;
-            WifiUser wfUser = null;
+            IncomeResult wfUser = null;
             if(wUser != null){
-                wfUser = new Gson().fromJson(wUser.getMessage(),WifiUser.class);
+                wfUser = (IncomeResult) wUser;
             }
 
             switch (type) {
@@ -101,11 +103,12 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                     dismissGiveupRequestDialog();
                     break;
                 case SocketMessage.MSG_SUBMIT_NAME:
-                    if(wfUser != null && !NotifyServerInfo.getInstance().getUsers().contains(wfUser.getUdid())){
-                        NotifyServerInfo.getInstance().addUser(wfUser);
-                        adapterUsers.notifyDataSetChanged();
+                    for(WifiUser wuser : wfUser.getUsers()){
+                        if(wfUser != null && !NotifyServerInfo.getInstance().getUsers().contains(wuser.getUdid())){
+                            NotifyServerInfo.getInstance().addUser(wuser);
+                            adapterUsers.notifyDataSetChanged();
+                        }
                     }
-
                     break;
                 case MSG_CONNECTING_DIALOG_SHOW:
                     break;
@@ -257,6 +260,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                     clientThread.stopSocket();
                 }
                 dismissWaitingPopup();
+                WifiUtils.dismissWifiReceiver();
                 break;
         }
     }
@@ -298,20 +302,29 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
     }
 
     private void dismissJoinedUserPopup(){
+
+        LPAWifiManager.getInstance(getApplicationContext()).stopWifiAP();
+
         if(mJoinedUserPopup != null && mJoinedUserPopup.isShowing()){
             mJoinedUserPopup.dismiss();
 
-            if(serNotifyThread != null){
-                serNotifyThread.stop();
+            try{
+                if(serNotifyThread != null){
 
-                serNotifyThread = null;
+                    Constants.isBoradcastNeeded = false;
+
+                    serNotifyThread = null;
+                }
+
+                if(clientThread != null){
+                    clientThread.stopSocket();
+
+                    clientThread = null;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
 
-            if(clientThread != null){
-                clientThread.stopSocket();
-
-                clientThread = null;
-            }
         }
     }
 
@@ -411,12 +424,14 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 
     private View view_giveup_request;
 
-    private void refreshUserStatus(WifiUser wu){
+    private void refreshUserStatus(IncomeResult wu){
 
-        String udid = wu.getUdid();
-        for(WifiUser user : NotifyServerInfo.getInstance().getUsers()){
-            if(user.getUdid().equals(udid)){
-                user.setAccept(1);
+        for(WifiUser wuser : wu.getUsers()){
+            String udid = wuser.getUdid();
+            for(WifiUser user : NotifyServerInfo.getInstance().getUsers()){
+                if(user.getUdid().equals(udid)){
+                    user.setAccept(1);
+                }
             }
         }
 

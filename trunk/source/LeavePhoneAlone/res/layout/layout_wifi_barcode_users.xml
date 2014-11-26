@@ -85,8 +85,8 @@
 
             <ImageView
                 android:id="@+id/iv_barcode"
-                android:minHeight="100dp"
-                android:minWidth="100dp"
+                android:minHeight="140dp"
+                android:minWidth="140dp"
                 android:scaleType="fitXY"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

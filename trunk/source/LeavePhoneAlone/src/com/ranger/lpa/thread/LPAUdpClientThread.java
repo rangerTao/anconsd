@@ -9,11 +9,15 @@ import com.ranger.lpa.Constants;
 import com.ranger.lpa.LPApplication;
 import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.pojos.BaseInfo;
+import com.ranger.lpa.pojos.IncomeResult;
+import com.ranger.lpa.pojos.NotifyServerInfo;
 import com.ranger.lpa.pojos.SocketMessage;
 import com.ranger.lpa.pojos.SubmitNameMessage;
 import com.ranger.lpa.pojos.SubmitNameResult;
+import com.ranger.lpa.pojos.WifiUser;
 import com.ranger.lpa.tools.NotifyManager;
 import com.ranger.lpa.utils.DeviceId;
+import com.ranger.lpa.utils.WifiUtils;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -46,7 +50,6 @@ public class LPAUdpClientThread extends Thread {
         try {
             dSocket = new DatagramSocket(Constants.UDP_SOCKET);
         } catch (Exception e) {
-            Log.e("TAG",e.getMessage());
             e.printStackTrace();
         }
     }
@@ -115,8 +118,15 @@ public class LPAUdpClientThread extends Thread {
                     msg = msg.substring(0, msg.lastIndexOf("}") + 1);
 
 
-                    gson = new Gson();
-                    baseInfo = gson.fromJson(msg, BaseInfo.class);
+                    try{
+                        gson = new Gson();
+                        IncomeResult wu = gson.fromJson(msg, IncomeResult.class);
+
+                        NotifyServerInfo.getInstance().getUsers().addAll(wu.getUsers());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                 }
 
             } catch (Exception e) {
@@ -130,18 +140,22 @@ public class LPAUdpClientThread extends Thread {
         sendNameReply(MineProfile.getInstance().getNickName());
     }
 
+    SubmitNameMessage snm;
+
     public void sendNameReply(String name) {
 
-        SubmitNameMessage snm = new SubmitNameMessage(BaseInfo.MSG_SUBMIT_NAME);
-        snm.setName(name);
-        snm.setUdid(MineProfile.getInstance().getUdid());
+        if(snm == null){
+            snm = new SubmitNameMessage(BaseInfo.MSG_SUBMIT_NAME);
+            snm.setName(name);
+            snm.setUdid(MineProfile.getInstance().getUdid());
+        }
 
         Gson gson = new Gson();
         String msg = gson.toJson(snm, SubmitNameMessage.class);
         DatagramPacket dpName = new DatagramPacket(msg.getBytes(), msg.length());
 
         try {
-            dpName.setAddress(InetAddress.getByName(LPApplication.getInstance().getLocalIP()));
+            dpName.setAddress(InetAddress.getByName("255.255.255.255"));
             dSocket.send(dpName);
         } catch (Exception e) {
             e.printStackTrace();
