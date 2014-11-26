@@ -41,12 +41,6 @@ public class LPAServerNotifyThread extends Thread{
         wuSelf.setName(Build.MODEL);
 
         NotifyServerInfo.getInstance().getUsers().add(wuSelf);
-//        try {
-//            if(Constants.ds_server == null)
-//                Constants.ds_server = new DatagramSocket(Constants.UDP_SOCKET);
-//        } catch (SocketException e) {
-//            e.printStackTrace();
-//        }
 
     }
 
@@ -104,7 +98,7 @@ public class LPAServerNotifyThread extends Thread{
         ds_localserver.setBroadcast(true);
 
         dp_notify = new DatagramPacket(msg,0,msg.length);
-        dp_notify.setAddress(InetAddress.getByName(LPAWifiManager.getLocalIpAddress()));
+        dp_notify.setAddress(InetAddress.getByName("255.255.255.255"));
         dp_notify.setPort(Constants.UDP_SOCKET);
     }
 
@@ -118,7 +112,7 @@ public class LPAServerNotifyThread extends Thread{
             String lockMsg = lockStart.getMessageStringLimt();
             byte[] msg = lockMsg.getBytes();
             dp_notify = new DatagramPacket(msg,0,msg.length);
-            dp_notify.setAddress(InetAddress.getByName(LPApplication.getInstance().getLocalIP()));
+            dp_notify.setAddress(InetAddress.getByName("255.255.255.255"));
             dp_notify.setPort(Constants.UDP_SOCKET);
 
             ds_localserver.send(dp_notify);

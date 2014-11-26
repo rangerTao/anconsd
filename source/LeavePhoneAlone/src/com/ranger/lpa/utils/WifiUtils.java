@@ -103,6 +103,11 @@ public class WifiUtils {
 
 	}
 
+    public static void dismissWifiReceiver(){
+        if(wifiReceiver!= null)
+            mContext.unregisterReceiver(wifiReceiver);
+    }
+
 	public static void detectWifiStatus(WifiManager wifiManager) {
 
 		switch (wifiManager.getWifiState()) {
@@ -126,14 +131,12 @@ public class WifiUtils {
 		// WifiInfo is valid if and only if Wi-Fi is enabled.
 		// Here we use the state of the check box as an optimization.
 
-        Log.e("TAG",state.toString() + state.compareTo(DetailedState.CONNECTED));
-
 		if (state != null && (state.compareTo(DetailedState.CONNECTED) == 0)) {
 			WifiInfo info = wifiManager.getConnectionInfo();
 
             wifiInfo = wifiManager.getConnectionInfo();
 
-            if(wifiInfo.getSSID().equals("\"" + mSSID +"\"")){
+            if(wifiInfo.getSSID().equals(mSSID)){
                 if(mWifiConnected != null){
                     mWifiConnected.onConnected();
                 }

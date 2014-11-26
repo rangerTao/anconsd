@@ -62,7 +62,7 @@ public class NotifyServerInfo{
                 JSONObject userObject = new JSONObject();
                 userObject.put("name",user.getName());
                 userObject.put("udid",user.getUdid());
-                jsonArray.put(userObject.toString());
+                jsonArray.put(userObject);
             }
 
             jsonRoot.put("users",jsonArray);
