@@ -17,6 +17,9 @@ public class BMApplication extends Application {
 
 	private static final String CUSTOM_THEME_URL = "file:///android_asset/sapi_theme/style.css";
 
+    private static int lastProvinceID = 0;
+    private static String lastProvinceName = "全国";
+
 	@Override
 	public void onCreate() {
 		mInstance = this;
@@ -52,4 +55,16 @@ public class BMApplication extends Application {
 		return mInstance;
 	}
 
+    public int getSelectedProvince(){
+        return lastProvinceID;
+    }
+
+    public String getSelectedProvinceName() {
+        return lastProvinceName;
+    }
+
+    public void setSelectedProvince(int pid,String name){
+        lastProvinceID = pid;
+        lastProvinceName = name;
+    }
 }

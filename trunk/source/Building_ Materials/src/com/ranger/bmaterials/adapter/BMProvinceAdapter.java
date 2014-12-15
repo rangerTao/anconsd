@@ -25,6 +25,12 @@ import java.util.zip.Inflater;
  */
 public class BMProvinceAdapter extends AbstractListAdapter<BMProvinceListResult.ProviceItem> implements StickyListHeadersAdapter, SectionIndexer {
 
+    public interface onProvinceSelectedListener{
+        public void onSelected(int position,String name);
+    }
+
+    private onProvinceSelectedListener listener;
+
     private SharedPreferences spSize;
 
     private Context mContext;
@@ -36,6 +42,10 @@ public class BMProvinceAdapter extends AbstractListAdapter<BMProvinceListResult.
     private int[] sectionIndices;
     /* 保存每个section的标记（首字母） */
     private Character[] sectionsLetters;
+
+    public void setOnProvinceSelectedListener(onProvinceSelectedListener lis){
+        listener = lis;
+    }
 
     public BMProvinceAdapter(Context context,ArrayList<BMProvinceListResult.ProviceItem> pros) {
         super(context);
@@ -129,6 +139,13 @@ public class BMProvinceAdapter extends AbstractListAdapter<BMProvinceListResult.
         ph.tvName.setText("    " + pi.getName());
 
         if(pi.getName().equals(selectedPro)){
+            if(selectedPro.equals("全国")){
+                if(listener!= null)
+                    listener.onSelected(0,"全国");
+            }else{
+                if(listener!= null)
+                    listener.onSelected(pi.getId(),pi.getName());
+            }
             ph.tvName.setBackgroundColor(Color.BLUE);
         }else{
             ph.tvName.setBackgroundColor(Color.parseColor("#d4d4d4"));

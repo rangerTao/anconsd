@@ -35,6 +35,25 @@ public class MineProfile implements IRequestListener {
     private String city;
     private String signture;
 
+    private int proId;
+    private int cityId;
+
+    public int getProId() {
+        return proId;
+    }
+
+    public void setProId(int proId) {
+        this.proId = proId;
+    }
+
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
+    }
+
     public String getCity() {
         return city;
     }
@@ -129,6 +148,8 @@ public class MineProfile implements IRequestListener {
         area = "";
         city = "";
         signture = "";
+        proId = 0;
+        cityId = 0;
 
 		accountList = new ArrayList<String>();
 	}
@@ -177,6 +198,9 @@ public class MineProfile implements IRequestListener {
         area = "";
         city = "";
         signture = "";
+
+        proId = 0;
+        cityId = 0;
 
 		Save(context);
 	}
@@ -242,6 +266,9 @@ public class MineProfile implements IRequestListener {
         this.area = settings.getString("province","");
         this.city = settings.getString("city","");
         this.signture = settings.getString("signture","");
+
+        this.proId = settings.getInt("proid",0);
+        this.cityId = settings.getInt("cityid",0);
 
 		// settings
 		this.downloadOnlyWithWiFi = settings.getBoolean("downloadOnlyWithWiFi", true);
@@ -354,6 +381,9 @@ public class MineProfile implements IRequestListener {
         editor.putString("province",area);
         editor.putString("city",city);
         editor.putString("signture",signture);
+
+        editor.putInt("proid",proId);
+        editor.putInt("cityid",cityId);
 
 		return editor.commit();
 	}

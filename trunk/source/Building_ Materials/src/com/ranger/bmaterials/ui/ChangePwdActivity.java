@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.app.DcError;
@@ -108,8 +109,10 @@ public class ChangePwdActivity extends Activity implements OnClickListener, IReq
         if(progressDialog != null && progressDialog.isShowing())
             progressDialog.dismiss();
 
+        Log.e("TAG","request success");
+
 		CustomToast.showLoginRegistSuccessToast(this, CustomToast.DC_OK_CHNAGE_PWD);
-		this.finish();
+		finish();
 	}
 
 	@Override
@@ -120,6 +123,8 @@ public class ChangePwdActivity extends Activity implements OnClickListener, IReq
         }
 
         switch (errorCode) {
+            case 5:
+                Toast.makeText(this,"原密码错误",Toast.LENGTH_LONG).show();
             case DcError.DC_BADPWD:
                 ((EditText) findViewById(R.id.edit_change_oldpwd)).requestFocus();
                 break;

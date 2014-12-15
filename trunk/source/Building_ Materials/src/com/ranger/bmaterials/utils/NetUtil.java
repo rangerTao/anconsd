@@ -593,8 +593,7 @@ public class NetUtil implements INetListener {
                     BaseResult baseResult = JSONParser.parseChangePwd(result);
                     baseResult.setTag(Constants.NET_TAG_CHANGE_PWD + "");
 
-                    Log.e("TAG", "webservice result " + result);
-                    if (baseResult.getSuccess() == 1) {
+                    if (baseResult.getSuccess() == 0) {
                         observer.onRequestSuccess(baseResult);
                     } else {
                         observer.onRequestError(Constants.NET_TAG_CHANGE_PWD, mCurrentRequestId, baseResult.getSuccess(), baseResult.getMessage());
@@ -1130,12 +1129,20 @@ public class NetUtil implements INetListener {
 
                     Log.e("TAG", "webservice result " + result);
 
-                    observer.onRequestSuccess(baseResult);
+                    if(baseResult.getSuccess() == 0){
+                        observer.onRequestSuccess(baseResult);
+                    }else{
+                        observer.onRequestError(Constants.NET_TAG_MODIFYUSER,mCurrentRequestId,baseResult.getSuccess(),baseResult.getMessage());
+                    }
+//                    observer.onRequestSuccess(baseResult);
 
                 } catch (Exception e) {
-
-                    SoapFault sf = (SoapFault) envelope.bodyIn;
-                    observer.onRequestError(Constants.NET_TAG_USERINFO, mCurrentRequestId, 1001, sf.getMessage());
+                    try{
+                        SoapFault sf = (SoapFault) envelope.bodyIn;
+                        observer.onRequestError(Constants.NET_TAG_USERINFO, mCurrentRequestId, 1001, sf.getMessage());
+                    }catch(Exception ex){
+//                        observer.onRequestError(Constants.NET_TAG_USERINFO,mCurrentRequestId,1001,"请重试！");
+                    }
 
                 }
             }
@@ -1162,6 +1169,7 @@ public class NetUtil implements INetListener {
         SoapObject rpc = new SoapObject(nameSpace, methodName);
 
         rpc.addProperty("token", MineProfile.getInstance().getSessionID());
+        Log.e("TAG","upload user info : " + JSONBuilder.buildUpdateUserinfoString());
         rpc.addProperty("info", JSONBuilder.buildUpdateUserinfoString());
 
         // 生成调用WebService方法的SOAP请求信息,并指定SOAP的版本

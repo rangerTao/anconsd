@@ -41,6 +41,7 @@ import com.ranger.bmaterials.R;
 import com.ranger.bmaterials.adapter.AbstractListAdapter;
 import com.ranger.bmaterials.adapter.BMProvinceAdapter;
 import com.ranger.bmaterials.adapter.SuggestAdapter;
+import com.ranger.bmaterials.app.BMApplication;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.db.CommonDaoImpl;
@@ -155,6 +156,8 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
                                     bpa.setProvince(pi.getName());
                                     bpa.notifyDataSetChanged();
+
+                                    BMApplication.getAppInstance().setSelectedProvince(pi.getId(),pi.getName());
 
                                     menu.toggle();
                                 } catch (Exception e) {
@@ -321,6 +324,27 @@ public class BMSearchFragment extends Fragment implements OnClickListener, OnIte
 
     @Override
     public void onResume() {
+
+        String pname = BMApplication.getAppInstance().getSelectedProvinceName();
+
+        if(bpa != null){
+            for(int i = 0;i<bpa.getCount();i++){
+
+                BMProvinceListResult.ProviceItem pi = (BMProvinceListResult.ProviceItem) bpa.getItem(i);
+
+                if(pname.equals(pi.getName())){
+                    try {
+                        setCityName(pi);
+
+                        bpa.setProvince(pi.getName());
+                        bpa.notifyDataSetChanged();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
 
         super.onResume();
     }
