@@ -45,6 +45,7 @@ import com.ranger.bmaterials.adapter.BMSearchResultAdapter;
 import com.ranger.bmaterials.adapter.ProductBandAdapter;
 import com.ranger.bmaterials.adapter.ProductPinpaiAdapter;
 import com.ranger.bmaterials.adapter.SuggestAdapter;
+import com.ranger.bmaterials.app.BMApplication;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.db.CommonDaoImpl;
@@ -124,8 +125,10 @@ public class BMSearchResultActivity extends Activity implements
 
         if (intent != null) {
             keyword = intent.getStringExtra(ARG_KEYWORD);
-            pid = intent.getIntExtra(ARG_PID, 0);
-            pname = intent.getStringExtra(ARG_PNAME);
+            pid = BMApplication.getAppInstance().getSelectedProvince();
+            pname = BMApplication.getAppInstance().getSelectedProvinceName();
+//            pid = intent.getIntExtra(ARG_PID, 0);
+//            pname = intent.getStringExtra(ARG_PNAME);
         }
 
         restore(savedInstanceState);
@@ -170,12 +173,13 @@ public class BMSearchResultActivity extends Activity implements
 
         if(!keyword.equals(newkeyword)){
             keyword = newkeyword;
-            pid = newpid;
-            pname = newpname;
+//            pid = newpid;
+//            pname = newpname;
             edit_search.setText(keyword);
 //            showLoadingProgressView();
             initParams();
             search();
+            loadBrandAndModel();
         }
 
     }
@@ -218,19 +222,6 @@ public class BMSearchResultActivity extends Activity implements
             lvRecom = (ListView) findViewById(R.id.ll_search_recom);
             suggestWords = keywords;
         }
-//        edit_search.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-////                        showDropdown();
-//                        break;
-//                }
-//
-//                return false;
-//            }
-//        });
 
     }
 
@@ -280,28 +271,50 @@ public class BMSearchResultActivity extends Activity implements
                 if (blr.getTag().equals(Constants.NET_TAG_GET_PROVINCE + "")) {
                     bpa = new BMProvinceAdapter(getApplicationContext(), blr.getProviceList());
                     bpa.setProvince(pname);
+                    bpa.setOnProvinceSelectedListener(new BMProvinceAdapter.onProvinceSelectedListener() {
+                        @Override
+                        public void onSelected(int position,String name) {
+//                            BMApplication.getAppInstance().setSelectedProvince(position,name);
+                        }
+                    });
                     lv_province_list.setAdapter(bpa);
                     lv_province_list.setOnItemClickListener(new OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                             BMProvinceListResult.ProviceItem pi = (BMProvinceListResult.ProviceItem) parent.getAdapter().getItem(position);
 
-                            if (pi != null) {
-                                try {
-                                    pid = pi.getId();
-                                    pname = pi.getName();
-                                    setCityName(pi.getName());
+                            if(pi.getId() == BMApplication.getAppInstance().getSelectedProvince()){
+                                pid = 0;
+                                pname = "全国";
+                            }else{
 
-                                    bpa.setProvince(pname);
-                                    bpa.notifyDataSetChanged();
+                                if (pi != null) {
+                                    try {
+                                        pid = pi.getId();
+                                        pname = pi.getName();
+                                        BMApplication.getAppInstance().setSelectedProvince(pid,pname);
 
-                                    menu.toggle();
+                                        setCityName(pi.getName());
 
-                                    search();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+
+
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
+
+                            setCityName(pname);
+
+                            bpa.setProvince(pname);
+                            bpa.notifyDataSetChanged();
+
+                            menu.toggle();
+
+                            search();
+                            loadBrandAndModel();
                         }
                     });
                     bpa.setOnListItemClickListener(new OnListItemClickListener() {
@@ -559,13 +572,12 @@ public class BMSearchResultActivity extends Activity implements
             tv_selected_cate.setText(cate);
             pba.notifyModalSelect(cate,gpos,cpos);
 
+            tv_selected_band_main.setText("全部");
+            tv_selected_band.setText("全部");
+            band = "";
+
             if(gpos == -1 || cpos == -1){
                 productPinpaiAdapter = new ProductPinpaiAdapter(getApplicationContext(),bamr.getBrand());
-
-                tv_selected_band_main.setText("全部");
-                tv_selected_band.setText("全部");
-                band = "";
-
             }else{
                 productPinpaiAdapter = new ProductPinpaiAdapter(getApplicationContext(),bamr.getCategory().get(gpos).getTypes().get(cpos).getBrand());
             }

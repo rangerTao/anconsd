@@ -130,8 +130,8 @@ public final class JSONBuilder {
             jsonObj.put("nickname",MineProfile.getInstance().getNickName());
             jsonObj.put("realname",MineProfile.getInstance().getUserName());
             jsonObj.put("sex",MineProfile.getInstance().getUserType()+"");
-            jsonObj.put("provinces",MineProfile.getInstance().getArea());
-            jsonObj.put("city",MineProfile.getInstance().getCity());
+            jsonObj.put("provinces",MineProfile.getInstance().getProId() +"");
+            jsonObj.put("city",MineProfile.getInstance().getCityId() +"");
             jsonObj.put("signature",MineProfile.getInstance().getSignture());
             jsonObj.put("qq","");
             res = jsonObj.toString();

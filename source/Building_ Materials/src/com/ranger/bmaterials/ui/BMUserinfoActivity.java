@@ -9,14 +9,12 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.text.AndroidCharacter;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.Spannable;
@@ -25,16 +23,12 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.AlignmentSpan;
-import android.util.MonthDisplayHelper;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
@@ -46,6 +40,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ranger.bmaterials.R;
+import com.ranger.bmaterials.adapter.SpinnerListAdapter;
 import com.ranger.bmaterials.app.Constants;
 import com.ranger.bmaterials.app.DcError;
 import com.ranger.bmaterials.app.MineProfile;
@@ -55,11 +50,9 @@ import com.ranger.bmaterials.cropimg.ModifyAvatarDialog;
 import com.ranger.bmaterials.json.JSONParser;
 import com.ranger.bmaterials.listener.onEditUserInfoDialogDismissListener;
 import com.ranger.bmaterials.netresponse.BMCityResult;
-import com.ranger.bmaterials.netresponse.BMProvinceListResult;
 import com.ranger.bmaterials.netresponse.BMUserInfoResult;
 import com.ranger.bmaterials.netresponse.BaseResult;
 import com.ranger.bmaterials.netresponse.CityListResult;
-import com.ranger.bmaterials.netresponse.UserNameRegisterResult;
 import com.ranger.bmaterials.tools.DeviceUtil;
 import com.ranger.bmaterials.tools.DialogFactory;
 import com.ranger.bmaterials.tools.StringUtil;
@@ -68,8 +61,6 @@ import com.ranger.bmaterials.utils.NetUtil.IRequestListener;
 import com.ranger.bmaterials.work.LoadingTask;
 
 import java.io.File;
-import java.io.IOException;
-import java.security.PrivateKey;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -243,6 +234,9 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
                     MineProfile.getInstance().setArea(city.getCitys().get(proIndex).getId() + "");
                     MineProfile.getInstance().setCity(city.getCitys().get(proIndex).getChildren().get(cityIndex).getId() + "");
 
+                    MineProfile.getInstance().setProId(city.getCitys().get(proIndex).getId());
+                    MineProfile.getInstance().setCityId(city.getCitys().get(proIndex).getChildren().get(cityIndex).getId());
+
                     str = city.getCitys().get(proIndex).getName();
                     cityName = city.getCitys().get(proIndex).getChildren().get(cityIndex).getName();
                 } else {
@@ -320,7 +314,7 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
             String[] provinns = new String[city.getCitys().size()];
 
             int index = 0;
-            int defPos = 0;
+            int defPos = -1;
 
             for (CityListResult pi : city.getCitys()) {
                 provinns[index] = pi.getName();
@@ -328,11 +322,14 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
                 if (pi.getName().equals(MineProfile.getInstance().getArea()) || pi.getName().contains(MineProfile.getInstance().getArea())) {
                     defPos = index;
                     proIndex = defPos;
+
+//                    break;
                 }
                 index++;
             }
 
             // 建立Adapter并且绑定数据源
+//            SpinnerListAdapter _Adapter = new SpinnerListAdapter(this,provinns);
             ArrayAdapter<String> _Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, provinns);
             //绑定 Adapter到控件
             spProvince.setAdapter(_Adapter);
@@ -342,17 +339,22 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                    final String str = parent.getItemAtPosition(position).toString();
+                    try{
 
-                    if (str.equals("")) {
-                        return;
+                        final String str = parent.getItemAtPosition(position).toString();
+
+                        if (str.equals("")) {
+                            return;
+                        }
+
+                        proIndex = position;
+
+                        cityIndex = -1;
+
+                        initCitySpinner(position, city);
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
-
-                    proIndex = position;
-
-                    cityIndex = -1;
-
-                    initCitySpinner(position, city);
 
 //                    MineProfile.getInstance().setArea(blr.getProviceList().get(position).getId() + "");
 
@@ -364,7 +366,7 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
                 }
             });
 
-            if(defPos != 0){
+            if(defPos != -1){
                 initCitySpinner(defPos,city);
             }
         }
@@ -385,10 +387,10 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
             if (ci.getName().contains(MineProfile.getInstance().getCity()) || ci.getName().equals(MineProfile.getInstance().getCity())) {
                 desPos = cIndex;
                 cityIndex = desPos;
+//                break;
             }
             cIndex++;
         }
-
 
         ArrayAdapter<String> city_adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, citys);
 
@@ -526,12 +528,19 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
 
         if (v.getId() == R.id.bm_rl_userhead) {
 
-            if (MineProfile.getInstance().getIsLogin()) {
-                showModifyAvatarView();
-            } else {
-                Intent loginIntent = new Intent(BMUserinfoActivity.this, BMLoginActivity.class);
-                startActivity(loginIntent);
+            try{
+                if (MineProfile.getInstance().getIsLogin()) {
+                    showModifyAvatarView();
+                } else {
+                    Intent loginIntent = new Intent(BMUserinfoActivity.this, BMLoginActivity.class);
+                    startActivity(loginIntent);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }catch (Error er){
+                er.printStackTrace();
             }
+
 
             return;
         }
