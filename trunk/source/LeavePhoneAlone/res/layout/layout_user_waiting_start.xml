@@ -66,6 +66,7 @@
             android:textSize="24sp"/>
 
         <TextView
+            android:id="@+id/tv_lock_time_waiting"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"

@@ -1,6 +1,11 @@
 package com.ranger.lpa.thread;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.DhcpInfo;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.util.Log;
 
@@ -12,12 +17,16 @@ import com.ranger.lpa.pojos.BaseInfo;
 import com.ranger.lpa.pojos.NotifyServerInfo;
 import com.ranger.lpa.pojos.WifiUser;
 import com.ranger.lpa.tools.DeviceUtil;
+import com.ranger.lpa.utils.WifiUtils;
 import com.tencent.mm.sdk.platformtools.PhoneUtil;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.MulticastSocket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
@@ -44,7 +53,7 @@ public class LPAServerNotifyThread extends Thread{
 
     }
 
-    DatagramPacket dp_notify;
+
 
     @Override
     public void run() {
@@ -59,10 +68,6 @@ public class LPAServerNotifyThread extends Thread{
                     sendLockStartDatagram();
                 }else{
                     sendNotifyServer();
-                }
-
-                if(ds_localserver != null){
-                    ds_localserver.send(dp_notify);
                 }
 
             } catch (SocketException e) {
@@ -80,6 +85,18 @@ public class LPAServerNotifyThread extends Thread{
 
     }
 
+    public void closeThread(){
+
+        Log.e("TAG","close client's notify server thread");
+
+        Constants.isBoradcastNeeded = false;
+        try{
+            ds_localserver.close();
+        }catch (Exception d){
+        }
+
+    }
+
     /**
      * Notify server when not locked;
      * @throws SocketException
@@ -89,17 +106,28 @@ public class LPAServerNotifyThread extends Thread{
 
         String json = NotifyServerInfo.getInstance().getJson();
 
-        if(Constants.DEBUG){
-            Log.e("TAG","notify server info : " + json);
-        }
-
         byte[] msg = json.getBytes();
 
         ds_localserver.setBroadcast(true);
 
-        dp_notify = new DatagramPacket(msg,0,msg.length);
-        dp_notify.setAddress(InetAddress.getByName("255.255.255.255"));
-        dp_notify.setPort(Constants.UDP_SOCKET);
+        DatagramPacket dp_notify = new DatagramPacket(msg,msg.length);
+
+        try{
+            InetAddress address = InetAddress.getByName("255.255.255.255");
+            dp_notify.setAddress(address);
+
+            dp_notify.setPort(Constants.UDP_CLIENT);
+
+            ds_localserver.send(dp_notify);
+
+            if(Constants.DEBUG){
+                Log.e("TAG","notify server info : " + json);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -108,17 +136,43 @@ public class LPAServerNotifyThread extends Thread{
     public void sendLockStartDatagram(){
 
         try {
+
+            MulticastSocket ms = new MulticastSocket(Constants.UDP_SOCKET);
+            ms.joinGroup(InetAddress.getByName("226.1.3.5"));
+
+            ms.setTimeToLive(5000);
+
+//            ds_localserver.setBroadcast(true);
             BaseInfo lockStart = new BaseInfo(BaseInfo.MSG_LOCK_REQUEST);
             String lockMsg = lockStart.getMessageStringLimt();
             byte[] msg = lockMsg.getBytes();
-            dp_notify = new DatagramPacket(msg,0,msg.length);
-            dp_notify.setAddress(InetAddress.getByName("255.255.255.255"));
+
+            if(Constants.DEBUG){
+                Log.e("TAG","notify server info for lock : " + lockMsg);
+            }
+
+            DatagramPacket dp_notify = new DatagramPacket(msg,msg.length);
+//            dp_notify.setAddress(InetAddress.getByName("255.255.255.255"));
             dp_notify.setPort(Constants.UDP_SOCKET);
 
-            ds_localserver.send(dp_notify);
+            ms.send(dp_notify);
+
+//            ds_localserver.send(dp_notify);
         }catch (Exception ex){
             ex.printStackTrace();
         }
+    }
+
+    InetAddress getBroadcastAddress() throws IOException {
+        WifiManager wifi = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+        DhcpInfo dhcp = wifi.getDhcpInfo();
+        // handle null somehow
+
+        int broadcast = (dhcp.ipAddress & dhcp.netmask) | ~dhcp.netmask;
+        byte[] quads = new byte[4];
+        for (int k = 0; k < 4; k++)
+            quads[k] = (byte) ((broadcast >> k * 8) & 0xFF);
+        return InetAddress.getByAddress(quads);
     }
 
 }

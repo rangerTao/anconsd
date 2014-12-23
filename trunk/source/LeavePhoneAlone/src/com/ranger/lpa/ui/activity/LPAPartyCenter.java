@@ -3,6 +3,8 @@ package com.ranger.lpa.ui.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,6 +28,7 @@ import com.ranger.lpa.LPApplication;
 import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.R;
 import com.ranger.lpa.adapter.LPAWifiUsersAdapter;
+import com.ranger.lpa.connectity.SocketSessionManager;
 import com.ranger.lpa.connectity.wifi.LPAWifiManager;
 import com.ranger.lpa.encoding.EncodingHandler;
 import com.ranger.lpa.pojos.BaseInfo;
@@ -35,13 +38,25 @@ import com.ranger.lpa.pojos.SocketMessage;
 import com.ranger.lpa.pojos.WifiInfo;
 import com.ranger.lpa.pojos.WifiUser;
 import com.ranger.lpa.receiver.IOnNotificationReceiver;
+import com.ranger.lpa.share.ShareUtil;
 import com.ranger.lpa.test.adapter.BtDeviceListAdapter;
+import com.ranger.lpa.thread.ClientServerHandler;
 import com.ranger.lpa.thread.LPAServerNotifyThread;
 import com.ranger.lpa.thread.LPAUdpClientThread;
 import com.ranger.lpa.tools.NotifyManager;
 import com.ranger.lpa.ui.view.LPAKeyGuardView;
 import com.ranger.lpa.utils.StringUtil;
 import com.ranger.lpa.utils.WifiUtils;
+import com.ranger.lpa.wxapi.WXEntryActivity;
+
+import org.apache.mina.core.service.IoAcceptor;
+import org.apache.mina.filter.codec.ProtocolCodecFilter;
+import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
+import org.apache.mina.filter.logging.LoggingFilter;
+import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
+
+import java.net.InetSocketAddress;
+import java.nio.charset.Charset;
 
 /**
  * Created by taoliang on 14-8-5.
@@ -52,6 +67,8 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
     public static final int MSG_CONNECTING_DIALOG_HIDE = 3 << 1;
     public static final int MSG_WIFI_CONNECTED = 4;
     public static final int MSG_WIFI_FAILED = 4 << 1;
+
+    private long lock_period = 60* 60*1000;
 
     View view_find_phone;
     View view_phone_found;
@@ -70,7 +87,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
             BaseInfo wUser = (BaseInfo) msg.obj;
             IncomeResult wfUser = null;
             if(wUser != null){
-                wfUser = (IncomeResult) wUser;
+                wfUser = new Gson().fromJson(wUser.getMessage(),IncomeResult.class);
             }
 
             switch (type) {
@@ -104,7 +121,8 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                     break;
                 case SocketMessage.MSG_SUBMIT_NAME:
                     for(WifiUser wuser : wfUser.getUsers()){
-                        if(wfUser != null && !NotifyServerInfo.getInstance().getUsers().contains(wuser.getUdid())){
+                        if(wfUser != null && !NotifyServerInfo.getInstance().isUserExists(wuser)){
+
                             NotifyServerInfo.getInstance().addUser(wuser);
                             adapterUsers.notifyDataSetChanged();
                         }
@@ -115,11 +133,21 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                 case MSG_CONNECTING_DIALOG_HIDE:
                     break;
                 case BaseInfo.MSG_NOTIFY_SERVER:
-                    if(!LPApplication.getInstance().isSelfServer()){
+                    for(WifiUser wuser : wfUser.getUsers()){
+                        if(wfUser != null && !NotifyServerInfo.getInstance().isUserExists(wuser)){
+                            NotifyServerInfo.getInstance().addUser(wuser);
+                            adapterUsers.notifyDataSetChanged();
+                        }
+                    }
 
+                    if(wfUser != null){
+                        if(tvLockPeriodWaiting != null){
+                            tvLockPeriodWaiting.setText(StringUtil.getFormattedTimeByMillseconds(wfUser.getLock_period()));
+                        }
+
+                        lock_period = wfUser.getLock_period();
                     }
                     break;
-
             }
         }
     };
@@ -159,10 +187,10 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
-        tvLockPeriodHint.setText(StringUtil.getFormattedTimeByMillseconds(MineProfile.getInstance().getLockPeriod()));
+        tvLockPeriodHint.setText(StringUtil.getFormattedTimeByMillseconds(MineProfile.getInstance().getLockPeriodParty()));
     }
 
     private void initFindingView() {
@@ -191,6 +219,8 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 
     private LPAUdpClientThread clientThread;
 
+    private boolean isWifiServer = false;
+
     @Override
     public void onClick(View v) {
 
@@ -215,12 +245,30 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 
                 break;
             case R.id.btn_join_party_server:
+
+                isWifiServer = false;
+
+                LPAWifiManager.getInstance(getApplicationContext()).enableWifi();
+
+                SocketSessionManager.init(getApplicationContext());
+
                 startBarcodeScanner();
                 WifiUtils.getInstance().setmWifiConnected(this);
 
                 showWaitingPopup();
                 break;
             case R.id.btn_start_party_server:
+
+                isWifiServer = true;
+
+                LPAWifiManager.getInstance(getApplicationContext()).enableWifi();
+
+                SocketSessionManager.init(getApplicationContext());
+
+                WifiManager manager = (WifiManager)getSystemService(WIFI_SERVICE);
+                WifiManager.MulticastLock lock = manager.createMulticastLock("lpa");
+
+                lock.acquire();
 
                 LPAWifiManager.getInstance(getApplicationContext()).startWifiAp(new WifiUtils.OnWifiConnected(){
                     @Override
@@ -239,13 +287,16 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                 dismissJoinedUserPopup();
                 break;
             case R.id.tv_btn_start_party:
-                if(serNotifyThread != null && NotifyServerInfo.getInstance().getUsers().size() > 0){
+                if(LPApplication.getInstance().isSelfServer() && NotifyServerInfo.getInstance().getUsers().size() > 0){
                     MineProfile.getInstance().setLocked(true);
+
+                    SocketSessionManager.getInstance().notifyLockStart();
+
+                    showLockedView();
                 }
                 break;
             case R.id.btn_request_accept:
-                //show lock waiting view
-                showWaitingPopup();
+                showLockedView();
                 break;
             case R.id.btn_request_refuse:
                 dismissLockRequestDialog();
@@ -262,18 +313,52 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                 dismissWaitingPopup();
                 WifiUtils.dismissWifiReceiver();
                 break;
+            case R.id.btn_giveup_accept:
+                dismissGiveupRequestDialog();
+                dismissLockedView();
+                break;
+            case R.id.btn_giveup_cancel:
+                dismissGiveupRequestDialog();
+                break;
+            case R.id.ll_cancel_lock:
+                Bundle bundle = new Bundle();
+                bundle.putString(ShareUtil.SHARE_CONTENT,"test");
+                bundle.putInt(ShareUtil.SHARE_TYPE,1);
+
+                Intent intentShare = new Intent(this,WXEntryActivity.class);
+                startActivity(intentShare);
+
+                break;
         }
     }
 
+    IoAcceptor clientAcceptor;
+    InetSocketAddress clientLocalInetAddress;
+
     private void onWifiApConnected() {
         try {
-            LPApplication.getInstance().setSelfServer(true);
+            if(isWifiServer){
+                LPApplication.getInstance().setSelfServer(true);
+                clientThread = new LPAUdpClientThread(getApplicationContext());
+                clientThread.start();
+            }else{
 
-            serNotifyThread = new LPAServerNotifyThread(getApplicationContext());
-            clientThread = new LPAUdpClientThread(getApplicationContext());
+                if(clientAcceptor == null){
+                    clientAcceptor = new NioSocketAcceptor();
+                    clientAcceptor.getFilterChain().addLast("logger",new LoggingFilter());
+                    clientAcceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
+                    clientAcceptor.setHandler(new ClientServerHandler(LPAPartyCenter.this));
+                    clientLocalInetAddress = new InetSocketAddress(Constants.UDP_CLIENT);
+                    clientAcceptor.setDefaultLocalAddress(clientLocalInetAddress);
 
-            serNotifyThread.start();
-            clientThread.start();
+                }
+
+                clientAcceptor.bind();
+
+                serNotifyThread = new LPAServerNotifyThread(getApplicationContext());
+                serNotifyThread.start();
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -321,6 +406,8 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 
                     clientThread = null;
                 }
+
+                NotifyServerInfo.getInstance().getUsers().clear();
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -336,7 +423,33 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
             mWaitingToStartPopup.dismiss();
             mWaitingToStartPopup = null;
         }
+
+        if(clientAcceptor != null){
+            try{
+                clientAcceptor.unbind(clientLocalInetAddress);
+                clientAcceptor.getFilterChain().clear();
+                clientAcceptor.dispose();
+                clientAcceptor = null;
+
+                if(Constants.DEBUG){
+                    Log.e("TAG","unbind acceptor");
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        if(serNotifyThread != null){
+            serNotifyThread.closeThread();
+            serNotifyThread = null;
+        }
+
+        LPAWifiManager.getInstance(getApplicationContext()).disableWifi();
+
     }
+
+    private TextView tvLockPeriodWaiting;
 
     private void showWaitingPopup(){
 
@@ -344,6 +457,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
             mWaitingToStartPopup = new PopupWindow(getApplicationContext());
             mWaitingToStartPopup.setWindowLayoutMode(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             waitStarting = LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_user_waiting_start,null);
+            tvLockPeriodWaiting = (TextView) waitStarting.findViewById(R.id.tv_lock_time_waiting);
             mWaitingToStartPopup.setContentView(waitStarting);
 
             waitStarting.findViewById(R.id.btn_cancel_waiting_popup).setOnClickListener(this);
@@ -385,7 +499,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 
     }
 
-    private LPAServerNotifyThread serNotifyThread;
+    public LPAServerNotifyThread serNotifyThread;
 
     private void startBarcodeScanner() {
         Intent intent = new Intent(this, BarcodeScannerActivity.class);
@@ -422,8 +536,6 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
         }
     };
 
-    private View view_giveup_request;
-
     private void refreshUserStatus(IncomeResult wu){
 
         for(WifiUser wuser : wu.getUsers()){
@@ -438,15 +550,25 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
         adapterUsers.notifyDataSetChanged();
     }
 
+    private View view_giveup_request;
+    private View view_cancel_lock;
+    private TextView tvDeviceName;
+
     private void showLockedView() {
         View lock_view = View.inflate(this, R.layout.layout_locked_view, null);
         view_giveup_request = lock_view.findViewById(R.id.include_dialog_giveup_confirm);
+        view_cancel_lock = lock_view.findViewById(R.id.ll_cancel_lock);
+        view_giveup_request = lock_view.findViewById(R.id.include_dialog_giveup_confirm);
+        tvDeviceName = (TextView) lock_view.findViewById(R.id.tv_device_name);
         lpa = LPAKeyGuardView.getInstance(this);
+        tvDeviceName.setText(Build.MODEL);
         lpa.setLockView(lock_view);
+        lpa.setLockPeriod(lock_period);
         lpa.lock();
 
         view_lock_control = lock_view.findViewById(R.id.fl_lock_area);
         view_lock_control.setOnClickListener(this);
+        view_cancel_lock.setOnClickListener(this);
     }
 
     private void dismissLockedView() {
@@ -511,35 +633,6 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
         if (view_giveup_request != null) {
             view_giveup_request.setVisibility(View.INVISIBLE);
         }
-    }
-
-    //显示选择设备弹窗
-    private void showDeviceSelectDialog() {
-
-        if (view_select_btdevices == null) {
-            view_select_btdevices = getLayoutInflater().inflate(R.layout.layout_bt_discovery_activity, null);
-        }
-
-        if (popup_select_btdevices == null) {
-            popup_select_btdevices = new Dialog(this);
-            popup_select_btdevices.setContentView(view_select_btdevices, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            lv_devices = (ListView) view_select_btdevices.findViewById(R.id.lv_bt_devices);
-
-            btla = new BtDeviceListAdapter(getApplicationContext());
-            lv_devices.setAdapter(btla);
-
-            lv_devices.setOnItemClickListener(this);
-        }
-
-        if (popup_select_btdevices != null && !popup_select_btdevices.isShowing()) {
-            popup_select_btdevices.show();
-
-            if (btla != null) {
-                btla.notifyDataSetChanged();
-            }
-        }
-
     }
 
     @Override

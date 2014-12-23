@@ -10,6 +10,15 @@ public class IncomeResult extends BaseInfo{
     }
 
     ArrayList<WifiUser> users;
+    long lock_period;
+
+    public long getLock_period() {
+        return lock_period;
+    }
+
+    public void setLock_period(long lock_period) {
+        this.lock_period = lock_period;
+    }
 
     public ArrayList<WifiUser> getUsers() {
         return users;

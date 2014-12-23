@@ -52,7 +52,7 @@ public class BarcodeScannerActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
         SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
@@ -70,7 +70,7 @@ public class BarcodeScannerActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         if (handler != null) {
             handler.quitSynchronously();

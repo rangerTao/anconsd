@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.ranger.lpa.Constants;
 import com.ranger.lpa.LPApplication;
 import com.ranger.lpa.MineProfile;
+import com.ranger.lpa.connectity.SocketSessionManager;
 import com.ranger.lpa.pojos.BaseInfo;
 import com.ranger.lpa.pojos.IncomeResult;
 import com.ranger.lpa.pojos.NotifyServerInfo;
@@ -19,9 +20,18 @@ import com.ranger.lpa.tools.NotifyManager;
 import com.ranger.lpa.utils.DeviceId;
 import com.ranger.lpa.utils.WifiUtils;
 
+import org.apache.mina.core.future.ConnectFuture;
+import org.apache.mina.filter.codec.ProtocolCodecFilter;
+import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
+import org.apache.mina.filter.logging.LoggingFilter;
+import org.apache.mina.transport.socket.nio.NioSocketConnector;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.MulticastSocket;
+import java.nio.charset.Charset;
 import java.security.spec.DSAParameterSpec;
 
 /**
@@ -45,10 +55,10 @@ public class LPAUdpClientThread extends Thread {
     }
 
     private void init(Context context) {
-        msgIN = new byte[1024];
+        msgIN = new byte[4096];
         mContext = context;
         try {
-            dSocket = new DatagramSocket(Constants.UDP_SOCKET);
+            dSocket = new DatagramSocket(Constants.UDP_CLIENT);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,69 +79,80 @@ public class LPAUdpClientThread extends Thread {
         Log.e("TAG","lpa client thread start");
 
         DatagramPacket dpIn = new DatagramPacket(msgIN, msgIN.length);
-
         if (dSocket != null) {
-            try {
-                dSocket.receive(dpIn);
-
-                String msg = new String(msgIN, 0, msgIN.length);
-                msg = msg.substring(0, msg.lastIndexOf("}") + 1);
-
-                Gson gson = new Gson();
-                BaseInfo baseInfo = gson.fromJson(msg, BaseInfo.class);
-
-                while (baseInfo.getErrcode() != BaseInfo.MSG_EXIT_PARTY) {
-
-                    try {
-                        switch (baseInfo.getErrcode()) {
-                            case BaseInfo.MSG_NOTIFY_SERVER:
-                                if (!LPApplication.getInstance().isSelfServer()){
-
-                                    if(Constants.DEBUG){
-                                        Log.e("TAG", "msg notify server received: " + msg);
-                                    }
-
-                                    SubmitNameResult snr = gson.fromJson(msg,SubmitNameResult.class);
-
-                                    if(!snr.getUsers().contains(MineProfile.getInstance().getUdid())){
-                                        sendNameReply();
-                                    }
-                                }
-                            default:
-                                baseInfo.setMessage(msg);
-                                NotifyManager.getInstance(mContext).notifyStateChanged(baseInfo.getErrcode(), baseInfo);
-                                break;
-
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    Log.e("TAG","income msg: " + msg);
-
-                    msgIN = new byte[1024];
-                    dpIn = new DatagramPacket(msgIN, msgIN.length);
-
+            while (true){
+                try {
                     dSocket.receive(dpIn);
-                    msg = new String(msgIN, 0, msgIN.length);
+
+                    InetAddress inComeAddress = dpIn.getAddress();
+
+                    String msg = new String(msgIN, 0, dpIn.getLength());
+
+                    Log.e("TAG","msg received : " + msg);
+
                     msg = msg.substring(0, msg.lastIndexOf("}") + 1);
+                    Log.e("TAG", "incoming address : " + inComeAddress.getHostAddress());
 
+                    SocketSessionManager.getInstance(mContext).connect(inComeAddress,msg);
+//
+//                    Gson gson = new Gson();
+//                    BaseInfo baseInfo = gson.fromJson(msg, BaseInfo.class);
+//
+//                    while (baseInfo.getErrcode() != BaseInfo.MSG_EXIT_PARTY) {
+//
+//                        try {
+//                            switch (baseInfo.getErrcode()) {
+//                                case BaseInfo.MSG_NOTIFY_SERVER:
+//                                    if (!LPApplication.getInstance().isSelfServer()){
+//
+//                                        if(Constants.DEBUG){
+//                                            Log.e("TAG", "msg notify server received: " + msg);
+//                                        }
+//
+//                                        SubmitNameResult snr = gson.fromJson(msg,SubmitNameResult.class);
+//
+//                                        if(!snr.isExists(MineProfile.getInstance().getUdid())){
+//                                            sendNameReply();
+//                                        }
+//                                    }
+//                                default:
+//                                    baseInfo.setMessage(msg);
+//                                    NotifyManager.getInstance(mContext).notifyStateChanged(baseInfo.getErrcode(), baseInfo);
+//                                    break;
+//                            }
+//
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        Log.e("TAG","income msg: " + msg);
+//
+//                        msgIN = new byte[4096];
+//                        dpIn = new DatagramPacket(msgIN, msgIN.length);
+//
+//                        dSocket.receive(dpIn);
+//                        msg = new String(msgIN, 0, msgIN.length);
+//                        msg = msg.substring(0, msg.lastIndexOf("}") + 1);
+//
+//
+//                        try{
+//                            gson = new Gson();
+//                            IncomeResult wu = gson.fromJson(msg, IncomeResult.class);
+//
+//                            NotifyServerInfo.getInstance().addAllUsers(wu.getUsers());
+//                        }catch (Exception e){
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
 
-                    try{
-                        gson = new Gson();
-                        IncomeResult wu = gson.fromJson(msg, IncomeResult.class);
-
-                        NotifyServerInfo.getInstance().getUsers().addAll(wu.getUsers());
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    break;
                 }
-
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+
+
         }
 
     }

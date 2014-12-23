@@ -77,7 +77,7 @@ public class SettingPatternActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
         initView();
