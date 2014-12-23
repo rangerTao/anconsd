@@ -19,6 +19,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -104,6 +107,10 @@
                 <data android:scheme="@string/app_name" />
             </intent-filter>
         </activity>
+
+        <meta-data android:name="BaiduMobAd_CHANNEL" android:value="develop" /> <!-- 您从百度网站获取的 APP KEY -->
+        <meta-data android:name="BaiduMobAd_STAT_ID" android:value="20ec0f19ff" />
+
     </application>
 
 </manifest>

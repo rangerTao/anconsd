@@ -35,10 +35,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:layout_above="@+id/btn_unlogin_try"
-            android:text="@string/login_weixin"
+            android:text="@string/login_now"
             android:id="@+id/btn_login_weixin"
             android:background="@drawable/login_button_bg"
-            android:drawableLeft="@drawable/icon_weixin"
             android:drawablePadding="15dp"
             android:textColor="#fff"
             android:textSize="29sp"
@@ -62,6 +61,7 @@
             android:textColor="#fff"
             android:layout_marginBottom="38dp"
             android:onClick="no_login_enter"
+            android:visibility="invisible"
             android:drawableRight="@drawable/unlogin_arrow_right"/>
 
 </RelativeLayout>

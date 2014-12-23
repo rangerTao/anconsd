@@ -3,7 +3,9 @@ package com.ranger.lpa.tools;
 import android.app.Notification;
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.ranger.lpa.pojos.BaseInfo;
+import com.ranger.lpa.pojos.NotifyServerInfo;
 import com.ranger.lpa.receiver.IOnNotificationReceiver;
 
 import java.util.ArrayList;
@@ -63,6 +65,22 @@ public class NotifyManager {
             }
         }
 
+    }
+
+    public void notifyUserChanged(){
+        BaseInfo baseInfo = new Gson().fromJson(NotifyServerInfo.getInstance().getJson(),BaseInfo.class);
+
+        for(IOnNotificationReceiver rec : receivers){
+            try {
+
+                if(rec != null){
+                    rec.onNotificated(BaseInfo.MSG_NOTIFY_SERVER,baseInfo);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void notifyStateChanged(int type,BaseInfo binfo){

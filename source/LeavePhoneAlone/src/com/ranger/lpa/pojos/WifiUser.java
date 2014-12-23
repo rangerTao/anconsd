@@ -7,7 +7,16 @@ public class WifiUser extends BaseInfo{
 
     private String name;
     private String udid;
+    private String ip;
     private int accept = 0;
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
     public int getAccept() {
         return accept;

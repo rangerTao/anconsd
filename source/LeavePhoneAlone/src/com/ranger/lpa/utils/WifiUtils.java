@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.DhcpInfo;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
 import android.net.wifi.ScanResult;
@@ -104,8 +105,43 @@ public class WifiUtils {
 	}
 
     public static void dismissWifiReceiver(){
-        if(wifiReceiver!= null)
-            mContext.unregisterReceiver(wifiReceiver);
+        try{
+            if(wifiReceiver!= null)
+                mContext.unregisterReceiver(wifiReceiver);
+
+            wifiManager.setWifiEnabled(true);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public static String getSubnetMask(Context context){
+
+        try{
+
+            if(wifiManager == null){
+                wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            }
+
+            DhcpInfo dhcpInfo = wifiManager.getDhcpInfo();
+
+            Log.e("TAG",String.valueOf(intToIp(dhcpInfo.netmask)));
+
+            return String.valueOf(intToIp(dhcpInfo.netmask));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "0.0.0.0";
+    }
+
+    public static String intToIp(int i) {
+
+        return (i & 0xFF) + "." +
+                ((i >> 8 ) & 0xFF) + "." +
+                ((i >> 16 ) & 0xFF) + "." +
+                ((i >> 24 ) & 0xFF) ;
     }
 
 	public static void detectWifiStatus(WifiManager wifiManager) {
@@ -136,13 +172,15 @@ public class WifiUtils {
 
             wifiInfo = wifiManager.getConnectionInfo();
 
-            if(wifiInfo.getSSID().equals(mSSID)){
-                if(mWifiConnected != null){
-                    mWifiConnected.onConnected();
-                }
-            }
 
-			if (info != null) {
+            if(wifiInfo != null){
+                if(wifiInfo.getSSID() != null && wifiInfo.getSSID().equals(mSSID)){
+                    if(mWifiConnected != null){
+                        mWifiConnected.onConnected();
+                    }
+                }
+
+
 			}
 		}
 	}

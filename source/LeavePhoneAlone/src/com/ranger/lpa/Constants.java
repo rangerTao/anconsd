@@ -1,6 +1,7 @@
 package com.ranger.lpa;
 
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.util.UUID;
 
 public class Constants {
@@ -26,7 +27,10 @@ public class Constants {
     public final static int WIFI_CONNECTIONINFO = 998;
 
     public final static int UDP_SOCKET = 8989;
+    public final static int UDP_CLIENT = 8990;
     public static DatagramSocket ds_server;
+
+    public static InetAddress temp_address;
 
     public static final String SETTINGS_PREFERENCE = "settings";
 

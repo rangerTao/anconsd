@@ -68,7 +68,7 @@ public class SettingPurnishListActivity extends BaseActivity implements View.OnC
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
         mAdapter.notifyDataSetChanged();

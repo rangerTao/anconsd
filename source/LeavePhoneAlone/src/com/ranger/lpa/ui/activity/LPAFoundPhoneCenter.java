@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -39,6 +40,8 @@ import com.ranger.lpa.tools.NotifyManager;
 import com.ranger.lpa.ui.view.LPAKeyGuardView;
 import com.ranger.lpa.utils.StringUtil;
 import com.ranger.lpa.wxapi.WXEntryActivity;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -222,7 +225,6 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
                 setFindingPhoneView();
 
-//                showLockedView();
 
                 break;
             case R.id.fl_btn_lock_selected_phone:
@@ -401,11 +403,14 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
     private View view_giveup_request;
     private View view_cancel_lock;
+    private TextView tvDeviceName;
 
     private void showLockedView() {
         View lock_view = View.inflate(this, R.layout.layout_locked_view, null);
         view_giveup_request = lock_view.findViewById(R.id.include_dialog_giveup_confirm);
         view_cancel_lock = lock_view.findViewById(R.id.ll_cancel_lock);
+        tvDeviceName = (TextView) lock_view.findViewById(R.id.tv_device_name);
+        tvDeviceName.setText(Build.MODEL);
         lpa = LPAKeyGuardView.getInstance(this);
         lpa.setLockView(lock_view);
         lpa.setLockPeriod(MineProfile.getInstance().getLockPeriod());

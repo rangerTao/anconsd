@@ -8,16 +8,29 @@ import java.util.ArrayList;
  */
 public class SubmitNameResult  {
 
-    private ArrayList<String> users;
+    private ArrayList<WifiUser> users;
 
     private int errcode;
 
-    public ArrayList<String> getUsers() {
+    public ArrayList<WifiUser> getUsers() {
         return users;
     }
 
-    public void setUsers(ArrayList<String> users) {
+    public void setUsers(ArrayList<WifiUser> users) {
         this.users = users;
+    }
+
+    public boolean isExists(String usudid){
+
+        if(users != null){
+            for(WifiUser user : users){
+                if(user.getUdid().equals(usudid)){
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public int getErrcode() {

@@ -2,6 +2,7 @@ package com.ranger.lpa.ui.activity;
 
 import java.util.ArrayList;
 
+import com.baidu.mobstat.StatActivity;
 import com.ranger.lpa.receiver.IOnNotificationReceiver;
 
 import android.app.Activity;
@@ -10,7 +11,7 @@ import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-public abstract class BaseActivity extends Activity{
+public abstract class BaseActivity extends StatActivity{
 
     private Handler mHandler = new Handler();
     

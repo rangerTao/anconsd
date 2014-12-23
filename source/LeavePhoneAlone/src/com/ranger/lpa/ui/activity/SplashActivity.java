@@ -28,12 +28,6 @@ public class SplashActivity extends BaseActivity{
 		
 	}
 
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-	}
-
 	public void login_enter(View view){
         no_login_enter(view);
     }

@@ -1,10 +1,18 @@
 package com.ranger.lpa.pojos;
 
+import android.os.Build;
+
 import com.google.gson.Gson;
+import com.ranger.lpa.MineProfile;
+import com.ranger.lpa.tools.DeviceUtil;
+import com.ranger.lpa.utils.DeviceId;
+import com.tencent.mm.sdk.platformtools.PhoneUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -14,12 +22,15 @@ public class NotifyServerInfo{
 
     private int errcode;
 
+    private static HashMap<String,WifiUser> userids;
+
     private static NotifyServerInfo _instance;
 
     public static NotifyServerInfo getInstance(){
         if(_instance == null){
-            _instance = new NotifyServerInfo();
             users = new LinkedList<WifiUser>();
+            userids = new HashMap<String, WifiUser>();
+            _instance = new NotifyServerInfo();
         }
 
         return _instance;
@@ -43,8 +54,37 @@ public class NotifyServerInfo{
         return users;
     }
 
+    public void addAllUsers(ArrayList<WifiUser> userlist){
+        for(WifiUser user : userlist){
+            if(!isUserExists(user)){
+                users.add(user);
+                userids.put(user.getUdid(),user);
+            }
+        }
+    }
+
+    public void removeUser(String udid){
+        if(users.contains(udid)){
+            users.remove(udid);
+        }
+
+        if(userids.containsKey(udid)){
+            userids.remove(udid);
+        }
+    }
+
+    public boolean isUserExists(WifiUser user){
+
+        if(user.getUdid().equals(MineProfile.getInstance().getUdid())){
+            return true;
+        }
+
+        return userids.containsKey(user.getUdid());
+    }
+
     public void addUser(WifiUser udid){
         users.add(udid);
+        userids.put(udid.getUdid(),udid);
     }
 
     public void setUsers(LinkedList<WifiUser> users) {
@@ -65,7 +105,14 @@ public class NotifyServerInfo{
                 jsonArray.put(userObject);
             }
 
+            JSONObject userObject = new JSONObject();
+            userObject.put("name",Build.MODEL);
+            userObject.put("udid", MineProfile.getInstance().getUdid());
+            jsonArray.put(userObject);
+
             jsonRoot.put("users",jsonArray);
+
+            jsonRoot.put("lock_period",MineProfile.getInstance().getLockPeriodParty());
 
             res = jsonRoot.toString();
 

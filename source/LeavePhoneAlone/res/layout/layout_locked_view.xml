@@ -14,6 +14,10 @@
     android:textColor="#4c4c4c"
     android:textSize="24sp"/>
 
+    <com.ranger.lpa.view.RippleView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" android:layout_centerInParent="true"/>
+
 <FrameLayout
     android:id="@+id/fl_lock_area"
     android:layout_width="fill_parent"
@@ -30,10 +34,13 @@
         android:src="@drawable/btn_red_big"/>
 
     <LinearLayout
+        android:background="@drawable/btn_red_big"
         android:id="@+id/ll_cancel_lock"
-        android:layout_width="fill_parent"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="70dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="40dp"
         android:orientation="vertical">
 
         <TextView
@@ -82,11 +89,11 @@
         android:src="@drawable/icon_phone_selected"/>
 
     <TextView
+        android:id="@+id/tv_device_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
-        android:text="Heaven"
         android:textColor="#676767"
         android:textSize="16sp"/>
 

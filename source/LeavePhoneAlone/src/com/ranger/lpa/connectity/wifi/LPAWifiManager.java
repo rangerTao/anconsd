@@ -91,6 +91,18 @@ public class LPAWifiManager {
 
     }
 
+    public void disableWifi(){
+        if(wifiManager != null){
+            wifiManager.setWifiEnabled(false);
+        }
+    }
+
+    public void enableWifi(){
+        if(wifiManager != null){
+            wifiManager.setWifiEnabled(true);
+        }
+    }
+
     public boolean checkWifiApState(){
 
         boolean apState = false;
@@ -133,7 +145,7 @@ public class LPAWifiManager {
             WifiConfiguration netConfig = new WifiConfiguration();
 
             netConfig.SSID = mSSID;
-            netConfig.preSharedKey = mPasswd;  
+            netConfig.preSharedKey = mPasswd;
   
             netConfig.allowedAuthAlgorithms  
                     .set(WifiConfiguration.AuthAlgorithm.OPEN);
@@ -148,22 +160,11 @@ public class LPAWifiManager {
             netConfig.allowedGroupCiphers  
                     .set(WifiConfiguration.GroupCipher.CCMP);  
             netConfig.allowedGroupCiphers  
-                    .set(WifiConfiguration.GroupCipher.TKIP);  
-  
+                    .set(WifiConfiguration.GroupCipher.TKIP);
+
             method1.invoke(wifiManager, netConfig, true);
 
             String mip = getLocalIpAddress();
-
-//            wifiReceiver = new BroadcastReceiver() {
-//
-//                @Override
-//                public void onReceive(Context context, Intent intent) {
-//                    detectWifiStatus(wifiManager);
-//                }
-//
-//            };
-//
-//            connectSavedWifi(wifiReceiver);
 
             mWifiInfo = new WifiInfo(mSSID,mPasswd,mip);
 
@@ -259,7 +260,7 @@ public class LPAWifiManager {
 		if (isWifiApEnabled(wifiManager)) {  
             try {  
                 Method method = wifiManager.getClass().getMethod("getWifiApConfiguration");  
-                method.setAccessible(true);  
+                method.setAccessible(true);
   
                 WifiConfiguration config = (WifiConfiguration) method.invoke(wifiManager);  
   
