@@ -68,7 +68,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
     public static final int MSG_WIFI_CONNECTED = 4;
     public static final int MSG_WIFI_FAILED = 4 << 1;
 
-    private long lock_period = 60* 60*1000;
+    private long lock_period = MineProfile.getInstance().getLockPeriodParty();
 
     View view_find_phone;
     View view_phone_found;
@@ -311,6 +311,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.btn_request_accept:
                 showLockedView();
+                dismissLockRequestDialog();
                 break;
             case R.id.btn_request_refuse:
                 dismissLockRequestDialog();
@@ -587,7 +588,13 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
         lpa = LPAKeyGuardView.getInstance(this);
         tvDeviceName.setText(Build.MODEL);
         lpa.setLockView(lock_view);
-        lpa.setLockPeriod(lock_period);
+
+        if(LPApplication.getInstance().isSelfServer()){
+            lpa.setLockPeriod(MineProfile.getInstance().getLockPeriodParty());
+        }else{
+            lpa.setLockPeriod(lock_period);
+        }
+
         lpa.lock();
 
         view_lock_control = lock_view.findViewById(R.id.fl_lock_area);
@@ -624,7 +631,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
         }
 
         if (popup_lock_request_dialog == null) {
-            popup_lock_request_dialog = new Dialog(appref);
+            popup_lock_request_dialog = new Dialog(appref,R.style.NobackDialog);
             popup_lock_request_dialog.setContentView(view_lock_request_dialog, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
             view_lock_request_dialog.findViewById(R.id.btn_request_accept).setOnClickListener(this);
