@@ -64,13 +64,21 @@ public class NotifyServerInfo{
     }
 
     public void removeUser(String udid){
-        if(users.contains(udid)){
-            users.remove(udid);
-        }
+
+        WifiUser userToRemove = null;
 
         if(userids.containsKey(udid)){
+
+            userToRemove = userids.get(udid);
+
+            if(userToRemove != null && users.contains(userToRemove)){
+                users.remove(userToRemove);
+            }
+
             userids.remove(udid);
         }
+
+
     }
 
     public boolean isUserExists(WifiUser user){
