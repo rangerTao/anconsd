@@ -149,13 +149,18 @@ public class SocketSessionManager {
 
             ConnectFuture cf = sessions.get(entrySession);
             if(cf != null && !cf.isCanceled()){
-                cf.getSession().write(message);
 
-                if(Constants.DEBUG){
-                    Log.e("TAG","notify user " + cf.getSession().getServiceAddress().toString());
+                try{
+                    cf.getSession().write(message);
+
+                    if(Constants.DEBUG){
+                        Log.e("TAG","notify user " + cf.getSession().getServiceAddress().toString());
+                    }
+
+                    Log.e("TAG","notify new user to : " + cf.getSession().getServiceAddress().toString() + " with message : " + NotifyServerInfo.getInstance().getJson());
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
-
-                Log.e("TAG","notify new user to : " + cf.getSession().getServiceAddress().toString() + " with message : " + NotifyServerInfo.getInstance().getJson());
             }
 
         }
@@ -186,7 +191,7 @@ public class SocketSessionManager {
 
     public void removeSession(String ip){
 
-        NotifyServerInfo.getInstance().removeUser(addedSessionIDs.get(ip));
+        NotifyServerInfo.getInstance().removeUser(addedSessionIDs.get("/" + ip + ":" + Constants.UDP_CLIENT));
 
         notifyNewUser();
 

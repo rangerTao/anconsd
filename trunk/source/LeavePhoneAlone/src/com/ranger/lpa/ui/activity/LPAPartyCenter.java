@@ -124,29 +124,33 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                         if(wfUser != null && !NotifyServerInfo.getInstance().isUserExists(wuser)){
 
                             NotifyServerInfo.getInstance().addUser(wuser);
-                            adapterUsers.notifyDataSetChanged();
+
                         }
                     }
+
+                    adapterUsers.notifyDataSetChanged();
                     break;
                 case MSG_CONNECTING_DIALOG_SHOW:
                     break;
                 case MSG_CONNECTING_DIALOG_HIDE:
                     break;
                 case BaseInfo.MSG_NOTIFY_SERVER:
-                    for(WifiUser wuser : wfUser.getUsers()){
-                        if(wfUser != null && !NotifyServerInfo.getInstance().isUserExists(wuser)){
-                            NotifyServerInfo.getInstance().addUser(wuser);
-                            adapterUsers.notifyDataSetChanged();
-                        }
-                    }
-
                     if(wfUser != null){
+                        for(WifiUser wuser : wfUser.getUsers()){
+                            if(wfUser != null && !NotifyServerInfo.getInstance().isUserExists(wuser)){
+                                NotifyServerInfo.getInstance().addUser(wuser);
+                            }
+                        }
+
                         if(tvLockPeriodWaiting != null){
                             tvLockPeriodWaiting.setText(StringUtil.getFormattedTimeByMillseconds(wfUser.getLock_period()));
                         }
 
                         lock_period = wfUser.getLock_period();
                     }
+
+                    adapterUsers.notifyDataSetChanged();
+
                     break;
             }
         }
@@ -225,6 +229,16 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.ll_locked_user:
+
+                showLockedUsersView();
+
+                break;
+            case R.id.iv_locked_users_close:
+
+                hideLockedUsersView();
+
+                break;
             case R.id.btn_settings:
                 Intent intent = new Intent(this,SettingsActivity.class);
                 startActivity(intent);
@@ -356,6 +370,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                 clientAcceptor.bind();
 
                 serNotifyThread = new LPAServerNotifyThread(getApplicationContext());
+                Constants.isBoradcastNeeded = true;
                 serNotifyThread.start();
             }
 
@@ -444,6 +459,8 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
             serNotifyThread.closeThread();
             serNotifyThread = null;
         }
+
+        NotifyServerInfo.getInstance().getUsers().clear();
 
         LPAWifiManager.getInstance(getApplicationContext()).disableWifi();
 
@@ -553,12 +570,19 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
     private View view_giveup_request;
     private View view_cancel_lock;
     private TextView tvDeviceName;
+    private View view_locked_users;
+
+    private GridView gv_locked_users;
 
     private void showLockedView() {
         View lock_view = View.inflate(this, R.layout.layout_locked_view, null);
         view_giveup_request = lock_view.findViewById(R.id.include_dialog_giveup_confirm);
         view_cancel_lock = lock_view.findViewById(R.id.ll_cancel_lock);
         view_giveup_request = lock_view.findViewById(R.id.include_dialog_giveup_confirm);
+        lock_view.findViewById(R.id.ll_locked_user).setOnClickListener(this);
+        lock_view.findViewById(R.id.iv_locked_users_close).setOnClickListener(this);
+        view_locked_users = lock_view.findViewById(R.id.rl_locked_users);
+        gv_locked_users = (GridView) lock_view.findViewById(R.id.gv_locked_users);
         tvDeviceName = (TextView) lock_view.findViewById(R.id.tv_device_name);
         lpa = LPAKeyGuardView.getInstance(this);
         tvDeviceName.setText(Build.MODEL);
@@ -689,5 +713,21 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
         onWifiApConnected();
     }
 
+    private void showLockedUsersView(){
+        if(gv_locked_users != null){
+            LPAWifiUsersAdapter locked_users = new LPAWifiUsersAdapter(getApplicationContext());
+            gv_locked_users.setAdapter(locked_users);
+            locked_users.notifyDataSetChanged();
+        }
+
+        view_locked_users.setVisibility(View.VISIBLE);
+    }
+
+    private void hideLockedUsersView(){
+
+        if(view_locked_users != null)
+            view_locked_users.setVisibility(View.GONE);
+
+    }
 
 }
