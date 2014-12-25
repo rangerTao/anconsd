@@ -429,7 +429,7 @@ public class WXEntryActivity extends BaseActivity implements
 		if (rsp.errCode == WBConstants.ErrorCode.ERR_OK) {
 			CustomToast.showToast(WXEntryActivity.this,
 					getString(R.string.share_success));
-
+            LPAKeyGuardView.getInstance(WXEntryActivity.this).unlock();
 		} else {
             Log.e("tim", "错误码： " + rsp.errCode + " " + rsp.errMsg);
 			CustomToast.showToast(WXEntryActivity.this,

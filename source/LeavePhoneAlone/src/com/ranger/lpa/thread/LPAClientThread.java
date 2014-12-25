@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.pojos.SocketMessage;
 import com.ranger.lpa.tools.NotifyManager;
 
@@ -56,6 +57,8 @@ public class LPAClientThread extends Thread {
 
             if(isServer == true){
                 SocketMessage stopServer = new SocketMessage(SocketMessage.MSG_STOPSERVER);
+                stopServer.setLock_period(MineProfile.getInstance().getLockPeriodCouple());
+                stopServer.setDefault_purnish(MineProfile.getInstance().getDefaultPurnishContent());
                 stopServer.sendMessage(bSocket);
 //
 //                try{
@@ -77,7 +80,7 @@ public class LPAClientThread extends Thread {
             Gson gson = new Gson();
             SocketMessage sm = gson.fromJson(strIncome, SocketMessage.class);
             if(sm!= null){
-                NotifyManager.getInstance(mContext).notifyStateChanged(sm.getErrcode());
+                NotifyManager.getInstance(mContext).notifyStateChanged(sm);
             }
 
             while (sm != null && sm.getErrcode() != SocketMessage.MSG_STOPSERVER) {
@@ -85,7 +88,7 @@ public class LPAClientThread extends Thread {
                 strIncome = br.readLine();
                 sm = gson.fromJson(strIncome, SocketMessage.class);
                 try{
-                    NotifyManager.getInstance(mContext).notifyStateChanged(sm.getErrcode());
+                    NotifyManager.getInstance(mContext).notifyStateChanged(sm);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -117,6 +120,8 @@ public class LPAClientThread extends Thread {
     public void sendLockRequestAccept(){
 
         SocketMessage smAccept = new SocketMessage(SocketMessage.MSG_LOCK_ACCEPT);
+        smAccept.setLock_period(MineProfile.getInstance().getLockPeriodCouple());
+        smAccept.setDefault_purnish(MineProfile.getInstance().getDefaultPurnishContent());
         smAccept.sendMessage(bSocket);
 
     }

@@ -11,6 +11,8 @@ import com.ranger.lpa.R;
 import com.ranger.lpa.utils.ACountTimer;
 import com.ranger.lpa.utils.StringUtil;
 
+import java.security.PublicKey;
+
 /**
  * Created by taoliang on 14-6-13.
  */
@@ -26,6 +28,16 @@ public class LPAKeyGuardView {
     private boolean isLocked;
 
     private TextView tvEllipsedTime;
+
+    public interface IKeyGuardViewRemoveListener{
+        public void onRemoved();
+    }
+
+    private IKeyGuardViewRemoveListener removeListener;
+
+    public void setRemoveListener(IKeyGuardViewRemoveListener removeListener) {
+        this.removeListener = removeListener;
+    }
 
     public static synchronized LPAKeyGuardView getInstance(Activity context) {
 
@@ -109,6 +121,10 @@ public class LPAKeyGuardView {
             timer.stop();
         }
         timer = null;
+
+        if(removeListener != null){
+            removeListener.onRemoved();
+        }
     }
 
     public boolean isShowing(){

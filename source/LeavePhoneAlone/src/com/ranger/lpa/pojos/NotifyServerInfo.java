@@ -121,6 +121,7 @@ public class NotifyServerInfo{
             jsonRoot.put("users",jsonArray);
 
             jsonRoot.put("lock_period",MineProfile.getInstance().getLockPeriodParty());
+            jsonRoot.put("default_purnish",MineProfile.getInstance().getDefaultPurnishContent());
 
             res = jsonRoot.toString();
 

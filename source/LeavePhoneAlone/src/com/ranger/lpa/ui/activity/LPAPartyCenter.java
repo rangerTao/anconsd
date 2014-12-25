@@ -17,6 +17,7 @@ import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -69,6 +70,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
     public static final int MSG_WIFI_FAILED = 4 << 1;
 
     private long lock_period = MineProfile.getInstance().getLockPeriodParty();
+    private String default_purnish = MineProfile.getInstance().getDefaultPurnishContent();
 
     View view_find_phone;
     View view_phone_found;
@@ -147,6 +149,11 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                         }
 
                         lock_period = wfUser.getLock_period();
+
+                        if(!LPApplication.getInstance().isSelfServer()){
+                            default_purnish = wfUser.getDefault_purnish();
+                        }
+
                     }
 
                     adapterUsers.notifyDataSetChanged();
@@ -330,21 +337,63 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.btn_giveup_accept:
                 dismissGiveupRequestDialog();
-                dismissLockedView();
+//                dismissLockedView();
+                showPurnishDialog();
                 break;
             case R.id.btn_giveup_cancel:
                 dismissGiveupRequestDialog();
                 break;
             case R.id.ll_cancel_lock:
-                Bundle bundle = new Bundle();
-                bundle.putString(ShareUtil.SHARE_CONTENT,"test");
-                bundle.putInt(ShareUtil.SHARE_TYPE,1);
+//                doShare("test");
 
-                Intent intentShare = new Intent(this,WXEntryActivity.class);
-                startActivity(intentShare);
+                showGiveupRequestDialog();
 
                 break;
         }
+    }
+
+    private PopupWindow ppwPurnish;
+    private Dialog dlgPurnish;
+    private View viewPurnishAccept;
+
+    private View.OnClickListener purnishClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.btn_purnish_accept_share:
+                    doShare(default_purnish);
+                    break;
+                case R.id.btn_purnish_play:
+                    break;
+            }
+        }
+    };
+
+
+    private void showPurnishDialog(){
+
+        viewPurnishAccept.setVisibility(View.VISIBLE);
+
+        viewPurnishAccept.findViewById(R.id.btn_purnish_accept_share).setOnClickListener(purnishClickListener);
+        viewPurnishAccept.findViewById(R.id.btn_purnish_play).setOnClickListener(purnishClickListener);
+
+    }
+
+    private void doShare(String shareContent) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ShareUtil.SHARE_CONTENT,shareContent);
+        bundle.putInt(ShareUtil.SHARE_TYPE,1);
+
+        Intent intentShare = new Intent(this,WXEntryActivity.class);
+        startActivity(intentShare);
+
+        LPAKeyGuardView.getInstance(this).setRemoveListener(new LPAKeyGuardView.IKeyGuardViewRemoveListener() {
+            @Override
+            public void onRemoved() {
+                dismissWaitingPopup();
+                dismissJoinedUserPopup();
+            }
+        });
     }
 
     IoAcceptor clientAcceptor;
@@ -552,6 +601,11 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
             msg.obj = info;
             mHandler.sendMessage(msg);
         }
+
+        @Override
+        public void onNotificated(SocketMessage sm) {
+
+        }
     };
 
     private void refreshUserStatus(IncomeResult wu){
@@ -577,6 +631,7 @@ public class LPAPartyCenter extends BaseActivity implements View.OnClickListener
 
     private void showLockedView() {
         View lock_view = View.inflate(this, R.layout.layout_locked_view, null);
+        viewPurnishAccept = lock_view.findViewById(R.id.layout_purnish_to_share);
         view_giveup_request = lock_view.findViewById(R.id.include_dialog_giveup_confirm);
         view_cancel_lock = lock_view.findViewById(R.id.ll_cancel_lock);
         view_giveup_request = lock_view.findViewById(R.id.include_dialog_giveup_confirm);

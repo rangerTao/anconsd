@@ -141,5 +141,10 @@
 
     </RelativeLayout>
 
-
+    <include
+        android:id="@+id/layout_purnish_to_share"
+        layout="@layout/dialog_purnish_to_be_accept"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
 </RelativeLayout>
