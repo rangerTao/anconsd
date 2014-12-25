@@ -389,7 +389,7 @@ public class MineProfile{
     public String getDefaultPurnishContent(){
 
         if(purnish == null){
-            return "";
+            return LPApplication.getInstance().getString(R.string.default_share_content);
         }
 
         for(int i = 0;i< purnish.getPurnishes().size();i++){

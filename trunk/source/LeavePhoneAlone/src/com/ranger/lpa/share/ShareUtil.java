@@ -59,8 +59,8 @@ public class ShareUtil {
 
     private boolean mIsSareFriend;
 
-    public static String SHARE_CONTENT = "";
-    public static String SHARE_TYPE = "";
+    public static String SHARE_CONTENT = "share_content";
+    public static String SHARE_TYPE = "share_type";
 
     private ShareUtil() {
 

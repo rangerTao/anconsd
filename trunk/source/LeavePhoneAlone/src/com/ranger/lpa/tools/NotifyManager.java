@@ -6,6 +6,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.ranger.lpa.pojos.BaseInfo;
 import com.ranger.lpa.pojos.NotifyServerInfo;
+import com.ranger.lpa.pojos.SocketMessage;
 import com.ranger.lpa.receiver.IOnNotificationReceiver;
 
 import java.util.ArrayList;
@@ -49,6 +50,22 @@ public class NotifyManager {
             } catch (Exception e) {
             }
         }
+    }
+
+    public void notifyStateChanged(SocketMessage sm){
+
+        for(IOnNotificationReceiver rec : receivers){
+            try {
+
+                if(rec != null){
+                    rec.onNotificated(sm);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public void notifyStateChanged(int type){

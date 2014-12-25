@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="17dp"
-            android:text="are you sure?"
+            android:text="@string/tip_giveup_confirm"
             android:textColor="#444"
             android:textSize="28sp"/>
 

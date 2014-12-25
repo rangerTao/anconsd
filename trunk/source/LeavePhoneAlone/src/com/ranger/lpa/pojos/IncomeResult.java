@@ -11,6 +11,15 @@ public class IncomeResult extends BaseInfo{
 
     ArrayList<WifiUser> users;
     long lock_period;
+    String default_purnish;
+
+    public String getDefault_purnish() {
+        return default_purnish;
+    }
+
+    public void setDefault_purnish(String default_purnish) {
+        this.default_purnish = default_purnish;
+    }
 
     public long getLock_period() {
         return lock_period;

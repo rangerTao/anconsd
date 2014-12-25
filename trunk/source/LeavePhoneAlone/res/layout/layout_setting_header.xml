@@ -8,8 +8,6 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:minHeight="50dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:layout_height="wrap_content">
 
         <ImageView

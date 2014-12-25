@@ -70,4 +70,15 @@
     <string name="weibo_download_cancelled_prompt">已取消下载新浪微博客户端！</string>
     <string name="share_success">分享成功</string>
     <string name="share_fail">分享失败</string>
+
+    <!-- purnish -->
+    <string name="tip_giveup_confirm">确定要放弃？</string>
+    <string name="title_mission_fail">任务失败</string>
+    <string name="tip_mission_fail">放弃了两个人的约定，让TA好伤心，为TA做点什么吧：）</string>
+    <string name="default_content_purnish">向TA下跪求饶：宝贝对不起</string>
+    <string name="purnish_accept_share">接受并分享</string>
+    <string name="purnish_play">播放</string>
+
+    <string name="default_share_content">哎，有放弃了。快来看看你能坚持多长时间吧！</string>
+
 </resources>

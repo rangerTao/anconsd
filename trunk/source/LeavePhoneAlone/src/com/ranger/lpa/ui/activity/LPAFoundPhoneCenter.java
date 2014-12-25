@@ -21,11 +21,14 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.ranger.lpa.Constants;
+import com.ranger.lpa.LPApplication;
 import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.R;
 import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
@@ -58,6 +61,9 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
     public static final int MSG_WIFI_CONNECTED = 4;
     public static final int MSG_WIFI_FAILED = 4 << 1;
 
+    private long lock_period = MineProfile.getInstance().getLockPeriodCouple();
+    private String default_purnish = MineProfile.getInstance().getDefaultPurnishContent();
+
     private int TYPE_PATTERN = 0;
 
     View view_find_phone;
@@ -83,7 +89,9 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-            int type = msg.what;
+            SocketMessage inComeMessage = (SocketMessage) msg.obj;
+
+            int type = inComeMessage.getErrcode();
 
             switch (type){
                 case SocketMessage.MSG_LOCK_REQUEST:
@@ -95,6 +103,14 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                             e.printStackTrace();
                         }
                     }
+
+                    if(!LPApplication.getInstance().isSelfServer()){
+                        lock_period = inComeMessage.getLock_period();
+                        default_purnish = inComeMessage.getDefault_purnish();
+                    }
+
+                    dismissFindingView();
+
                     showLockRequestDialog();
                     break;
                 case SocketMessage.MSG_LOCK_ACCEPT:
@@ -190,13 +206,17 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
     }
 
     private void resetFindingView(){
+        dismissFindingView();
+
+        finish();
+    }
+
+    private void dismissFindingView() {
         if(view_find_phone!=null)
             view_find_phone.setVisibility(View.VISIBLE);
 
         if(view_phone_found != null)
             view_phone_found.setVisibility(View.GONE);
-
-        finish();
     }
 
     private LPAKeyGuardView lpa;
@@ -246,6 +266,8 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                                 lpact = new LPAClientThread(getApplicationContext(),socket,true);
                                 lpact.start();
 
+                                LPApplication.getInstance().setSelfServer(true);
+
                             }
 
                         } catch (IOException e) {
@@ -279,17 +301,21 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
             case R.id.btn_request_accept:
                 showLockedView();
                 //
+                if(lpact == null){
+                    Toast.makeText(getApplicationContext(),"连接出错，请重试！",Toast.LENGTH_LONG).show();
+                    break;
+                }
+                dismissLockRequest();
                 lpact.sendLockRequestAccept();
                 break;
             case R.id.btn_request_refuse:
-                if(popup_lock_request_dialog != null && popup_lock_request_dialog.isShowing()){
-                    popup_lock_request_dialog.dismiss();
-                }
+                dismissLockRequest();
                 lpact.sendLockRequestRefuse();
                 break;
             case R.id.btn_giveup_accept:
                 dismissGiveupRequestDialog();
-                dismissLockedView();
+//                dismissLockedView();
+                showPurnishDialog();
                 lpact.sendGiveupRequestAccept();
                 break;
             case R.id.btn_giveup_cancel:
@@ -298,15 +324,60 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.ll_cancel_lock:
 
-                Bundle bundle = new Bundle();
-                bundle.putString(ShareUtil.SHARE_CONTENT,"test");
-                bundle.putInt(ShareUtil.SHARE_TYPE,1);
-
-                Intent intentShare = new Intent(this,WXEntryActivity.class);
-                startActivity(intentShare);
+                showGiveupRequestDialog();
 
                 break;
         }
+    }
+
+    private void dismissLockRequest() {
+        if(popup_lock_request_dialog != null && popup_lock_request_dialog.isShowing()){
+            popup_lock_request_dialog.dismiss();
+        }
+    }
+
+    private PopupWindow ppwPurnish;
+    private Dialog dlgPurnish;
+    private View viewPurnishAccept;
+
+    private View.OnClickListener purnishClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.btn_purnish_accept_share:
+                    doShare(default_purnish);
+                    break;
+                case R.id.btn_purnish_play:
+                    break;
+            }
+        }
+    };
+
+    private void doShare(String shareContent) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ShareUtil.SHARE_CONTENT,shareContent);
+        bundle.putInt(ShareUtil.SHARE_TYPE,1);
+
+        Intent intentShare = new Intent(this,WXEntryActivity.class);
+        intentShare.putExtras(bundle);
+        startActivity(intentShare);
+
+        LPAKeyGuardView.getInstance(this).setRemoveListener(new LPAKeyGuardView.IKeyGuardViewRemoveListener() {
+            @Override
+            public void onRemoved() {
+                showLockRequestDialog();
+                dismissLockRequest();
+            }
+        });
+    }
+
+    private void showPurnishDialog(){
+
+        viewPurnishAccept.setVisibility(View.VISIBLE);
+
+        viewPurnishAccept.findViewById(R.id.btn_purnish_accept_share).setOnClickListener(purnishClickListener);
+        viewPurnishAccept.findViewById(R.id.btn_purnish_play).setOnClickListener(purnishClickListener);
+
     }
 
     @Override
@@ -319,11 +390,6 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
     private LPAServerNotifyThread serNotifyThread;
 
-    private void startBarcodeScanner(){
-        Intent intent = new Intent(this,BarcodeScannerActivity.class);
-        startActivityForResult(intent,BarcodeScannerActivity.RESULT_BARCODE);
-    }
-
     // 查找蓝牙设备
     private static final int REQUEST_DISCOVERABLE = 0x2;
 
@@ -331,11 +397,10 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
     private void startBlueToothAndDiscovery() {
         registerFinishReceiver();
 
-        if (!btManager.getBluetoothAdapter().isEnabled()) {
-            btManager.startDiscovery();
-        }
+//        if (!btManager.getBluetoothAdapter().isEnabled()) {
+//        }
+//        btManager.startDiscovery();
 
-//        btManager.getBluetoothAdapter().setName("test");
         btManager.setDeviceVisiable(this);
 
         // 设置蓝牙可见
@@ -399,6 +464,14 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
         public void onNotificated(int type, BaseInfo info) {
 
         }
+
+        @Override
+        public void onNotificated(SocketMessage sm) {
+            Message msg = new Message();
+            msg.what = sm.getErrcode();
+            msg.obj = sm;
+            mHandler.sendMessage(msg);
+        }
     };
 
     private View view_giveup_request;
@@ -407,13 +480,14 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
 
     private void showLockedView() {
         View lock_view = View.inflate(this, R.layout.layout_locked_view, null);
+        viewPurnishAccept = lock_view.findViewById(R.id.layout_purnish_to_share);
         view_giveup_request = lock_view.findViewById(R.id.include_dialog_giveup_confirm);
         view_cancel_lock = lock_view.findViewById(R.id.ll_cancel_lock);
         tvDeviceName = (TextView) lock_view.findViewById(R.id.tv_device_name);
         tvDeviceName.setText(Build.MODEL);
         lpa = LPAKeyGuardView.getInstance(this);
         lpa.setLockView(lock_view);
-        lpa.setLockPeriod(MineProfile.getInstance().getLockPeriod());
+        lpa.setLockPeriod(lock_period);
         lpa.lock();
 
         view_lock_control = lock_view.findViewById(R.id.fl_lock_area);
@@ -621,5 +695,12 @@ public class LPAFoundPhoneCenter extends BaseActivity implements View.OnClickLis
                 Toast.makeText(getApplicationContext(),"请选择“允许”，才能使用此功能！",Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        tvLockPeriod.setText(StringUtil.getFormattedTimeByMillseconds(MineProfile.getInstance().getLockPeriodCouple()));
     }
 }
