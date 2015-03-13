@@ -134,11 +134,13 @@ public class BMRegisterActivity extends Activity implements OnClickListener,
 
 	@Override
 	public void onRequestSuccess(BaseResult responseData) {
+
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
+
 		if (StringUtil.parseInt(responseData.getTag()) != Constants.NET_TAG_GET_PHONE_VERIFYCODE) {
-			if (progressDialog != null) {
-				progressDialog.dismiss();
-				progressDialog = null;
-			}
 
 			MineProfile.getInstance().Reset(this);
 

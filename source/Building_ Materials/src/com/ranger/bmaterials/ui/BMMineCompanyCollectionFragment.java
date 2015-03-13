@@ -209,7 +209,7 @@ public class BMMineCompanyCollectionFragment extends Fragment implements OnClick
 		default:
 			break;
 		}
-		CustomToast.showLoginRegistErrorToast(getActivity(), errorCode);
+//		CustomToast.showLoginRegistErrorToast(getActivity(), errorCode);
 	}
 
 	@Override

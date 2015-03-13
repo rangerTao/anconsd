@@ -149,36 +149,44 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
             @Override
             public void run() {
 
-                SharedPreferences sp = getSharedPreferences("cache", Context.MODE_PRIVATE);
+                try{
 
-                String cache_province = sp.getString("citys", "");
+                    SharedPreferences sp = getSharedPreferences("cache", Context.MODE_PRIVATE);
 
-                if (!cache_province.equals("")) {
+                    String cache_province = sp.getString("citys", "");
 
-                    BMCityResult citys = JSONParser.parseCityList(cache_province);
+                    if (!cache_province.equals("")) {
 
-                    doShowProvinceDialog(citys);
-                } else {
+                        BMCityResult citys = JSONParser.parseCityList(cache_province);
 
-                    NetUtil.getInstance().requestCityList(getApplicationContext(), new IRequestListener() {
-                        @Override
-                        public void onRequestSuccess(BaseResult responseData) {
+                        doShowProvinceDialog(citys);
+                    } else {
 
-                            doShowProvinceDialog((BMCityResult) responseData);
+                        NetUtil.getInstance().requestCityList(getApplicationContext(), new IRequestListener() {
+                            @Override
+                            public void onRequestSuccess(BaseResult responseData) {
 
-                        }
+                                doShowProvinceDialog((BMCityResult) responseData);
 
-                        @Override
-                        public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
-                            Message msg2 = new Message();
-                            msg2.what = DISMISS_LOADING;
-                            mHandler.sendMessage(msg2);
+                            }
 
-                            CustomToast.showToast(getApplicationContext(), "网络不给力，请重试！");
-                        }
-                    });
+                            @Override
+                            public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
+                                Message msg2 = new Message();
+                                msg2.what = DISMISS_LOADING;
+                                mHandler.sendMessage(msg2);
 
+                                CustomToast.showToast(getApplicationContext(), "网络不给力，请重试！");
+                            }
+                        });
+
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }catch (Error er){
+                    er.printStackTrace();
                 }
+
             }
         });
 
@@ -812,6 +820,16 @@ public class BMUserinfoActivity extends Activity implements OnClickListener,
     public void onRequestError(int requestTag, int requestId, int errorCode, String msg) {
 
         CustomToast.showToast(getApplicationContext(), msg);
+
+        MineProfile.getInstance().setIsLogin(false);
+        MineProfile.getInstance().Save();
+
+        Intent loginIntent = new Intent(BMUserinfoActivity.this, BMLoginActivity.class);
+        startActivity(loginIntent);
+
+        finish();
+
+        MainHallActivity.jumpToTabByChildActivity(this, 0);
 
     }
 

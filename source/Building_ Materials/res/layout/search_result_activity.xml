@@ -17,7 +17,6 @@
             android:layout_height="fill_parent"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/select_band"
-
             android:orientation="horizontal"
             android:paddingBottom="8dp"
             android:paddingLeft="8dp"
@@ -30,8 +29,11 @@
                 android:layout_gravity="center_vertical"
                 android:drawablePadding="5dp"
                 android:drawableRight="@drawable/arrow_down"
-                android:src="@drawable/back_selector"
+                android:onClick="menuProvinceOnclick"
                 android:text="全国"
+                android:clickable="true"
+                android:focusable="true"
+                android:enabled="true"
                 android:textColor="#fff"
                 android:textSize="28sp"/>
 

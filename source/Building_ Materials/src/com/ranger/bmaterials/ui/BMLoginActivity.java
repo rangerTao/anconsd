@@ -25,6 +25,8 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow.OnDismissListener;
@@ -58,7 +60,8 @@ public class BMLoginActivity extends Activity implements OnClickListener,
 	private String message;
 	private EditText edit_login_username;
     private EditText edit_password;
-	
+    private CheckBox bm_ck_is_auto_login;
+
 	/**是否应该忽略一键注册结果，如果请求已成功或者请求被用户取消、网络超时等，则不应忽略。
 	 * 如果请求未被取消，则暂时忽略以前的请求结果，初始状态为false*/
 	boolean ignoreRegResult;
@@ -82,10 +85,23 @@ public class BMLoginActivity extends Activity implements OnClickListener,
 
 		findViewById(R.id.btn_back).setOnClickListener(this);
 		findViewById(R.id.btn_commit_login).setOnClickListener(this);
-		findViewById(R.id.btn_register).setOnClickListener(this);
+        findViewById(R.id.btn_register).setOnClickListener(this);
+        CheckBox cbAutoLogin = (CheckBox)findViewById(R.id.bm_ck_is_auto_login);
+        cbAutoLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                MineProfile.getInstance().setAutoLogin(isChecked);
+            }
+        });
+
+        cbAutoLogin.setChecked(MineProfile.getInstance().isAutoLogin());
 
 		edit_login_username = (EditText) findViewById(R.id.edit_login_username);
 		edit_login_username.addTextChangedListener(this);
+
+        edit_password = (EditText) findViewById(R.id.edit_login_pwd);
+
+        bm_ck_is_auto_login = (CheckBox) findViewById(R.id.bm_ck_is_auto_login);
 
 		resetUsernameEditText();
 	}
@@ -108,6 +124,14 @@ public class BMLoginActivity extends Activity implements OnClickListener,
 		// TODO Auto-generated method stub
 		super.onResume();
 		enableFastRegBtn();
+
+        if(MineProfile.getInstance().isAutoLogin()){
+            Message msg = new Message();
+            msg.what = MSG_AUTO_LOGIN;
+            mHandler.sendMessageDelayed(msg,1500);
+
+            Toast.makeText(getApplicationContext(),"自动登录中...",Toast.LENGTH_LONG).show();
+        }
 	}
 
 	@Override
@@ -128,6 +152,9 @@ public class BMLoginActivity extends Activity implements OnClickListener,
 
     private int lastClickTime = 0;
 
+    String username;
+    String password;
+
 	@Override
 	public void onClick(View v) {
 		int id = v.getId();
@@ -137,43 +164,7 @@ public class BMLoginActivity extends Activity implements OnClickListener,
 			InjectKeys(KeyEvent.KEYCODE_BACK);
 		} else if (id == R.id.btn_commit_login) {
 
-            if(System.currentTimeMillis() - lastClickTime < 1000){
-                return;
-            }
-
-			if (!ConnectManager.isNetworkConnected(this)) {
-				CustomToast.showLoginRegistErrorToast(this, DcError.DC_NET_GENER_ERROR);
-				return;
-			}
-
-			String username = ((EditText) findViewById(R.id.edit_login_username)).getText()
-					.toString();
-			String password = ((EditText) findViewById(R.id.edit_login_pwd)).getText().toString();
-
-			if (!StringUtil.checkValidUserName(username)) {
-				CustomToast.showLoginRegistErrorToast(this, CustomToast.DC_ERR_INVALID_USERNAME);
-				findViewById(R.id.edit_login_username).requestFocus();
-				return;
-			}
-
-			if (!StringUtil.checkValidPassword(password)) {
-				CustomToast.showLoginRegistErrorToast(this, CustomToast.DC_ERR_INVALID_PWD);
-				findViewById(R.id.edit_login_pwd).requestFocus();
-				return;
-			}
-
-            try {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
-            } catch (Exception e) {
-            }
-            progressDialog = CustomProgressDialog.createDialog(this);
-            progressDialog.setMessage(getResources().getString(R.string.committing_tip));
-            progressDialog.show();
-
-            NetUtil.getInstance().requestUserLogin(username,password,this);
-
+            doLogin();
 
 		} else if (id == R.id.btn_register) {
 
@@ -181,6 +172,45 @@ public class BMLoginActivity extends Activity implements OnClickListener,
             startActivityForResult(regisIntent,RESULT_REGISTER);
 		}
 	}
+
+    private void doLogin() {
+        if(System.currentTimeMillis() - lastClickTime < 1000){
+            return;
+        }
+
+        if (!ConnectManager.isNetworkConnected(this)) {
+            CustomToast.showLoginRegistErrorToast(this, DcError.DC_NET_GENER_ERROR);
+            return;
+        }
+
+        username = ((EditText) findViewById(R.id.edit_login_username)).getText()
+                .toString();
+        password = ((EditText) findViewById(R.id.edit_login_pwd)).getText().toString();
+
+        if (!StringUtil.checkValidUserName(username)) {
+            CustomToast.showLoginRegistErrorToast(this, CustomToast.DC_ERR_INVALID_USERNAME);
+            findViewById(R.id.edit_login_username).requestFocus();
+            return;
+        }
+
+        if (!StringUtil.checkValidPassword(password)) {
+            CustomToast.showLoginRegistErrorToast(this, CustomToast.DC_ERR_INVALID_PWD);
+            findViewById(R.id.edit_login_pwd).requestFocus();
+            return;
+        }
+
+        try {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        } catch (Exception e) {
+        }
+        progressDialog = CustomProgressDialog.createDialog(this);
+        progressDialog.setMessage(getResources().getString(R.string.committing_tip));
+        progressDialog.show();
+
+        NetUtil.getInstance().requestUserLogin(username,password,this);
+    }
 
     public static final int RESULT_REGISTER = 0x2;
 
@@ -202,6 +232,13 @@ public class BMLoginActivity extends Activity implements OnClickListener,
             MineProfile.getInstance().setNickName(result.getNickname());
             MineProfile.getInstance().setStrUserHead(result.getPhoto());
             MineProfile.getInstance().setIsLogin(true);
+            if(bm_ck_is_auto_login.isChecked()){
+                MineProfile.getInstance().setAutoLogin(true);
+                MineProfile.getInstance().setAutoLoginInfo(username + "," + password);
+            }else{
+                MineProfile.getInstance().setAutoLogin(false);
+            }
+
             MineProfile.getInstance().Save();
             loginSucceed();
         }else{
@@ -337,6 +374,7 @@ public class BMLoginActivity extends Activity implements OnClickListener,
 	}
 
 	private final static int MSG_CANCEL_TO_MANUAL = 1;
+    private final static int MSG_AUTO_LOGIN = 2;
 	Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			if (msg.what == MSG_CANCEL_TO_MANUAL) {
@@ -345,6 +383,20 @@ public class BMLoginActivity extends Activity implements OnClickListener,
 				}
 				cancelRequest();
 			}
+
+            if( msg.what == MSG_AUTO_LOGIN){
+
+                String[] upass = MineProfile.getInstance().getAutoLoginInfo().split(",");
+
+                if(upass.length > 1){
+                    edit_login_username.setText(upass[0]);
+                    edit_password.setText(upass[1]);
+                }
+
+                if(upass.length > 1){
+                    doLogin();
+                }
+            }
 		};
 	};
 

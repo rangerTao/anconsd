@@ -253,7 +253,7 @@ public class CustomToast {
 			CustomToast.showToast(context, context.getResources().getString(R.string.fast_register_failed));
 			break;
 		default:
-			CustomToast.showToast(context, context.getResources().getString(R.string.request_failed_tip));
+//			CustomToast.showToast(context, context.getResources().getString(R.string.request_failed_tip));
 			break;
 		}
 	}

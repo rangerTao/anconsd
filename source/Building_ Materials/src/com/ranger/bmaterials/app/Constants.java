@@ -3,13 +3,15 @@ package com.ranger.bmaterials.app;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
+import com.ranger.bmaterials.adapter.BMProductCollectionAdapter;
 import com.ranger.bmaterials.mode.KeywordsList;
 
+import android.graphics.Bitmap;
 import android.os.Environment;
 
 
 public final class Constants {
-
+	
 	private static final String FORMATTER_DATE_STRING = "yyyy-MM-dd";
 	public static final SimpleDateFormat FORMATER_DATE_FORMAT = new SimpleDateFormat(FORMATTER_DATE_STRING);
 

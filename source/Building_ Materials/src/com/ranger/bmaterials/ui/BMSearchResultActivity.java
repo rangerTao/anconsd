@@ -297,9 +297,6 @@ public class BMSearchResultActivity extends Activity implements
 
                                         setCityName(pi.getName());
 
-
-
-
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -429,7 +426,7 @@ public class BMSearchResultActivity extends Activity implements
     private void initTitleBar() {
         TextView backView = (TextView) findViewById(R.id.btn_province);
         backView.setText(pname.equals("") ? "全国" : pname);
-        backView.setOnClickListener(this);
+//        backView.setOnClickListener(this);
     }
 
     boolean isLoadingMore = false;
@@ -491,6 +488,11 @@ public class BMSearchResultActivity extends Activity implements
         return footer_view;
     }
 
+    public void menuProvinceOnclick(View view){
+        if(!menu.isMenuShowing()){
+            menu.showMenu(true);
+        }
+    }
 
     private void initView() {
 
@@ -771,6 +773,12 @@ public class BMSearchResultActivity extends Activity implements
 
         bamr = (BandAndModelResult) responseData;
 
+        band = "";
+        smalltype = "";
+        tv_selected_band.setText("全部");
+        tv_selected_band_main.setText("全部");
+        tv_selected_cate.setText("全部");
+
         if (bamr != null) {
             pba = new ProductBandAdapter(getApplicationContext(), bamr);
             bandList.setAdapter(pba);
@@ -784,6 +792,7 @@ public class BMSearchResultActivity extends Activity implements
             productPinpaiAdapter.setOnCategoryClickListener(onCategoryClickListener);
 
             typeList.setAdapter(productPinpaiAdapter);
+
         }
     }
 
@@ -1040,7 +1049,7 @@ public class BMSearchResultActivity extends Activity implements
                 break;
             case R.id.btn_province:
                 if (!menu.isShown())
-                    menu.showMenu();
+                    menu.showMenu(true);
                 break;
             case R.id.btn_back_bottom:
                 finish();

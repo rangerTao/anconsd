@@ -878,7 +878,7 @@ public class NetUtil implements INetListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 1001, "网络不给力，请重试");
+                    observer.onRequestError(Constants.NET_TAG_SEARCH, mCurrentRequestId, 9001, "网络不给力，请重试");
                 }
             }
         }.run();

@@ -38,6 +38,25 @@ public class MineProfile implements IRequestListener {
     private int proId;
     private int cityId;
 
+    private boolean isAutoLogin = false;
+    private String autoLoginInfo;
+
+    public String getAutoLoginInfo() {
+        return autoLoginInfo;
+    }
+
+    public void setAutoLoginInfo(String autoLoginInfo) {
+        this.autoLoginInfo = autoLoginInfo;
+    }
+
+    public boolean isAutoLogin() {
+        return isAutoLogin;
+    }
+
+    public void setAutoLogin(boolean isAutoLogin) {
+        this.isAutoLogin = isAutoLogin;
+    }
+
     public int getProId() {
         return proId;
     }
@@ -123,6 +142,8 @@ public class MineProfile implements IRequestListener {
 		isLogin = false;
 		isNewUser = false;
 		isRootUser = false;
+        isAutoLogin = false;
+        autoLoginInfo = "";
 		sessionID = "";
 		userType = USERTYPE_UNBINDINGPHONE;
 		phonenum = "";
@@ -189,7 +210,9 @@ public class MineProfile implements IRequestListener {
 		messagenum = "0";
 		collectnum = "0";
 		coinnum = 0;
-		checkRootPrompTime = 0;
+        isAutoLogin =false;
+        autoLoginInfo = "";
+                checkRootPrompTime = 0;
 		appversion = "";
 		isNewUser = false;
 		isRootUser = false;
@@ -270,6 +293,9 @@ public class MineProfile implements IRequestListener {
         this.proId = settings.getInt("proid",0);
         this.cityId = settings.getInt("cityid",0);
 
+        this.isAutoLogin = settings.getBoolean("isAutoLogin",false);
+        this.autoLoginInfo = settings.getString("autologin","");
+
 		// settings
 		this.downloadOnlyWithWiFi = settings.getBoolean("downloadOnlyWithWiFi", true);
 		this.noPicture = settings.getBoolean("noPicture", false);
@@ -349,6 +375,9 @@ public class MineProfile implements IRequestListener {
 				this.showInstallTipAfterDownloading);
 		editor.putBoolean("installAutomaticllyAfterDownloading",
 				this.installAutomaticllyAfterDownloading);
+
+        editor.putBoolean("isAutoLogin",isAutoLogin);
+        editor.putString("autologin",autoLoginInfo);
 
 		editor.putString("gamenum", this.gamenum);
 		editor.putString("totalmsgnum", this.totalmsgnum);

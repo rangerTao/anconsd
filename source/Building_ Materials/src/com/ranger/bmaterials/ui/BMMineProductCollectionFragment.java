@@ -206,7 +206,7 @@ public class BMMineProductCollectionFragment extends ListFragment implements OnC
 		default:
 			break;
 		}
-		CustomToast.showLoginRegistErrorToast(getActivity(), errorCode);
+//		CustomToast.showLoginRegistErrorToast(getActivity(), errorCode);
 	}
 
 	@Override
