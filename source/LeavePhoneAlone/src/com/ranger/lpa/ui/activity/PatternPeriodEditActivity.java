@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.R;
+import com.ranger.lpa.statics.ClickStats;
 import com.ranger.lpa.utils.StringUtil;
 
 import antistatic.spinnerwheel.AbstractWheel;
@@ -131,10 +132,13 @@ public class PatternPeriodEditActivity extends BaseActivity implements View.OnCl
 
                 if(type == 0){
                     MineProfile.getInstance().setLockPeriodCouple(period);
+                    ClickStats.onClickStats(getApplicationContext(), ClickStats.CLICK_TYPE.Click_Pattern_Period_C,period + "");
                 }else if (type == 1){
                     MineProfile.getInstance().setLockPeriodParty(period);
+                    ClickStats.onClickStats(getApplicationContext(), ClickStats.CLICK_TYPE.Click_Pattern_Period_P,period + "");
                 }else if (type == 2){
                     MineProfile.getInstance().setLockPeriodWork(period);
+                    ClickStats.onClickStats(getApplicationContext(), ClickStats.CLICK_TYPE.Click_Pattern_Period_W,period + "");
                 }
 
                 Toast.makeText(this,getString(R.string.toast_default_saved),Toast.LENGTH_LONG).show();

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.R;
+import com.ranger.lpa.statics.ClickStats;
 import com.ranger.lpa.utils.StringUtil;
 
 /**
@@ -64,12 +65,15 @@ public class SettingPatternActivity extends BaseActivity implements View.OnClick
                 return;
             case R.id.rl_pattern_couple:
                 editIntent.putExtra(PatternPeriodEditActivity.PATTER_TYPE,0);
+                ClickStats.onClickStats(getApplicationContext(), ClickStats.CLICK_TYPE.Enter_Patter_Couple);
                 break;
             case R.id.rl_pattern_party:
                 editIntent.putExtra(PatternPeriodEditActivity.PATTER_TYPE,1);
+                ClickStats.onClickStats(getApplicationContext(), ClickStats.CLICK_TYPE.Enter_Patter_Party);
                 break;
             case R.id.rl_pattern_work:
                 editIntent.putExtra(PatternPeriodEditActivity.PATTER_TYPE,2);
+                ClickStats.onClickStats(getApplicationContext(), ClickStats.CLICK_TYPE.Enter_Patter_Work);
                 break;
         }
 

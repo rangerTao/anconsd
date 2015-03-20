@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.ranger.lpa.R;
 import com.ranger.lpa.connectity.bluetooth.LPABlueToothManager;
 import com.ranger.lpa.share.ShareUtil;
+import com.ranger.lpa.statics.ClickStats;
 import com.ranger.lpa.wxapi.WXEntryActivity;
 
 /**
@@ -49,13 +50,16 @@ public class LPAMainActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_enter_couple:
                 startFindingPhoneView(0);
+                ClickStats.onClickStats(this, ClickStats.CLICK_TYPE.START_COUPLE);
                 break;
 
             case R.id.btn_enter_party:
                 startPartyCenter();
+                ClickStats.onClickStats(this, ClickStats.CLICK_TYPE.START_PARTY);
                 break;
             case R.id.btn_enter_work:
                 startPartyCenter();
+                ClickStats.onClickStats(this, ClickStats.CLICK_TYPE.START_WORK);
                 break;
         }
 

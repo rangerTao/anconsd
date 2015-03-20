@@ -1,6 +1,7 @@
 package com.ranger.lpa.ui.activity;
 
 import com.ranger.lpa.R;
+import com.ranger.lpa.statics.ClickStats;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ public class SplashActivity extends BaseActivity{
 
         Intent intentMain = new Intent(getApplicationContext(),LPAMainActivity.class);
         startActivity(intentMain);
+
+        ClickStats.onClickStats(this, ClickStats.CLICK_TYPE.ENTER);
     }
 
     @Override

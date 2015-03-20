@@ -28,6 +28,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/iv_icon_purnish"
+            android:layout_toLeftOf="@+id/iv_extend"
             android:orientation="vertical">
 
             <TextView
@@ -49,6 +50,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/iv_extend"
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_height="wrap_content"

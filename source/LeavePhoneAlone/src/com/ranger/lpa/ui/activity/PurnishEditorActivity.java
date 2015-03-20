@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.R;
 import com.ranger.lpa.pojos.PurnishInfo;
+import com.ranger.lpa.statics.ClickStats;
 
 
 /**
@@ -89,6 +90,7 @@ public class PurnishEditorActivity extends BaseActivity implements View.OnClickL
                 }else{
                     Toast.makeText(this,getString(R.string.toast_save_fail),Toast.LENGTH_LONG).show();
                 }
+                ClickStats.onClickStats(getApplicationContext(), ClickStats.CLICK_TYPE.Click_Purnish_default);
                 break;
             case R.id.btn_purnish_delete:
                 if(MineProfile.getInstance().removePurnish(pIndex)){
@@ -97,6 +99,8 @@ public class PurnishEditorActivity extends BaseActivity implements View.OnClickL
                 }else{
                     Toast.makeText(this,getString(R.string.toast_delete_fail),Toast.LENGTH_LONG).show();
                 }
+
+                ClickStats.onClickStats(getApplicationContext(), ClickStats.CLICK_TYPE.Click_Purnish_del);
                 break;
         }
     }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.ranger.lpa.MineProfile;
 import com.ranger.lpa.R;
 import com.ranger.lpa.pojos.PurnishInfo;
+import com.ranger.lpa.statics.ClickStats;
 
 
 /**
@@ -74,12 +75,14 @@ public class PurnishAddActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.btn_purnish_cancel:
                 finish();
+                ClickStats.onClickStats(getApplicationContext(), ClickStats.CLICK_TYPE.Click_Purnish_Cancel);
                 break;
             case R.id.btn_purnish_save:
                 pi.setPurnish_content(et_purnish_content.getText().toString());
                 MineProfile.getInstance().getPurnish().getPurnishes().add(pi);
                 MineProfile.getInstance().Save();
                 finish();
+                ClickStats.onClickStats(getApplicationContext(), ClickStats.CLICK_TYPE.Click_Purnish_Save);
                 break;
         }
     }

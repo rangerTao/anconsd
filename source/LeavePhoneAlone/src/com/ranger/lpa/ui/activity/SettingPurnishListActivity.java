@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.ranger.lpa.R;
 import com.ranger.lpa.adapter.LPAPurnishAdapter;
+import com.ranger.lpa.statics.ClickStats;
 
 /**
  * Created by taoliang on 14-8-25.
@@ -54,6 +55,7 @@ public class SettingPurnishListActivity extends BaseActivity implements View.OnC
             case R.id.iv_btn_title_right:
                 Intent editIntent = new Intent(this,PurnishAddActivity.class);
                 startActivity(editIntent);
+                ClickStats.onClickStats(getApplicationContext(), ClickStats.CLICK_TYPE.Enter_purnish_add);
                 break;
         }
     }
@@ -64,6 +66,7 @@ public class SettingPurnishListActivity extends BaseActivity implements View.OnC
         Intent editIntent = new Intent(this,PurnishEditorActivity.class);
         editIntent.putExtra(PurnishEditorActivity.INDEX_PURNISH,position);
         startActivity(editIntent);
+        ClickStats.onClickStats(getApplicationContext(), ClickStats.CLICK_TYPE.Enter_purnish_edit);
 
     }
 

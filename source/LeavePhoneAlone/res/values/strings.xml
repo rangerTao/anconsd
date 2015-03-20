@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">不要玩手机</string>
+    <string name="app_name">放开那手机</string>
     <string name="login_weixin">微信登录</string>
     <string name="unlogin_try">免登录试用</string>
     <string name="login_now">立即开始</string>
@@ -40,7 +40,7 @@
     <string name="btn_giveup_cancel">坚持住</string>
 
     <string name="barcode_hint">锁屏码</string>
-    <string name="hint_click_to_startserver">下滑建立</string>
+    <string name="hint_click_to_startserver">点击建立</string>
     <string name="hint_click_to_joinserver">点击加入</string>
     <string name="hint_scan_barcode_join">给朋友们扫一扫，让他们快快加入吧</string>
     <string name="hint_user_already_in">已加入小伙伴</string>
