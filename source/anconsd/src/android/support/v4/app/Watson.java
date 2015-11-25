@@ -1,4 +1,4 @@
-package com.andconsd.framework.app;
+package android.support.v4.app;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;

@@ -2,7 +2,7 @@ package com.andconsd.framework.actionbarsherlock.app;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import com.andconsd.framework.app.Watson;
+import android.support.v4.app.Watson;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
