@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <com.andconsd.view.pull.PullToRefreshListView
+    <com.andconsd.framework.pull.PullToRefreshListView
         android:id="@+id/waterfallview"
         style="@style/content_list_seach"
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
@@ -28,7 +28,7 @@
         android:background="#848484"
         android:visibility="gone" >
 
-        <com.andconsd.widget.photoview.PhotoView
+        <com.andconsd.ui.widget.photoview.PhotoView
             android:id="@+id/ivFullScreen"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

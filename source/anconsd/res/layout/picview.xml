@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <com.andconsd.widget.DuoleVideoView
+    <com.andconsd.ui.widget.DuoleVideoView
         android:id="@+id/vv"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:padding="1dip" >
 
-    <com.andconsd.widget.photoview.PhotoView
+    <com.andconsd.ui.widget.photoview.PhotoView
         android:id="@+id/ivThumb"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

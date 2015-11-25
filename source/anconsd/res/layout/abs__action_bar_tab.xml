@@ -2,6 +2,6 @@
 
 <view
     xmlns:android="http://schemas.android.com/apk/res/android"
-    class="com.actionbarsherlock.internal.widget.ScrollingTabContainerView$TabView"
+    class="com.andconsd.framework.actionbarsherlock.internal.widget.ScrollingTabContainerView$TabView"
     style="?attr/actionBarTabStyle"
 />

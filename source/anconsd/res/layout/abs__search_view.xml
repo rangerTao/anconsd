@@ -81,7 +81,7 @@
                 android:orientation="horizontal"
                 android:background="?attr/searchViewTextField">
 
-            <view class="com.actionbarsherlock.widget.SearchView$SearchAutoComplete"
+            <view class="com.andconsd.framework.actionbarsherlock.widget.SearchView$SearchAutoComplete"
                   style="?attr/searchAutoCompleteTextView"
                   android:id="@+id/abs__search_src_text"
                   android:layout_height="36dip"

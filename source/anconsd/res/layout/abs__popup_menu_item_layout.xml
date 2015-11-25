@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 
-<com.actionbarsherlock.internal.view.menu.ListMenuItemView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.andconsd.framework.actionbarsherlock.internal.view.menu.ListMenuItemView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?attr/dropdownListPreferredItemHeight"
     android:minWidth="196dip"
@@ -57,4 +57,4 @@
 
     <!-- Checkbox, and/or radio button will be inserted here. -->
     
-</com.actionbarsherlock.internal.view.menu.ListMenuItemView>
+</com.andconsd.framework.actionbarsherlock.internal.view.menu.ListMenuItemView>

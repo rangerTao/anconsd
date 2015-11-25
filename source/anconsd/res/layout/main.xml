@@ -19,7 +19,14 @@
         android:columnWidth="110dp"
         android:horizontalSpacing="10dp"
         android:numColumns="auto_fit"
+        android:visibility="gone"
         android:verticalSpacing="30px" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvPicList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 
     <com.baidu.mobads.AdView
         android:id="@+id/baiduad"

@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 
-<com.actionbarsherlock.internal.view.menu.ActionMenuItemView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.andconsd.framework.actionbarsherlock.internal.view.menu.ActionMenuItemView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -37,7 +37,8 @@
                  android:adjustViewBounds="true"
                  android:background="@null"
                  android:focusable="false" />
-    <com.actionbarsherlock.internal.widget.CapitalizingButton android:id="@+id/abs__textButton"
+    <com.andconsd.framework.actionbarsherlock.internal.widget.CapitalizingButton
+        android:id="@+id/abs__textButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -53,4 +54,4 @@
             android:paddingLeft="4dip"
             android:paddingRight="4dip"
             android:focusable="false" />
-</com.actionbarsherlock.internal.view.menu.ActionMenuItemView>
+</com.andconsd.framework.actionbarsherlock.internal.view.menu.ActionMenuItemView>
