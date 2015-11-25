@@ -4,14 +4,13 @@ import java.io.File;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Environment;
 
-import com.andconsd.utils.Constants;
+import com.andconsd.framework.utils.Constants;
 import com.baidu.frontia.FrontiaApplication;
-import com.baidu.mobads.AdView;
 import com.nostra13.universalimageloader.cache.disc.impl.TotalSizeLimitedDiscCache;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -44,10 +43,12 @@ public class AndApplication extends Application {
 
 		instance = this;
 		initImageLoader(getApplicationContext());
-		
+
+		PackageManager pm = getPackageManager();
+
 		options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.ic_empty).showImageOnFail(R.drawable.ic_error).resetViewBeforeLoading(true).cacheOnDisc(true)
 				.imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).displayer(new FadeInBitmapDisplayer(100)).build();
-		
+
 //		AdView.setAppSid(getApplicationContext(), "debug");
 //		AdView.setAppSec(getApplicationContext(), "debug");
 		

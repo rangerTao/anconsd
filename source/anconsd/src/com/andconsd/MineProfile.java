@@ -1,11 +1,7 @@
 package com.andconsd;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import com.andconsd.utils.Constants;
-import com.andconsd.utils.MyLogger;
+import com.andconsd.framework.utils.Constants;
+import com.andconsd.framework.utils.MyLogger;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
