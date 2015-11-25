@@ -61,7 +61,7 @@
             android:name="com.baidu.mobads.AppActivity"
             android:configChanges="keyboard|keyboardHidden|orientation" />
         <activity
-            android:name="com.andconsd.ui.WelcomeActivity"
+            android:name=".ui.activity.WelcomeActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateHidden|adjustResize" >
             <intent-filter>
@@ -71,24 +71,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.PicViewer"
+            android:name=".ui.activity.PicViewer"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name" />
         <activity
-            android:name="com.andconsd.ui.Androsd"
+            android:name=".ui.activity.Androsd"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name" />
-        <activity android:name="com.andconsd.ui.picview.PicFlowListActivity" />
-        <activity android:name="com.andconsd.ui.FeedBackActivity" />
+        <activity android:name=".ui.activity.PicFlowListActivity" />
+        <activity android:name=".ui.activity.FeedBackActivity" />
 
-        <service android:name="com.andconsd.ui.WebService" >
+        <service android:name=".service.WebService" >
             <intent-filter>
                 <action android:name="com.andconsd.WebService" />
             </intent-filter>
         </service>
 
-        <activity android:name=".ui.SettingPreference" />
-        <activity android:name="com.andconsd.ui.PromotionActivity" />
+        <activity android:name=".ui.widget.SettingPreference" />
+        <activity android:name=".ui.activity.PromotionActivity" />
 
         <activity android:name="com.baidu.mobads.appoffers.OffersActivity"
             android:configChanges="keyboard|keyboardHidden|orientation" />
