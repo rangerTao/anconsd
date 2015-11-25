@@ -13,8 +13,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.andconsd.R;
-import com.andconsd.ui.PicViewer;
-import com.andconsd.utils.AndconsdUtils;
+import com.andconsd.ui.activity.PicViewer;
+import com.andconsd.framework.utils.AndconsdUtils;
 
 public class PicViewAdapter extends BaseAdapter implements OnClickListener{
 

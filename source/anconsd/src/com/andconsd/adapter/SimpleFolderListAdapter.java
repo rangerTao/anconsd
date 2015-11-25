@@ -2,7 +2,7 @@ package com.andconsd.adapter;
 
 import java.util.ArrayList;
 
-import com.andconsd.ui.SettingPreference.FolderItem;
+import com.andconsd.ui.widget.SettingPreference.FolderItem;
 
 import android.content.Context;
 import android.view.View;

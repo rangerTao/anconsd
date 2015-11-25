@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.andconsd.R;
-import com.andconsd.ui.PicViewer;
-import com.andconsd.utils.Constants;
-import com.andconsd.widget.photoview.PhotoView;
+import com.andconsd.ui.activity.PicViewer;
+import com.andconsd.framework.utils.Constants;
+import com.andconsd.ui.widget.photoview.PhotoView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
